@@ -1,0 +1,10 @@
+2025-10-08 10:09:02.8524||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-10-08 10:43:08.2826||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-10-08 11:00:47.8127||WARN|Ocelot.Requester.DelegatingHandlerHandlerFactory|requestId: 80000102-0001-ff00-b63f-84710c7967bb, previousRequestId: no previous request id, message: ReRoute Ocelot.Values.UpstreamPathTemplate specifies use QoS but no QosHandler found in DI container. Will use not use a QosHandler, please check your setup! 
+2025-10-08 12:55:39.7449||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-10-08 13:43:43.2588||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-10-08 14:27:39.1157||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-10-08 15:14:28.7135||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-10-08 15:44:30.0559||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-10-08 17:29:36.9133||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-10-08 18:24:31.3014||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 

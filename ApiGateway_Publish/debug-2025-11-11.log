@@ -1,0 +1,5 @@
+2025-11-11 16:15:22.9339||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-11-11 17:18:26.6400||ERROR|Microsoft.AspNetCore.Server.IIS.Core.IISHttpServer|Connection ID "1897907957552", Request ID "80000377-0002-fb00-b63f-84710c7967bb": An unhandled exception was thrown by the application. The CancellationTokenSource has been disposed.
+2025-11-11 18:46:37.2378||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-11-11 20:35:04.6832||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-11-11 21:09:41.2974||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 

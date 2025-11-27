@@ -1,0 +1,571 @@
+.nav-link {
+  color: white !important;
+}
+
+.container-fluid {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.nav-tabs {
+  background-color: #0068a7 !important;
+  border-radius: 29px !important;
+  padding: 1px !important;
+}
+
+.nav-item.active {
+  background-color: #0e2381 !important;
+  border-radius: 31px !important;
+  height: 100% !important;
+}
+
+.nav-link.active {
+  background-color: #0e2381 !important;
+  border-radius: 31px !important;
+  height: 100% !important;
+}
+
+.nav-justified {
+  display: flex !important;
+  align-items: center !important;
+}
+
+hr {
+  border-top: 1px solid #6c757d !important;
+}
+
+.error-star {
+  color: red;
+}
+
+/* tab */
+.tab .panel-tabs {
+  background-color: #fff !important;
+  border-width: 1px;
+  border-style: ridge;
+  border-color: #7A10EB;
+  padding: 7px 4px 4px;
+  margin: 0 0 10px;
+  border-radius: 30px;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+}
+
+.tab .panel-tabs li a {
+  color: #555;
+  background: #fff !important;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 20px 6px;
+  /* padding: 8px 28px 6px; */
+  margin: 0 5px 0 0;
+  border: none;
+  border-radius: 30px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease 0.3s;
+}
+
+.tab .panel-tabs li.active a,
+.tab .panel-tabs li a:hover,
+.tab .panel-tabs li.active a:hover {
+  color: #fff;
+  background: linear-gradient(to right, #1890E0, #7A10EB) !important;
+  border: none;
+}
+
+.tab .panel-tabs li a:before,
+.tab .panel-tabs li a:after {
+  content: "";
+  background-color: #1890E0 !important;
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  opacity: 0.5;
+  transform: scaleX(0);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: all 0.4s ease 0s;
+}
+
+.tab .panel-tabs li a:after {
+  background-color: #7A10EB !important;
+  transform: scaleX(0);
+  transition: all 0.4s ease 0.2s;
+}
+
+.tab .panel-tabs li.active a:before,
+.tab .panel-tabs li a:hover:before {
+  opacity: 0;
+  transform: scaleX(1);
+}
+
+.tab .panel-tabs li.active a:after,
+.tab .panel-tabs li a:hover:after {
+  opacity: 1;
+  transform: scaleX(1);
+  background: linear-gradient(to right, #1890E0, #7A10EB) !important;
+}
+
+.tab .tab-content {
+  color: #999;
+  background-color: #fff;
+  font-size: 17px;
+  letter-spacing: 1px;
+  line-height: 30px;
+  padding: 20px;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  position: relative;
+}
+
+@media only screen and (max-width: 479px) {
+  .tab .panel-tabs {
+    padding: 0;
+    border-radius: 20px;
+  }
+
+  .tab .panel-tabs li {
+    width: 100%;
+    text-align: center;
+    margin: 0 0 5px;
+  }
+
+  .tab .panel-tabs li:last-child {
+    margin-bottom: 0;
+  }
+
+  .tab .panel-tabs li a {
+    margin: 0;
+  }
+
+  #tableList_paginate {
+    float: none !important;
+  }
+}
+
+
+hr {
+  margin-top: 0rem !important;
+  margin-bottom: 0rem !important;
+
+}
+
+
+.card {
+  /* box-shadow: -4px 4px 4px rgb(0 0 0 / 50%), inset 1px 0px 0px rgb(255 255 255 / 40%) !important; */
+  /* box-shadow: 0 0 5px #000 !important;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; */
+  /* background-color: #eef0f2;
+
+  border-width: 3px; */
+  border-radius: 0px !important;
+  /* margin-top: 15px */
+}
+
+
+
+.label,
+#item_no_label {
+  text-transform: capitalize !important;
+}
+
+.save_btn {
+  background: green !important;
+  border-color: green !important;
+  color: white !important
+}
+
+.info_btn {
+  background: rgb(45, 109, 194) !important;
+  border-color: rgb(45, 109, 194);
+  color: white !important
+}
+
+.back_btn {
+  background: red !important;
+  border-color: red !important;
+  color: white !important
+}
+
+.add_btn {
+  background: #329504 !important;
+  border-color: #a9ca !important;
+  color: white !important
+}
+
+.submit_btn,
+.edit_btn {
+  background: orange !important;
+  border-color: orange !important;
+  color: white !important
+}
+
+;
+
+.form-control {
+  background: #e2e4e6 !important;
+  color: #0a0000 !important;
+  border-radius: 5px;
+  padding: 0.8rem;
+}
+
+.lowercase {
+  text-transform: lowercase !important;
+}
+
+
+/* Breadcrumb */
+
+.breadcrumb {
+  /*centering*/
+  display: inline-block !important;
+  overflow: hidden !important;
+  border-radius: 5px !important;
+  /*Lets add the numbers for each link using CSS counters. flag is the name of the counter. to be defined using counter-reset in the parent element of the links*/
+  counter-reset: flag !important;
+  /* margin-bottom: 0 !important; */
+  background: white;
+  padding: 5px;
+}
+
+.breadcrumb li {
+  text-decoration: none !important;
+  outline: none !important;
+  display: block !important;
+  float: left !important;
+  font-size: 12px !important;
+  line-height: 36px !important;
+  color: white !important;
+  /*need more margin on the left of links to accomodate the numbers*/
+  padding: 0 10px 0 60px !important;
+  background: rgb(125, 123, 123) !important;
+  background: linear-gradient(rgb(125, 123, 123), #333) !important;
+  position: relative !important;
+}
+
+/*since the first link does not have a triangle before it we can reduce the left padding to make it look consistent with other links*/
+.breadcrumb li:first-child {
+  padding-left: 46px !important;
+  border-radius: 5px 0 0 5px !important;
+  /*to match with the parent's radius*/
+}
+
+.breadcrumb li:first-child:before {
+  left: 14px !important;
+}
+
+.breadcrumb li:last-child {
+  border-radius: 0 5px 5px 0 !important;
+  /*this was to prevent glitches on hover*/
+  padding-right: 20px !important;
+}
+
+/*hover/active styles*/
+.breadcrumb li.active,
+.breadcrumb li:hover {
+  background: #333 !important;
+  background: linear-gradient(#333, #000) !important;
+}
+
+.breadcrumb li.active:after,
+.breadcrumb li:hover:after {
+  background: #333 !important;
+  background: linear-gradient(135deg, #333, #000) !important;
+}
+
+/*adding the arrows for the breadcrumbs using rotated pseudo elements*/
+.breadcrumb li:after {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  right: -18px !important;
+  /*half of square's length*/
+  /*same dimension as the line-height of .breadcrumb a */
+  width: 36px !important;
+  height: 36px !important;
+  /*as you see the rotated square takes a larger height. which makes it tough to position it properly. So we are going to scale it down so that the diagonals become equal to the line-height of the link. We scale it to 70.7% because if square's: 
+	length = 1; diagonal = (1^2 + 1^2)^0.5 = 1.414 (pythagoras theorem)
+	if diagonal required = 1; length = 1/1.414 = 0.707 */
+  transform: scale(0.707) rotate(45deg) !important;
+  /*we need to prevent the arrows from getting buried under the next link*/
+  z-index: 1 !important;
+  /*background same as links but the gradient will be rotated to compensate with the transform applied*/
+  background: #777 !important;
+  background: linear-gradient(135deg, #777, #333) !important;
+  ;
+  /*stylish arrow design using box shadow*/
+  /* box-shadow:
+    2px -2px 0 2px rgba(0, 0, 0, 0.4),
+    3px -3px 0 2px rgba(255, 255, 255, 0.1) !important; */
+  /*
+		5px - for rounded arrows and 
+		50px - to prevent hover glitches on the border created using shadows*/
+  border-radius: 0 5px 0 50px !important;
+}
+
+/*we dont need an arrow after the last link*/
+.breadcrumb li:last-child:after {
+  content: none !important;
+}
+
+/*we will use the :before element to show numbers*/
+.breadcrumb li:before {
+  content: counter(flag) !important;
+  counter-increment: flag !important;
+  /*some styles now*/
+  border-radius: 100% !important;
+  display: grid !important;
+  place-items: end !important;
+
+  width: 20px !important;
+  height: 20px !important;
+  line-height: 20px !important;
+  margin: 8px 0 !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 30px !important;
+  background: #444 !important;
+  background: linear-gradient(#444, #222) !important;
+  font-weight: bold !important;
+}
+
+.breadcrumb:active li:before {
+  content: counter(flag) !important;
+  counter-increment: flag !important;
+  /*some styles now*/
+  border-radius: 100% !important;
+  display: grid !important;
+  place-items: end !important;
+
+  width: 20px !important;
+  height: 20px !important;
+  line-height: 20px !important;
+  margin: 8px 0 !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 30px !important;
+
+  font-weight: bold !important;
+}
+
+.breadcrumb li:first-child::before {
+  content: counter(flag) !important;
+  counter-increment: flag !important;
+  /*some styles now*/
+  border-radius: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+
+  width: 20px !important;
+  height: 20px !important;
+  line-height: 20px !important;
+  margin: 8px 0px 8px 2px !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  color: black;
+  font-weight: bold !important;
+}
+
+.breadcrumb:active li:first-child::before {
+  content: counter(flag) !important;
+  counter-increment: flag !important;
+  /*some styles now*/
+  border-radius: 100% !important;
+  display: grid !important;
+  place-items: end !important;
+
+  width: 20px !important;
+  height: 20px !important;
+  line-height: 20px !important;
+  margin: 8px 0 !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  font-weight: bold !important;
+}
+
+
+
+
+
+.breadcrumb li,
+.breadcrumb li:after {
+  background: white !important;
+  color: black !important;
+  transition: all 0.5s !important;
+}
+
+.breadcrumb li:before {
+  background: white !important;
+  box-shadow: 0 0 0 1px #ccc !important;
+}
+
+.breadcrumb li:hover,
+.breadcrumb li.active,
+.breadcrumb li:hover:after,
+.breadcrumb li.active:after {
+  background: #034b86 !important;
+
+}
+
+.breadcrumb li.active,
+.breadcrumb li:hover:after,
+.breadcrumb li.active:after {
+  color: #fff !important;
+
+}
+
+.breadcrumb li:hover a {
+  color: rgb(255, 255, 255) !important;
+
+}
+
+.breadcrumb li a {
+  color: #007bff !important;
+
+}
+
+.breadcrumb li a {
+  color: #007bff !important;
+
+}
+
+.breadcrumblibm {
+  margin: 8px 0px 8px 2px !important;
+}
+
+.breadcrumb li.active {
+  color: rgb(255, 255, 255) !important;
+  font-weight: bold !important;
+}
+
+.breadcrumb a {
+  font-weight: bold !important;
+
+}
+
+.responsive-button {
+  /* padding: 1rem; */
+  border-radius: 1rem;
+  margin: 0.2rem 0;
+}
+
+@media (max-width: 600px) {
+  .responsive-button span {
+    /* display: none; */
+    padding: 0.5rem;
+  }
+
+  .button-style {
+    padding: 0.5rem !important;
+  }
+
+  #tableList_paginate {
+    float: none !important;
+  }
+}
+
+.button-style {
+  font-size: 15px;
+  font-weight: bold;
+  color: white !important;
+}
+
+.edit-button {
+  background-color: orange !important;
+}
+
+.next-button {
+  background: #4d94ff !important;
+  border-color: #4d94ff !important;
+}
+
+.back-button,
+.prev-button {
+  background: #4d94ff !important;
+  border-color: #4d94ff !important;
+  color: white !important
+}
+
+.cancel-button {
+  background: red !important;
+  border-color: red !important;
+}
+
+/*  */
+.screen-title {
+  color: darkblue;
+  padding: 1rem;
+  margin: auto;
+  justify-content: center;
+}
+
+/* Table */
+#tableList td,
+#tableList th {
+  /* border: 1px solid#343a405c !important; */
+  padding: 7px !important;
+
+}
+
+#tableList tr:nth-child(odd) {
+  background-color: #cfe0e8;
+}
+
+#tableList tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#tableList tr:hover {
+  background-color: #ddd;
+}
+
+#tableList th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  color: white;
+}
+
+thead {
+  background-color: #567ece !important;
+  color: white;
+  text-align: center !important;
+  text-transform: capitalize !important;
+}
+
+td {
+  /* text-align: center !important; */
+}
+
+table.table-bordered {
+  border: 1px solid white !important;
+}
+
+table.table-bordered>thead>tr>th {
+  border: 1px solid white !important;
+  color: white;
+}
+
+table.table-bordered>tbody>tr>td {
+  border: 1px solid white !important;
+}
+
+
+.table:not(.table-sm) thead th {
+  background-color: rgb(9 48 110) !important;
+}
+
+#tableList td,
+#tableList th {
+  /* border: 1px solid#343a405c !important; */
+  padding: 8px !important;
+  word-break: break-word !important;
+}
+
+#tableList_paginate {
+  float: right !important;
+}

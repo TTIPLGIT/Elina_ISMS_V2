@@ -1,0 +1,1943 @@
+[2025-11-18 08:43:05] PROD.INFO: email  
+[2025-11-18 09:35:10] PROD.INFO: email  
+[2025-11-18 09:38:17] PROD.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\app\\Http\\Controllers\\AuthController.php:569)
+[stacktrace]
+#0 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\app\\Http\\Controllers\\AuthController.php(569): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Attempt to read...', 'C:\\\\Apache24\\\\htd...', 569)
+#1 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php(54): App\\Http\\Controllers\\AuthController->logout()
+#2 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(45): Illuminate\\Routing\\Controller->callAction('logout', Array)
+#3 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(261): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\AuthController), 'logout')
+#4 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(205): Illuminate\\Routing\\Route->runController()
+#5 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(721): Illuminate\\Routing\\Route->run()
+#6 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(128): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#7 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\fruitcake\\laravel-cors\\src\\HandleCors.php(52): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#8 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Fruitcake\\Cors\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#9 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#10 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#11 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php(127): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#12 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php(93): Illuminate\\Routing\\Middleware\\ThrottleRequests->handleRequest(Object(Illuminate\\Http\\Request), Object(Closure), Array)
+#13 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php(55): Illuminate\\Routing\\Middleware\\ThrottleRequests->handleRequestUsingNamedLimiter(Object(Illuminate\\Http\\Request), Object(Closure), 'api', Object(Closure))
+#14 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Illuminate\\Routing\\Middleware\\ThrottleRequests->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'api')
+#15 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(103): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#16 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(719): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#17 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(698): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#18 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(662): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#19 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(651): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#20 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(167): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#21 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(128): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#22 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#23 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#24 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#25 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#26 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#27 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#28 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#30 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#31 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#32 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\fruitcake\\laravel-cors\\src\\HandleCors.php(52): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#33 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Fruitcake\\Cors\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#34 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\fideloper\\proxy\\src\\TrustProxies.php(57): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#35 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Fideloper\\Proxy\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#36 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\app\\Http\\Middleware\\corsMiddleware.php(19): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#37 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): App\\Http\\Middleware\\corsMiddleware->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#38 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(103): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#39 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(142): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#40 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(111): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#41 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\public\\index.php(51): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#42 {main}
+"} 
+[2025-11-18 09:38:51] PROD.ERROR: array (
+  0 => 
+  (object) array(
+     'id' => 299,
+     'name' => 'Aathish',
+     'email' => 'elinaiscordinator1@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$QqUJHp.zZwa6wyIMJjAOn.e7k.572sXV7y/cjmMUmtbtr5lxIQp8i',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => '1,4',
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => '<p>Mrs.Narmatha</p>
+<p>Special educator</p>
+<p>IS-Coordinator</p>
+<p>Elina Advisory and referral center</p>
+<p>Chennai-97</p>',
+     'user_role_id' => 487,
+     'user_id' => 299,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+  1 => 
+  (object) array(
+     'id' => 300,
+     'name' => 'Abirami',
+     'email' => 'elinaiscordinator2@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$Zkq7PjvxCkXyNDkTh3vbL.sTls2osjF7j10gbmaEtJvRshA1VYo7i',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => '<p>Mrs.Malini</p>
+<p>Special educator</p>
+<p>IS-Coordinator</p>
+<p>Elina Advisory and referral center</p>
+<p>Chennai-97</p>',
+     'user_role_id' => 190,
+     'user_id' => 300,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+  2 => 
+  (object) array(
+     'id' => 658,
+     'name' => 'testiscoordinator1',
+     'email' => 'arynemerald@livinitlarge.net',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$UkDyMH9512MqIkdGrDxwAO01vTkT20AIXaLtE3QDQvGqrByoBk7Qa',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 534,
+     'user_id' => 658,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+  3 => 
+  (object) array(
+     'id' => 659,
+     'name' => 'testiscoordinator2',
+     'email' => '875claudina@tiffincrane.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$hz05Bpb7ip/dpyCL0ST4HeW7m6Nck6JgkNJgrrz9f13cWxp3rQ0mW',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 1,
+     'additional_details' => NULL,
+     'user_role_id' => 535,
+     'user_id' => 659,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+  4 => 
+  (object) array(
+     'id' => 687,
+     'name' => 'Narmatha',
+     'email' => 'narmathavinodh1011@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$F1tjDH8ywbZyHi1ZqKDE7eQB/SMDeoXSpON8kVxGY2HFKSYtNnLy.',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 563,
+     'user_id' => 687,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+  5 => 
+  (object) array(
+     'id' => 688,
+     'name' => 'Aparna',
+     'email' => 'aparnaismanager@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$wDdY7hMhB5mUj.Vd2wu6JO06cu22C1nR1MQ./TQIVWqyr/K7.p5bi',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 564,
+     'user_id' => 688,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+)  
+[2025-11-18 09:38:51] PROD.ERROR: array (
+  0 => 
+  (object) array(
+     'id' => 299,
+     'name' => 'Aathish',
+     'email' => 'elinaiscordinator1@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$QqUJHp.zZwa6wyIMJjAOn.e7k.572sXV7y/cjmMUmtbtr5lxIQp8i',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => '1,4',
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => '<p>Mrs.Narmatha</p>
+<p>Special educator</p>
+<p>IS-Coordinator</p>
+<p>Elina Advisory and referral center</p>
+<p>Chennai-97</p>',
+     'user_role_id' => 487,
+     'user_id' => 299,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 1,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/033',
+           'child_id' => 'CH/2025/033',
+           'child_name' => 'Rockesh',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/039',
+           'child_id' => 'CH/2025/039',
+           'child_name' => 'John Victor',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/039',
+           'child_name' => 'John Victor',
+           'current_status' => 'Activity Initiated',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+  1 => 
+  (object) array(
+     'id' => 300,
+     'name' => 'Abirami',
+     'email' => 'elinaiscordinator2@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$Zkq7PjvxCkXyNDkTh3vbL.sTls2osjF7j10gbmaEtJvRshA1VYo7i',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => '<p>Mrs.Malini</p>
+<p>Special educator</p>
+<p>IS-Coordinator</p>
+<p>Elina Advisory and referral center</p>
+<p>Chennai-97</p>',
+     'user_role_id' => 190,
+     'user_id' => 300,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 1,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/033',
+           'child_id' => 'CH/2025/033',
+           'child_name' => 'Rockesh',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/039',
+           'child_id' => 'CH/2025/039',
+           'child_name' => 'John Victor',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+  2 => 
+  (object) array(
+     'id' => 658,
+     'name' => 'testiscoordinator1',
+     'email' => 'arynemerald@livinitlarge.net',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$UkDyMH9512MqIkdGrDxwAO01vTkT20AIXaLtE3QDQvGqrByoBk7Qa',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 534,
+     'user_id' => 658,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 0,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+  3 => 
+  (object) array(
+     'id' => 659,
+     'name' => 'testiscoordinator2',
+     'email' => '875claudina@tiffincrane.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$hz05Bpb7ip/dpyCL0ST4HeW7m6Nck6JgkNJgrrz9f13cWxp3rQ0mW',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 1,
+     'additional_details' => NULL,
+     'user_role_id' => 535,
+     'user_id' => 659,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 1,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/036',
+           'child_id' => 'CH/2025/036',
+           'child_name' => 'Kevin',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+  4 => 
+  (object) array(
+     'id' => 687,
+     'name' => 'Narmatha',
+     'email' => 'narmathavinodh1011@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$F1tjDH8ywbZyHi1ZqKDE7eQB/SMDeoXSpON8kVxGY2HFKSYtNnLy.',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 563,
+     'user_id' => 687,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 2,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/034',
+           'child_id' => 'CH/2025/034',
+           'child_name' => 'Vedhika',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/037',
+           'child_id' => 'CH/2025/037',
+           'child_name' => 'Anand',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/034',
+           'child_name' => 'Vedhika',
+           'current_status' => 'Activity Initiated',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/037',
+           'child_name' => 'Anand',
+           'current_status' => 'Completed',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+  5 => 
+  (object) array(
+     'id' => 688,
+     'name' => 'Aparna',
+     'email' => 'aparnaismanager@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$wDdY7hMhB5mUj.Vd2wu6JO06cu22C1nR1MQ./TQIVWqyr/K7.p5bi',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 564,
+     'user_id' => 688,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 3,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/034',
+           'child_id' => 'CH/2025/034',
+           'child_name' => 'Vedhika',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/036',
+           'child_id' => 'CH/2025/036',
+           'child_name' => 'Kevin',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        2 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/037',
+           'child_id' => 'CH/2025/037',
+           'child_name' => 'Anand',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/036',
+           'child_name' => 'Kevin',
+           'current_status' => 'Recommendation Report Sent',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+)  
+[2025-11-18 09:45:34] PROD.ERROR: array (
+  0 => 
+  (object) array(
+     'id' => 299,
+     'name' => 'Aathish',
+     'email' => 'elinaiscordinator1@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$QqUJHp.zZwa6wyIMJjAOn.e7k.572sXV7y/cjmMUmtbtr5lxIQp8i',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => '1,4',
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => '<p>Mrs.Narmatha</p>
+<p>Special educator</p>
+<p>IS-Coordinator</p>
+<p>Elina Advisory and referral center</p>
+<p>Chennai-97</p>',
+     'user_role_id' => 487,
+     'user_id' => 299,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+  1 => 
+  (object) array(
+     'id' => 300,
+     'name' => 'Abirami',
+     'email' => 'elinaiscordinator2@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$Zkq7PjvxCkXyNDkTh3vbL.sTls2osjF7j10gbmaEtJvRshA1VYo7i',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => '<p>Mrs.Malini</p>
+<p>Special educator</p>
+<p>IS-Coordinator</p>
+<p>Elina Advisory and referral center</p>
+<p>Chennai-97</p>',
+     'user_role_id' => 190,
+     'user_id' => 300,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+  2 => 
+  (object) array(
+     'id' => 658,
+     'name' => 'testiscoordinator1',
+     'email' => 'arynemerald@livinitlarge.net',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$UkDyMH9512MqIkdGrDxwAO01vTkT20AIXaLtE3QDQvGqrByoBk7Qa',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 534,
+     'user_id' => 658,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+  3 => 
+  (object) array(
+     'id' => 659,
+     'name' => 'testiscoordinator2',
+     'email' => '875claudina@tiffincrane.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$hz05Bpb7ip/dpyCL0ST4HeW7m6Nck6JgkNJgrrz9f13cWxp3rQ0mW',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 1,
+     'additional_details' => NULL,
+     'user_role_id' => 535,
+     'user_id' => 659,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+  4 => 
+  (object) array(
+     'id' => 687,
+     'name' => 'Narmatha',
+     'email' => 'narmathavinodh1011@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$F1tjDH8ywbZyHi1ZqKDE7eQB/SMDeoXSpON8kVxGY2HFKSYtNnLy.',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 563,
+     'user_id' => 687,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+  5 => 
+  (object) array(
+     'id' => 688,
+     'name' => 'Aparna',
+     'email' => 'aparnaismanager@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$wDdY7hMhB5mUj.Vd2wu6JO06cu22C1nR1MQ./TQIVWqyr/K7.p5bi',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 564,
+     'user_id' => 688,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+)  
+[2025-11-18 09:45:34] PROD.ERROR: array (
+  0 => 
+  (object) array(
+     'id' => 299,
+     'name' => 'Aathish',
+     'email' => 'elinaiscordinator1@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$QqUJHp.zZwa6wyIMJjAOn.e7k.572sXV7y/cjmMUmtbtr5lxIQp8i',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => '1,4',
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => '<p>Mrs.Narmatha</p>
+<p>Special educator</p>
+<p>IS-Coordinator</p>
+<p>Elina Advisory and referral center</p>
+<p>Chennai-97</p>',
+     'user_role_id' => 487,
+     'user_id' => 299,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 1,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/033',
+           'child_id' => 'CH/2025/033',
+           'child_name' => 'Rockesh',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/039',
+           'child_id' => 'CH/2025/039',
+           'child_name' => 'John Victor',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/039',
+           'child_name' => 'John Victor',
+           'current_status' => 'Activity Initiated',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+  1 => 
+  (object) array(
+     'id' => 300,
+     'name' => 'Abirami',
+     'email' => 'elinaiscordinator2@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$Zkq7PjvxCkXyNDkTh3vbL.sTls2osjF7j10gbmaEtJvRshA1VYo7i',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => '<p>Mrs.Malini</p>
+<p>Special educator</p>
+<p>IS-Coordinator</p>
+<p>Elina Advisory and referral center</p>
+<p>Chennai-97</p>',
+     'user_role_id' => 190,
+     'user_id' => 300,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 1,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/033',
+           'child_id' => 'CH/2025/033',
+           'child_name' => 'Rockesh',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/039',
+           'child_id' => 'CH/2025/039',
+           'child_name' => 'John Victor',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+  2 => 
+  (object) array(
+     'id' => 658,
+     'name' => 'testiscoordinator1',
+     'email' => 'arynemerald@livinitlarge.net',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$UkDyMH9512MqIkdGrDxwAO01vTkT20AIXaLtE3QDQvGqrByoBk7Qa',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 534,
+     'user_id' => 658,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 0,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+  3 => 
+  (object) array(
+     'id' => 659,
+     'name' => 'testiscoordinator2',
+     'email' => '875claudina@tiffincrane.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$hz05Bpb7ip/dpyCL0ST4HeW7m6Nck6JgkNJgrrz9f13cWxp3rQ0mW',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 1,
+     'additional_details' => NULL,
+     'user_role_id' => 535,
+     'user_id' => 659,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 1,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/036',
+           'child_id' => 'CH/2025/036',
+           'child_name' => 'Kevin',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+  4 => 
+  (object) array(
+     'id' => 687,
+     'name' => 'Narmatha',
+     'email' => 'narmathavinodh1011@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$F1tjDH8ywbZyHi1ZqKDE7eQB/SMDeoXSpON8kVxGY2HFKSYtNnLy.',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 563,
+     'user_id' => 687,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 2,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/034',
+           'child_id' => 'CH/2025/034',
+           'child_name' => 'Vedhika',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/037',
+           'child_id' => 'CH/2025/037',
+           'child_name' => 'Anand',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/034',
+           'child_name' => 'Vedhika',
+           'current_status' => 'Activity Initiated',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/037',
+           'child_name' => 'Anand',
+           'current_status' => 'Completed',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+  5 => 
+  (object) array(
+     'id' => 688,
+     'name' => 'Aparna',
+     'email' => 'aparnaismanager@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$wDdY7hMhB5mUj.Vd2wu6JO06cu22C1nR1MQ./TQIVWqyr/K7.p5bi',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 564,
+     'user_id' => 688,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 3,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/034',
+           'child_id' => 'CH/2025/034',
+           'child_name' => 'Vedhika',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/036',
+           'child_id' => 'CH/2025/036',
+           'child_name' => 'Kevin',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        2 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/037',
+           'child_id' => 'CH/2025/037',
+           'child_name' => 'Anand',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/11/036',
+           'child_name' => 'Kevin',
+           'current_status' => 'Recommendation Report Sent',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+)  
+[2025-11-18 09:45:51] PROD.ERROR: array (
+  'requestData' => 'eyJpdiI6IkN3Z2tqUHRpWUVPNnhraksxb2kybWc9PSIsInZhbHVlIjoibGQxRDJVWVB4ZmsrR3FQQy9SbWd5TW5jbkFncmV5NHVPMy9HWkxUUi81NUpMenFPOUVxaUt6Q2xrUFB3d1ZWUlQ0RVY0VXp2bkNhY04wYlVXV2NjYys4TThtUUhJbG53eUYvRXRoeDU3SVc4NWtzclFUZDZ1KzVsU1lGKzNtdTJTL1dnZmJsVVI4Y1RNU2pQSzRwc0lwaTlINy9PdEl0S3RJUEtjUDUvNTRjSTRyeTNCWGVPbFJYYVJXaTlBZlN0TU1ZNkpnbDhCamdCL1RvY0R4UVNVbThNMW0ramxyblozQ2RhNmR6UHlWT3luWTFIL1poc2N0YTVDc1BMb1BDMmI5bm1iRmZ0bmZnQk9BVUJxNllka0oyeTVwT3RsRS9BNWhwNHdXblQ2OU9CU3FzVWc5SkJuNyt4clJ2RlRaOEp3Y3hFbnVZejNvTmYvQVNoVnV1c3JiTEM0ZzJaVTV5ZWU0SzhienlFKzB6YXpsV0xmQVJLYWx4WmRQamkxcDEvZ1Q3akt4T0lkdkZvS3VhU1dSalNkZz09IiwibWFjIjoiMzVkYzliZGVmYzkxMzUxNjNmNGYxZjBkODUxNDBhNDY0M2M2YmRhYzMyZTMxMzg3Mjc3MzkwYjI0YzRmMTVjYyIsInRhZyI6IiJ9',
+)  
+[2025-11-18 09:45:51] PROD.ERROR: in  
+[2025-11-18 09:45:51] PROD.ERROR: narmathavinodh1011@gmail.com  
+[2025-11-18 09:45:51] PROD.ERROR: itservices@talentakeaways.com  
+[2025-11-18 09:45:51] PROD.ERROR: hitted the controller  
+[2025-11-18 09:45:51] PROD.ERROR: array (
+  'mailSubject' => 'IS-Coordinator Allocation',
+  'child_name' => 'Rishi',
+  'is_coordinator1' => 'Narmatha',
+  'is_coordinator2' => 'Aparna',
+  'child_dob' => '12/07/2020',
+  'parentname' => 'Priyan',
+  'email' => 'elinatest11@2200freefonts.com',
+  'contact_no' => '9876543264',
+)  
+[2025-11-18 09:45:55] PROD.ERROR: in1  
+[2025-11-18 09:45:55] PROD.ERROR: in2  
+[2025-11-18 09:45:55] PROD.ERROR: aparnaismanager@gmail.com  
+[2025-11-18 09:45:55] PROD.ERROR: itservices@talentakeaways.com  
+[2025-11-18 09:45:55] PROD.ERROR: hitted the controller  
+[2025-11-18 09:45:55] PROD.ERROR: array (
+  'mailSubject' => 'IS-Coordinator Allocation',
+  'child_name' => 'Rishi',
+  'is_coordinator1' => 'Narmatha',
+  'is_coordinator2' => 'Aparna',
+  'child_dob' => '12/07/2020',
+  'parentname' => 'Priyan',
+  'email' => 'elinatest11@2200freefonts.com',
+  'contact_no' => '9876543264',
+)  
+[2025-11-18 09:45:58] PROD.ERROR: in  
+[2025-11-18 10:17:39] PROD.ERROR: bhj  
+[2025-11-18 10:17:39] PROD.ERROR: array (
+  'user_id' => 687,
+  'id' => 20,
+  'requestData' => 'eyJpdiI6IllDamExT3lkb1pBaTB4dk1KQ0t1L3c9PSIsInZhbHVlIjoic2RqMXRNaE53emw2ZUVsWkVmWEVvai8rQ1lCRW5MNFR1ZWNCaHFTcm8zSk0xV3NubzQ2U2xCQXpJSkQzUGtZMCIsIm1hYyI6Ijk2MWU0YWUzZmJjN2FkZGMwOTdhZmFiOWIwZDdlNjg4OTUyZmI3ZTU5OGQyNGNjYmExMDFhZTlhZTE0NWU1NGMiLCJ0YWciOiIifQ==',
+)  
+[2025-11-18 10:17:39] PROD.ERROR: array (
+  'enrollment_details' => 
+  array (
+  ),
+  'iscoordinators' => 
+  array (
+    0 => 
+    (object) array(
+       'id' => 299,
+       'name' => 'Aathish',
+       'email' => 'elinaiscordinator1@gmail.com',
+       'user_type' => 'AD',
+       'email_verified_at' => NULL,
+       'password' => '$2y$10$QqUJHp.zZwa6wyIMJjAOn.e7k.572sXV7y/cjmMUmtbtr5lxIQp8i',
+       'workspace_email' => NULL,
+       'remember_token' => NULL,
+       'array_dashboard_list' => '',
+       'array_roles' => '5',
+       'created_at' => NULL,
+       'updated_at' => NULL,
+       'phone_number' => NULL,
+       'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+       'designation_id' => 3,
+       'active_flag' => 0,
+       'project_role_id' => NULL,
+       'delete_status' => 0,
+       'roles' => '1,4',
+       'mobile_no' => NULL,
+       'otp' => '1234',
+       'dor' => NULL,
+       'ep' => NULL,
+       'profile_path' => NULL,
+       'online' => 0,
+       'additional_details' => '<p>Mrs.Narmatha</p>
+<p>Special educator</p>
+<p>IS-Coordinator</p>
+<p>Elina Advisory and referral center</p>
+<p>Chennai-97</p>',
+       'user_role_id' => 487,
+       'user_id' => 299,
+       'role_id' => 5,
+       'created_by' => 68,
+       'created_date' => '2022-08-09',
+       'last_modified_by' => 136,
+       'last_modified_date' => '2024-05-26',
+       'role_name' => 'IS Coordinator',
+    ),
+    1 => 
+    (object) array(
+       'id' => 300,
+       'name' => 'Abirami',
+       'email' => 'elinaiscordinator2@gmail.com',
+       'user_type' => 'AD',
+       'email_verified_at' => NULL,
+       'password' => '$2y$10$Zkq7PjvxCkXyNDkTh3vbL.sTls2osjF7j10gbmaEtJvRshA1VYo7i',
+       'workspace_email' => NULL,
+       'remember_token' => NULL,
+       'array_dashboard_list' => '1',
+       'array_roles' => '5',
+       'created_at' => NULL,
+       'updated_at' => NULL,
+       'phone_number' => NULL,
+       'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+       'designation_id' => 3,
+       'active_flag' => 0,
+       'project_role_id' => NULL,
+       'delete_status' => 0,
+       'roles' => NULL,
+       'mobile_no' => NULL,
+       'otp' => '1234',
+       'dor' => NULL,
+       'ep' => NULL,
+       'profile_path' => NULL,
+       'online' => 0,
+       'additional_details' => '<p>Mrs.Malini</p>
+<p>Special educator</p>
+<p>IS-Coordinator</p>
+<p>Elina Advisory and referral center</p>
+<p>Chennai-97</p>',
+       'user_role_id' => 190,
+       'user_id' => 300,
+       'role_id' => 5,
+       'created_by' => 68,
+       'created_date' => '2022-08-09',
+       'last_modified_by' => 136,
+       'last_modified_date' => '2024-05-26',
+       'role_name' => 'IS Coordinator',
+    ),
+    2 => 
+    (object) array(
+       'id' => 658,
+       'name' => 'testiscoordinator1',
+       'email' => 'arynemerald@livinitlarge.net',
+       'user_type' => 'AD',
+       'email_verified_at' => NULL,
+       'password' => '$2y$10$UkDyMH9512MqIkdGrDxwAO01vTkT20AIXaLtE3QDQvGqrByoBk7Qa',
+       'workspace_email' => NULL,
+       'remember_token' => NULL,
+       'array_dashboard_list' => '1,2,3,4,5,6,7',
+       'array_roles' => '5',
+       'created_at' => NULL,
+       'updated_at' => NULL,
+       'phone_number' => NULL,
+       'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+       'designation_id' => 3,
+       'active_flag' => 0,
+       'project_role_id' => NULL,
+       'delete_status' => 0,
+       'roles' => NULL,
+       'mobile_no' => NULL,
+       'otp' => '1234',
+       'dor' => NULL,
+       'ep' => NULL,
+       'profile_path' => NULL,
+       'online' => 0,
+       'additional_details' => NULL,
+       'user_role_id' => 534,
+       'user_id' => 658,
+       'role_id' => 5,
+       'created_by' => 68,
+       'created_date' => '2022-08-09',
+       'last_modified_by' => 136,
+       'last_modified_date' => '2024-05-26',
+       'role_name' => 'IS Coordinator',
+    ),
+    3 => 
+    (object) array(
+       'id' => 659,
+       'name' => 'testiscoordinator2',
+       'email' => '875claudina@tiffincrane.com',
+       'user_type' => 'AD',
+       'email_verified_at' => NULL,
+       'password' => '$2y$10$hz05Bpb7ip/dpyCL0ST4HeW7m6Nck6JgkNJgrrz9f13cWxp3rQ0mW',
+       'workspace_email' => NULL,
+       'remember_token' => NULL,
+       'array_dashboard_list' => '1,2,3,4,5,6,7',
+       'array_roles' => '5',
+       'created_at' => NULL,
+       'updated_at' => NULL,
+       'phone_number' => NULL,
+       'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+       'designation_id' => 3,
+       'active_flag' => 0,
+       'project_role_id' => NULL,
+       'delete_status' => 0,
+       'roles' => NULL,
+       'mobile_no' => NULL,
+       'otp' => '1234',
+       'dor' => NULL,
+       'ep' => NULL,
+       'profile_path' => NULL,
+       'online' => 1,
+       'additional_details' => NULL,
+       'user_role_id' => 535,
+       'user_id' => 659,
+       'role_id' => 5,
+       'created_by' => 68,
+       'created_date' => '2022-08-09',
+       'last_modified_by' => 136,
+       'last_modified_date' => '2024-05-26',
+       'role_name' => 'IS Coordinator',
+    ),
+    4 => 
+    (object) array(
+       'id' => 687,
+       'name' => 'Narmatha',
+       'email' => 'narmathavinodh1011@gmail.com',
+       'user_type' => 'AD',
+       'email_verified_at' => NULL,
+       'password' => '$2y$10$F1tjDH8ywbZyHi1ZqKDE7eQB/SMDeoXSpON8kVxGY2HFKSYtNnLy.',
+       'workspace_email' => NULL,
+       'remember_token' => NULL,
+       'array_dashboard_list' => '1,2,3,4,5,6,7',
+       'array_roles' => '5',
+       'created_at' => NULL,
+       'updated_at' => NULL,
+       'phone_number' => NULL,
+       'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+       'designation_id' => 3,
+       'active_flag' => 0,
+       'project_role_id' => NULL,
+       'delete_status' => 0,
+       'roles' => NULL,
+       'mobile_no' => NULL,
+       'otp' => '1234',
+       'dor' => NULL,
+       'ep' => NULL,
+       'profile_path' => NULL,
+       'online' => 1,
+       'additional_details' => NULL,
+       'user_role_id' => 563,
+       'user_id' => 687,
+       'role_id' => 5,
+       'created_by' => 68,
+       'created_date' => '2022-08-09',
+       'last_modified_by' => 136,
+       'last_modified_date' => '2024-05-26',
+       'role_name' => 'IS Coordinator',
+    ),
+    5 => 
+    (object) array(
+       'id' => 688,
+       'name' => 'Aparna',
+       'email' => 'aparnaismanager@gmail.com',
+       'user_type' => 'AD',
+       'email_verified_at' => NULL,
+       'password' => '$2y$10$wDdY7hMhB5mUj.Vd2wu6JO06cu22C1nR1MQ./TQIVWqyr/K7.p5bi',
+       'workspace_email' => NULL,
+       'remember_token' => NULL,
+       'array_dashboard_list' => '1,2,3,4,5,6,7',
+       'array_roles' => '5',
+       'created_at' => NULL,
+       'updated_at' => NULL,
+       'phone_number' => NULL,
+       'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+       'designation_id' => 3,
+       'active_flag' => 0,
+       'project_role_id' => NULL,
+       'delete_status' => 0,
+       'roles' => NULL,
+       'mobile_no' => NULL,
+       'otp' => '1234',
+       'dor' => NULL,
+       'ep' => NULL,
+       'profile_path' => NULL,
+       'online' => 0,
+       'additional_details' => NULL,
+       'user_role_id' => 564,
+       'user_id' => 688,
+       'role_id' => 5,
+       'created_by' => 68,
+       'created_date' => '2022-08-09',
+       'last_modified_by' => 136,
+       'last_modified_date' => '2024-05-26',
+       'role_name' => 'IS Coordinator',
+    ),
+  ),
+)  
+[2025-11-18 10:19:20] PROD.ERROR: ds  
+[2025-11-18 10:19:20] PROD.ERROR: array (
+  'meeting_startdate1' => '19/11/2025',
+  'meeting_starttime1' => '10:30',
+  'meeting_endtime1' => '11:30',
+  'meeting_startdate2' => '20/11/2025',
+  'meeting_starttime2' => '10:30',
+  'meeting_endtime2' => '11:30',
+  'is_coo1' => '687',
+  'is_coo2' => '688',
+  'enrollment_id' => '42',
+)  
+[2025-11-18 10:19:20] PROD.ERROR: array (
+  'meeting_startdate1' => '19/11/2025',
+  'meeting_starttime1' => '10:30',
+  'meeting_endtime1' => '11:30',
+  'meeting_startdate2' => '20/11/2025',
+  'meeting_starttime2' => '10:30',
+  'meeting_endtime2' => '11:30',
+  'is_coo1' => '687',
+  'is_coo2' => '688',
+  'enrollment_id' => '42',
+)  
+[2025-11-18 10:19:20] PROD.ERROR: array (
+)  
+[2025-11-18 10:19:31] PROD.ERROR: ds  
+[2025-11-18 10:19:31] PROD.ERROR: array (
+  'meeting_startdate1' => '19/11/2025',
+  'meeting_starttime1' => '10:30:00',
+  'meeting_endtime1' => '11:30:00',
+  'meeting_startdate2' => '20/11/2025',
+  'meeting_starttime2' => '10:30:00',
+  'meeting_endtime2' => '11:30:00',
+  'is_coo1' => '687',
+  'is_coo2' => '688',
+  'enrollment_id' => '42',
+)  
+[2025-11-18 10:19:31] PROD.ERROR: array (
+  'meeting_startdate1' => '19/11/2025',
+  'meeting_starttime1' => '10:30:00',
+  'meeting_endtime1' => '11:30:00',
+  'meeting_startdate2' => '20/11/2025',
+  'meeting_starttime2' => '10:30:00',
+  'meeting_endtime2' => '11:30:00',
+  'is_coo1' => '687',
+  'is_coo2' => '688',
+  'enrollment_id' => '42',
+)  
+[2025-11-18 10:19:31] PROD.ERROR: array (
+)  
+[2025-11-18 10:19:58] PROD.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\app\\Http\\Controllers\\AuthController.php:569)
+[stacktrace]
+#0 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\app\\Http\\Controllers\\AuthController.php(569): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Attempt to read...', 'C:\\\\Apache24\\\\htd...', 569)
+#1 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php(54): App\\Http\\Controllers\\AuthController->logout()
+#2 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(45): Illuminate\\Routing\\Controller->callAction('logout', Array)
+#3 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(261): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\AuthController), 'logout')
+#4 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(205): Illuminate\\Routing\\Route->runController()
+#5 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(721): Illuminate\\Routing\\Route->run()
+#6 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(128): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#7 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\fruitcake\\laravel-cors\\src\\HandleCors.php(52): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#8 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Fruitcake\\Cors\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#9 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#10 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#11 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php(127): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#12 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php(93): Illuminate\\Routing\\Middleware\\ThrottleRequests->handleRequest(Object(Illuminate\\Http\\Request), Object(Closure), Array)
+#13 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php(55): Illuminate\\Routing\\Middleware\\ThrottleRequests->handleRequestUsingNamedLimiter(Object(Illuminate\\Http\\Request), Object(Closure), 'api', Object(Closure))
+#14 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Illuminate\\Routing\\Middleware\\ThrottleRequests->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'api')
+#15 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(103): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#16 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(719): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#17 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(698): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#18 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(662): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#19 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(651): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#20 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(167): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#21 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(128): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#22 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#23 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#24 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#25 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#26 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#27 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#28 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#30 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#31 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#32 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\fruitcake\\laravel-cors\\src\\HandleCors.php(52): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#33 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Fruitcake\\Cors\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#34 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\fideloper\\proxy\\src\\TrustProxies.php(57): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#35 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Fideloper\\Proxy\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#36 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\app\\Http\\Middleware\\corsMiddleware.php(19): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#37 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): App\\Http\\Middleware\\corsMiddleware->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#38 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(103): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#39 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(142): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#40 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(111): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#41 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\public\\index.php(51): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#42 {main}
+"} 
+[2025-11-18 10:51:41] PROD.ERROR: array (
+  0 => 
+  (object) array(
+     'role_name' => 'IS Coordinator',
+  ),
+)  
+[2025-11-18 10:51:41] PROD.ERROR: 6  
+[2025-11-18 10:52:42] PROD.ERROR: 43  
+[2025-11-18 10:52:42] PROD.ERROR: 44  
+[2025-11-18 10:52:42] PROD.ERROR: 45  
+[2025-11-18 10:52:42] PROD.ERROR: 46  
+[2025-11-18 10:52:42] PROD.ERROR: 47  
+[2025-11-18 10:52:42] PROD.ERROR: 48  
+[2025-11-18 10:52:42] PROD.ERROR: 49  
+[2025-11-18 10:52:42] PROD.ERROR: 50  
+[2025-11-18 10:52:42] PROD.ERROR: 51  
+[2025-11-18 10:52:42] PROD.ERROR: 52  
+[2025-11-18 10:52:42] PROD.ERROR: 53  
+[2025-11-18 10:52:42] PROD.ERROR: 54  
+[2025-11-18 10:52:42] PROD.ERROR: 55  
+[2025-11-18 10:52:42] PROD.ERROR: 56  
+[2025-11-18 10:52:42] PROD.ERROR: 57  
+[2025-11-18 10:52:42] PROD.ERROR: 58  
+[2025-11-18 10:52:42] PROD.ERROR: 59  
+[2025-11-18 10:52:42] PROD.ERROR: 60  
+[2025-11-18 10:52:42] PROD.ERROR: 61  
+[2025-11-18 10:52:42] PROD.ERROR: 62  
+[2025-11-18 10:52:42] PROD.ERROR: 78  
+[2025-11-18 10:52:42] PROD.ERROR: 79  
+[2025-11-18 10:52:42] PROD.ERROR: 80  
+[2025-11-18 10:52:42] PROD.ERROR: 81  
+[2025-11-18 10:52:43] PROD.ERROR: 82  
+[2025-11-18 10:52:43] PROD.ERROR: 83  
+[2025-11-18 10:52:43] PROD.ERROR: 84  
+[2025-11-18 10:52:43] PROD.ERROR: 85  
+[2025-11-18 10:52:43] PROD.ERROR: 86  
+[2025-11-18 10:52:43] PROD.ERROR: 87  
+[2025-11-18 10:52:43] PROD.ERROR: 88  
+[2025-11-18 10:52:43] PROD.ERROR: 89  
+[2025-11-18 10:52:43] PROD.ERROR: 90  
+[2025-11-18 10:52:43] PROD.ERROR: 91  
+[2025-11-18 10:52:43] PROD.ERROR: 92  
+[2025-11-18 10:52:43] PROD.ERROR: 98  
+[2025-11-18 10:52:43] PROD.ERROR: 99  
+[2025-11-18 10:52:43] PROD.ERROR: 100  
+[2025-11-18 10:52:43] PROD.ERROR: 101  
+[2025-11-18 10:52:43] PROD.ERROR: 102  
+[2025-11-18 10:52:43] PROD.ERROR: 218  
+[2025-11-18 10:52:43] PROD.ERROR: 389  
+[2025-11-18 10:52:43] PROD.ERROR: 103  
+[2025-11-18 10:52:43] PROD.ERROR: 104  
+[2025-11-18 10:52:43] PROD.ERROR: 105  
+[2025-11-18 10:52:43] PROD.ERROR: 106  
+[2025-11-18 10:52:43] PROD.ERROR: 107  
+[2025-11-18 10:52:43] PROD.ERROR: 108  
+[2025-11-18 10:52:43] PROD.ERROR: 109  
+[2025-11-18 10:52:43] PROD.ERROR: 110  
+[2025-11-18 10:52:43] PROD.ERROR: 111  
+[2025-11-18 10:52:43] PROD.ERROR: 112  
+[2025-11-18 10:52:43] PROD.ERROR: 362  
+[2025-11-18 10:52:43] PROD.ERROR: 363  
+[2025-11-18 10:52:43] PROD.ERROR: 364  
+[2025-11-18 10:52:43] PROD.ERROR: 365  
+[2025-11-18 10:52:43] PROD.ERROR: 366  
+[2025-11-18 10:52:43] PROD.ERROR: 367  
+[2025-11-18 10:52:43] PROD.ERROR: 368  
+[2025-11-18 10:52:43] PROD.ERROR: 369  
+[2025-11-18 10:52:43] PROD.ERROR: 370  
+[2025-11-18 10:52:43] PROD.ERROR: 371  
+[2025-11-18 10:52:43] PROD.ERROR: 372  
+[2025-11-18 10:52:43] PROD.ERROR: 373  
+[2025-11-18 10:52:43] PROD.ERROR: 374  
+[2025-11-18 10:52:43] PROD.ERROR: 375  
+[2025-11-18 10:52:43] PROD.ERROR: 376  
+[2025-11-18 10:52:43] PROD.ERROR: 377  
+[2025-11-18 10:52:43] PROD.ERROR: 378  
+[2025-11-18 10:52:43] PROD.ERROR: 379  
+[2025-11-18 10:52:43] PROD.ERROR: 380  
+[2025-11-18 10:52:43] PROD.ERROR: 381  
+[2025-11-18 10:52:43] PROD.ERROR: 382  
+[2025-11-18 10:52:43] PROD.ERROR: 383  
+[2025-11-18 10:52:43] PROD.ERROR: 384  
+[2025-11-18 10:52:43] PROD.ERROR: 385  
+[2025-11-18 10:52:43] PROD.ERROR: 386  
+[2025-11-18 10:52:43] PROD.ERROR: 387  
+[2025-11-18 10:52:43] PROD.ERROR: 388  
+[2025-11-18 10:52:43] PROD.ERROR: 93  
+[2025-11-18 10:52:43] PROD.ERROR: 94  
+[2025-11-18 10:52:43] PROD.ERROR: 95  
+[2025-11-18 10:52:43] PROD.ERROR: 96  
+[2025-11-18 10:52:43] PROD.ERROR: 97  
+[2025-11-18 10:52:43] PROD.ERROR: 219  
+[2025-11-18 10:52:43] PROD.ERROR: 220  
+[2025-11-18 10:52:43] PROD.ERROR: 221  
+[2025-11-18 10:52:43] PROD.ERROR: 222  
+[2025-11-18 10:52:43] PROD.ERROR: 223  
+[2025-11-18 10:52:43] PROD.ERROR: 295  
+[2025-11-18 10:52:43] PROD.ERROR: 296  
+[2025-11-18 10:52:43] PROD.ERROR: 297  
+[2025-11-18 10:52:43] PROD.ERROR: 298  
+[2025-11-18 10:52:43] PROD.ERROR: 299  
+[2025-11-18 10:52:43] PROD.ERROR: 305  
+[2025-11-18 10:52:43] PROD.ERROR: 306  
+[2025-11-18 10:52:43] PROD.ERROR: 307  
+[2025-11-18 10:52:43] PROD.ERROR: 308  
+[2025-11-18 10:52:43] PROD.ERROR: 309  
+[2025-11-18 10:52:43] PROD.ERROR: 320  
+[2025-11-18 10:52:43] PROD.ERROR: 321  
+[2025-11-18 10:52:43] PROD.ERROR: 322  
+[2025-11-18 10:52:43] PROD.ERROR: 323  
+[2025-11-18 10:52:43] PROD.ERROR: 324  
+[2025-11-18 10:52:43] PROD.ERROR: 310  
+[2025-11-18 10:52:43] PROD.ERROR: 311  
+[2025-11-18 10:52:43] PROD.ERROR: 312  
+[2025-11-18 10:52:43] PROD.ERROR: 313  
+[2025-11-18 10:52:43] PROD.ERROR: 314  
+[2025-11-18 10:52:43] PROD.ERROR: 315  
+[2025-11-18 10:52:43] PROD.ERROR: 316  
+[2025-11-18 10:52:43] PROD.ERROR: 317  
+[2025-11-18 10:52:43] PROD.ERROR: 318  
+[2025-11-18 10:52:43] PROD.ERROR: 319  
+[2025-11-18 10:52:43] PROD.ERROR: 325  
+[2025-11-18 10:52:43] PROD.ERROR: 326  
+[2025-11-18 10:52:43] PROD.ERROR: 327  
+[2025-11-18 10:52:43] PROD.ERROR: 328  
+[2025-11-18 10:52:43] PROD.ERROR: 329  
+[2025-11-18 10:52:43] PROD.ERROR: 123  
+[2025-11-18 10:52:43] PROD.ERROR: 124  
+[2025-11-18 10:52:43] PROD.ERROR: 125  
+[2025-11-18 10:52:43] PROD.ERROR: 126  
+[2025-11-18 10:52:43] PROD.ERROR: 127  
+[2025-11-18 10:52:43] PROD.ERROR: 279  
+[2025-11-18 10:52:43] PROD.ERROR: 280  
+[2025-11-18 10:52:43] PROD.ERROR: 281  
+[2025-11-18 10:52:43] PROD.ERROR: 282  
+[2025-11-18 10:52:43] PROD.ERROR: 283  
+[2025-11-18 10:52:43] PROD.ERROR: 284  
+[2025-11-18 10:52:43] PROD.ERROR: 285  
+[2025-11-18 10:52:43] PROD.ERROR: 286  
+[2025-11-18 10:52:43] PROD.ERROR: 287  
+[2025-11-18 10:52:43] PROD.ERROR: 288  
+[2025-11-18 10:52:43] PROD.ERROR: 183  
+[2025-11-18 10:52:43] PROD.ERROR: 184  
+[2025-11-18 10:52:43] PROD.ERROR: 185  
+[2025-11-18 10:52:43] PROD.ERROR: 186  
+[2025-11-18 10:52:43] PROD.ERROR: 187  
+[2025-11-18 10:52:43] PROD.ERROR: 188  
+[2025-11-18 10:52:43] PROD.ERROR: 189  
+[2025-11-18 10:52:43] PROD.ERROR: 190  
+[2025-11-18 10:52:43] PROD.ERROR: 191  
+[2025-11-18 10:52:43] PROD.ERROR: 192  
+[2025-11-18 10:53:14] PROD.ERROR: array (
+  0 => 
+  (object) array(
+     'role_name' => 'IS Coordinator',
+  ),
+)  
+[2025-11-18 10:53:14] PROD.ERROR: 6  
+[2025-11-18 15:17:05] PROD.ERROR: {"ServiceMethod":"Method => Paymentcontroller => index","Exception":"Undefined array key 0"}  
+[2025-11-18 15:18:52] PROD.ERROR: Attempt to read property "id" on null {"exception":"[object] (ErrorException(code: 0): Attempt to read property \"id\" on null at C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\app\\Http\\Controllers\\AuthController.php:569)
+[stacktrace]
+#0 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\app\\Http\\Controllers\\AuthController.php(569): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Attempt to read...', 'C:\\\\Apache24\\\\htd...', 569)
+#1 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php(54): App\\Http\\Controllers\\AuthController->logout()
+#2 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(45): Illuminate\\Routing\\Controller->callAction('logout', Array)
+#3 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(261): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\AuthController), 'logout')
+#4 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(205): Illuminate\\Routing\\Route->runController()
+#5 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(721): Illuminate\\Routing\\Route->run()
+#6 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(128): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#7 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\fruitcake\\laravel-cors\\src\\HandleCors.php(52): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#8 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Fruitcake\\Cors\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#9 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#10 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#11 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php(127): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#12 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php(93): Illuminate\\Routing\\Middleware\\ThrottleRequests->handleRequest(Object(Illuminate\\Http\\Request), Object(Closure), Array)
+#13 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\ThrottleRequests.php(55): Illuminate\\Routing\\Middleware\\ThrottleRequests->handleRequestUsingNamedLimiter(Object(Illuminate\\Http\\Request), Object(Closure), 'api', Object(Closure))
+#14 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Illuminate\\Routing\\Middleware\\ThrottleRequests->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'api')
+#15 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(103): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#16 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(719): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#17 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(698): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#18 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(662): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#19 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(651): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#20 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(167): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#21 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(128): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#22 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#23 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#24 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#25 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#26 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#27 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#28 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#30 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#31 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#32 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\fruitcake\\laravel-cors\\src\\HandleCors.php(52): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#33 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Fruitcake\\Cors\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#34 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\fideloper\\proxy\\src\\TrustProxies.php(57): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#35 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): Fideloper\\Proxy\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#36 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\app\\Http\\Middleware\\corsMiddleware.php(19): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#37 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(167): App\\Http\\Middleware\\corsMiddleware->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#38 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(103): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#39 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(142): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#40 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(111): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#41 C:\\Apache24\\htdocs\\Elina ISMS\\v1\\api-isms\\public\\index.php(51): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#42 {main}
+"} 
+[2025-11-18 16:25:15] PROD.ERROR: {"ServiceMethod":"Method => ParentvideouploadController => Getmaterials","Exception":"Undefined array key 0"}  

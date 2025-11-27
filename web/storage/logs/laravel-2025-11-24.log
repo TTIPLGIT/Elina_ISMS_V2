@@ -1,0 +1,7 @@
+[2025-11-24 07:38:43] Development.ERROR: Debugbar exception: File does not exist at path C:\Apache24\htdocs\Elina ISMS\v1\web\storage\debugbar\X668b891c05e7cac723191d758b93e5eb.json.  
+[2025-11-24 07:38:49] Development.ERROR: Method => UserController => notifications: [0] "Attempt to read property "Status" on null" on line 959 of file C:\Apache24\htdocs\Elina ISMS\v1\web\app\Http\Controllers\UserController.php  
+[2025-11-24 11:07:22] Development.ERROR: Allowed memory size of 134217728 bytes exhausted (tried to allocate 15728672 bytes) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Allowed memory size of 134217728 bytes exhausted (tried to allocate 15728672 bytes) at C:\\Apache24\\htdocs\\Elina ISMS\\v1\\web\\vendor\\maximebf\\debugbar\\src\\DebugBar\\JavascriptRenderer.php:1246)
+[stacktrace]
+#0 {main}
+"} 
+[2025-11-24 12:58:45] Development.ERROR: Method => UserController => notifications: [0] "Attempt to read property "Status" on null" on line 959 of file C:\Apache24\htdocs\Elina ISMS\v1\web\app\Http\Controllers\UserController.php  

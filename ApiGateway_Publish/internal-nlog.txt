@@ -1,0 +1,8 @@
+2025-09-29 21:58:15.2451 Error FileTarget(Name=debug): Failed write to file 'C:\Apache24\htdocs\Elina ISMS\v1\ApiGateway_Publish\debug-2025-09-29.log'. Exception: System.UnauthorizedAccessException: Access to the path 'C:\Apache24\htdocs\Elina ISMS\v1\ApiGateway_Publish\debug-2025-09-29.log' is denied.
+   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at NLog.Internal.FileAppenders.BaseFileAppender.TryCreateFileStream(Boolean allowFileSharedWriting, Int32 overrideBufferSize)
+   at NLog.Internal.FileAppenders.BaseFileAppender.CreateFileStream(Boolean allowFileSharedWriting, Int32 overrideBufferSize)
+   at NLog.Internal.FileAppenders.RetryingMultiProcessFileAppender.Write(Byte[] bytes, Int32 offset, Int32 count)
+   at NLog.Targets.FileTarget.WriteToFile(String fileName, ArraySegment`1 bytes, Boolean initializedNewFile)

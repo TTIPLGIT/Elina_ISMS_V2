@@ -1,0 +1,6 @@
+2025-10-22 11:28:10.9696||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-10-22 11:56:16.7952||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-10-22 13:24:38.8983||WARN|Ocelot.Requester.DelegatingHandlerHandlerFactory|requestId: 4000017c-0000-f900-b63f-84710c7967bb, previousRequestId: no previous request id, message: ReRoute Ocelot.Values.UpstreamPathTemplate specifies use QoS but no QosHandler found in DI container. Will use not use a QosHandler, please check your setup! 
+2025-10-22 14:30:37.9973||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-10-22 14:30:39.2251||ERROR|Microsoft.AspNetCore.Server.IIS.Core.IISHttpServer|Connection ID "18230571296696042629", Request ID "40000486-0001-fd00-b63f-84710c7967bb": An unhandled exception was thrown by the application. The CancellationTokenSource has been disposed.
+2025-10-22 15:05:25.6691||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 

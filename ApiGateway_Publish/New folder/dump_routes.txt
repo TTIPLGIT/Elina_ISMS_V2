@@ -1,0 +1,168 @@
+  {
+      "DownstreamPathTemplate": "/api/Elinademo/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Elinademo/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Elinademo/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Elinademo/create",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Elinademo/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Elinademo/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Elinademo/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Elinademo/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Elinademo/completed_data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Elinademo/completed_data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Elinademo/ovmmeetingcompleted",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Elinademo/ovmmeetingcompleted",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Elinademo/ovmreport",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Elinademo/ovmreport",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Elinademo/ovmreportview",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Elinademo/ovmreportview",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Elinademo/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Elinademo/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Elinademo/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Elinademo/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Elinademo/meetinginvite",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Elinademo/meetinginvite",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Elinademo/getchilddetails/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Elinademo/getchilddetails/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },

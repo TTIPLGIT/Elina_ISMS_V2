@@ -1,0 +1,4 @@
+[2025-11-20 04:23:37] Development.ERROR: Method => UserController => notifications: [0] "Attempt to read property "Status" on null" on line 959 of file C:\Apache24\htdocs\Elina ISMS\v1\web\app\Http\Controllers\UserController.php  
+[2025-11-20 04:23:39] Development.ERROR: Method => UserController => notifications: [0] "Attempt to read property "Status" on null" on line 959 of file C:\Apache24\htdocs\Elina ISMS\v1\web\app\Http\Controllers\UserController.php  
+[2025-11-20 08:11:28] Development.ERROR: Method => UserController => notifications: [0] "Attempt to read property "Status" on null" on line 959 of file C:\Apache24\htdocs\Elina ISMS\v1\web\app\Http\Controllers\UserController.php  
+[2025-11-20 10:12:42] Development.ERROR: Method => UserController => notifications: [0] "Attempt to read property "Status" on null" on line 959 of file C:\Apache24\htdocs\Elina ISMS\v1\web\app\Http\Controllers\UserController.php  

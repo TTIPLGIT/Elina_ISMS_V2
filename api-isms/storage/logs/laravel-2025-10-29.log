@@ -1,0 +1,1107 @@
+[2025-10-29 09:06:43] PROD.INFO: email  
+[2025-10-29 09:09:03] PROD.ERROR: array (
+  0 => 
+  (object) array(
+     'id' => 299,
+     'name' => 'Narmatha',
+     'email' => 'elinaiscordinator1@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$QqUJHp.zZwa6wyIMJjAOn.e7k.572sXV7y/cjmMUmtbtr5lxIQp8i',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => '1,4',
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 1,
+     'additional_details' => '<p>Mrs.Narmatha</p>
+<p>Special educator</p>
+<p>IS-Coordinator</p>
+<p>Elina Advisory and referral center</p>
+<p>Chennai-97</p>',
+     'user_role_id' => 487,
+     'user_id' => 299,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+  1 => 
+  (object) array(
+     'id' => 300,
+     'name' => 'Malini',
+     'email' => 'elinaiscordinator2@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$Zkq7PjvxCkXyNDkTh3vbL.sTls2osjF7j10gbmaEtJvRshA1VYo7i',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => '<p>Mrs.Malini</p>
+<p>Special educator</p>
+<p>IS-Coordinator</p>
+<p>Elina Advisory and referral center</p>
+<p>Chennai-97</p>',
+     'user_role_id' => 190,
+     'user_id' => 300,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+  2 => 
+  (object) array(
+     'id' => 658,
+     'name' => 'testiscoordinator1',
+     'email' => 'arynemerald@livinitlarge.net',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$UkDyMH9512MqIkdGrDxwAO01vTkT20AIXaLtE3QDQvGqrByoBk7Qa',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 534,
+     'user_id' => 658,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+  3 => 
+  (object) array(
+     'id' => 659,
+     'name' => 'testiscoordinator2',
+     'email' => '875claudina@tiffincrane.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$hz05Bpb7ip/dpyCL0ST4HeW7m6Nck6JgkNJgrrz9f13cWxp3rQ0mW',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 535,
+     'user_id' => 659,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+)  
+[2025-10-29 09:09:03] PROD.ERROR: array (
+  0 => 
+  (object) array(
+     'id' => 299,
+     'name' => 'Narmatha',
+     'email' => 'elinaiscordinator1@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$QqUJHp.zZwa6wyIMJjAOn.e7k.572sXV7y/cjmMUmtbtr5lxIQp8i',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => '1,4',
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 1,
+     'additional_details' => '<p>Mrs.Narmatha</p>
+<p>Special educator</p>
+<p>IS-Coordinator</p>
+<p>Elina Advisory and referral center</p>
+<p>Chennai-97</p>',
+     'user_role_id' => 487,
+     'user_id' => 299,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 4,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/09/004',
+           'child_id' => 'CH/2025/004',
+           'child_name' => 'Testdata',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/09/005',
+           'child_id' => 'CH/2025/005',
+           'child_name' => 'Angelin',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        2 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/006',
+           'child_id' => 'CH/2025/006',
+           'child_name' => 'Krish',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        3 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/008',
+           'child_id' => 'CH/2025/008',
+           'child_name' => 'Yashika',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        4 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/Sep/001',
+           'child_id' => 'CH/2025/001',
+           'child_name' => 'Test Data',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/006',
+           'child_name' => 'Krish',
+           'current_status' => 'Activity Initiated',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/008',
+           'child_name' => 'Yashika',
+           'current_status' => 'Activity Initiated',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+  1 => 
+  (object) array(
+     'id' => 300,
+     'name' => 'Malini',
+     'email' => 'elinaiscordinator2@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$Zkq7PjvxCkXyNDkTh3vbL.sTls2osjF7j10gbmaEtJvRshA1VYo7i',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => '<p>Mrs.Malini</p>
+<p>Special educator</p>
+<p>IS-Coordinator</p>
+<p>Elina Advisory and referral center</p>
+<p>Chennai-97</p>',
+     'user_role_id' => 190,
+     'user_id' => 300,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 4,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/09/004',
+           'child_id' => 'CH/2025/004',
+           'child_name' => 'Testdata',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/09/005',
+           'child_id' => 'CH/2025/005',
+           'child_name' => 'Angelin',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        2 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/006',
+           'child_id' => 'CH/2025/006',
+           'child_name' => 'Krish',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        3 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/008',
+           'child_id' => 'CH/2025/008',
+           'child_name' => 'Yashika',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        4 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/Sep/001',
+           'child_id' => 'CH/2025/001',
+           'child_name' => 'Test Data',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/09/005',
+           'child_name' => 'Angelin',
+           'current_status' => 'Activity Initiated',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/Sep/001',
+           'child_name' => 'Test Data',
+           'current_status' => 'Consent Sent',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+  2 => 
+  (object) array(
+     'id' => 658,
+     'name' => 'testiscoordinator1',
+     'email' => 'arynemerald@livinitlarge.net',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$UkDyMH9512MqIkdGrDxwAO01vTkT20AIXaLtE3QDQvGqrByoBk7Qa',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 534,
+     'user_id' => 658,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 2,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/007',
+           'child_id' => 'CH/2025/007',
+           'child_name' => 'testyashwanth',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/009',
+           'child_id' => 'CH/2025/009',
+           'child_name' => 'Yashwanth',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/007',
+           'child_name' => 'testyashwanth',
+           'current_status' => 'Activity Initiated',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/009',
+           'child_name' => 'Yashwanth',
+           'current_status' => 'Activity Initiated',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+  3 => 
+  (object) array(
+     'id' => 659,
+     'name' => 'testiscoordinator2',
+     'email' => '875claudina@tiffincrane.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$hz05Bpb7ip/dpyCL0ST4HeW7m6Nck6JgkNJgrrz9f13cWxp3rQ0mW',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 535,
+     'user_id' => 659,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 2,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/007',
+           'child_id' => 'CH/2025/007',
+           'child_name' => 'testyashwanth',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/009',
+           'child_id' => 'CH/2025/009',
+           'child_name' => 'Yashwanth',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+)  
+[2025-10-29 09:09:10] PROD.ERROR: array (
+  0 => 
+  (object) array(
+     'id' => 299,
+     'name' => 'Narmatha',
+     'email' => 'elinaiscordinator1@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$QqUJHp.zZwa6wyIMJjAOn.e7k.572sXV7y/cjmMUmtbtr5lxIQp8i',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => '1,4',
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 1,
+     'additional_details' => '<p>Mrs.Narmatha</p>
+<p>Special educator</p>
+<p>IS-Coordinator</p>
+<p>Elina Advisory and referral center</p>
+<p>Chennai-97</p>',
+     'user_role_id' => 487,
+     'user_id' => 299,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+  1 => 
+  (object) array(
+     'id' => 300,
+     'name' => 'Malini',
+     'email' => 'elinaiscordinator2@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$Zkq7PjvxCkXyNDkTh3vbL.sTls2osjF7j10gbmaEtJvRshA1VYo7i',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => '<p>Mrs.Malini</p>
+<p>Special educator</p>
+<p>IS-Coordinator</p>
+<p>Elina Advisory and referral center</p>
+<p>Chennai-97</p>',
+     'user_role_id' => 190,
+     'user_id' => 300,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+  2 => 
+  (object) array(
+     'id' => 658,
+     'name' => 'testiscoordinator1',
+     'email' => 'arynemerald@livinitlarge.net',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$UkDyMH9512MqIkdGrDxwAO01vTkT20AIXaLtE3QDQvGqrByoBk7Qa',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 534,
+     'user_id' => 658,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+  3 => 
+  (object) array(
+     'id' => 659,
+     'name' => 'testiscoordinator2',
+     'email' => '875claudina@tiffincrane.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$hz05Bpb7ip/dpyCL0ST4HeW7m6Nck6JgkNJgrrz9f13cWxp3rQ0mW',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 535,
+     'user_id' => 659,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+  ),
+)  
+[2025-10-29 09:09:10] PROD.ERROR: array (
+  0 => 
+  (object) array(
+     'id' => 299,
+     'name' => 'Narmatha',
+     'email' => 'elinaiscordinator1@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$QqUJHp.zZwa6wyIMJjAOn.e7k.572sXV7y/cjmMUmtbtr5lxIQp8i',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => '1,4',
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 1,
+     'additional_details' => '<p>Mrs.Narmatha</p>
+<p>Special educator</p>
+<p>IS-Coordinator</p>
+<p>Elina Advisory and referral center</p>
+<p>Chennai-97</p>',
+     'user_role_id' => 487,
+     'user_id' => 299,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 4,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/09/004',
+           'child_id' => 'CH/2025/004',
+           'child_name' => 'Testdata',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/09/005',
+           'child_id' => 'CH/2025/005',
+           'child_name' => 'Angelin',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        2 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/006',
+           'child_id' => 'CH/2025/006',
+           'child_name' => 'Krish',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        3 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/008',
+           'child_id' => 'CH/2025/008',
+           'child_name' => 'Yashika',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        4 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/Sep/001',
+           'child_id' => 'CH/2025/001',
+           'child_name' => 'Test Data',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/006',
+           'child_name' => 'Krish',
+           'current_status' => 'Activity Initiated',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/008',
+           'child_name' => 'Yashika',
+           'current_status' => 'Activity Initiated',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+  1 => 
+  (object) array(
+     'id' => 300,
+     'name' => 'Malini',
+     'email' => 'elinaiscordinator2@gmail.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$Zkq7PjvxCkXyNDkTh3vbL.sTls2osjF7j10gbmaEtJvRshA1VYo7i',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => '<p>Mrs.Malini</p>
+<p>Special educator</p>
+<p>IS-Coordinator</p>
+<p>Elina Advisory and referral center</p>
+<p>Chennai-97</p>',
+     'user_role_id' => 190,
+     'user_id' => 300,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 4,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/09/004',
+           'child_id' => 'CH/2025/004',
+           'child_name' => 'Testdata',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/09/005',
+           'child_id' => 'CH/2025/005',
+           'child_name' => 'Angelin',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        2 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/006',
+           'child_id' => 'CH/2025/006',
+           'child_name' => 'Krish',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        3 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/008',
+           'child_id' => 'CH/2025/008',
+           'child_name' => 'Yashika',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        4 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/Sep/001',
+           'child_id' => 'CH/2025/001',
+           'child_name' => 'Test Data',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/09/005',
+           'child_name' => 'Angelin',
+           'current_status' => 'Activity Initiated',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/Sep/001',
+           'child_name' => 'Test Data',
+           'current_status' => 'Consent Sent',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+  2 => 
+  (object) array(
+     'id' => 658,
+     'name' => 'testiscoordinator1',
+     'email' => 'arynemerald@livinitlarge.net',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$UkDyMH9512MqIkdGrDxwAO01vTkT20AIXaLtE3QDQvGqrByoBk7Qa',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 534,
+     'user_id' => 658,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 2,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/007',
+           'child_id' => 'CH/2025/007',
+           'child_name' => 'testyashwanth',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/009',
+           'child_id' => 'CH/2025/009',
+           'child_name' => 'Yashwanth',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/007',
+           'child_name' => 'testyashwanth',
+           'current_status' => 'Activity Initiated',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/009',
+           'child_name' => 'Yashwanth',
+           'current_status' => 'Activity Initiated',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+  3 => 
+  (object) array(
+     'id' => 659,
+     'name' => 'testiscoordinator2',
+     'email' => '875claudina@tiffincrane.com',
+     'user_type' => 'AD',
+     'email_verified_at' => NULL,
+     'password' => '$2y$10$hz05Bpb7ip/dpyCL0ST4HeW7m6Nck6JgkNJgrrz9f13cWxp3rQ0mW',
+     'workspace_email' => NULL,
+     'remember_token' => NULL,
+     'array_dashboard_list' => '1,2,3,4,5,6,7',
+     'array_roles' => '5',
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'phone_number' => NULL,
+     'profile_image' => '/user_signature/67/am9obm55LWRlcHAuanBn.jpg',
+     'designation_id' => 3,
+     'active_flag' => 0,
+     'project_role_id' => NULL,
+     'delete_status' => 0,
+     'roles' => NULL,
+     'mobile_no' => NULL,
+     'otp' => '1234',
+     'dor' => NULL,
+     'ep' => NULL,
+     'profile_path' => NULL,
+     'online' => 0,
+     'additional_details' => NULL,
+     'user_role_id' => 535,
+     'user_id' => 659,
+     'role_id' => 5,
+     'created_by' => 68,
+     'created_date' => '2022-08-09',
+     'last_modified_by' => 136,
+     'last_modified_date' => '2024-05-26',
+     'role_name' => 'IS Coordinator',
+     'ovm2_completion_count' => 2,
+     'inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+        0 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/007',
+           'child_id' => 'CH/2025/007',
+           'child_name' => 'testyashwanth',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+        1 => 
+        (object) array(
+           'enrollment_id' => 'EN/2025/10/009',
+           'child_id' => 'CH/2025/009',
+           'child_name' => 'Yashwanth',
+           'meeting_status' => 'Completed',
+           'Type' => 'OVM1',
+        ),
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+     'sail_inprogress_count' => 
+    \Illuminate\Support\Collection::__set_state(array(
+       'items' => 
+      array (
+      ),
+       'escapeWhenCastingToString' => false,
+    )),
+  ),
+)  
+[2025-10-29 09:09:19] PROD.ERROR: array (
+  'requestData' => 'eyJpdiI6IkNkRkV0RjdCOUt0YmpQYTVVZk9YbXc9PSIsInZhbHVlIjoiNmtYb2ROSVJ2NVNkU0h3NDFZYmxuRTRrcDdjT1luNGx1SWlzcjZZdkVxWW9ZVmtEWE8yOVVJbmpzTk9ubkxISVZoaXlOVGxNVzk2OU8ybk1vNnJLVm9FaWlqUXVhbUFKd25PZ0laZFJFTVlSelptTkREMysyY0xHZm5kcVRxQkdib1lZMUwydk1iTHNwNW82dlFhWEpOYkpURkxoMjRpT2o5L2RnNW1ERFpjcXB6OUJZdkFtVUdRSzAwdlNkWE8yck9NVHJxWDZkaHpNVyt2RDZIckllRnJKc08zYUtxSUdoS3Q3M3NHZUI0N0UydFNETk16dnJSTkYwT0xTa0xLYjhCeUFHYjIydzFUT1I4eDNHbUQ1VlNyZ0JBSE5jU2FjWXVpc1BDU2JOY1RMZ0dWNHgyNlBRSHlYRHQ0MHZZZE9MekpvZm00S2lOaGQ4bCtzZEdlaEdwcEdKUE9VT1BnSGJSaXlYRUxkbE03RXdFMjRzZDIxSnNOWFNpWkM1eXh6d3Z2ZHNyYnVpMkNVNExSOFl0bUx5UT09IiwibWFjIjoiNWUyNTllMWYwYTk2NjdhZTY2NWMzOTJmNjVlNDIwY2I3YmEyOGNkOGZhODA5MWY2MDQ5Nzg0MzAyMWEzYjhlMSIsInRhZyI6IiJ9',
+)  
+[2025-10-29 09:09:19] PROD.ERROR: in  
+[2025-10-29 09:09:19] PROD.ERROR: elinaiscordinator2@gmail.com  
+[2025-10-29 09:09:19] PROD.ERROR: itservices@talentakeaways.com  
+[2025-10-29 09:09:19] PROD.ERROR: hitted the controller  
+[2025-10-29 09:09:19] PROD.ERROR: array (
+  'mailSubject' => 'IS-Coordinator Allocation',
+  'child_name' => 'Ganesha',
+  'is_coordinator1' => 'Malini',
+  'is_coordinator2' => 'Narmatha',
+  'child_dob' => '01/02/2012',
+  'parentname' => 'Hari',
+  'email' => 'overseascarma@tiffincrane.com',
+  'contact_no' => '+917845098098',
+)  
+[2025-10-29 09:09:23] PROD.ERROR: in1  
+[2025-10-29 09:09:23] PROD.ERROR: in2  
+[2025-10-29 09:09:23] PROD.ERROR: elinaiscordinator1@gmail.com  
+[2025-10-29 09:09:23] PROD.ERROR: itservices@talentakeaways.com  
+[2025-10-29 09:09:23] PROD.ERROR: hitted the controller  
+[2025-10-29 09:09:23] PROD.ERROR: array (
+  'mailSubject' => 'IS-Coordinator Allocation',
+  'child_name' => 'Ganesha',
+  'is_coordinator1' => 'Malini',
+  'is_coordinator2' => 'Narmatha',
+  'child_dob' => '01/02/2012',
+  'parentname' => 'Hari',
+  'email' => 'overseascarma@tiffincrane.com',
+  'contact_no' => '+917845098098',
+)  
+[2025-10-29 09:09:26] PROD.ERROR: in  
+[2025-10-29 09:10:45] PROD.ERROR: ds  
+[2025-10-29 09:10:45] PROD.ERROR: array (
+  'meeting_startdate1' => '30/10/2025',
+  'meeting_starttime1' => '14:40',
+  'meeting_endtime1' => '15:40',
+  'meeting_startdate2' => '31/10/2025',
+  'meeting_starttime2' => '14:40',
+  'meeting_endtime2' => '15:40',
+  'is_coo1' => '300',
+  'is_coo2' => '299',
+  'enrollment_id' => '16',
+)  
+[2025-10-29 09:10:45] PROD.ERROR: array (
+  'meeting_startdate1' => '30/10/2025',
+  'meeting_starttime1' => '14:40',
+  'meeting_endtime1' => '15:40',
+  'meeting_startdate2' => '31/10/2025',
+  'meeting_starttime2' => '14:40',
+  'meeting_endtime2' => '15:40',
+  'is_coo1' => '300',
+  'is_coo2' => '299',
+  'enrollment_id' => '16',
+)  
+[2025-10-29 09:10:45] PROD.ERROR: array (
+)  

@@ -1,0 +1,84 @@
+.custom-popup-arp {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    max-width: 800px;
+    height: auto;
+    max-height: 80%;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.custom-popup-header-arp {
+    background-color: #007bff;
+    padding: 5px;
+    cursor: move;
+}
+
+.custom-popup-body-arp {
+    padding: 20px;
+}
+
+.custom-popup-header-btns-arp {
+    float: right;
+}
+
+.resize-handle-arp {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #333;
+    cursor: nwse-resize;
+    bottom: 0;
+    right: 0;
+}
+
+.tiny-window-arp {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 250px;
+    height: 150px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    z-index: 9999;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.tiny-window-header-arp {
+    background-color: #007bff;
+    padding: 5px;
+    cursor: move;
+}
+
+.tiny-window-body-arp {
+    /* padding: 20px; */
+}
+
+.pip-button-arp {
+    position: fixed;
+    z-index: 2;
+    right: 10px;
+    bottom: 10px;
+    /* height: 25px; */
+    background-color: #007bff;
+    border: none;
+    border-radius: 35px;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.btn-icon-arp {
+    border: none;
+    /* height: 20px; */
+}

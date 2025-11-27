@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "elina-calendar",
+  "private_key_id": "77c00779daa999f3ed6d9f1136e6670f102ec63e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQD0vcriUYM/mdVn\nwiUuYgiNb1ENxtq31pJQcEzu7DUJxh1l6TALsx91hU2m4RO6gVBTH51IDr0nklk2\nVuEEPogq7efJNc0zkCUWO9YTLtZohd12tI1MooZdkMGH3qjiBO7AxHWmffK49bUW\ngVEpRfTGqogMl2u8AcGp8Bz53vAymd7loadY/S6zdW0Cy9E6UACleQTRxP4/HOrU\nv8CsMXLqsDdO3gRbxoF5dAf9OXyhG2O5jFpRToiV3eZPB5qaiOAjnEguPxglVsZZ\neFrSUNHAsoxWob3TtJxqra74O9jmicg5wQh7yCynI0rzgm2SzSiSm/NH2FcJW0Ah\nSFDWofIZAgMBAAECggEAFSM8Pdo86/YRGqZHuE8SvoZt+XLiioyvc9+TIXKIrSit\netMOSYBlt+x0tbRMVCgdhCRfnOza9Os8pccQpaFx+MU15uis6aZqMZam6V66+WmQ\nZFN5PbRuxu9864t1ShoTddYx9Bh+KW/dPU2bcSVf2/W4DOBaF3GOZKs+kW0qETCS\nM1tSrp9DmPrejhsK4U0cXYvr/aF7gsZ5nlGdInGbu4P011JattbLbm4cYzuHnrwE\ngw/+1FcWimY0wZVSyH+9JVZyYciManL9Xo5OnyuuWoVXzqwoqBWBo3kyMM9CeQFi\nqeYBVAK41j816fIZ5g9eQ4yPg6DcJsMDwdw6651SAQKBgQD+9/ZuiOWmP17vgOTd\njNPSiVnVNUTSQ3yoNdYGT06joSPlGyRZ9GhakM/Hx/g8hH9RIuUx5qPDSY/e5RV4\nz5M8Eie0Yo4QRAIWScSgmOeG7RFHKGQsX14Oh97/VVn/oA2bx8bOjfAff4VDSoFW\n97Csm+1QxPh5wEd9reEYNXL3GQKBgQD1uz0omeleRIKD1ybkpYOczw1acId+BoyU\nZtfAiKfHlOlZgUsPSWSKGwMUMn/ubg75RMd6WqM5GqgAndoworHQv+q/USCteFyT\nrcx7R5Z5QUxXJYkj21Y3XccRsIsRECC3MOA4r0ID88uoSmA+OrgQankVFkb1pXhG\n+TuEwT0zAQKBgGkzpNGs2JzE7wYBd+1WKxxmodNQHGppgCjjtcB6vqbTWT0x+sjH\nCLu9no3/G5TU0reGn2z8jjuIwb0lZrunYkfZ8doDBDz/4qCRpXjiPj202Xkz2Ela\nvDNgqolODUllH9hUENqvRBGrCzBdsIpSvuopmDzIWQHbbWQU95iGjT4ZAoGAJWez\nD5MeKvNSyq7dhMCNIDmEVtf6R/zHOW/ON8iVgZPxUWaU/ma1nzAtb82gG7M1JEyL\n8NwLLI4aNL3SkMSzPIt6OFUpHD7OGMzD66AiD6MY88sK7SJeJV9pBhBRmu9Ri5Et\nEHPdIKzju2JW9CIMErOiastRUeM2Q9d8b+DaaAECgYEApYXUUI5a5OgeQ8tRIczP\ncRtxg5HM0k+ujun1YocM+4TGrhrN2QdarX8oeFK3VORsUCBeh06Vrz5ofpiOZcbM\nJbHjeUC48OQPZYZSRctztIA6kAAgCTlfhfq3xtUzLRt+ZaFYGB6MtMseWH/BsfJT\nfT3wMy+PiDHi7xiVQVcgM2U=\n-----END PRIVATE KEY-----\n",
+  "client_email": "elina-229@elina-calendar.iam.gserviceaccount.com",
+  "client_id": "109618499656676676843",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/elina-229%40elina-calendar.iam.gserviceaccount.com"
+}

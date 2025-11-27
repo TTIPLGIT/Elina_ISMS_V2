@@ -1,0 +1,1570 @@
+@extends('layouts.adminnav')
+
+@section('content')
+<style>
+    @charset "UTF-8";
+
+    body {
+        font-family: "Open Sans";
+    }
+
+    .stepper-horizontal {
+        display: table;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .stepper-horizontal .step {
+        display: table-cell;
+        position: relative;
+        padding: 1.5rem;
+        z-index: 2;
+        width: 25%;
+    }
+
+    .stepper-horizontal .step:last-child .step-bar-left,
+    .stepper-horizontal .step:last-child .step-bar-right {
+        display: none;
+    }
+
+    .stepper-horizontal .step .step-circle {
+        width: 2rem;
+        height: 2rem;
+        margin: 0 auto;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 1.75rem;
+        font-size: 1rem;
+        font-weight: 600;
+        z-index: 2;
+        border: 2px solid #d9e2ec;
+    }
+
+    .stepper-horizontal .step.done .step-circle {
+        background-color: #199473;
+        border: 2px solid #199473;
+        color: #ffffff;
+    }
+
+    .stepper-horizontal .step.done .step-circle:before {
+        font-family: "FontAwesome";
+        font-weight: 100;
+        content: "";
+    }
+
+    .stepper-horizontal .step.done .step-circle * {
+        display: none;
+    }
+
+    .stepper-horizontal .step.done .step-title {
+        color: #102a43;
+    }
+
+    .stepper-horizontal .step.editing .step-circle {
+        background: #ffffff;
+        border-color: #199473;
+        color: #199473;
+    }
+
+    .stepper-horizontal .step.editing .step-title {
+        color: #199473;
+        text-decoration: underline;
+    }
+
+    .stepper-horizontal .step .step-title {
+        margin-top: 1rem;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    .stepper-horizontal .step .step-title,
+    .stepper-horizontal .step .step-optional {
+        text-align: center;
+        color: #829ab1;
+    }
+
+    .stepper-horizontal .step .step-optional {
+        font-size: 0.75rem;
+        font-style: italic;
+        color: #9fb3c8;
+    }
+
+    .stepper-horizontal .step .step-bar-left,
+    .stepper-horizontal .step .step-bar-right {
+        position: absolute;
+        top: calc(2rem + 5px);
+        height: 5px;
+        background-color: #d9e2ec;
+        border: solid #d9e2ec;
+        border-width: 2px 0;
+    }
+
+    .stepper-horizontal .step .step-bar-left {
+        width: calc(100% - 2rem);
+        left: 50%;
+        margin-left: 1rem;
+        z-index: -1;
+    }
+
+    .stepper-horizontal .step .step-bar-right {
+        width: 0;
+        left: 50%;
+        margin-left: 1rem;
+        z-index: -1;
+        transition: width 500ms ease-in-out;
+    }
+
+    .stepper-horizontal .step.done .step-bar-right {
+        background-color: #199473;
+        border-color: #199473;
+        z-index: 3;
+        width: calc(100% - 2rem);
+    }
+</style>
+<style>
+    .tab {
+        overflow: hidden;
+        border: 1px solid #f37020;
+        background-color: #d4d0cf;
+        border-radius: 36px;
+        /* justify-content: center; */
+        width: fit-content;
+        margin: auto;
+        text-align: center;
+
+    }
+
+    /* Style the buttons inside the tab */
+    .tab button {
+        background-color: #d4d0cf;
+        /* float: left; */
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 4.1rem;
+        transition: 0.3s;
+        font-size: 20px;
+        border-radius: 36px;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+        background-color: #f37020;
+    }
+
+    /* Create an active/current tablink class */
+    .tab button.active {
+        background-color: #f37020;
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        margin-top: 20px;
+        /* border: 1px solid #ccc; */
+        /* border-top: none; */
+    }
+</style>
+<style>
+    .card_design {
+        background-color: white;
+        border-radius: 12px !important;
+        margin-top: 2rem;
+    }
+
+    .card_design label {
+        text-align: center;
+    }
+</style>
+<style>
+    .table_content {
+        /* width: 100%; */
+        border-collapse: collapse;
+    }
+
+    .table_content td {
+        padding: 12px 15px;
+        text-align: left !important;
+        font-size: 16px;
+    }
+
+    .table_content th {
+        padding: 12px 15px;
+        text-align: center !important;
+        font-size: 16px;
+    }
+
+    .inputError {
+        box-shadow: inset 0px 0px 0px 2px #f31010;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+</style>
+<style>
+    #frname {
+        color: red;
+    }
+
+
+
+    .form-control.default {
+        border-radius: 5px !important;
+        border: 1px solid #ced4da !important;
+        border-color: #bec4d0 !important;
+        box-shadow: 2px 2px 4px rgb(0 0 0/15%) !important;
+        border-style: outset !important;
+    }
+
+    .is-coordinate {
+        justify-content: center;
+    }
+
+
+    .centerid {
+        width: 100%;
+        text-align: center;
+    }
+
+    #invite {
+        display: none;
+    }
+
+    #co_one,
+    #co_two {
+        padding: 0 0 0 5px;
+        background: transparent;
+    }
+
+    .fc-scroller.fc-day-grid-container {
+        height: 500px !important;
+    }
+
+    .container {
+        padding: 6px 12px;
+        margin-top: 3rem;
+        margin-right: -2rem;
+    }
+
+    .main-content {
+        min-height: 300px !important;
+    }
+
+    .questionaire {
+        padding-top: 13px !important;
+    }
+
+    .form-group {
+        margin-bottom: 25px !important;
+        margin-top: 0px !important;
+    }
+</style>
+
+@include('questionnaire_for_parents.style')
+<div class="main-content ">
+
+    <!-- Main Content -->
+    <section class="section">
+        <div class="section-body mt-1">
+
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body" style="padding-bottom: 0px !important;">
+                            <div class="box-header with-border">
+                                @csrf
+
+                                <div class="row is-coordinate">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Enrollment ID<span class="error-star" style="color:red;">*</span></label>
+                                            <input class="form-control default" type="text" id="enrollment_child_num" name="enrollment_child_num" onchange="GetChilddetails()" value="EN/2022/12/025 (Kaviya)" autocomplete="off" style="background-color:white!important;" readonly>
+                                            <!-- <select class="form-control" id="enrollment_child_num" name="enrollment_child_num" onchange="GetChilddetails()" required>
+                        <option value="">Select-Enrollment</option>
+                        <option>EN/2022/12/025</option>
+
+                      </select> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Child ID</label>
+                                            <input class="form-control default" type="text" id="child_id" name="child_id" placeholder="Child ID" autocomplete="off" value="CH/2022/025" style="background-color:white!important;" readonly>
+                                            <!-- <input type="hidden" id="enrollment_id" name="enrollment_id" autocomplete="off" readonly> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Child Name</label>
+                                            <input class="form-control default" type="text" id="child_name" name="child_name" oninput="Childname(event)" maxlength="20" value="Kaviya" style="background-color:white!important;" autocomplete="off" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group ">
+                                            <label class="control-label">IS Co-ordinator<span class="error-star" style="color:red;">*</span></label>
+                                            <div style="display: flex;">
+                                                <input class="form-control default" type="text" id="is_coordinator1" name="is_coordinator1" placeholder="Child ID" autocomplete="off" value="Robert" style="background-color:white!important;" readonly>
+                                                <!-- <select class="form-control" id="is_coordinator1" name="is_coordinator1" onchange="iscoordinatorfn(event)" required>
+                          <option>Select-IS-Coordinator</option>
+                          <option value="131">Robert</option>
+
+
+                        </select> -->
+                                                <button style="display: none;" id="co_one" title="Availability Calendar" class="btn" data-toggle="modal" data-target="#calModal" type="button">
+                                                    <i style="color: blue;font-size: 20px;" class="fa fa-calendar" aria-hidden="true"></i></button>
+                                            </div>
+                                            <input type="hidden" id="is_coordinator1old">
+                                            <input type="hidden" id="is_coordinator1current">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Therapist<span class="error-star" style="color:red;">*</span></label>
+                                            <div style="display: flex;">
+                                                <input class="form-control default" type="text" id="is_therapist" name="is_therapist" autocomplete="off" value="Malini" style="background-color:white!important;" readonly>
+                                                <!-- <select class="form-control" id="is_coordinator2" name="is_coordinator2" onchange="iscoordinatorfn(event)" required>
+                          <option>Select-Therapist</option>
+                          <option value="134">Malini</option>
+                        </select> -->
+                                                <button style="display: none;" id="co_two" title="Availability Calendar" class="btn" data-toggle="modal" data-target="#calModal2" type="button">
+                                                    <i style="color: blue;font-size: 20px;" class="fa fa-calendar" aria-hidden="true"></i></button>
+                                            </div>
+                                            <input type="hidden" id="is_coordinator2old">
+                                            <input type="hidden" id="is_coordinator2current">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Month<span class="error-star" style="color:red;">*</span></label>
+                                            <div style="display: flex;">
+                                                <input type='text' class="form-control default" id='month' name="month" title="Month" value="2022-12-10" style="background-color:white!important;" required autocomplete="off">
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+    </section>
+</div>
+
+<div class="main-content questionaire">
+    <div class="col-lg-12 text-center" style="margin-bottom: 10px;">
+        <h4 style="color:darkblue;">{{$questionnaire_name}}</h4>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-12 col-md-12">
+            <div class="" style="height:100%;">
+                <div id="content">
+                    <div id="loader_div" class="loader_div">
+                        <img src="/images/loaderajax.gif">
+                    </div>
+
+                    <div class="stepper-horizontal" id="stepper1" style="display: none;">
+                        <div class="step editing" id="Stepper1ID">
+                            <div class="step-circle"><span>1</span></div>
+                            <div class="step-bar-left" id="Stepper2ID2"></div>
+                        </div>
+                        <div class="step" id="Stepper2ID">
+                            <div class="step-circle"><span>2</span></div>
+                            <div class="step-bar-left" id="Stepper3ID2"></div>
+                        </div>
+                        <div class="step" id="Stepper3ID">
+                            <div class="step-circle"><span>3</span></div>
+                            <div class="step-bar-left" id="Stepper4ID2"></div>
+                        </div>
+                        <div class="step" id="Stepper4ID">
+                            <div class="step-circle"><span>4</span></div>
+                            <div class="step-bar-left"></div>
+                        </div>
+                    </div>
+
+                    <div class="tab">
+                        <button class="tablinks active" id="Tab1" onclick="openCity(event, 'Step1' , '1')">Stage 1<i class="fa fa-check" aria-hidden="true" id="tab1tick" name="step_value1" style="display:none"></i></button>
+                        <button class="tablinks" id="Tab2" onclick="openCity(event, 'Step2' , '2')">Stage 2<i class="fa fa-check" aria-hidden="true" id="tab2tick" name="step_value1" style="display:none"></i></button>
+                        <button class="tablinks" id="Tab3" onclick="openCity(event, 'Step3' , '3')">Stage 3<i class="fa fa-check" aria-hidden="true" id="tab3tick" name="step_value1" style="display:none"></i></button>
+                        <button class="tablinks" id="Tab4" onclick="openCity(event, 'Step4' , '4')">Stage 4<i class="fa fa-check" aria-hidden="true" id="tab4tick" name="step_value1" style="display:none"></i></button>
+                    </div>
+                    <form class="formValidationDiv" action="{{ route('questionnaire.form.save') }}" method="post" id="divQuestionnaireForm">
+                        {{ csrf_field() }}
+                        <div class="card card_design">
+                            <input type="hidden" id="btn_type" name="progress_status">
+                            <input type="hidden" id="complete_question" name="complete_question">
+
+                            <div id="Step1" class="tabcontent pagination_one page_lable">
+                                <input type="hidden" id="step_value" value="no">
+                            </div>
+                            <div id="Step2" class="tabcontent pagination_two page_lable">
+                                <input type="hidden" id="step_value2" value=" ">
+                            </div>
+                            <div id="Step3" class="tabcontent pagination_three page_lable">
+                                <input type="hidden" id="step_value3" value="step3">
+                            </div>
+                            <div id="Step4" class="tabcontent pagination_four page_lable">
+                                <input type="hidden" id="step_value4" value="step4">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row text-center">
+                <div class="col-md-12">
+                  <a type="button" class="btn btn-warning text-white" onclick="validateForm('Saved')" name="type" value="Saved">Save</a>
+                  <a type="button" class="btn btn-success text-white" onclick="validateForm('sent')" name="type" value="sent">Send</a>
+                  <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{ route('hometracker') }}" style="color:white !important">
+                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back</a>
+                </div>
+              </div> -->
+        <div class="tile-footer title-footer-button-alignment" style="padding: 10px;">
+            <a type="button" class="btn text-white" style="background-color:orangered;" onclick="validateForm()" name="type" value="Saved">Save</a>
+            <a class="btn btn-info" href="{{route('monthlyobjective.index')}}">Back</a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        for (i = 1; i <= 4; i++) {
+            var zzz = $(".pagination-element" + i).length;
+            if (zzz == 0) {
+                var TabID = 'Tab'.concat(i);
+                var StepperID = 'Stepper' + i + 'ID';
+                var StepperID2 = 'Stepper' + i + 'ID2';
+
+                document.getElementById(TabID).style.display = "none";
+                document.getElementById(StepperID).style.display = "none";
+                document.getElementById(StepperID2).style.display = "none";
+            }
+        }
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        var cityName = 'Step1';
+        document.getElementById(cityName).style.display = "block";
+        currentPagination('1');
+    });
+
+    function openCity(evt, cityName, stepNum) {
+
+        var tabID = $('.tablinks.active').attr('id');
+        var ret = tabID.replace('Tab', '');
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+        pagi_nation(stepNum);
+        currentPagination(stepNum);
+    }
+</script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+
+<script>
+    $(document).ready(function() {
+
+        var response = <?php echo (json_encode($question)); ?>;
+        if (response.length > 0) {
+            QuestionnaireForm(response);
+            pagi_nation('1');
+            currentPagination('1');
+        }
+
+    });
+
+    function QuestionnaireForm(DataFields) {
+        var count = DataFields.length;
+
+        if (count > 40) {
+            divCount = 4;
+        } else {
+            divCount = 3;
+            document.getElementById("Tab4").style.display = "none";
+            document.getElementById("Stepper4ID").style.display = "none";
+            document.getElementById("Stepper4ID2").style.display = "none";
+        }
+
+        var tab_count = Math.ceil(count / divCount);
+        const tab_content = [0];
+        for (i = 1; i <= divCount; i++) {
+            tab_content.push(i * tab_count + 1);
+        }
+        var step = '#Step';
+        let num = 0;
+
+        var documentCategoryID = $('#documentCategory').val();
+        for (let index = 0; index < DataFields.length; index++) {
+
+            const isInArray = tab_content.includes(index);
+            if (isInArray == true) {
+                num++
+                const stage1 = step.concat(num);
+                var stage = step.concat(num);
+            }
+            var checkindex = index;
+            const fieldTypeID = DataFields[index]['questionnaire_field_types_id'];
+            const fieldID = DataFields[index]['question_details_id'];
+            const fieldLabel = DataFields[index]['question'];
+            const fieldName = DataFields[index]['question_field_name'];
+            const fieldValue = DataFields[index][fieldName];
+
+            if (fieldTypeID == 1) {
+                var textboxHtml = '<div class="col-md-12 divClass" id="div' + fieldName + '"><div class="form-group pagination-element' + num + '">';
+                textboxHtml += '<label class="control-label">' + fieldLabel + '</label>';
+                if (fieldValue == null) {
+                    textboxHtml += '<input class="form-control pagination' + num + '" type="text" id="' + fieldName + '" name="' + fieldName + '" placeholder="Your Answer"><i class="bar"></i>';
+                } else {
+                    textboxHtml += '<input class="form-control pagination' + num + '" type="text" value="' + fieldValue + '" id="' + fieldName + '" name="' + fieldName + '" placeholder="Your Answer"><i class="bar"></i>';
+                }
+                textboxHtml += '</div></div>';
+                $(stage).append(textboxHtml);
+            }
+
+            if (fieldTypeID == 2) {
+                var textboxHtml = '<div class="col-md-12 divClass" id="div' + fieldName + '"><div class="form-group pagination-element' + num + '">';
+                textboxHtml += '<label class="control-label">' + fieldLabel + '</label>';
+                if (fieldValue == null) {
+                    textboxHtml += '<textarea class="form-control pagination' + num + '" id="' + fieldName + '" name="' + fieldName + '" rows="2" cols="25" placeholder="Your Answer"></textarea>';
+                } else {
+                    textboxHtml += '<textarea class="form-control pagination' + num + '" id="' + fieldName + '" name="' + fieldName + '" rows="2" cols="25" placeholder="Your Answer">' + fieldValue + '</textarea>';
+                }
+                textboxHtml += '<i class="bar"></i>';
+                textboxHtml += '</div></div>';
+                $(stage).append(textboxHtml);
+            }
+
+            if (fieldTypeID == 3) {
+                $.ajax({
+                    url: '/questionnaire/field/dropdown/option',
+                    type: 'GET',
+                    async: false,
+                    data: {
+                        fieldID: fieldID,
+                        _token: '{{csrf_token()}}'
+                    }
+                }).done(function(data) {
+                    var response = JSON.parse(data);
+                    var dropdownHtml = '<div class="col-md-12 divClass" id="div' + fieldName + '"><div class="form-group pagination-element' + num + '">';
+                    dropdownHtml += '<label class="control-label">' + fieldLabel + '</label>';
+                    dropdownHtml += '<select class="documentCategory pagination' + num + '" name="' + fieldName + '" id="' + fieldName + '" style="width: 50%;">';
+                    dropdownHtml += '<option value=""> Choose </option>';
+                    for (let index = 0; index < response.length; index++) {
+                        const question_details_id = response[index]['question_details_id'];
+                        const option_field_name = response[index]['option_for_question'];
+                        if (question_details_id == fieldID)
+                            if (fieldValue == option_field_name) {
+                                var option = "<option value='" + option_field_name + "' selected>" + option_field_name + "</option>";
+                            } else {
+                                var option = "<option value='" + option_field_name + "'>" + option_field_name + "</option>";
+                            }
+                        dropdownHtml += option;
+                    }
+                    dropdownHtml += '</select><i class="bar" style="width: 50%;"></i></div></div>';
+                    $(stage).append(dropdownHtml);
+                });
+            }
+
+            if (fieldTypeID == 4) {
+                $.ajax({
+                    url: '/questionnaire/field/dropdown/option',
+                    type: 'GET',
+                    async: false,
+                    data: {
+                        fieldID: fieldID,
+                        _token: '{{csrf_token()}}'
+                    }
+                }).done(function(data) {
+                    var response = JSON.parse(data);
+                    var radioButtonHtml = '<div class="col-md-12 divClass" id="div' + fieldName + '"><div class="form-radio pagination-element' + num + '">';
+                    radioButtonHtml += '<label class="control-label" style="margin-left: -30px;padding-bottom: 10px;">' + fieldLabel + '</label><div class="radio">';
+                    for (let index = 0; index < response.length; index++) {
+                        const question_details_id = response[index]['question_details_id'];
+                        const option_field_name = response[index]['option_for_question'];
+                        if (question_details_id == fieldID)
+                            if (fieldValue == option_field_name) {
+                                radioButtonHtml += '<div class="radio">';
+                                radioButtonHtml += '<label><input style="margin-right: 10px;" class="pagination' + num + ' Qradio" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="' + option_field_name + '" checked><i class="helper"></i>' + option_field_name;
+                                radioButtonHtml += '</label></div>';
+                            } else {
+                                radioButtonHtml += '<div class="radio">';
+                                radioButtonHtml += '<label><input style="margin-right: 10px;" class="pagination' + num + ' Qradio" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="' + option_field_name + '"><i class="helper"></i>' + option_field_name;
+                                radioButtonHtml += '</label></div>';
+                            }
+                    }
+                    radioButtonHtml += '</div></div>';
+                    $(stage).append(radioButtonHtml);
+                });
+            }
+            if (fieldTypeID == 5) {
+                $.ajax({
+                    url: '/questionnaire/field/dropdown/option',
+                    type: 'GET',
+                    async: false,
+                    data: {
+                        fieldID: fieldID,
+                        _token: '{{csrf_token()}}'
+                    }
+                }).done(function(data) {
+                    var response = JSON.parse(data);
+                    var obj;
+                    if (fieldValue != null || fieldValue != undefined) {
+                        obj = JSON.parse(fieldValue);
+                    }
+                    if (obj != null) {
+                        var cou = obj.length;
+                    }
+                    var radioButtonHtml = '<div class="col-md-12 divClass" id="div' + fieldName + '"><div class="form-group pagination-element' + num + '">';
+                    radioButtonHtml += '<label class="control-label">' + fieldLabel + '</label><div class="checkbox">';
+                    for (let index = 0; index < response.length; index++) {
+                        const question_details_id = response[index]['question_details_id'];
+                        const option_field_name = response[index]['option_for_question'];
+                        if (question_details_id == fieldID)
+                            if (obj != null) {
+                                for (let j = 0; j < obj.length; j++) {
+                                    var che = obj[j];
+                                    if (che == option_field_name) {
+                                        radioButtonHtml += '<label><input class="pagination' + num + '" type="checkbox" name="' + fieldName + '[]" id="' + fieldName + '" value="' + option_field_name + '" checked><i class="helper"></i>' + option_field_name + '</label>';
+                                    } else {
+                                        radioButtonHtml += '<label><input class="pagination' + num + '" type="checkbox" name="' + fieldName + '[]" id="' + fieldName + '" value="' + option_field_name + '"><i class="helper"></i>' + option_field_name + '</label>';
+                                    }
+                                }
+                            } else {
+                                radioButtonHtml += '<label><input class="pagination' + num + '" type="checkbox" name="' + fieldName + '[]" id="' + fieldName + '" value="' + option_field_name + '"><i class="helper"></i>' + option_field_name + '</label>';
+                            }
+                    }
+                    radioButtonHtml += '</div></div>';
+                    $(stage).append(radioButtonHtml);
+                });
+            }
+
+            if (fieldTypeID == 7) {
+                $.ajax({
+                    url: '/questionnaire/field/subradio/option',
+                    type: 'GET',
+                    async: false,
+                    data: {
+                        fieldID: fieldID,
+                        _token: '{{csrf_token()}}'
+                    }
+                }).done(function(data) {
+                    var response = JSON.parse(data);
+                    var fieldOptions = response.fieldOptions;
+                    var fieldQuestions = response.fieldQuestions;
+                    var radioButtonHtml = '<div class="col-md-12 divClass" id="div' + fieldName + '"><div class="form-group pagination-element' + num + '">';
+                    radioButtonHtml += '<label class="control-label">' + fieldLabel + '</label><br>'; //Sub Question Radio
+                    radioButtonHtml += '<table class="table_content">';
+                    radioButtonHtml += '<tr>';
+                    radioButtonHtml += '<th></th>';
+                    for (let index = 0; index < fieldOptions.length; index++) {
+                        const question_details_id = fieldOptions[index]['question_details_id'];
+                        const option_field_name = fieldOptions[index]['option_for_question'];
+                        if (question_details_id == fieldID)
+                            radioButtonHtml += '<th>' + option_field_name + '</th>';
+                    }
+                    radioButtonHtml += '</tr>';
+                    radioButtonHtml += '<tr>';
+                    for (let i = 0; i < fieldQuestions.length; i++) {
+                        const sub_questions_id = fieldQuestions[i]['sub_questions_id'];
+                        const sub_question = fieldQuestions[i]['sub_question'];
+                        const optionValue = fieldName + sub_questions_id;
+                        const questionValue = DataFields[checkindex][optionValue];
+                        radioButtonHtml += '<td>' + sub_question + '</td>';
+                        for (let index = 0; index < fieldOptions.length; index++) {
+                            const question_details_id = fieldOptions[index]['question_details_id'];
+                            const option_field_name = fieldOptions[index]['option_for_question'];
+                            if (question_details_id == fieldID)
+                                if (questionValue == option_field_name) {
+                                    radioButtonHtml += '<td><input style="height: 15px;" class="pagination' + num + ' QSub" type="radio" name="' + fieldName + sub_questions_id + '" id="' + fieldName + '" value="' + option_field_name + '" checked></td>';
+                                } else {
+                                    radioButtonHtml += '<td><input style="height: 15px;" class="pagination' + num + ' QSub" type="radio" name="' + fieldName + sub_questions_id + '" id="' + fieldName + '" value="' + option_field_name + '"></td>';
+                                }
+                        }
+                        radioButtonHtml += '</tr>'
+                    }
+                    radioButtonHtml += '</table>';
+                    $(stage).append(radioButtonHtml);
+                });
+            }
+        }
+    }
+</script>
+
+<style>
+    .pagination1 {
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .pagination1,
+    .pagination1 * {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .pagination1 a {
+        display: inline-block;
+        padding: 0 10px;
+        cursor: pointer;
+    }
+
+    .pagination1 a.disabled {
+        opacity: 0.3;
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+
+    .pagination1 a.current {
+        background: #f3f3f3;
+    }
+
+    .pagination2 {
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .pagination2,
+    .pagination2 * {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .pagination2 a {
+        display: inline-block;
+        padding: 0 10px;
+        cursor: pointer;
+    }
+
+    .pagination2 a.disabled {
+        opacity: 0.3;
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+
+    .pagination2 a.current {
+        background: #f3f3f3;
+    }
+
+    .pagination3 {
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .pagination3,
+    .pagination3 * {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .pagination3 a {
+        display: inline-block;
+        padding: 0 10px;
+        cursor: pointer;
+    }
+
+    .pagination3 a.disabled {
+        opacity: 0.3;
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+
+    .pagination3 a.current {
+        background: #f3f3f3;
+    }
+
+    .pagination4 {
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .pagination4,
+    .pagination4 * {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .pagination4 a {
+        display: inline-block;
+        padding: 0 10px;
+        cursor: pointer;
+    }
+
+    .pagination4 a.disabled {
+        opacity: 0.3;
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+
+    .pagination4 a.current {
+        background: #f3f3f3;
+    }
+</style>
+<script>
+    function pagi_nation(ffff) {
+
+        // $('#pageDiv').html('');
+
+        if (ffff == 1) {
+            var pagify = {
+                items: {},
+                container: null,
+                totalPages: 1,
+                perPage: 3,
+                currentPage: 0,
+                createNavigation: function() {
+                    this.totalPages = Math.ceil(this.items.length / this.perPage);
+
+                    $('.pagination', this.container.parent()).remove();
+                    var pagination1 = $('<div class="pagination1" id="pageDiv1"></div>').append('<a class="nav prev disabled" data-next="false"><</a>');
+
+                    for (var i = 0; i < this.totalPages; i++) {
+                        var pageElClass = "page1";
+                        if (!i)
+                            pageElClass = "page1 current";
+                        var pageEl = '<a class="' + pageElClass + '" data-page1="' + (
+                            i + 1) + '">' + (
+                            i + 1) + "</a>";
+                        pagination1.append(pageEl);
+                    }
+                    pagination1.append('<a class="nav next" data-next="true">></a>');
+
+                    this.container.after(pagination1);
+
+                    var that = this;
+                    $("body").off("click", ".nav");
+                    this.navigator = $("body").on("click", ".nav", function() {
+                        var el = $(this);
+                        that.navigate(el.data("next"));
+                    });
+
+                    $("body").off("click", ".page1");
+                    this.pageNavigator = $("body").on("click", ".page1", function() {
+                        var el = $(this);
+                        that.goToPage(el.data("page1"));
+                    });
+                },
+                navigate: function(next) {
+                    // default perPage to 5
+                    if (isNaN(next) || next === undefined) {
+                        next = true;
+                    }
+                    $(".pagination1 .nav").removeClass("disabled");
+                    if (next) {
+                        this.currentPage++;
+                        if (this.currentPage > (this.totalPages - 1))
+                            this.currentPage = (this.totalPages - 1);
+                        if (this.currentPage == (this.totalPages - 1))
+                            $(".pagination1 .nav.next").addClass("disabled");
+                    } else {
+                        this.currentPage--;
+                        if (this.currentPage < 0)
+                            this.currentPage = 0;
+                        if (this.currentPage == 0)
+                            $(".pagination1 .nav.prev").addClass("disabled");
+                    }
+
+                    this.showItems();
+                },
+                updateNavigation: function() {
+
+                    var pages = $(".pagination1 .page1");
+                    pages.removeClass("current");
+                    $('.pagination1 .page1[data-page="' + (
+                        this.currentPage + 1) + '"]').addClass("current");
+                },
+                goToPage: function(page1) {
+
+                    this.currentPage = page1 - 1;
+
+                    $(".pagination1 .nav").removeClass("disabled");
+                    if (this.currentPage == (this.totalPages - 1))
+                        $(".pagination1 .nav.next").addClass("disabled");
+
+                    if (this.currentPage == 0)
+                        $(".pagination1 .nav.prev").addClass("disabled");
+                    this.showItems();
+                },
+                showItems: function() {
+                    this.items.hide();
+                    var base = this.perPage * this.currentPage;
+                    this.items.slice(base, base + this.perPage).show();
+
+                    this.updateNavigation();
+                },
+                init: function(container, items, perPage) {
+                    this.container = container;
+                    this.currentPage = 0;
+                    this.totalPages = 1;
+                    this.perPage = perPage;
+                    this.items = items;
+                    this.createNavigation();
+                    this.showItems();
+                }
+            };
+
+            // stuff it all into a jQuery method!
+            $.fn.pagify = function(perPage, itemSelector, cPage) {
+                var el = $(this);
+                var items = $(itemSelector, el);
+
+                // default perPage to 5
+                if (isNaN(perPage) || perPage === undefined) {
+                    perPage = 3;
+                }
+
+                // don't fire if fewer items than perPage
+                if (items.length <= perPage) {
+                    return true;
+                }
+
+                pagify.init(el, items, perPage);
+            };
+
+
+            $('#pageDiv2').hide();
+            $('#pageDiv3').hide();
+            $('#pageDiv4').hide();
+
+
+            $(".pagination_one").pagify(5, ".pagination-element1", 1);
+        }
+        if (ffff == 2) {
+            var pagify = {
+                items: {},
+                container: null,
+                totalPages: 1,
+                perPage: 3,
+                currentPage: 0,
+                createNavigation: function() {
+                    this.totalPages = Math.ceil(this.items.length / this.perPage);
+
+                    $('.pagination', this.container.parent()).remove();
+                    var pagination2 = $('<div class="pagination2" id="pageDiv2"></div>').append('<a class="nav prev disabled" data-next="false"><</a>');
+
+                    for (var i = 0; i < this.totalPages; i++) {
+                        var pageElClass = "page2";
+                        if (!i)
+                            pageElClass = "page2 current";
+                        var pageEl = '<a class="' + pageElClass + '" data-page2="' + (
+                            i + 1) + '">' + (
+                            i + 1) + "</a>";
+                        pagination2.append(pageEl);
+                    }
+                    pagination2.append('<a class="nav next" data-next="true">></a>');
+
+                    this.container.after(pagination2);
+
+                    var that = this;
+                    $("body").off("click", ".nav");
+                    this.navigator = $("body").on("click", ".nav", function() {
+                        var el = $(this);
+                        that.navigate(el.data("next"));
+                    });
+
+                    $("body").off("click", ".page2");
+                    this.pageNavigator = $("body").on("click", ".page2", function() {
+                        var el = $(this);
+                        that.goToPage(el.data("page2"));
+                    });
+                },
+                navigate: function(next) {
+                    // default perPage to 5
+                    if (isNaN(next) || next === undefined) {
+                        next = true;
+                    }
+                    $(".pagination2 .nav").removeClass("disabled");
+                    if (next) {
+                        this.currentPage++;
+                        if (this.currentPage > (this.totalPages - 1))
+                            this.currentPage = (this.totalPages - 1);
+                        if (this.currentPage == (this.totalPages - 1))
+                            $(".pagination2 .nav.next").addClass("disabled");
+                    } else {
+                        this.currentPage--;
+                        if (this.currentPage < 0)
+                            this.currentPage = 0;
+                        if (this.currentPage == 0)
+                            $(".pagination2 .nav.prev").addClass("disabled");
+                    }
+
+                    this.showItems();
+                },
+                updateNavigation: function() {
+
+                    var pages = $(".pagination2 .page2");
+                    pages.removeClass("current");
+                    $('.pagination2 .page2[data-page="' + (
+                        this.currentPage + 1) + '"]').addClass("current");
+                },
+                goToPage: function(page2) {
+
+                    this.currentPage = page2 - 1;
+
+                    $(".pagination2 .nav").removeClass("disabled");
+                    if (this.currentPage == (this.totalPages - 1))
+                        $(".pagination2 .nav.next").addClass("disabled");
+
+                    if (this.currentPage == 0)
+                        $(".pagination2 .nav.prev").addClass("disabled");
+                    this.showItems();
+                },
+                showItems: function() {
+                    this.items.hide();
+                    var base = this.perPage * this.currentPage;
+                    this.items.slice(base, base + this.perPage).show();
+
+                    this.updateNavigation();
+                },
+                init: function(container, items, perPage) {
+                    this.container = container;
+                    this.currentPage = 0;
+                    this.totalPages = 1;
+                    this.perPage = perPage;
+                    this.items = items;
+                    this.createNavigation();
+                    this.showItems();
+                }
+            };
+
+            // stuff it all into a jQuery method!
+            $.fn.pagify = function(perPage, itemSelector, cPage) {
+                var el = $(this);
+                var items = $(itemSelector, el);
+
+                // default perPage to 5
+                if (isNaN(perPage) || perPage === undefined) {
+                    perPage = 3;
+                }
+
+                // don't fire if fewer items than perPage
+                if (items.length <= perPage) {
+                    return true;
+                }
+
+                pagify.init(el, items, perPage);
+            };
+            $('#pageDiv1').hide();
+            $('#pageDiv4').hide();
+            $('#pageDiv3').hide();
+
+            $(".pagination_two").pagify(5, ".pagination-element2", 2);
+        }
+        if (ffff == 3) {
+            var pagify = {
+                items: {},
+                container: null,
+                totalPages: 1,
+                perPage: 3,
+                currentPage: 0,
+                createNavigation: function() {
+                    this.totalPages = Math.ceil(this.items.length / this.perPage);
+
+                    $('.pagination', this.container.parent()).remove();
+                    var pagination3 = $('<div class="pagination3" id="pageDiv3"></div>').append('<a class="nav prev disabled" data-next="false"><</a>');
+
+                    for (var i = 0; i < this.totalPages; i++) {
+                        var pageElClass = "page3";
+                        if (!i)
+                            pageElClass = "page3 current";
+                        var pageEl = '<a class="' + pageElClass + '" data-page3="' + (
+                            i + 1) + '">' + (
+                            i + 1) + "</a>";
+                        pagination3.append(pageEl);
+                    }
+                    pagination3.append('<a class="nav next" data-next="true">></a>');
+
+                    this.container.after(pagination3);
+
+                    var that = this;
+                    $("body").off("click", ".nav");
+                    this.navigator = $("body").on("click", ".nav", function() {
+                        var el = $(this);
+                        that.navigate(el.data("next"));
+                    });
+
+                    $("body").off("click", ".page3");
+                    this.pageNavigator = $("body").on("click", ".page3", function() {
+                        var el = $(this);
+                        that.goToPage(el.data("page3"));
+                    });
+                },
+                navigate: function(next) {
+                    // default perPage to 5
+                    if (isNaN(next) || next === undefined) {
+                        next = true;
+                    }
+                    $(".pagination3 .nav").removeClass("disabled");
+                    if (next) {
+                        this.currentPage++;
+                        if (this.currentPage > (this.totalPages - 1))
+                            this.currentPage = (this.totalPages - 1);
+                        if (this.currentPage == (this.totalPages - 1))
+                            $(".pagination3 .nav.next").addClass("disabled");
+                    } else {
+                        this.currentPage--;
+                        if (this.currentPage < 0)
+                            this.currentPage = 0;
+                        if (this.currentPage == 0)
+                            $(".pagination3 .nav.prev").addClass("disabled");
+                    }
+
+                    this.showItems();
+                },
+                updateNavigation: function() {
+
+                    var pages = $(".pagination3 .page3");
+                    pages.removeClass("current");
+                    $('.pagination3 .page3[data-page="' + (
+                        this.currentPage + 1) + '"]').addClass("current");
+                },
+                goToPage: function(page3) {
+
+                    this.currentPage = page3 - 1;
+
+                    $(".pagination3 .nav").removeClass("disabled");
+                    if (this.currentPage == (this.totalPages - 1))
+                        $(".pagination3 .nav.next").addClass("disabled");
+
+                    if (this.currentPage == 0)
+                        $(".pagination3 .nav.prev").addClass("disabled");
+                    this.showItems();
+                },
+                showItems: function() {
+                    this.items.hide();
+                    var base = this.perPage * this.currentPage;
+                    this.items.slice(base, base + this.perPage).show();
+
+                    this.updateNavigation();
+                },
+                init: function(container, items, perPage) {
+                    this.container = container;
+                    this.currentPage = 0;
+                    this.totalPages = 1;
+                    this.perPage = perPage;
+                    this.items = items;
+                    this.createNavigation();
+                    this.showItems();
+                }
+            };
+
+            // stuff it all into a jQuery method!
+            $.fn.pagify = function(perPage, itemSelector, cPage) {
+                var el = $(this);
+                var items = $(itemSelector, el);
+
+                // default perPage to 5
+                if (isNaN(perPage) || perPage === undefined) {
+                    perPage = 3;
+                }
+
+                // don't fire if fewer items than perPage
+                if (items.length <= perPage) {
+                    return true;
+                }
+
+                pagify.init(el, items, perPage);
+            };
+
+
+            $('#pageDiv1').hide();
+            $('#pageDiv2').hide();
+            $('#pageDiv4').hide();
+
+            $(".pagination_three").pagify(5, ".pagination-element3", 3);
+        }
+        if (ffff == 4) {
+            var pagify = {
+                items: {},
+                container: null,
+                totalPages: 1,
+                perPage: 3,
+                currentPage: 0,
+                createNavigation: function() {
+                    this.totalPages = Math.ceil(this.items.length / this.perPage);
+
+                    $('.pagination', this.container.parent()).remove();
+                    var pagination4 = $('<div class="pagination4" id="pageDiv4" style="display:none;"></div>').append('<a class="nav prev disabled" data-next="false"><</a>');
+
+                    for (var i = 0; i < this.totalPages; i++) {
+                        var pageElClass = "page4";
+                        if (!i)
+                            pageElClass = "page4 current";
+                        var pageEl = '<a class="' + pageElClass + '" data-page4="' + (
+                            i + 1) + '">' + (
+                            i + 1) + "</a>";
+                        pagination4.append(pageEl);
+                    }
+                    pagination4.append('<a class="nav next" data-next="true">></a>');
+
+                    this.container.after(pagination4);
+
+                    var that = this;
+                    $("body").off("click", ".nav");
+                    this.navigator = $("body").on("click", ".nav", function() {
+                        var el = $(this);
+                        that.navigate(el.data("next"));
+                    });
+
+                    $("body").off("click", ".page4");
+                    this.pageNavigator = $("body").on("click", ".page4", function() {
+                        var el = $(this);
+                        that.goToPage(el.data("page4"));
+                    });
+                },
+                navigate: function(next) {
+                    // default perPage to 5
+                    if (isNaN(next) || next === undefined) {
+                        next = true;
+                    }
+                    $(".pagination4 .nav").removeClass("disabled");
+                    if (next) {
+                        this.currentPage++;
+                        if (this.currentPage > (this.totalPages - 1))
+                            this.currentPage = (this.totalPages - 1);
+                        if (this.currentPage == (this.totalPages - 1))
+                            $(".pagination4 .nav.next").addClass("disabled");
+                    } else {
+                        this.currentPage--;
+                        if (this.currentPage < 0)
+                            this.currentPage = 0;
+                        if (this.currentPage == 0)
+                            $(".pagination4 .nav.prev").addClass("disabled");
+                    }
+
+                    this.showItems();
+                },
+                updateNavigation: function() {
+
+                    var pages = $(".pagination4 .page4");
+                    pages.removeClass("current");
+                    $('.pagination4 .page4[data-page="' + (
+                        this.currentPage + 1) + '"]').addClass("current");
+                },
+                goToPage: function(page4) {
+
+                    this.currentPage = page4 - 1;
+
+                    $(".pagination4 .nav").removeClass("disabled");
+                    if (this.currentPage == (this.totalPages - 1))
+                        $(".pagination4 .nav.next").addClass("disabled");
+
+                    if (this.currentPage == 0)
+                        $(".pagination4 .nav.prev").addClass("disabled");
+                    this.showItems();
+                },
+                showItems: function() {
+                    this.items.hide();
+                    var base = this.perPage * this.currentPage;
+                    this.items.slice(base, base + this.perPage).show();
+
+                    this.updateNavigation();
+                },
+                init: function(container, items, perPage) {
+                    this.container = container;
+                    this.currentPage = 0;
+                    this.totalPages = 1;
+                    this.perPage = perPage;
+                    this.items = items;
+                    this.createNavigation();
+                    this.showItems();
+                }
+            };
+
+            // stuff it all into a jQuery method!
+            $.fn.pagify = function(perPage, itemSelector, cPage) {
+                var el = $(this);
+                var items = $(itemSelector, el);
+
+                // default perPage to 5
+                if (isNaN(perPage) || perPage === undefined) {
+                    perPage = 3;
+                }
+
+                // don't fire if fewer items than perPage
+                if (items.length <= perPage) {
+                    return true;
+                }
+
+                pagify.init(el, items, perPage);
+            };
+
+            $('#pageDiv1').hide();
+            $('#pageDiv2').hide();
+            $('#pageDiv3').hide();
+
+            $(".pagination_four").pagify(5, ".pagination-element4", 4);
+        }
+
+
+    }
+</script>
+<script>
+    function currentPagination(num) {
+
+        if (num == 1) {
+            $('#pageDiv1').show();
+            $('#pageDiv2').hide();
+            $('#pageDiv3').hide();
+            $('#pageDiv4').hide();
+        } else if (num == 2) {
+            $('#pageDiv1').hide();
+            $('#pageDiv2').show();
+            $('#pageDiv3').hide();
+            $('#pageDiv4').hide();
+        } else if (num == 3) {
+            $('#pageDiv1').hide();
+            $('#pageDiv2').hide();
+            $('#pageDiv3').show();
+            $('#pageDiv4').hide();
+        } else if (num == 4) {
+            $('#pageDiv1').hide();
+            $('#pageDiv2').hide();
+            $('#pageDiv3').hide();
+            $('#pageDiv4').show();
+        }
+    }
+</script>
+
+@include('ovm1.cal')
+<!-- End -->
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        tinymce.init({
+            selector: 'textarea#meeting_description',
+            height: 180,
+            menubar: false,
+            branding: false,
+            toolbar: 'undo redo | formatselect | ' +
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+        });
+        event.preventDefault()
+    });
+
+    const iscoordinatorfn = (event) => {
+
+        let coordinatorname = event.target.value;
+        let currentcoordinator = event.target.name;
+
+
+        getEventsDB(currentcoordinator);
+
+        //...
+    }
+</script>
+<script>
+    meeting_startdate.min = new Date().toISOString().split("T")[0];
+    meeting_enddate.min = new Date().toISOString().split("T")[0];
+</script>
+<script>
+    function newmeeting()
+
+    {
+        if (document.getElementById('enrollment_child_num').value == "") {
+            Swal.fire("Please Select Enrolment Number: ", "", "error");
+            return false;
+        }
+
+        document.getElementById('invite').style.display = "block";
+    }
+</script>
+
+<!-- //validation -->
+<script>
+    function Childame(event) {
+        let value = event.target.value || '';
+        value = value.replace(/[^a-z A-Z ]/, '', );
+        event.target.value = value;
+
+    }
+
+    function location(event) {
+        let value = event.target.value || '';
+        value = value.replace(/[^a-z A-Z ]/, '', );
+        event.target.value = value;
+
+    }
+</script>
+
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    function GetChilddetails() {
+        var enrollment_child_num = $("select[name='enrollment_child_num']").val();
+
+        if (enrollment_child_num != "") {
+            $.ajax({
+                url: "{{ url('/userregisterfee/enrollmentlist') }}",
+                type: 'POST',
+                data: {
+                    'enrollment_child_num': enrollment_child_num,
+                    _token: '{{csrf_token()}}'
+                }
+            }).done(function(data) {
+                // var category_id = json.parse(data);
+                console.log(data);
+
+                if (data != '[]') {
+
+                    // var user_select = data;
+                    var optionsdata = "";
+
+                    document.getElementById('child_id').value = data[0].child_id;
+                    document.getElementById('child_name').value = data[0].child_name;
+                    document.getElementById('meeting_to').value = data[0].child_contact_email;
+                    document.getElementById('enrollment_id').value = data[0].enrollment_id;
+
+
+                } else {
+                    document.getElementById('child_name');
+                    var ddd = '<option value="child_name">Select Enrollment_child_num</option>';
+                    var demonew = $('#child_name').html(ddd);
+                }
+            })
+        } else {
+            document.getElementById('initiated_by');
+            var ddd = '<option value="initiated_by">Select Enrollment_child_num</option>';
+            var demonew = $('#initiated_by').html(ddd);
+        }
+    };
+</script>
+
+<script>
+    function getEventsDB(current_co) {
+
+        if (current_co == 'is_coordinator1') {
+            var co_one = $('#is_coordinator1').val();
+            if (co_one != null) {
+                $('#co_one').hide();
+                getEventData(co_one, 'col1');
+                $('#co_one').show();
+            } else {
+                $('#co_one').hide();
+            }
+        } else {
+            var co_two = $('#is_coordinator2').val();
+            if (co_two != null) {
+                $('#co_two').hide();
+                getEventData(co_two, 'col2');
+                $('#co_two').show();
+            } else {
+                $('#co_two').hide();
+            }
+        }
+    }
+
+    var data1 = [];
+    var data2 = [];
+
+    function getEventData(is_ID, col) {
+
+
+        $.ajax({
+            url: '/calendar/event/getdata',
+            type: 'GET',
+            async: false,
+            data: {
+                fieldID: is_ID,
+                _token: '{{csrf_token()}}'
+            }
+        }).done(function(data) {
+            var response = JSON.parse(data);
+
+            if (col == 'col1') {
+                data1 = [];
+                for (let index = 0; index < response.length; index++) {
+                    const eventvalue = response[index];
+                    data1.push(eventvalue);
+                }
+                $('#calendar1').html('');
+                var calendar = new Calendar('#calendar1', data1);
+            } else if (col == 'col2') {
+                data2 = [];
+                for (let index = 0; index < response.length; index++) {
+                    const eventvalue = response[index];
+                    data2.push(eventvalue);
+                }
+                $('#calendar2').html('');
+                var calendar = new Calendar('#calendar2', data2);
+
+            }
+
+        });
+
+    }
+
+    function validateForm() {
+
+
+        var step1 = document.getElementById("step_value").value;
+        // alert(step1);
+        var step2 = document.getElementById("step_value2").value;
+
+
+
+        if (step1 == "no") {
+
+            document.getElementById("step_value").value = "checked";
+            document.getElementById("tab1tick").style.display = "inline-block";
+            document.getElementById("tab1tick").style.color = "green";
+        }
+
+        //alert(step2);
+        if (step1 == "checked") {
+
+            document.getElementById("step_value2").value = "checked";
+            document.getElementById("tab2tick").style.display = "inline-block";
+            document.getElementById("tab2tick").style.color = "green";
+        }
+        if (step2 == "checked") {
+
+
+            document.getElementById("tab3tick").style.display = "inline-block";
+            document.getElementById("tab3tick").style.color = "green";
+        }
+    }
+</script>
+<script>
+
+</script>
+
+@endsection

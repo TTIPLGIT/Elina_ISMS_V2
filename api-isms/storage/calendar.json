@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "elinaisms",
+  "private_key_id": "c5aa395637c9cb7554cda0c442ff6f1e0a5495c0",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC4tymvJVJVXjeU\n42WwT7pEkW/U2JC4rf3FAwRJVu+LwDTlzF+/R6Kqmscw/pSrElsdy8/MEZf1aw0l\n5BNIXSZnOhGb6askSME2r5V15UwZMWqPHttBWV4L1woC71W62yQ3RM6Et4LUtt08\n8Vut9OVhnt9Cz5UvU+9VwEwdb8196dMm7OnepJ3REXHJ7Rguzdrk6/MXQmf3vySv\nrYbJa7OiY8DhYseEwhdxab3KvJPJFEMusSsq31x8I601cqafUF4eZBwJC8G6yH6D\nsSeDkzE6CwCymyEuDup7OgpI0K4LYML93KmjRi2vK2X+xCES5PgdruugfHR56EEQ\n3dZYe2MZAgMBAAECggEAUqqWWy4mxNHfqiCC1/82a41zMRyi2CP2GH+bIX9owXCJ\nu/ZVO3PB1vxh/QlSW6VhZdpa6wdMrKb2QWjrQE1/7F7Olqpiz2BIKEM4boTqI7Q7\n7kVu9rYaIs5gSqP2CCQe9yUyD69ZO/2C0c1qrFWXerLxVCM2rvGvgP8IkXwByUFj\nXrAAGGdfy82cWJ6o9KUcalmG4euOEdsbjcx/lbnG6jj1I1PUNQ9zUxwkMEF+nv3d\n6SGSSzE4JgJTlJLgJvboZqxq1dvrvrt1m4SlIoi2XZwEh/Zl9G0OHIG0ZNFpdJeL\n32eLPRpuXHZLQL1r6fvzEYbO3CNF+XXrZRoMF+P4iQKBgQDhFqMKoqMJUxwg28W6\nVXNmENOoc5Fn0EfQl5v9VhUwx0b5QIzyA0BtHgyp6vIFrtn7S8A2RyLaW/gVLE/j\nImg2+TgmLkf6All7ZWKct3mel2aETx1KM9v0pRACrlCCWIPuw8bdug9Q4Q4s6ATz\nhBE0qb9lV7iyDizNkfVi9oTVGwKBgQDSFSWgG6nyT4L5fQ/E4i+OcSJjXNlXvRxV\nL5T9bgTuY1ybQFPAg++aavgvXWBTD2r1jYN08avBe23K6eJ3AyNn6Z7PqEGlKxPe\nYZ3yO/9hUVyQUvyt+3J2Y+mtVMxmpjuYsRvdpCRGp1rdT5RRBG7bBhUxPsdEaccs\nqmof9V2P2wKBgQCsJvAUFkezvgjpaK1V0j0sdvorABjZ2YbTluELZWdXo1I5GJG0\nF6CS1ETDQJpSlmTJuioMWWPitiyLpRSEl7A1O28iZItQP7PImMZPLlSqYwlZcFjq\ng7da6VPReRjCWIiveLUEqGVGapq45cvDo+K08I8eJ3VvWUATCeswAXOeuQKBgCAT\n+I3NC5MjTvV3givm+an/Xmfbqpg6GRRs0owr+3bHF0HhfahcvP5QLRtWX7nvFb7u\n387AhCBkD2y3b8wKX6KjSoucvoFQ5ZTERRDS1njuqnqjIVATn/Ox5+F+nENkSJ9V\nE9MxGBTtwvMeDqCcU6z/7cZ6NoUcvbv1PYUpuyKXAoGBAItbLfiq0gsNnVjxFri3\nvkpwG8BMSFArKxxqvHIzecFAEqElSns53d8XbgL0v8Yx2dVmuANf8qRICxW4zPvm\n0sC0cPSJrJhjoVsps9dmUBv+ijl+9/XiXoO1R4F1ebpGycx+XHk5oiIOP1x+9Fdf\nQgvH4QDgiODCMnK2/bkCtrbF\n-----END PRIVATE KEY-----\n",
+  "client_email": "elinaservices@elinaisms.iam.gserviceaccount.com",
+  "client_id": "100832004513925172700",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/elinaservices%40elinaisms.iam.gserviceaccount.com"
+}

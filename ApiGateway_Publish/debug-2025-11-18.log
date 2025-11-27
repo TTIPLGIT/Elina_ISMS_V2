@@ -1,0 +1,13 @@
+2025-11-18 11:02:03.6250||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-11-18 11:49:50.2627||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-11-18 13:10:27.7954||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-11-18 13:10:28.5342||WARN|Ocelot.DownstreamRouteFinder.Middleware.DownstreamRouteFinderMiddleware|requestId: 4000007a-0000-fa00-b63f-84710c7967bb, previousRequestId: no previous request id, message: DownstreamRouteFinderMiddleware setting pipeline errors. IDownstreamRouteFinder returned Error Code: UnableToFindDownstreamRouteError Message: Failed to match ReRoute configuration for upstream path: /, verb: GET. 
+2025-11-18 13:10:28.5381||WARN|Ocelot.DownstreamRouteFinder.Middleware.DownstreamRouteFinderMiddleware|requestId: 4000007a-0000-fa00-b63f-84710c7967bb, previousRequestId: no previous request id, message: Failed to match ReRoute configuration for upstream path: /, verb: GET. 
+2025-11-18 13:10:28.5381||WARN|Ocelot.Responder.Middleware.ResponderMiddleware|requestId: 4000007a-0000-fa00-b63f-84710c7967bb, previousRequestId: no previous request id, message: Error Code: UnableToFindDownstreamRouteError Message: Failed to match ReRoute configuration for upstream path: /, verb: GET. errors found in ResponderMiddleware. Setting error response for request path:/, request method: GET 
+2025-11-18 14:08:48.4337||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-11-18 15:05:09.7893||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-11-18 15:46:52.1662||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-11-18 18:56:07.6439||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-11-18 18:56:07.6439||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 
+2025-11-18 19:10:53.1920||WARN|Ocelot.Requester.DelegatingHandlerHandlerFactory|requestId: 400004c6-0001-fb00-b63f-84710c7967bb, previousRequestId: no previous request id, message: ReRoute Ocelot.Values.UpstreamPathTemplate specifies use QoS but no QosHandler found in DI container. Will use not use a QosHandler, please check your setup! 
+2025-11-18 20:44:10.9910||WARN|Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware|Failed to determine the https port for redirect. 

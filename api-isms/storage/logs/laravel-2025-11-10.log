@@ -1,0 +1,4 @@
+[2025-11-10 13:34:17] PROD.ERROR: select * from question_details WHERE questionnaire_details_id=27 ORDER BY question_field_name DESC   
+[2025-11-10 13:34:17] PROD.ERROR: {"ServiceMethod":"Method => QuestionCreationController => store_question","Exception":"SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1 text' at line 1 (SQL: ALTER TABLE Sail_KNOWINGMOREABOUTYOURCHILD ADD 1 text )"}  
+[2025-11-10 13:37:51] PROD.ERROR: {"ServiceMethod":"Method => QuestionCreationController => store_question","Exception":"There is no active transaction"}  
+[2025-11-10 13:54:08] PROD.ERROR: {"ServiceMethod":"Method => QuestionCreationController => store_question","Exception":"foreach() argument must be of type array|object, string given"}  

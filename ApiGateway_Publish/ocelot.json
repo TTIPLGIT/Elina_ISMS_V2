@@ -1,0 +1,6656 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/api/login",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/service/token",
+      "UpstreamHttpMethod": [
+        "Post"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/signedLogin",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/signedLogin",
+      "UpstreamHttpMethod": [
+        "Post"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Register",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Register/screen",
+      "UpstreamHttpMethod": [
+        "Post"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Register/screenapl",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Register/screenapl",
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Register/expcreate",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Register/expcreate",
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/generatedotp",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/generatedotp",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/VerifyOTP",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/VerifyOTP",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/register/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Register/store",
+      "UpstreamHttpMethod": [
+        "Post"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user_general/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user_general/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user_general/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user_general/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user_general/storedynamic",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user_general/storedynamicdata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user_general/updatedynamicdata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user_general/updatedynamicdata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user_general/updatedynamicdata1",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user_general/updatedynamicdata1",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/master/storequestion",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/master/storequestion",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Questionmaster/data_edit/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Questionmaster/data_edit/",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Questionmaster/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Questionmaster/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Questionmaster/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/Questionmaster/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/master/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/master/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user_general/storeeqans",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user_general/storeeqans",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user_general/updateeqans",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user_general/updateeqans",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user_general/deleteeqans",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user_general/deleteeqans",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user_general/deletegen",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user_general/deletegen",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user_general/deleteexp",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user_general/deleteexp",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user_general/deleteedu",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user_general/deleteedu",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user_general/storedynamic1",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user_general/storedynamicdata1",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/login/user",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/login/user",
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/logout",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/logout",
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/unauthenticated/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/unauthenticated/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/require_captcha",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/require_captcha",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    // api-document
+    {
+      "DownstreamPathTemplate": "/api/user/dashboard",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/dashboard",
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm1/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm1/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/g2form/getdata/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/g2form/getdata/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/g2form/list/view",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/g2form/list/view",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/lead/syj/view/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/lead/syj/view/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/g2form/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/g2form/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm1/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm1/create",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovmiscfeedback/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovmiscfeedback/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm1/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm1/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm1/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm1/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm1/completed_data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm1/completed_data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm1/completedisedit_data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm1/completedisedit_data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm1/feedbacksubmit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm1/feedbacksubmit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm1/ovmmeetingcompleted",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm1/ovmmeetingcompleted",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm1/ovmreport",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm1/ovmreport",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/assessment",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/assessment",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/recommendation/sail_recommendation",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/recommendation/sail_recommendation",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/ovm/report",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/ovm/report",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm1/ovmreportview",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm1/ovmreportview",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm1/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm1/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/elinaleadsearch/dashboard",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/elinaleadsearch/dashboard",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm1/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm1/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm2/meetinginvite",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm2/meetinginvite",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm1/meetinginvite",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm1/meetinginvite",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm1/getchilddetails/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm1/getchilddetails/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/calendar/event/getdata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/calendar/event/getdata",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm2/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm2/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm2/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm2/create",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm2/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm2/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm2/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm2/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm2/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm2/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm2/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm2/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activityinitiate/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activityinitiate/create",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activity_initiate/update_toggle",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activity_initiate/update_toggle",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/videocreation/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/videocreation/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activityinitiate/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activityinitiate/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activityinitiate/complete",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activityinitiate/complete",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activityinitiate/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activityinitiate/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activity/edit/bulk",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activity/edit/bulk",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activity/send/required",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activity/send/required",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activityinitiate/observationrecord",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activityinitiate/observationrecord",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activityinitiate/activeStatus",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activityinitiate/activeStatus",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activityinitiate/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activityinitiate/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/videocreation/createdata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/videocreation/createdata",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/videocreation/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/videocreation/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/master/videocreation/data_edit_1/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/master/videocreation/data_edit_1/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/videocreation/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/videocreation/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/videocreation/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/videocreation/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activity/materials/mapping/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activity/materials/mapping/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activityinitiate/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activityinitiate/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/parentvideo/parent_createdata/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/parentvideo/parent_createdata/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/videocreation/parentstore",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/videocreation/parentstore",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/video/parent/reject/reupload/bulk",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/video/parent/reject/reupload/bulk",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/videocreation/parentstore/bulk",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/videocreation/parentstore/bulk",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/video/creation/action",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/video/creation/action",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/videocreation/policyaggrement",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/videocreation/policyaggrement",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activityinitiate/ajax",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activityinitiate/ajax",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/parentvideo/description",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/parentvideo/description",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/parentvideo/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/parentvideo/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activity/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activity/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/assessmentreport",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/assessmentreport",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/report/list",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/report/list",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/assessmentreport/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/assessmentreport/create",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/master/assessment",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/master/assessment",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/master/assessment/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/master/assessment/create",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/master/assessment/header",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/master/assessment/header",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/areas/master/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/areas/master/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/area/master/recommendation/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/area/master/recommendation/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/areas/master/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/areas/master/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/areas/master/update_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/areas/master/update_data",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/area/master/delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/area/master/delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/master/table",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/master/table",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/sail/sail_assessment",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/sail/sail_assessment",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/master/final/submit",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/master/final/submit",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/master/assessment/header/update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/master/assessment/header/update",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/master/assessment/update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/master/assessment/update",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/master/assessment/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/master/assessment/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/master/assessment/report_store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/master/assessment/report_store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/assessment/new/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/assessment/new/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/recommendationreport",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/recommendationreport",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/recommendation/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/recommendation/create",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/recommendation/new/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/recommendation/new/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/assessment/new/update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/assessment/new/update",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/recommendation/new/update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/recommendation/new/update",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/master/assessment/edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/master/assessment/edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_modules_screens/get_sub_module",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_modules_screens/get_sub_module",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_modules/get_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_modules/get_data",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_modules/get_uam_modules",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_modules/get_uam_modules",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_modules/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_modules/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_modules/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_modules/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_modules/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_modules/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_modules/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_modules/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/userregisterfee/sailcreate",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/userregisterfee/sailcreate",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/userregisterfee/createdata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/userregisterfee/createdata",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/userregisterfee/store_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/userregisterfee/store_data",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/consent/declined",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/consent/declined",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/userregisterfee/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/userregisterfee/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/userregisterfee/create_data/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/userregisterfee/create_data/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/userregisterfee/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/userregisterfee/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment/offline/request",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment/offline/request",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/offline/payment/complete",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/offline/payment/complete",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/userregisterfee/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/userregisterfee/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/userregisterfee/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/userregisterfee/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/userregisterfee/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/userregisterfee/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/userregisterfee/enrollmentlist",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/userregisterfee/enrollmentlist",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sensory/enrollmentlist",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sensory/enrollmentlist",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/sailstatus",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/sailstatus",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/questionnaireinitiate",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/questionnaireinitiate",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/sailquestionnaireinitiate",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/sailquestionnaireinitiate",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire/graph/getdata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire/graph/getdata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/sailquestionnairelistview",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/sailquestionnairelistview",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/sailstoredata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/sailstoredata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/edit_data/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/edit_data/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sailcomplete/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sailcomplete/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/question_creation/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/question_creation/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/question_creation/question_update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/question_creation/question_update",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/question_creation/store_question",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/question_creation/store_question",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/question_creation/update_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/question_creation/update_data",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/question_creation/getdata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/question_creation/getdata",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/question_creation/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/question_creation/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/question_creation/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/question_creation/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/question_creation/get_options",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/question_creation/get_options",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/question_creation/question_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/question_creation/question_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire_for_parents/getdata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire_for_parents/getdata",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire_parents/fields/list",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire_parents/fields/list",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    //
+    {
+      "DownstreamPathTemplate": "/api/questionnaire/field/dropdown/option",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire/field/dropdown/option",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire/field/radio/option",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire/field/radio/option",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire/field/checkbox/option",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire/field/checkbox/option",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire/field/subdropdown/option",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire/field/subdropdown/option",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire/field/subradio/option",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire/field/subradio/option",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire/form/submit",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire/form/submit",
+      "UpstreamHttpMethod": [
+        "POST"
+      ],
+      "QoSOptions": {
+        "TimeoutValue": 5000000
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire/form/save",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire/form/save",
+      "UpstreamHttpMethod": [
+        "POST"
+      ],
+      "QoSOptions": {
+        "TimeoutValue": 5000000
+      }
+    },
+    //
+    {
+      "DownstreamPathTemplate": "/api/sail/category_data_get",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/category_data_get",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/getchildenrollment",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/getchildenrollment",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire_for_parents/editdata/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire_for_parents/editdata/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire_for_parents/indexlist",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire_for_parents/indexlist",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire/update_toggle",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire/update_toggle",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/reports_master/update_toggle",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/reports_master/update_toggle",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment/createdata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment/createdata",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment/createdata1/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment/createdata1/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment/storedata/email",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment/storedata/email",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/beforeenrollment/createdata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/beforeenrollment/createdata",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/validate/enrollment/user",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/validate/enrollment/user",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/schoolenrollment/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/schoolenrollment/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/beforeenrollment/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/beforeenrollment/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/beforeenrollment/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/v1/beforeenrollment/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/schoolenrollment/createdata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/schoolenrollment/createdata",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/schoolenrollment/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/schoolenrollment/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/serviveprovider/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/serviveprovider/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/schoolenrollment/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/schoolenrollment/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/internship/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/internship/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/schoolenrollment/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/schoolenrollment/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/newenrollment/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/newenrollment/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/newenrollment/internlist",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/newenrollment/internlist",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/newenrollment/servicelist",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/newenrollment/servicelist",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/newenrollment/createdata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/newenrollment/createdata",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/newenrollment/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/newenrollment/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/assessmentreport/edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/assessmentreport/edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/recommendation/edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/recommendation/edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/newenrollment/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/newenrollment/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/areaname/master/ajax",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/areaname/master/ajax",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/internview/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/internview/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/serviceproviderview/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/serviceproviderview/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/newenrollment/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/newenrollment/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v2/newenrollment/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/v2/newenrollment/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/newenrollment/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/newenrollment/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    // faq(moduleviruma)
+    {
+      "DownstreamPathTemplate": "/api/uam_data/filldynamiclist/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_data/filldynamiclist/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/login/background",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/login/background",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/FAQ_modules/get_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/FAQ_modules/get_data",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/FAQ_modules/get_FAQ_modules",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/FAQ_modules/get_FAQ_modules",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/FAQ_modules/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/FAQ_modules/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/FAQ_modules/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/FAQ_modules/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/FAQ_modules/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/FAQ_modules/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/FAQ_modules/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/FAQ_modules/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/designation/get_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/designation/get_data",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/designation/get_designation",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/designation/get_designation",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/designation/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/designation/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/designation_srm/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 505
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/designation_srm/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/designation/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/designation/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/designation_srm/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 505
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/designation_srm/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/document_category/bulkdummyupload",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/document_category/bulkdummyupload",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/document_category/checking_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/document_category/checking_data",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/designation/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/designation/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/designation/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/designation/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/FAQ_questions/get_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/FAQ_questions/get_data",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/FAQ_questions/get_FAQ_questions",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/FAQ_questions/get_FAQ_questions",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/FAQ_questions/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/FAQ_questions/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/FAQ_questions/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/FAQ_questions/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/FAQ_questions/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/FAQ_questions/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/FAQ_questions/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/FAQ_questions/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/document_category/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/document_category/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/document_category/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/document_category/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/document_category/category_data_get",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/document_category/category_data_get",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/document_category/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/document_category/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/document_category_srm/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 505
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/document_category_srm/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/roles/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/roles/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/roles/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/roles/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/roles/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/roles/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/FAQ_questions_ans/get_faq_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/FAQ_questions_ans/get_faq_data",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/FAQ_questions_ans/get_search_ques",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/FAQ_questions_ans/get_search_ques",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/FAQ_questions_ans/get_search_ans",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/FAQ_questions_ans/get_search_ans",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/FAQ_questions/update_toggle",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/FAQ_questions/update_toggle",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/document_category/update_toggle",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/document_category/update_toggle",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_screens/get_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_screens/get_data",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_screens/getscreenpermission/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_screens/getscreenpermission/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_screens/get_work_flow_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_screens/get_work_flow_data",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_screens/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_screens/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_screens/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_screens/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_screens/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_screens/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_screens/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_screens/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/privacy/update/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/privacy/update/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/privacy/policy_screen",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/privacy/policy_screen",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/privacy/publish",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/privacy/publish",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_modules_screens/screen_data_get",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_modules_screens/screen_data_get",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_modules_screens/get_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_modules_screens/get_data",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_modules_screens/getmodulesandscreens",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_modules_screens/getmodulesandscreens",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_modules_screens/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_modules_screens/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_modules_screens/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_modules_screens/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_modules_screens/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_modules_screens/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_modules_screens/get_modules_screen/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_modules_screens/get_modules_screen/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_modules_screens/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_modules_screens/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_roles/get_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_roles/get_data",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_roles/getmodulesandscreens",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_roles/getmodulesandscreens",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_roles/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_roles/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_roles/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_roles/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_roles/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_roles/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_roles/get_roles_screen/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_roles/get_roles_screen/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_roles/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_roles/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/get_user_list",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/get_user_list",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/reset_expire_data_get",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/reset_expire_data_get",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/token_expire_data_update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/token_expire_data_update",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/project_roles_list",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/project_roles_list",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/department_list",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/department_list",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/get_roles_list",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/get_roles_list",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/user_register",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/user_register",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/get_department_list",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/get_department_list",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/edit_permission/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/edit_permission/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/profilepage",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/profilepage",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/profile_update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/profile_update",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/update_toggle",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/update_toggle",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/notifications",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/notifications",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/notification_alert",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/notification_alert",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/updatedatapermission",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/updatedatapermission",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/auditlog/search",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/auditlog/search",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/auditlog/search",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/auditlog/search",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/auditlog/activity",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/auditlog/activity",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/auditlog/activity",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/auditlog/activity",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/auditlog/login",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/auditlog/login",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/auditlog/login",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/auditlog/login",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/auditlog/login_report",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/auditlog/login_report",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/auditlog/login_report",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/auditlog/login_report",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/reports/added_doc",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/reports/added_doc",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/reports/added_doc",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/reports/added_doc",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/reports/deleted_doc",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/reports/deleted_doc",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/reports/deleted_doc",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/reports/deleted_doc",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/reports/archive_doc",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/reports/archive_doc",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/reports/archive_doc",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/reports/archive_doc",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/reports/grouped_count",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/reports/grouped_count",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/reports/grouped_count",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/reports/grouped_count",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/reports/awaiting_auth",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/reports/awaiting_auth",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/reports/awaiting_auth",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/reports/awaiting_auth",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/reports/process_doc",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/reports/process_doc",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/reports/process_doc",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/reports/process_doc",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/reports/userrole",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/reports/userrole",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/reports/processflow",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/reports/processflow",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/reports/processflow",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/reports/processflow",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/reports/userrole",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/reports/userrole",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/auditlog/user_id",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/auditlog/user_id",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_data/menu_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_data/menu_data",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_data/fillscreensbasedonuser/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_data/fillscreensbasedonuser/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_data/fillscreensbasedondash/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_data/fillscreensbasedondash/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/uam_data/fillscreensbasedondocument/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/uam_data/fillscreensbasedondocument/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/forget_password",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/forget_password",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/change_password_save",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/change_password_save",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/reset_password",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/reset_password",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/reset/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/reset/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/document_category_srm/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 505
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/document_category_srm/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/tender_notice/getdata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 505
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/tender_notice/getdata",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/roles/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/roles/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/signed/form/url",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/signed/form/url",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire/signed/form/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire/signed/form/",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/signed/form/email",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/signed/form/email",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire/submitted/list",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire/submitted/list",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire/submitted/form/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire/submitted/form/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire/sensoryreport/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire/sensoryreport/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/initiate",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/initiate",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/initiate/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/initiate/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/reinitiate/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/reinitiate/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/GetIsCo",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/GetIsCo",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire_master/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire_master/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire_master/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire_master/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire_master/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire_master/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire_master/update_toggle",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire_master/update_toggle",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire_master/search",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire_master/search",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire_master/get_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire_master/get_data",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire_master/directorate",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire_master/directorate",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire_master/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire_master/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire_master/department_category_get",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire_master/department_category_get",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/question_creation/viewdata/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/question_creation/viewdata/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    //Email Preview
+    {
+      "DownstreamPathTemplate": "/api/emailpreview/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/emailpreview/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/emailpreview/getdata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/emailpreview/getdata",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/emailpreview/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/emailpreview/create",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/emailpreview/data_delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/emailpreview/data_delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/emailpreview/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/emailpreview/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/emailpreview/update_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/emailpreview/update_data",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    //In Person Meeting
+    {
+      "DownstreamPathTemplate": "/api/inperson/meeting/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/inperson/meeting/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/inperson/meeting/invite",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/inperson/meeting/invite",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/inperson/meeting/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/inperson/meeting/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/get/sail/details",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/get/sail/details",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/inperson/meeting/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/inperson/meeting/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/inperson/meeting/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/inperson/meeting/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovmallocation/meetinginvite",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovmallocation/meetinginvite",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm_allocation/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm_allocation/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm_allocation/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm_allocation/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm_allocation/getdetail/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm_allocation/getdetail/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm_allocation/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm_allocation/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm_allocation/update_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm_allocation/update_data",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm_allocation/user_update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm_allocation/user_update",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    //Compass
+    {
+      "DownstreamPathTemplate": "/api/compassstatus",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/compassstatus",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/compass/initiate/new",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/compass/initiate/new",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/compassstatus/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/compassstatus/store",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/performancearea/get_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/performancearea/get_data",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/performancearea/create_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/performancearea/create_data",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/performancearea/update_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/performancearea/update_data",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/performancearea/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/performancearea/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activityinitiate/update/video",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activityinitiate/update/video",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activityinitiate/save/video",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activityinitiate/save/video",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/signedLoginSub",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/signedLoginSub",
+      "UpstreamHttpMethod": [
+        "Post"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/referral/report/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/referral/report/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/referral/report/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/referral/report/create",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/referral/report/get_data/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/referral/report/get_data/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/referral/report/update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/referral/report/update",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/therapist/specialization/getuser",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/therapist/specialization/getuser",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/service/provider/createdata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/service/provider/createdata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/status/view",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/user/status/view",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/search/Coordinators/view",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/search/Coordinators/view",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/calendar/availability/store_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/calendar/availability/store_data",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/quadrant/questionnaire/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/quadrant/questionnaire/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/quadrant/questionnaire/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/quadrant/questionnaire/create",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/quadrant/questionnaire/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/quadrant/questionnaire/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire/validation/type",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire/validation/type",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm/template/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm/template/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/guide/save",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/guide/save",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm/template/getdata/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm/template/getdata/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/conversation/summery/getdata/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/conversation/summery/getdata/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/conversation/summery/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/conversation/summery/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/conversation/summery/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/conversation/summery/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    // 
+    // AssessmentMapping
+    {
+      "DownstreamPathTemplate": "/api/assessment/mapping/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/assessment/mapping/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/assessment/mapping/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/assessment/mapping/create",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/assessment/mapping/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/assessment/mapping/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/assessment/mapping/update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/assessment/mapping/update",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/assessment/mapping/edit",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/assessment/mapping/edit",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/store/new/assessment/skill",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/store/new/assessment/skill",
+      "UpstreamHttpMethod": [
+        "Post"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/assessment/skill/getdetails",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/assessment/skill/getdetails",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/assessment/skill/getdetails",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/assessment/skill/getdetails1",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/submitDenial",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/submitDenial",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/sail/consent/form",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/sail/consent/form",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/referral/report/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/referral/report/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/referral/report/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/referral/report/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/referral/report/data_edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/referral/report/data_edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/referral/report/send",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/referral/report/send",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/signedLoginSail",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/signedLoginSail",
+      "UpstreamHttpMethod": [
+        "Post"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire/executive_report/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire/executive_report/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/referal/accept/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/referal/accept/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    //IS-Coordinator Allocation
+    {
+      "DownstreamPathTemplate": "/api/coordinator_allocation/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/coordinator_allocation/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/coordinator/allocation/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/coordinator/allocation/store",
+      "UpstreamHttpMethod": [
+        "Post"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/coordinator/list/view",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/coordinator/list/view",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/coordinator/allocation/show/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/coordinator/allocation/show/{id}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/coordinator/allocation/edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/coordinator/allocation/edit/{id}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/coordinator/reallocation/update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/coordinator/reallocation/update",
+      "UpstreamHttpMethod": [
+        "Post"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/coordinator/cancellation/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/coordinator/cancellation/{id}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/coordinator/cancellation/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/coordinator/cancellation/store",
+      "UpstreamHttpMethod": [
+        "Post"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/allocation/list/view",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/allocation/list/view",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm_allocation/meetinginvite",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm_allocation/meetinginvite",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm/ovm_fetch",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm/ovm_fetch",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm/allocation/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm/allocation/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/meeting/date/validation",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/meeting/date/validation",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovmmeetingview",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovmmeetingview",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/check/user/session",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/check/user/session",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    // Here //
+    //Compass Registration Fee Initation
+    {
+      "DownstreamPathTemplate": "/api/register/compass/compasscreate",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/register/compass/compasscreate",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    //CompassNewmeetinginvite
+    {
+      "DownstreamPathTemplate": "/api/CompassNewmeetinginvite",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/CompassNewmeetinginvite",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/compassmeeting/therapist/specialization",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/compassmeeting/therapist/specialization",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    //hometrackerInitiate
+    {
+      "DownstreamPathTemplate": "/api/hometrackerInit",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/hometrackerInit",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    //Theraipst Allocation
+    {
+      "DownstreamPathTemplate": "/api/therapist/initation",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/therapist/initation",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    //Therapist for specilization
+    {
+      "DownstreamPathTemplate": "/api/therapist/specialization",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/therapist/specialization",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    //progress status
+    {
+      "DownstreamPathTemplate": "/api/progress/status",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/progress/status",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/therapist/weeklycal",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/therapist/weeklycal",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    //Therapist review meeting 
+    {
+      "DownstreamPathTemplate": "/api/parents/review/invite",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/parents/review/invite",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    //review meeting
+    {
+      "DownstreamPathTemplate": "/api/therapist/review/invite",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/therapist/review/invite",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/therapist/specialization/review",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/therapist/specialization/review",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    //weekly feedback 
+    {
+      "DownstreamPathTemplate": "/api/weeklyfeedbackInit",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/weeklyfeedbackInit",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    //monthly calendarlist
+    {
+      "DownstreamPathTemplate": "/api/monthly/viewcal",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/monthly/viewcal",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/parentvideo13/description",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/parentvideo13/description",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm1/completed_isedit_data_edit/{id}/{meet}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm1/completed_isedit_data_edit/{id}/{meet}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovmisc_feedback/update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovmisc_feedback/update",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/autosave/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/autosave/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ovm1/resend",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/ovm1/resend",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/assessmentreport/observation",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/assessmentreport/observation",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/meeting_description_ass/update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/meeting_description_ass/update",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire/updateoption",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire/updateoption",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/parentvideo/materials",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/parentvideo/materials",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/parentvideo/f2fdescription",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/parentvideo/f2fdescription",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activity/f2f/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activity/f2f/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activity/f2f/edit/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activity/f2f/edit/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activity/f2f/show/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activity/f2f/show/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activity/f2f/delete",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activity/f2f/delete",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activity/f2f/update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activity/f2f/update",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/activity/f2f/fetch",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activity/f2f/fetch",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment_master/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment_master/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment_master/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment_master/create",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment_master/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment_master/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/questionnaire/updateoption/parent",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/questionnaire/updateoption/parent",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment_master/show",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment_master/show",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment_master/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment_master/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment/master/toggle_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment/master/toggle_data",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment/master/hold_data",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment/master/hold_data",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment/master/cancel",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment/master/cancel",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/report/republish/get_data/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/report/republish/get_data/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/assessment/report/republish",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/assessment/report/republish",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/assessment/report/get/comments",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/assessment/report/get/comments",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/business/affiliate/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/business/affiliate/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/business/affiliate/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/business/affiliate/create",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/business/affiliate/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/business/affiliate/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/business/affiliate/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/business/affiliate/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/business/affiliate/getdata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/business/affiliate/getdata",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment/customized/sail/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment/customized/sail/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment/customized/sail/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment/customized/sail/create",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment/customized/sail/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment/customized/sail/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment/customized/sail/updatedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment/customized/sail/updatedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/payment/customized/sail/getdata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/payment/customized/sail/getdata",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/service/briefing/master",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/service/briefing/master",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/service/briefing/master/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/service/briefing/master/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/service/briefing/master/update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/service/briefing/master/update",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:700"
+  }
+}
