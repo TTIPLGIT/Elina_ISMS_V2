@@ -751,9 +751,9 @@ class ParentvideouploadController extends BaseController
                 return $enID;
             });
 
-            $rejectedReOpen = DB::table('parent_video_upload')->where('activity_description_id', $input['rejectedReOpen']) 
-            ->where('enrollment_id' , $enrollID)
-            ->first();
+            $rejectedReOpen = DB::table('parent_video_upload')->where('activity_description_id', $input['rejectedReOpen'])
+                ->where('enrollment_id', $enrollID)
+                ->first();
             $rejectedReOpenID = $rejectedReOpen->activity_initiation_id ?? null;
 
             $serviceResponse = array();
@@ -864,9 +864,21 @@ class ParentvideouploadController extends BaseController
                             ]);
                         } else {
                             $lvc = DB::select("SELECT * FROM latest_video_comments WHERE parent_video_upload_id = $pId and created_by = " . auth()->user()->id . " ORDER BY id DESC");
-                            DB::table('latest_video_comments')
-                                ->where('id', $lvc[0]->id)
-                                ->update([
+                            if (!empty($lvc)) {
+                                DB::table('latest_video_comments')
+                                    ->where('id', $lvc[0]->id)
+                                    ->update([
+                                        'parent_video_upload_id' => $pId,
+                                        'activity_initiation_id' => $pvu[0]->activity_initiation_id,
+                                        'user_name' => auth()->user()->name,
+                                        'active_status' => $state,
+                                        'created_by' => auth()->user()->id,
+                                        'created_at' => NOW(),
+                                        'comments' => $comments[$pId],
+                                        'role' => $role_name[0]->role_name
+                                    ]);
+                            } else {
+                                DB::table('latest_video_comments')->insertGetId([
                                     'parent_video_upload_id' => $pId,
                                     'activity_initiation_id' => $pvu[0]->activity_initiation_id,
                                     'user_name' => auth()->user()->name,
@@ -876,6 +888,7 @@ class ParentvideouploadController extends BaseController
                                     'comments' => $comments[$pId],
                                     'role' => $role_name[0]->role_name
                                 ]);
+                            }
                         }
                     }
                 }
@@ -889,8 +902,8 @@ class ParentvideouploadController extends BaseController
                 // $state = 'Submitted';
 
                 $restoreActivityID = DB::table('parent_video_upload')
-                ->where('activity_description_id', $input['restorePage'])
-                ->value('activity_id');
+                    ->where('activity_description_id', $input['restorePage'])
+                    ->value('activity_id');
 
                 if ($input['submit_type'] == "Submit") {
 
