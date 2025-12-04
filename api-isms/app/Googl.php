@@ -21,7 +21,7 @@ class Googl
         // $email = 'aathish.mani@1daymaidservices.com';
         // Log::error($workspace_email);
         $client = new Google_Client();
-        $jsonKey = storage_path('elina_calendar.json');
+        $jsonKey = storage_path('elina-calendar-v2.json');
         $client->setApplicationName('iCalEvent');
         $client->setScopes(['https://www.googleapis.com/auth/calendar']);
         $client->setAuthConfig($jsonKey);
@@ -41,7 +41,7 @@ class Googl
         $client = new Google_Client();
         $client->setApplicationName('iCalEvent');
         $client->setScopes(['https://www.googleapis.com/auth/admin.directory.user']);
-        $client->setAuthConfig(storage_path('elina_calendar.json'));
+        $client->setAuthConfig(storage_path('elina-calendar-v2.json'));
         $client->setAccessType('offline');
         $client->setPrompt('select_account consent');
         $client->setApprovalPrompt('force');
