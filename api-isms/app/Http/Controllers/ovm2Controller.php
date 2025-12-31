@@ -214,6 +214,9 @@ class ovm2Controller extends BaseController
             // $endTime = $inputArray['meeting_enddate'] . 'T' . $inputArray['meeting_endtime'] . ':00';
 
             // Date - DD/MM/YYYY
+            if (substr_count($inputArray['meeting_starttime'], ':') === 1) {
+                $inputArray['meeting_starttime'] .= ':00';
+            }
             $date_str = $inputArray['meeting_startdate'] . $inputArray['meeting_starttime'];
             $date_obj = DateTime::createFromFormat('d/m/Y H:i:s', $date_str , new DateTimeZone('Asia/Kolkata'));
 
@@ -227,6 +230,9 @@ class ovm2Controller extends BaseController
                 $startTime = $date_obj->format('c');
             }
 
+            if (substr_count($inputArray['meeting_endtime'], ':') === 1) {
+                $inputArray['meeting_endtime'] .= ':00';
+            }
             $date_str = $inputArray['meeting_enddate'] . $inputArray['meeting_endtime'];
             $date_obj = DateTime::createFromFormat('d/m/Y H:i:s', $date_str, new DateTimeZone('Asia/Kolkata'));
 
@@ -657,7 +663,10 @@ class ovm2Controller extends BaseController
             // $startTime = $inputArray['meeting_startdate'] . 'T' . $inputArray['meeting_starttime'] . ':00';
             // $endTime = $inputArray['meeting_enddate'] . 'T' . $inputArray['meeting_endtime'] . ':00';
             // Date - DD/MM/YYYY
-            $date_str = $inputArray['meeting_startdate'] . $inputArray['meeting_starttime'] . ':00';
+            if (substr_count($inputArray['meeting_starttime'], ':') === 1) {
+                $inputArray['meeting_starttime'] .= ':00';
+            }
+            $date_str = $inputArray['meeting_startdate'] . $inputArray['meeting_starttime'];
             $date_obj = DateTime::createFromFormat('d/m/Y H:i:s', $date_str , new DateTimeZone('Asia/Kolkata'));
 
             if ($date_obj instanceof DateTime) {
@@ -670,7 +679,10 @@ class ovm2Controller extends BaseController
                 $startTime = $date_obj->format('c');
             }
 
-            $date_str = $inputArray['meeting_enddate'] . $inputArray['meeting_endtime'] . ':00';
+            if (substr_count($inputArray['meeting_endtime'], ':') === 1) {
+                $inputArray['meeting_endtime'] .= ':00';
+            }
+            $date_str = $inputArray['meeting_enddate'] . $inputArray['meeting_endtime'];
             $date_obj = DateTime::createFromFormat('d/m/Y H:i:s', $date_str, new DateTimeZone('Asia/Kolkata'));
 
             if ($date_obj instanceof DateTime) {

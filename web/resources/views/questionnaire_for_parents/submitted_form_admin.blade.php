@@ -811,25 +811,19 @@
                     if (question_details_id == fieldID) {
                         currentOption.push(option_field_name);
                         var checkOther2 = currentOption2.includes(fieldValue);
-                        if (fieldValue == option_field_name) {
-                            radioButtonHtml += '<div class="radio">';
-                            if (other_flag == 1) {
-                                radioButtonHtml += '<label><input data-required="' + requiredQuestion + '" style="margin-right: 10px;" class="pagination' + num + ' Qradio" other-flag=' + other_flag + ' othersub="otherOption_' + option_question_fields_id + '" name="' + fieldName + '" type="radio"  id="' + fieldName + '" value="' + option_field_name + '" onclick="showInputSub(' + fieldName + ',' + option_question_fields_id + ')" checked><i class="helper"></i>' + option_field_name;
-                                radioButtonHtml += '<input type="text" class="otherOption_' + option_question_fields_id + ' otherOption' + fieldName + '" ' + (checkOther2 == false ? ' value="' + fieldValue + '" style="opacity: 1;width: 589px;margin: -2px 0px 0px 80px;pointer-events:none !important;"' : 'value="" style="opacity: 1;display:none;width: 589px;margin: -2px 0px 0px 80px;"') + ' name="' + fieldName + '">';
-                            } else {
-                                radioButtonHtml += '<label><input data-required="' + requiredQuestion + '" style="margin-right: 10px;" class="pagination' + num + ' Qradio" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="' + option_field_name + '" onclick="showInput(' + fieldName + ')" checked><i class="helper"></i>' + option_field_name;
-                            }
-                            radioButtonHtml += '</label></div>';
+                        var optionMatches = fieldValue == option_field_name;
+                        var otherSelected = other_flag == 1 && !checkOther2 && fieldValue != null && fieldValue !== '';
+                        var isSelected = optionMatches || otherSelected;
+                        var textValue = otherSelected ? fieldValue : '';
+
+                        radioButtonHtml += '<div class="radio">';
+                        if (other_flag == 1) {
+                            radioButtonHtml += '<label><input disabled data-required="' + requiredQuestion + '" style="margin-right: 10px;" class="pagination' + num + ' Qradio" other-flag=' + other_flag + ' othersub="otherOption_' + option_question_fields_id + '" name="' + fieldName + '" type="radio"  id="' + fieldName + '" value="' + option_field_name + '" onclick="showInputSub(' + fieldName + ',' + option_question_fields_id + ')" ' + (isSelected ? 'checked' : '') + '><i class="helper"></i>' + option_field_name;
+                            radioButtonHtml += '<input type="text" disabled readonly class="otherOption_' + option_question_fields_id + ' otherOption' + fieldName + '" ' + (isSelected ? ' value="' + textValue + '" style="opacity: 1;width: 50%;margin: 5px 0px 0px 80px;display: block;pointer-events:none !important;background-color:white !important;color:black !important;"' : 'value="" style="opacity: 1;display:none;width: 50%;margin: 5px 0px 0px 80px;pointer-events:none !important;" disabled') + ' name="' + fieldName + '">';
                         } else {
-                            radioButtonHtml += '<div class="radio">';
-                            if (other_flag == 1) {
-                                radioButtonHtml += '<label><input data-required="' + requiredQuestion + '" style="margin-right: 10px;" class="pagination' + num + ' Qradio" other-flag=' + other_flag + ' othersub="otherOption_' + option_question_fields_id + '" name="' + fieldName + '" type="radio"  id="' + fieldName + '" value="' + option_field_name + '" onclick="showInputSub(' + fieldName + ',' + option_question_fields_id + ')" checked disabled><i class="helper"></i>' + option_field_name;
-                                radioButtonHtml += '<input type="text" class="otherOption_' + option_question_fields_id + ' otherOption' + fieldName + '" ' + (checkOther2 == false ? ' value="' + fieldValue + '" style="opacity: 1;width: 589px;margin: -2px 0px 0px 80px;pointer-events:none !important;"' : 'value="" style="opacity: 1;display:none;width: 589px;margin: -2px 0px 0px 80px;" ') + ' name="' + fieldName + '">';
-                            } else {
-                                radioButtonHtml += '<label><input data-required="' + requiredQuestion + '" style="margin-right: 10px;" class="pagination' + num + ' Qradio" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="' + option_field_name + '" onclick="showInput(' + fieldName + ')" disabled><i class="helper" style="opacity:0.1"></i>' + option_field_name;
-                            }
-                            radioButtonHtml += '</label></div>';
+                            radioButtonHtml += '<label><input disabled data-required="' + requiredQuestion + '" style="margin-right: 10px;" class="pagination' + num + ' Qradio" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="' + option_field_name + '" onclick="showInput(' + fieldName + ')" ' + (isSelected ? 'checked' : '') + '><i class="helper" style="' + (isSelected ? '' : 'opacity:0.1') + '"></i>' + option_field_name;
                         }
+                        radioButtonHtml += '</label></div>';
                     }
 
                 }
@@ -841,13 +835,13 @@
 
                     if (setcheckOther == true) {
                         radioButtonHtml += '<div class="radio">';
-                        radioButtonHtml += '<label><input style="margin-right: 10px;" class="pagination' + num + ' Qradio" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="Others" onclick="showInput(' + fieldName + ')" checked><i class="helper"></i> ' + (fieldID == '106' ? 'If yes, please mention the reason <br/>' : 'Others');
-                        radioButtonHtml += '<input data-required="' + requiredQuestion + '" type="text" class="otherOption' + fieldName + '" value="' + fieldValue + '" ' + (fieldID == '106' ? 'style="opacity: 1;width: 589px;margin: -2px 0px 0px 30px;pointer-events:none !important;"' : 'style="opacity: 1;width: 589px;margin: -2px 0px 0px 80px;"') + ' name="' + fieldName + '">';
+                        radioButtonHtml += '<label><input style="margin-right: 10px;" class="pagination' + num + ' Qradio" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="Others" onclick="showInput(' + fieldName + ')" checked disabled><i class="helper"></i> ' + (fieldID == '106' ? 'If yes, please mention the reason <br/>' : 'Others');
+                        radioButtonHtml += '<input data-required="' + requiredQuestion + '" type="text" disabled readonly class="otherOption' + fieldName + '" value="' + fieldValue + '" ' + (fieldID == '106' ? 'style="opacity: 1;width: 50%;margin: 5px 0px 0px 30px;display: block;pointer-events:none !important;background-color:white !important;color:black !important;"' : 'style="opacity: 1;width: 50%;margin: 5px 0px 0px 80px;display: block;pointer-events:none !important;background-color:white !important;color:black !important;"') + ' name="' + fieldName + '">';
                         radioButtonHtml += '</label></div>';
                     } else {
                         radioButtonHtml += '<div class="radio">';
                         radioButtonHtml += '<label><input style="margin-right: 10px;" class="pagination' + num + ' Qradio" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="Others" onclick="showInput(' + fieldName + ')" disabled><i class="helper" style="opacity:0.1"></i> Others';
-                        radioButtonHtml += '<input disabled data-required="' + requiredQuestion + '" type="text" class="otherOption' + fieldName + '" ' + (fieldID == '106' ? 'style="opacity: 1;display:none;margin: -2px 0px 0px 30px;width: 589px;pointer-events:none !important;"' : 'style="opacity: 1;display:none;margin: -2px 0px 0px 80px;width: 589px;"') + ' name="' + fieldName + '">';
+                        radioButtonHtml += '<input disabled data-required="' + requiredQuestion + '" type="text" class="otherOption' + fieldName + '" ' + (fieldID == '106' ? 'style="opacity: 1;display:none;width: 50%;margin: 5px 0px 0px 30px;pointer-events:none !important;"' : 'style="opacity: 1;display:none;width: 50%;margin: 5px 0px 0px 80px;pointer-events:none !important;"') + ' name="' + fieldName + '">';
                         radioButtonHtml += '</label></div>';
                     }
                 }
@@ -907,31 +901,33 @@
                         currentOption.push(option_field_name);
                         if (obj != null) {
                             if (obj.includes(option_field_name)) {
-                                radioButtonHtml += `<label><input onclick="return false" class="pagination${num}" type="checkbox" name="${fieldName}[]" id="${fieldName}" value="${option_field_name}" checked><i class="helper"></i>${option_field_name}</label>`;
+                                radioButtonHtml += `<label><input disabled onclick="return false" class="pagination${num}" type="checkbox" name="${fieldName}[]" id="${fieldName}" value="${option_field_name}" checked><i class="helper"></i>${option_field_name}</label>`;
                             } else {
-                                radioButtonHtml += `<label><input class="pagination${num}" type="checkbox" name="${fieldName}[]" id="${fieldName}" value="${option_field_name}" onclick="return false"><i class="helper" style="opacity: 0.1;"></i>${option_field_name}</label>`;
+                                radioButtonHtml += `<label><input disabled class="pagination${num}" type="checkbox" name="${fieldName}[]" id="${fieldName}" value="${option_field_name}" onclick="return false"><i class="helper" style="opacity: 0.1;"></i>${option_field_name}</label>`;
                             }
                         } else {
-                            radioButtonHtml += `<label><input onclick="return false" class="pagination${num}" type="checkbox" name="${fieldName}[]" id="${fieldName}" value="${option_field_name}"><i class="helper" style="opacity: 0.1;"></i>${option_field_name}</label>`;
+                            radioButtonHtml += `<label><input disabled onclick="return false" class="pagination${num}" type="checkbox" name="${fieldName}[]" id="${fieldName}" value="${option_field_name}"><i class="helper" style="opacity: 0.1;"></i>${option_field_name}</label>`;
                         }
                     }
                 }
                 if (otherOption == 1) {
                     let setcheckOther = false;
                     var missingValues = '';
-                    for (var i = 0; i < obj.length; i++) {
-                        if (!currentOption.includes(obj[i])) {
-                            setcheckOther = true;
-                            missingValues = obj[i];
-                            break;
+                    if (obj) {
+                        for (var i = 0; i < obj.length; i++) {
+                            if (!currentOption.includes(obj[i])) {
+                                setcheckOther = true;
+                                missingValues = obj[i];
+                                break;
+                            }
                         }
                     }
                     if (setcheckOther == true) {
-                        radioButtonHtml += '<label><input onclick="return false" class="pagination' + num + ' otherOption' + fieldName + '" type="checkbox" id="' + fieldName + '" onclick="showInputOthers(' + fieldName + ')" checked><i class="helper"></i>Others';
-                        radioButtonHtml += '<input type="text" disabled class="otherField' + fieldName + '" value="' + missingValues + '" style="display:inline;opacity: 1;border: 1px solid;pointer-events:none !important;" name="' + fieldName + '[]"></label>';
+                        radioButtonHtml += '<label style="display:block;margin-bottom:4px;"><input disabled onclick="return false" class="pagination' + num + ' otherOption' + fieldName + '" type="checkbox" id="' + fieldName + '" checked><i class="helper"></i>Others</label>';
+                        radioButtonHtml += '<input type="text" disabled class="otherField' + fieldName + '" value="' + missingValues + '" placeholder="Please specify" style="display:block;margin: 0 0 24px 25px;width: 50%;opacity: 1;border: 1px solid;pointer-events:none !important;background-color:white !important;color:black !important;" name="' + fieldName + '[]">';
                     } else {
-                        radioButtonHtml += '<label><input onclick="return false" class="pagination' + num + ' otherOption' + fieldName + '" type="checkbox" id="' + fieldName + '" onclick="showInputOthers(' + fieldName + ')"><i class="helper" style="opacity: 0.1;"></i>Others';
-                        radioButtonHtml += '<input disabled type="text" class="otherField' + fieldName + '" style="opacity: 1;display:none;border: 1px solid;pointer-events:none !important;" name="' + fieldName + '[]"></label>';
+                        radioButtonHtml += '<label style="display:block;margin-bottom:4px;"><input disabled onclick="return false" class="pagination' + num + ' otherOption' + fieldName + '" type="checkbox" id="' + fieldName + '"><i class="helper" style="opacity: 0.1;"></i>Others</label>';
+                        radioButtonHtml += '<input disabled type="text" class="otherField' + fieldName + '" value="" placeholder="Please specify" style="display:none;margin: 0 0 24px 25px;width: 50%;opacity: 1;border: 1px solid;pointer-events:none !important;background-color:white !important;color:black !important;" name="' + fieldName + '[]">';
                     }
                 }
                 radioButtonHtml += `</div></div>`;
@@ -2134,17 +2130,34 @@
         }
     });
     
+    // Ensure all "Others" option text fields are disabled and read-only
+    $(document).ready(function() {
+        $('input[class*="otherOption"], input[class*="otherField"]').each(function() {
+            $(this).prop('disabled', true);
+            $(this).prop('readOnly', true);
+            $(this).css({
+                'pointer-events': 'none',
+                'background-color': 'white',
+                'color': 'black'
+            });
+        });
+    });
+    
     function showInput(nameField) {
         var otherInput = document.getElementsByClassName("otherOption" + nameField[0].id);
         for (var i = 0; i < nameField.length; i++) {
             if (nameField[i].checked) {
                 if (nameField[i].value == 'Others') {
-                    otherInput[0].style.display = "inline";
+                    otherInput[0].style.display = "block";
+                    otherInput[0].style.marginTop = "5px";
+                    otherInput[0].style.marginLeft = "80px";
+                    otherInput[0].style.width = "50%";
                     otherInput[0].style.border = "1px solid black";
-                    otherInput[0].disabled = false;
+                    otherInput[0].disabled = true;
+                    otherInput[0].readOnly = true;
                     otherInput[0].style.pointerEvents = "none";
-                    
-
+                    otherInput[0].style.backgroundColor = "white";
+                    otherInput[0].style.color = "black";
                 } else {
                     otherInput[0].style.display = "none";
                     otherInput[0].disabled = true;
@@ -2162,10 +2175,16 @@
             var othersubinputElement = document.getElementsByClassName(othersub)[0];
 
             if (nameField[i].checked) {
-                otherInput[0].style.display = "inline";
+                otherInput[0].style.display = "block";
+                otherInput[0].style.marginTop = "5px";
+                otherInput[0].style.marginLeft = "80px";
+                otherInput[0].style.width = "50%";
                 otherInput[0].style.border = "1px solid black";
-                otherInput[0].disabled = false;
+                otherInput[0].disabled = true;
+                otherInput[0].readOnly = true;
                 otherInput[0].style.pointerEvents = "none";
+                otherInput[0].style.backgroundColor = "white";
+                otherInput[0].style.color = "black";
             } else {
                 otherInput[0].style.display = "none";
                 otherInput[0].disabled = true;
@@ -2177,10 +2196,16 @@
         // alert(nameField[0].id);
         var checkbox = document.getElementsByClassName("otherField" + nameField[0].id);
         if ($('.otherOption' + nameField[0].id).prop('checked')) {
-            checkbox[0].style.display = "inline";
+            checkbox[0].style.display = "block";
+            checkbox[0].style.marginTop = "5px";
+            checkbox[0].style.marginLeft = "25px";
+            checkbox[0].style.width = "50%";
             checkbox[0].style.border = "1px solid black";
-            checkbox[0].disabled = false;
+            checkbox[0].disabled = true;
+            checkbox[0].readOnly = true;
             checkbox[0].style.pointerEvents = "none";
+            checkbox[0].style.backgroundColor = "white";
+            checkbox[0].style.color = "black";
         } else {
             checkbox[0].style.display = "none";
             checkbox[0].disabled = true;

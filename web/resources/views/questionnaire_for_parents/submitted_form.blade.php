@@ -811,25 +811,19 @@
                     if (question_details_id == fieldID) {
                         currentOption.push(option_field_name);
                         var checkOther2 = currentOption2.includes(fieldValue);
-                        if (fieldValue == option_field_name) {
-                            radioButtonHtml += '<div class="radio">';
-                            if (other_flag == 1) {
-                                radioButtonHtml += '<label><input data-required="' + requiredQuestion + '" style="margin-right: 10px;" class="pagination' + num + ' Qradio" other-flag=' + other_flag + ' othersub="otherOption_' + option_question_fields_id + '" name="' + fieldName + '" type="radio"  id="' + fieldName + '" value="' + option_field_name + '" onclick="showInputSub(' + fieldName + ',' + option_question_fields_id + ')" checked><i class="helper"></i>' + option_field_name;
-                                radioButtonHtml += '<input type="text" class="otherOption_' + option_question_fields_id + ' otherOption' + fieldName + '" ' + (checkOther2 == false ? ' value="' + fieldValue + '" style="opacity: 1;width: 589px;margin: -2px 0px 0px 80px;pointer-events:none !important;"' : 'value="" style="opacity: 1;display:none;width: 589px;margin: -2px 0px 0px 80px;"') + ' name="' + fieldName + '">';
-                            } else {
-                                radioButtonHtml += '<label><input data-required="' + requiredQuestion + '" style="margin-right: 10px;" class="pagination' + num + ' Qradio" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="' + option_field_name + '" onclick="showInput(' + fieldName + ')" checked><i class="helper"></i>' + option_field_name;
-                            }
-                            radioButtonHtml += '</label></div>';
+                        var optionMatches = fieldValue == option_field_name;
+                        var otherSelected = other_flag == 1 && !checkOther2 && fieldValue != null && fieldValue !== '';
+                        var isSelected = optionMatches || otherSelected;
+                        var textValue = otherSelected ? fieldValue : '';
+
+                        radioButtonHtml += '<div class="radio">';
+                        if (other_flag == 1) {
+                            radioButtonHtml += '<label><input disabled data-required="' + requiredQuestion + '" style="margin-right: 10px;" class="pagination' + num + ' Qradio" other-flag=' + other_flag + ' othersub="otherOption_' + option_question_fields_id + '" name="' + fieldName + '" type="radio"  id="' + fieldName + '" value="' + option_field_name + '" onclick="showInputSub(' + fieldName + ',' + option_question_fields_id + ')" ' + (isSelected ? 'checked' : '') + '><i class="helper"></i>' + option_field_name;
+                            radioButtonHtml += '<input type="text" class="otherOption_' + option_question_fields_id + ' otherOption' + fieldName + '" ' + (isSelected ? ' value="' + textValue + '" style="opacity: 1;width: 589px;margin: -2px 0px 0px 80px;pointer-events:none !important;"' : 'value="" style="opacity: 1;display:none;width: 589px;margin: -2px 0px 0px 80px;" disabled') + ' name="' + fieldName + '">';
                         } else {
-                            radioButtonHtml += '<div class="radio">';
-                            if (other_flag == 1) {
-                                radioButtonHtml += '<label><input data-required="' + requiredQuestion + '" style="margin-right: 10px;" class="pagination' + num + ' Qradio" other-flag=' + other_flag + ' othersub="otherOption_' + option_question_fields_id + '" name="' + fieldName + '" type="radio"  id="' + fieldName + '" value="' + option_field_name + '" onclick="showInputSub(' + fieldName + ',' + option_question_fields_id + ')" checked disabled><i class="helper"></i>' + option_field_name;
-                                radioButtonHtml += '<input type="text" class="otherOption_' + option_question_fields_id + ' otherOption' + fieldName + '" ' + (checkOther2 == false ? ' value="' + fieldValue + '" style="opacity: 1;width: 589px;margin: -2px 0px 0px 80px;pointer-events:none !important;"' : 'value="" style="opacity: 1;display:none;width: 589px;margin: -2px 0px 0px 80px;" ') + ' name="' + fieldName + '">';
-                            } else {
-                                radioButtonHtml += '<label><input data-required="' + requiredQuestion + '" style="margin-right: 10px;" class="pagination' + num + ' Qradio" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="' + option_field_name + '" onclick="showInput(' + fieldName + ')" disabled><i class="helper" style="opacity:0.1"></i>' + option_field_name;
-                            }
-                            radioButtonHtml += '</label></div>';
+                            radioButtonHtml += '<label><input disabled data-required="' + requiredQuestion + '" style="margin-right: 10px;" class="pagination' + num + ' Qradio" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="' + option_field_name + '" onclick="showInput(' + fieldName + ')" ' + (isSelected ? 'checked' : '') + '><i class="helper" style="' + (isSelected ? '' : 'opacity:0.1;') + '"></i>' + option_field_name;
                         }
+                        radioButtonHtml += '</label></div>';
                     }
 
                 }
@@ -907,31 +901,33 @@
                         currentOption.push(option_field_name);
                         if (obj != null) {
                             if (obj.includes(option_field_name)) {
-                                radioButtonHtml += `<label><input onclick="return false" class="pagination${num}" type="checkbox" name="${fieldName}[]" id="${fieldName}" value="${option_field_name}" checked><i class="helper"></i>${option_field_name}</label>`;
+                                radioButtonHtml += `<label><input disabled onclick="return false" class="pagination${num}" type="checkbox" name="${fieldName}[]" id="${fieldName}" value="${option_field_name}" checked><i class="helper"></i>${option_field_name}</label>`;
                             } else {
-                                radioButtonHtml += `<label><input class="pagination${num}" type="checkbox" name="${fieldName}[]" id="${fieldName}" value="${option_field_name}" onclick="return false"><i class="helper" style="opacity: 0.1;"></i>${option_field_name}</label>`;
+                                radioButtonHtml += `<label><input disabled class="pagination${num}" type="checkbox" name="${fieldName}[]" id="${fieldName}" value="${option_field_name}" onclick="return false"><i class="helper" style="opacity: 0.1;"></i>${option_field_name}</label>`;
                             }
                         } else {
-                            radioButtonHtml += `<label><input onclick="return false" class="pagination${num}" type="checkbox" name="${fieldName}[]" id="${fieldName}" value="${option_field_name}"><i class="helper" style="opacity: 0.1;"></i>${option_field_name}</label>`;
+                            radioButtonHtml += `<label><input disabled onclick="return false" class="pagination${num}" type="checkbox" name="${fieldName}[]" id="${fieldName}" value="${option_field_name}"><i class="helper" style="opacity: 0.1;"></i>${option_field_name}</label>`;
                         }
                     }
                 }
                 if (otherOption == 1) {
                     let setcheckOther = false;
                     var missingValues = '';
-                    for (var i = 0; i < obj.length; i++) {
-                        if (!currentOption.includes(obj[i])) {
-                            setcheckOther = true;
-                            missingValues = obj[i];
-                            break;
+                    if (obj) {
+                        for (var i = 0; i < obj.length; i++) {
+                            if (!currentOption.includes(obj[i])) {
+                                setcheckOther = true;
+                                missingValues = obj[i];
+                                break;
+                            }
                         }
                     }
                     if (setcheckOther == true) {
-                        radioButtonHtml += '<label><input onclick="return false" class="pagination' + num + ' otherOption' + fieldName + '" type="checkbox" id="' + fieldName + '" onclick="showInputOthers(' + fieldName + ')" checked><i class="helper"></i>Others';
-                        radioButtonHtml += '<input type="text" disabled class="otherField' + fieldName + '" value="' + missingValues + '" style="display:inline;opacity: 1;border: 1px solid;pointer-events:none !important;" name="' + fieldName + '[]"></label>';
+                        radioButtonHtml += '<label style="display:block;margin-bottom:4px;"><input disabled class="pagination' + num + ' otherOption' + fieldName + '" type="checkbox" id="' + fieldName + '" checked><i class="helper"></i>Others</label>';
+                        radioButtonHtml += '<input type="text" disabled class="otherField' + fieldName + '" value="' + missingValues + '" placeholder="Please specify" style="display:block;margin: 0 0 24px 25px;width: 50%;opacity: 1;border: 1px solid;pointer-events:none !important;background-color:white !important;color:black !important;" name="' + fieldName + '[]">';
                     } else {
-                        radioButtonHtml += '<label><input onclick="return false" class="pagination' + num + ' otherOption' + fieldName + '" type="checkbox" id="' + fieldName + '" onclick="showInputOthers(' + fieldName + ')"><i class="helper" style="opacity: 0.1;"></i>Others';
-                        radioButtonHtml += '<input disabled type="text" class="otherField' + fieldName + '" style="opacity: 1;display:none;border: 1px solid;pointer-events:none !important;" name="' + fieldName + '[]"></label>';
+                        radioButtonHtml += '<label style="display:block;margin-bottom:4px;"><input disabled class="pagination' + num + ' otherOption' + fieldName + '" type="checkbox" id="' + fieldName + '" ' + (obj && obj.length ? 'checked' : '') + '><i class="helper" style="' + ((obj && obj.length) ? '' : 'opacity: 0.1;') + '"></i>Others</label>';
+                        radioButtonHtml += '<input disabled type="text" class="otherField' + fieldName + '" value="' + (obj && obj.length ? obj[0] : '') + '" placeholder="Please specify" style="opacity: 1;' + ((obj && obj.length) ? 'display:block;' : 'display:none;') + 'margin: 0 0 24px 25px;width: 50%;border: 1px solid;pointer-events:none !important;background-color:white !important;color:black !important;" name="' + fieldName + '[]">';
                     }
                 }
                 radioButtonHtml += `</div></div>`;

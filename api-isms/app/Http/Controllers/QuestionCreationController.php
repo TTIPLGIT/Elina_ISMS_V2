@@ -229,7 +229,9 @@ class QuestionCreationController extends BaseController
             // Get last question details for this questionnaire
             $question_details = DB::select("
             SELECT * FROM question_details
-            WHERE questionnaire_details_id = ?
+            WHERE question_order IS NOT NULL
+            AND question_order != ''
+            AND questionnaire_details_id = ?
             ORDER BY question_field_name DESC
             LIMIT 1
         ", [$questionnaire_details_id]);
@@ -244,7 +246,7 @@ class QuestionCreationController extends BaseController
                 if (empty($ww)) {
                     $metadata_client_field_name .= '_001';
                 } else {
-                    $metadata_client_field_name = $input['question_field_name'] . '_' . str_pad($last_question->question_order + 1, 3, '0', STR_PAD_LEFT);
+                    $metadata_client_field_name = $input['question_field_name'] . '_' . str_pad((int)substr($last_question->question_field_name, -3) + 1, 3, '0', STR_PAD_LEFT);
                 }
 
                 $question_order = $last_question->question_order + 1;

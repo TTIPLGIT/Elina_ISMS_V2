@@ -418,6 +418,22 @@ class ParentsQuestionnaireController extends BaseController
 			if ($table_name == '') {
 				$table_name = 'question_process';
 			}
+			$columns = DB::select("DESCRIBE " . $table_name);
+			$existingColumns = array_map(function ($column) {
+				return $column->Field;
+			}, $columns);
+
+			foreach ($data21 as $key => $value) {
+				if (!in_array($key, $existingColumns)) {
+					// Add the missing column
+					if (is_null($value)) {
+						unset($data21[$key]);  // Remove the key-value pair if the value is null
+					}
+					$columnType = $this->getColumnType($value);  // You should define how to determine the column type
+					DB::statement("ALTER TABLE $table_name ADD COLUMN `$key` $columnType");
+				}
+			}
+
 			$check = DB::select("SELECT * FROM " . $table_name . " WHERE questionnaire_initiation_id = $initiationID");
 			// $this->WriteFileLog($data21);
 			if ($check == []) {
@@ -509,6 +525,20 @@ class ParentsQuestionnaireController extends BaseController
 			$serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
 			$sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
 			return $sendServiceResponse;
+		}
+	}
+
+	private function getColumnType($value) {
+		if (is_int($value)) {
+			return 'INT';
+		} elseif (is_float($value)) {
+			return 'FLOAT';
+		} elseif (is_string($value)) {
+			return 'VARCHAR(255)';
+		} elseif (is_null($value)) {
+			return 'TEXT';
+		} else {
+			return 'TEXT';
 		}
 	}
 
@@ -1063,14 +1093,14 @@ class ParentsQuestionnaireController extends BaseController
 			];
 			$initiationID = $input['questionnaire_initiation_id'];
 			$en_id_num = $input['enrollment_id'];
-			
+
 			$enrollment = DB::select("SELECT enrollment_id FROM enrollment_details WHERE enrollment_child_num=?", [$en_id_num]);
 			$en_id = $enrollment[0]->enrollment_id;
 			$table = DB::select("SELECT b.table_name FROM questionnaire_initiation AS a 
 				INNER JOIN questionnaire AS b ON b.questionnaire_id=a.questionnaire_id
 				WHERE a.questionnaire_initiation_id = $initiationID and enrollment_id=$en_id");
 			$table_name = $table[0]->table_name;
-			
+
 			if ($table_name == '') {
 				$table_name = 'question_process';
 			}
@@ -1128,7 +1158,7 @@ class ParentsQuestionnaireController extends BaseController
 				INNER JOIN questionnaire_initiation AS b ON b.questionnaire_id=a.questionnaire_id
 				WHERE b.questionnaire_initiation_id = $initiationID and enrollment_id=$en_id");
 			$table_name = $table[0]->questionnaire_name;
-			
+
 			$admin_details = DB::SELECT("SELECT * from users where array_roles = '4'");
 			$noti = DB::select("SELECT * FROM sail_details WHERE enrollment_id ='$en_id_num'");
 			$coID1 = $noti[0]->is_coordinator1;

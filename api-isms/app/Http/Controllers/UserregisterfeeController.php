@@ -753,7 +753,7 @@ class UserregisterfeeController extends BaseController
 
                 $rows =  DB::select("SELECT a.questionnaire_id, a.questionnaire_name FROM questionnaire AS a 
                 INNER JOIN questionnaire_details AS b ON b.questionnaire_id=a.questionnaire_id
-                WHERE b.no_questions=b.question_count
+                WHERE a.active_flag = 0 and b.no_questions=b.question_count
                 AND a.questionnaire_id NOT IN (
                 SELECT ques.questionnaire_id  FROM questionnaire AS ques 
                 inner JOIN questionnaire_details AS qud ON ques.questionnaire_id= qud.questionnaire_id
@@ -771,7 +771,7 @@ class UserregisterfeeController extends BaseController
                 $rows =  DB::select("SELECT a.questionnaire_id, a.questionnaire_name, qb.status FROM questionnaire AS a 
                 INNER JOIN questionnaire_details AS b ON b.questionnaire_id=a.questionnaire_id 
                 INNER JOIN questionnaire_initiation AS qb ON qb.questionnaire_id = b.questionnaire_id
-                WHERE b.no_questions=b.question_count
+                WHERE a.active_flag = 0 and b.no_questions=b.question_count
                 AND a.questionnaire_id IN (
                 SELECT ques.questionnaire_id  FROM questionnaire AS ques 
                 inner JOIN questionnaire_details AS qud ON ques.questionnaire_id= qud.questionnaire_id
