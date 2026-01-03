@@ -10,7 +10,7 @@
 </style>
 
 <div style="font-weight:bold;font-style: italic;font-size: 15px;display: flex;align-items: center;">
-    <p style="color:red">* </p> &nbsp; Note: Text in the 'Evidence' column not to be exceeded more than 1500 characters.
+    <!-- <p style="color:red">* </p> &nbsp; Note: Text in the 'Evidence' column not to be exceeded more than 1500 characters. -->
 </div>
 <div id="table{{$page['page']}}">
     <div class="table-responsive">
@@ -19,8 +19,8 @@
                 <tr>
                     <th width="30%">{{ $perskills['skill_name'] ?? $page['tab_name'] }}</th>
                     <th width="30%">Observation</th>
-                    <th class="required" width="30%">Evidence</th>
-                    <th width="10%">Recommendation</th>
+                    <th class="required" width="40%">Evidence</th>
+                    <th width="40%">Recommendation</th>
                 </tr>
             </thead>
             <tbody id="tablebody{{$page['page']}}">
@@ -51,7 +51,7 @@
                     <td>
                         <textarea style="width: 100% !important;" class="observationSelect" id="evidence{{$activity['activity_id']}}" oninput="checkCharCount(this)" name="evidence[{{$page['assesment_skill_id']}}][]"></textarea>
                     </td>
-                    <td style="display: flex;align-items: center;height: fit-content;">
+                    <td style="display: flex;align-items: center;height: fit-content;"> 
                         <textarea class="form-control default" name="recommendation[{{$page['assesment_skill_id']}}][]" id="recommendation{{ $activity['activity_id'] }}" placeholder="Enter recommendation for this skill area..."></textarea>
                         <a class="btn remove" order="{{$page['page']}}" title="Remove" id="removeProduct"><i class="fa fa-times" order="{{$page['page']}}"></i></a>
                     </td>
@@ -64,11 +64,9 @@
     </div>
 </div>
 
-<div class="d-flex justify-content-center align-items-center">
-    <button type="button" class="btn btn-success" onclick="addNewRowWithInput({{ $page['page'] }}, {{ $page['assesment_skill_id'] }}, {{ $perskills['skill_id'] }})">
-        Add Activity
-    </button>
-</div>
+<button type="button" class="btn btn-success" onclick="addNewRowWithInput({{ $page['page'] }}, {{ $page['assesment_skill_id'] }}, {{ $perskills['skill_id'] }})">
+    Add Activity Row - Skill
+</button>
 
 <script>
     $(function() {
@@ -91,13 +89,6 @@
     }
 
     function addNewRowWithInput(pageId, assesmentSkillId, skillId) {
-
-        if (removedPages.includes(String(pageId))) {
-            Swal.fire('Warning', `The respective page has been removed. You can’t add a new activity to this page.`, 'warning');
-            // console.log(`${pageId} is already in removedPages`);
-            return false;
-        }
-        
         const allActivities = @json($activitys);
 
         const filteredActivities = allActivities.filter(act =>
@@ -205,11 +196,11 @@
         return observations.map(o => `<option value="${o.observation_id}">${o.observation_name}</option>`).join('');
     }
 
-    function checkCharCount(textarea) {
-        const maxLength = 1500;
-        if (textarea.value.length > maxLength) {
-            textarea.value = textarea.value.slice(0, maxLength);
-            alert("Maximum character limit of 1500 exceeded.");
-        }
-    }
+    // function checkCharCount(textarea) {
+    //     const maxLength = 1500;
+    //     if (textarea.value.length > maxLength) {
+    //         textarea.value = textarea.value.slice(0, maxLength);
+    //         alert("Maximum character limit of 1500 exceeded.");
+    //     }
+    // }
 </script>

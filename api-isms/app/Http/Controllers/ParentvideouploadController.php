@@ -1380,4 +1380,194 @@ class ParentvideouploadController extends BaseController
             return $sendServiceResponse;
         }
     }
+      public function parent_storedata_bulk_one(Request $request)
+    {
+        $inputArray = $this->DecryptData($request->requestData);
+        $this->WriteFileLog("Welcome to the balde");
+
+
+        try {
+
+            $method = 'Method => ParentvideouploadController => parent_storedata_bulk_one';
+            $inputArray = $this->DecryptData($request->requestData);
+            // \Log::info("Bulk Request Data: ", $inputArray);
+            $input = [
+                'video_link' => $inputArray['video_link'],
+                'parent_video_upload_id' => $inputArray['parent_video_upload_id'],
+                'parent_video_upload_ids' => $inputArray['parent_video_upload_ids'],
+                'comments' => $inputArray['comments'],
+                'activity_description_id' => $inputArray['activity_description_id'],
+                'current_status' => $inputArray['current_status'],
+                'activity_name' => $inputArray['activity_name'],
+                'submit_type' => $inputArray['submit_type'],
+                'save_flag' => $inputArray['save_flag'],
+                'restorePage' => $inputArray['restorePage'] ?? null,
+            ];
+
+
+
+            $reid = DB::transaction(function () use ($input) {
+                // New
+
+
+                $comments = $input['comments'];
+                $current_status = $input['current_status'];
+                $video_link = $input['video_link'];
+                $save_flag = $input['save_flag'];
+                $activity_description = $input['activity_description_id'];
+
+                $selectedId = $input['parent_video_upload_ids'] ?? null;
+                $allParentIds = $input['parent_video_upload_id'];
+                $matchedKey = array_search($selectedId, $allParentIds);
+
+                DB::table('parent_video_upload')
+                    ->where('parent_video_upload_id', $matchedKey)
+                    ->update([
+                        // 'comments' => $comments[$pId],
+                        'status' => ($input['submit_type'] == 'oneSubmit') ? 'Submitted' : 'Saved',
+                        'save_flag' => ($input['submit_type'] == 'Save' && $video_link[$matchedKey][0] != null ? '1' : '0'),
+                        'last_modified_by' => auth()->user()->id,
+                        'last_modified_date' => NOW()
+                    ]);
+
+                // $fpVid = array_keys($activity_description);
+
+                // $pvCount = count($fpVid);
+
+                $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
+
+
+                DB::select("Delete from activity_parent_video_upload where parent_video_upload_id =" . $matchedKey);
+                foreach ($video_link[$matchedKey] as $video) {
+                    if ($video != '' || $video != null) {
+                        DB::table('activity_parent_video_upload')
+                            ->where('video_link_id', $input['video_link'])
+                            ->insert([
+                                // 'comments' => $comments[$pId],
+                                'video_link' => $video,
+                                'parent_video_upload_id' => $matchedKey,
+                                'status' => '0',
+                                'created_by' => auth()->user()->id,
+                                'created_at' => NOW()
+                            ]);
+                    }
+                }
+
+                if ($comments[$matchedKey] != null) {
+                    $pvu = DB::table('parent_video_upload')
+                        ->where('parent_video_upload_id', $matchedKey)
+                        ->first();
+
+
+                    $existing = DB::table('latest_video_comments')
+                        ->where('parent_video_upload_id', $matchedKey)
+                        ->where('created_by', auth()->user()->id)
+                        ->orderBy('id', 'DESC')
+                        ->first();
+                    $selectedId = $input['parent_video_upload_ids'] ?? null;
+                    $allParentIds = $input['parent_video_upload_id'];
+                    $matchedKey = array_search($selectedId, $allParentIds);
+
+                    // $this->WriteFileLog( $existing);
+
+                    if ($existing) {
+
+                        DB::table('latest_video_comments')
+                            // ->where('id', $existing->id)
+                            ->where('parent_video_upload_id', $matchedKey)
+                            // ->where('created_by', auth()->user()->id)
+                            ->update([
+                                'comments' => $comments[$matchedKey],
+                                'active_status' =>"Submitted",
+                                'created_at' => NOW(),
+                                'role' => $role_name[0]->role_name,
+                                'user_name' => auth()->user()->name
+                            ]);
+                    } else {
+
+
+                        DB::table('latest_video_comments')
+                            ->insert([
+                                'parent_video_upload_id' => $matchedKey,
+                                'activity_initiation_id' => $pvu->activity_initiation_id,
+                                'user_name' => auth()->user()->name,
+                                'active_status' => "Submitted",
+                                'created_by' => auth()->user()->id,
+                                'created_at' => NOW(),
+                                'comments' => $comments[$matchedKey],
+                                'role' => $role_name[0]->role_name
+                            ]);
+                    }
+                }
+                // }
+
+                $pvu = DB::select("SELECT * FROM parent_video_upload WHERE parent_video_upload_id = $matchedKey");
+                $enID = $pvu[0]->Enrollment_id;
+                $enrol = DB::select("SELECT * FROM enrollment_details WHERE Enrollment_id = $enID");
+                $enChi = $enrol[0]->enrollment_child_num;
+                $sail = DB::select("SELECT JSON_EXTRACT(is_coordinator1, '$.id') AS coID FROM sail_details WHERE enrollment_id = '$enChi'");
+                // $state = 'Submitted';
+                if ($input['submit_type'] == "oneSubmit") {
+
+                    DB::table('notifications')->insertGetId([
+                        'user_id' =>  $sail[0]->coID,
+                        'notification_type' => 'activity',
+                        'notification_status' => 'Updated',
+                        'notification_url' => 'activity_initiate/' . encrypt($pvu[0]->activity_initiation_id) . '/edit',
+                        'megcontent' => $input['activity_name'] . " has been " . "Submitted" . " by " . $enrol[0]->child_name . " (" . $enrol[0]->enrollment_child_num . ")",
+                        'alert_meg' => $input['activity_name'] . " has been " . "Submitted" . " by " . $enrol[0]->child_name . " (" . $enrol[0]->enrollment_child_num . ")",
+                        'created_by' => auth()->user()->id,
+                        'created_at' => NOW()
+                    ]);
+                }
+
+
+                $admin_details = DB::SELECT("SELECT * from users where array_roles = '4'");
+                $adminn_count = count($admin_details);
+                if ($admin_details != []) {
+                    for ($j = 0; $j < $adminn_count; $j++) {
+                        if ($input['submit_type'] == "oneSubmit") {
+                            DB::table('notifications')->insertGetId([
+                                'user_id' =>  $admin_details[$j]->id,
+                                'notification_type' => 'activity',
+                                'notification_status' => 'Updated',
+                                'notification_url' => 'activity_initiate/' . encrypt($pvu[0]->activity_initiation_id) . '/edit',
+                                'megcontent' => $input['activity_name'] . " has been " . "Submitted" . " by " . $enrol[0]->child_name . " (" . $enrol[0]->enrollment_child_num . ")",
+                                'alert_meg' => $input['activity_name'] . " has been " . "Submitted" . " by " . $enrol[0]->child_name . " (" . $enrol[0]->enrollment_child_num . ")",
+                                'created_by' => auth()->user()->id,
+                                'created_at' => NOW()
+                            ]);
+                        }
+                    }
+                }
+                // Activity set 1 has been submitted by Kaviya -> Activity set 1 has been submitted by Kaviya
+                // End New
+                $re = $pvu[0]->activity_initiation_id;
+                return $pvu[0]->Enrollment_id;
+            });
+            $restorePage = DB::table('parent_video_upload')
+                ->where('activity_description_id', $inputArray['restorePage'])
+                ->where('enrollment_id', $reid)
+                ->value('activity_initiation_id');
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.success');
+            $serviceResponse['Message'] = config('setting.status_message.success');
+            $serviceResponse['Data'] = $restorePage;
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+            return $sendServiceResponse;
+        } catch (\Exception $exc) {
+            $exceptionResponse = array();
+            $exceptionResponse['ServiceMethod'] = $method;
+            $exceptionResponse['Exception'] = $exc->getMessage();
+            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+            $this->WriteFileLog($exceptionResponse);
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.exception');
+            $serviceResponse['Message'] = $exc->getMessage();
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+            return $sendServiceResponse;
+        }
+    }
 }

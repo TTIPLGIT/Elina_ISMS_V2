@@ -21,7 +21,7 @@ class HomeController extends BaseController
    */
   public function index(Request $request)
 
-  {
+  { 
     $user_id = $request->session()->get("userID");
     $menus = $this->FillMenu($request);
     $screens = $menus['screens'];

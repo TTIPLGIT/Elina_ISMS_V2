@@ -81,14 +81,13 @@
       var message = $('#session_data1').val();
       var session_page = $('#session_page').val();
 
-      // Role - Parent :: The Modal Restore after save has been removed as per the request by Elina Team; on 28th Oct 2025;
-      // "Activity upload - after saving the video it says video upload success, after that why does the same activity window appear again?";
+      swal.fire("Success", message, "success")
 
-      // swal.fire("Success", message, "success").then(function() {
-      //   $("#cuModal" + session_page).modal('show');
-      // })
+      //.then(function() {
+      // $("#cuModal" + session_page).modal('show');
+      //})
 
-      Swal.fire('Success!', message, 'info');
+      // Swal.fire('Success!', message, 'info');
     }
   </script>
   @endif
@@ -155,6 +154,7 @@
                       </thead>
                       <tbody>
                         @php $cuModaliteration = 0 @endphp
+
                         @foreach($activitylist as $key=>$row)
                         <tr>
                           <!-- <td>{{ $loop->iteration }}</td> -->
@@ -239,6 +239,8 @@
   <input type="hidden" id="submit_type" name="submit_type">
   <input type="hidden" id="openID" name="openID">
   <input type="hidden" id="saved_stage" name="saved_stage">
+  <input type="hidden" id="parent_video_upload_ids" name="parent_video_upload_ids">
+
   @php $cuModaliteration1 = 0 @endphp
 
   @foreach($activitylist_nav as $key=>$row)
@@ -266,7 +268,7 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class="control-label">Activity Description</label>
-                        <input class="form-control activity-description" type="text" value="{{$row['description']}}" readonly>
+                        <input class="form-control" type="text" value="{{$row['description']}}" readonly>
                       </div>
                     </div>
                     <div class="col-12" style="display: flex;">
@@ -345,8 +347,19 @@
 
                   <div class="col-md-12  text-center" style="padding-top: 1rem;">
 
-                    <a type="button" onclick="saveBulk('Submit' , '{{$row['activity_description_id']}}')" id="submitbuttonbulk" class="btn btn-labeled btn-succes" title="Submit" style="background: green !important; border-color:green !important; color:white !important">
-                      <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span>Submit</a>
+
+                    <a type="button" onclick="saveBulk('Submit' , '{{$row['activity_description_id']}}')" id="submitbuttonbulk" class="btn btn-labeled btn-succes" title="Submit ALL" style="background: green !important; border-color:green !important; color:white !important">
+                      <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span>Submit All</a>
+
+                    <a type="button"
+                      onclick="oneSubmit('oneSubmit', '{{$row['activity_description_id']}}', '{{$row['parent_video_upload_id']}}')"
+                      title="Submit "
+                      class="btn btn-labeled btn-success">
+                      <span class="btn-label"><i class="fa fa-check"></i></span>
+                      Submit
+                    </a>
+
+
 
                     <a type="button" onclick="saveBulk('Save' , '{{$row['activity_description_id']}}')" id="submitbuttonbulk" class="btn btn-labeled btn-succes" title="Save" style="background: green !important; border-color:green !important; color:white !important">
                       <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-bookmark-o"></i></span>Save</a>
@@ -410,82 +423,25 @@
 
   }
 
-  // function saveBulk(type, id) {
-  //   // 
-  //   document.getElementById('submit_type').value = type;
-  //   document.getElementById('openID').value = id;
-  //   if (type == 'Submit') {
-  //     Swal.fire({
-  //       title: 'Are you sure you want to upload the Activity Video?',
-  //       text: 'Please take a moment to review the videos carefully, as this action cannot be undone.',
-  //       icon: 'question',
-  //       showCancelButton: true,
-  //       confirmButtonColor: "#3085d6",
-  //       cancelButtonColor: "#d33",
-  //       confirmButtonText: "Upload",
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         document.getElementById('bulkStore').submit();
-  //       }
-  //     })
-  //   } else {
-  //     document.getElementById('bulkStore').submit();
-  //   }
-  // }
+  function oneSubmit(type, id, parentId) {
 
-  function saveBulk(type, id) {
+    // Set hidden fields
     document.getElementById('submit_type').value = type;
     document.getElementById('openID').value = id;
+    document.getElementById('parent_video_upload_ids').value = parentId;
 
-    const videoInputs = document.querySelectorAll(`#cuModal${id} input[name^="video_link"]`);
-    const activityDescriptionInput = document.querySelector(`#cuModal${id} .activity-description`);
-    const activityDescription = activityDescriptionInput ? activityDescriptionInput.value : "This activity";
+    // Change form action ONLY for One Submit
+    document.getElementById('bulkStore').action = "{{ route('video.parentstore.one') }}";
 
-    let isValid = true;
-    let hasAtLeastOneLink = false;
+    console.log("Type:", type);
+    console.log("ID:", id);
+    console.log("Parent ID:", parentId);
 
-    // Google Drive link pattern
-    const googleDrivePattern = /^(https?:\/\/)?(www\.)?(drive\.google\.com)\/[^\s]+$/;
-
-    videoInputs.forEach(input => {
-      const value = input.value.trim();
-
-      input.style.border = "";
-
-      if (value !== "") {
-        hasAtLeastOneLink = true;
-        // Uncomment for Google Drive Validation (Optional)
-        // if (!googleDrivePattern.test(value)) {
-        //   isValid = false;
-        //   input.style.border = "2px solid red";
-        // }
-      }
-    });
-
-    if (!hasAtLeastOneLink) {
-      Swal.fire({
-        title: 'Please Add Activity Video Link',
-        text: `Activity "${activityDescription}" requires at least one video link.`,
-        icon: 'error',
-        confirmButtonColor: '#d33'
-      });
-      return;
-    }
-
-    if (!isValid) {
-      Swal.fire({
-        title: 'Invalid Video Link',
-        text: 'Please ensure all links are valid Google Drive URLs (e.g., https://drive.google.com/...).',
-        icon: 'error',
-        confirmButtonColor: '#d33'
-      });
-      return;
-    }
-
-    if (type === 'Submit') {
+    // Submit directly (or add SweetAlert if needed)
+    if (type == 'oneSubmit') {
       Swal.fire({
         title: 'Are you sure you want to upload the Activity Video?',
-        text: 'Please review your videos carefully, as this action cannot be undone.',
+        text: 'Please take a moment to review the videos carefully, as this action cannot be undone.',
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -495,7 +451,32 @@
         if (result.isConfirmed) {
           document.getElementById('bulkStore').submit();
         }
-      });
+      })
+    } else {
+      document.getElementById('bulkStore').submit();
+    }
+  }
+
+  function saveBulk(type, id) {
+    // 
+    document.getElementById('submit_type').value = type;
+    document.getElementById('openID').value = id;
+    var a = document.getElementById('parent_video_upload_ids').value
+    console.log(a);
+    if (type == 'Submit') {
+      Swal.fire({
+        title: 'Are you sure you want to upload the Activity Video?',
+        text: 'Please take a moment to review the videos carefully, as this action cannot be undone.',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Upload",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          document.getElementById('bulkStore').submit();
+        }
+      })
     } else {
       document.getElementById('bulkStore').submit();
     }
@@ -706,8 +687,7 @@
                               @endif
                               @endforeach
                             </div>
-                            <!-- <label style="padding: 5px;" for="sameVideoLink"><input type="checkbox" name="sameVideoLink[{{$row['parent_video_upload_id']}}]" id="sameVideoLink{{$row['parent_video_upload_id']}}" onclick="sameVideoLink11('{{$row['parent_video_upload_id']}}')" value="1">Updated the video on the same Google Drive link</label> -->
-                             <p style="color: red;margin: 0;">Click Add Video and insert the new or updated video link.</p>
+                            <label style="padding: 5px;" for="sameVideoLink"><input type="checkbox" name="sameVideoLink[{{$row['parent_video_upload_id']}}]" id="sameVideoLink{{$row['parent_video_upload_id']}}" onclick="sameVideoLink11('{{$row['parent_video_upload_id']}}')" value="1">Updated the video on the same Google Drive link</label>
                             <br>
                             <button type="button" class="add-field btn btn-success">Add video</button>
                             <label style="padding: 10px;"> <input type="checkbox" onclick="unable_activity('{{$row['parent_video_upload_id']}}')" name="unable[{{$row['parent_video_upload_id']}}]" id="unable{{$row['parent_video_upload_id']}}" value="1" data-rej="{{$row['parent_video_upload_id']}}" style="margin-right: 0.3rem!important;">My child is unable to do this activity</label>
@@ -983,7 +963,7 @@
         if (result.isConfirmed) {
           Swal.fire({
             title: 'Submission Warning',
-            text: 'Only activities with the new video(s) will be submitted. All other activities will remain in their current status. You still need to add the videos.',
+            text: 'Only activities with the new video(s) will be submitted.',
             icon: 'info',
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -1036,7 +1016,7 @@
 
     var pvuID = <?php echo ($row['parent_video_upload_id']) ?>;
     $(".add-field", $(this)).click(function(e) {
-      $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus().removeAttr('readonly').attr('isClone', true).end().find('.remove-field').removeClass('rejectedVideo');
+      $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus().removeAttr('readonly').attr('isClone', true);
       $('#file_field').append('<div class="multi-field" style="display: flex;margin-bottom: 5px;"><input class="form-control" type="url" id="video_link' + pvuID + '"name="video_link[]" autocomplete="off" required></div>');
     });
 
@@ -1046,18 +1026,13 @@
       var $removeButton = $field.find('.remove-field');
 
       if ($field.hasClass('rejectedVideo')) {
-        // alert('This Video link cannot be removed.');
-        Swal.fire('Info!', 'The previously uploaded video cannot be removed. Click Add Video and insert the new or updated video link.', 'info');
+        alert('This Video link cannot be removed.');
         return false;
       }
-
       if ($('.multi-field', $wrapper).length > 1)
         $(this).parent('.multi-field').remove();
 
-      else 
-        // alert('Atleast one video is needed!');
-      Swal.fire('Info!', 'Atleast one video is needed!', 'info');
-      return false;
+      else alert('This Process cannot be done');
 
     });
   });

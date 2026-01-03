@@ -455,7 +455,7 @@
                             <td> <input type="checkbox" class="Enabled" id="approved{{$data2['parent_video_upload_id']}}" name="enabled" value="1" checked onclick="return false;"></td>
                             <!-- Enabled</td> -->
                             @else
-                            <td> <input type="checkbox" class="Not Enabled" id="approved{{$data2['parent_video_upload_id']}}" name="enabled" value="0" onclick="return false;"></td>
+                            <td> <input type="checkbox" class="Not Enabled" id="approved{{$data2['parent_video_upload_id']}}" name="enabled" value="0" disabled></td>
                             <!-- Not Enabled</td> -->
                             @endif
                           </tr>
@@ -703,6 +703,9 @@
     <input type="hidden" id="check_video" name="check_video">
     <input type="hidden" id="enrollment_id" name="enrollment_id" value="{{$rows[0]['enrollment_id']}}">
     <input type="hidden" id="is_active_tab" name="is_active_tab">
+    <input type="hidden" id="submit_type" name="submit_type">
+    <input type="hidden" id="openID" name="openID">
+
 
     @foreach($currentactivity as $key => $data)
     <div class="modal fade cuModalPopup" id="cuModal{{$loop->iteration}}" role="dialog">
@@ -829,6 +832,7 @@
                                   <td>
 
                                     @php $activity_materials_id = 0; @endphp
+
                                     @foreach($activity_materials_mapping as $mapping)
                                     @if($data['activity_description_id'] == $mapping['activity_description_id'])
                                     @php $activity_materials_id = $mapping['activity_materials_id']; @endphp
@@ -839,9 +843,11 @@
 
                                     <select data-placeholder="Select Materials" multiple class="chosen-select" name="material[{{$data['parent_video_upload_id']}}][]" style="width: 100% !important;">
                                       @foreach($activity_materials as $material)
+
                                       @if(in_array($material['id'] , explode(',', $activity_materials_id) ))
                                       @if(in_array($material['materials'] , explode(',', $data['materials_required']) ))
                                       <option value="{{$material['materials']}}" selected>{{$material['materials']}}</option>
+
                                       @else
                                       <option value="{{$material['materials']}}">{{$material['materials']}}</option>
                                       @endif
@@ -877,9 +883,16 @@
                   <a type="button" class="btn btn-labeled btn-info" onclick="showModalPrev('{{$loop->iteration}}')" id="Previous" title="Previous" style="height: 35px;background: blue !important; border-color:blue !important; color:white !important">
                     <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Previous</a>
                   @endif
+                  <a type="button"
+                    onclick="oneSubmit('{{$data['parent_video_upload_id']}}')"
+                    class="btn btn-labeled btn-succes"
+                    style="background: green !important; border-color:green !important; color:white !important">
+                    <span class="btn-label"><i class="fa fa-check"></i></span> oneSubmit
+                  </a>
+
                   <a type="button" onclick="tempSave('{{$data['parent_video_upload_id']}}')" id="submitbutton" class="btn btn-labeled btn-succes" title="Save" style="background: green !important; border-color:green !important; color:white !important">
                     <span class="btn-label" style="font-size:13px !important;"><i id="checkIcon{{$data['parent_video_upload_id']}}" class="fa fa-check"></i></span>Save</a>
-                  <a type="button" onclick="saveall('{{$data['parent_video_upload_id']}}')" id="submitbutton" class="btn btn-labeled btn-succes" title="Submit" style="background: green !important; border-color:green !important; color:white !important">
+                  <a type="button" onclick="saveall()" id="submitbutton" class="btn btn-labeled btn-succes" title="Submit" style="background: green !important; border-color:green !important; color:white !important">
                     <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span>Submit</a>
                   <a type="button" class="btn btn-labeled back-btn" onclick="confirmclose('{{$loop->iteration}}')" data-dismiss="modal" aria-hidden="true" title="Close" style="color:white !important"><span class="btn-label" style="font-size:13px !important;"><i class="fa fa-times-circle-o"></i></span> Close</a>
                   @if($loop->iteration != count($currentactivity))
@@ -1056,12 +1069,12 @@
                               </div>
                             </div>
 
-                            <!-- <div class="col-md-6">
+                            <div class="col-md-6">
                               <div class="form-group">
                                 <label class="control-label">Comments for Parent</label>
                                 <textarea class="form-control" name="comments" id="comments"></textarea>
                               </div>
-                            </div> -->
+                            </div>
 
                           </div>
                         </div>
@@ -1118,14 +1131,14 @@
 
     function updateNavigationButtons() {
       // Show or hide the "Next" button based on the current modal index
-      // console.log("Current modalIndex:", modalIndex);
-      // console.log("lastActivity length:", lastActivity.length);
+      console.log("Current modalIndex:", modalIndex);
+      console.log("lastActivity length:", lastActivity.length);
       if (modalIndex == lastActivity.length - 1) {
         $('.Nextsubmission').hide();
-        // console.log("Hiding 'Next' button");
+        console.log("Hiding 'Next' button");
       } else {
         $('.Nextsubmission').show();
-        // console.log("Showing 'Next' button");
+        console.log("Showing 'Next' button");
       }
     }
   </script>
@@ -1562,23 +1575,7 @@
 
     }
 
-    function saveall(parent_video_upload_id) {
-
-      const approvalSelect = document.querySelector('#approval_status' + parent_video_upload_id);
-      if (!approvalSelect.value) {
-        swal.fire("Please select Approval Status for the current activity", "", "error");
-        return false;
-      }
-
-      const f2fCheckbox = document.getElementById('enablef2f' + parent_video_upload_id);
-      if (f2fCheckbox && f2fCheckbox.checked) {
-        const materialsSelect = document.querySelector('select[name="material[' + parent_video_upload_id + '][]"]');
-        if (!materialsSelect || !materialsSelect.selectedOptions.length) {
-          swal.fire("Please select at least one Material Required for Face To Face activity.", "", "error");
-          return;
-        }
-      }
-
+    function saveall() {
       const video_checks = document.querySelectorAll('#video_check');
       var check = [];
       var i = 0;
@@ -1589,10 +1586,34 @@
         }
       }
       document.getElementById('check_video').value = check;
-      $(".loader").show();
+      // $(".loader").show();
       document.getElementById('video_update').submit();
 
     }
+
+    function oneSubmit(parentId) {
+
+      document.getElementById('submit_type').value = 'oneSubmit';
+
+      document.getElementById('openID').value = parentId;
+
+      console.log(document.getElementById('openID').value)
+      document.getElementById('video_update').action = "{{ route('activity.update.video.all') }}";
+      Swal.fire({
+        title: 'Are you sure you want to update this Activity ?',
+        text: 'Please review before updating.',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Upload"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          document.getElementById('video_update').submit();
+        }
+      });
+    }
+
 
     function tempSave(pID) {
       const video_checks = document.querySelectorAll('#video_check');
@@ -1607,7 +1628,7 @@
       document.getElementById('check_video').value = check;
 
       var form = $('#video_update');
-      var formData = form.serialize()  + "&pvID=" + pID ;
+      var formData = form.serialize();
       // console.log(formData);
 
       var checkIcon = document.getElementById("checkIcon" + pID);
@@ -1623,7 +1644,7 @@
           console.log('Something went wrong');
         },
         success: function(data) {
-          // console.log('Success');
+          console.log('Success');
           checkIcon.classList.remove("fa-spinner", "fa-spin");
           checkIcon.classList.add("fa-check");
           Swal.fire('Info!', 'Activity Status and Observation  saved successfully.', 'info');
@@ -1693,7 +1714,7 @@
       elt.target.setAttribute("aria-selected", true);
       let clickedTab = elt.target.dataset.tabTarget;
       fadeIn(document.querySelector(`#${clickedTab}`));
-      // togglePreviousNextButtons();
+      togglePreviousNextButtons();
     }
 
     tabBtns.forEach((tab) => {
@@ -1806,7 +1827,7 @@
         // }
 
         const tabButton = tabButtons[index];
-        // console.log(tabButton);
+        console.log(tabButton);
 
         tabButton.scrollIntoView({
           behavior: 'smooth',
@@ -1829,83 +1850,19 @@
       }
 
       // Add event listeners for Next and Previous buttons
-      // nextButton.addEventListener('click', () => {
-      //   if (currentTab < tabButtons.length - 1) {
-      //     changeTab(currentTab + 1);
-      //     scrollToTab(currentTab + 1);
-      //   }
-      // });
-
-      // prevButton.addEventListener('click', () => {
-      //   if (currentTab > 0) {
-      //     changeTab(currentTab - 1);
-      //     scrollToTab(currentTab - 1);
-      //   }
-      // });
-
       nextButton.addEventListener('click', () => {
-
         if (currentTab < tabButtons.length - 1) {
-
           changeTab(currentTab + 1);
-
-          var table = @json($activity);
-          let checkActivity = Number(document.getElementById('is_active_tab').value);
-          console.log('checkActivity', checkActivity);
-
-          let nextActivity = null;
-
-          if (checkActivity === 0) {
-            // Special case: next = 2nd item
-            nextActivity = table[1] || null;
-          } else {
-            let checkIndex = table.findIndex(a => a.activity_id === checkActivity);
-            nextActivity = (checkIndex !== -1 && checkIndex + 1 < table.length) ?
-              table[checkIndex + 1] :
-              null;
-          }
-
-          if (nextActivity) {
-            document.querySelector(`button[value="${nextActivity.activity_id}"]`)?.click();
-          }
-
           scrollToTab(currentTab + 1);
-
         }
       });
 
       prevButton.addEventListener('click', () => {
-
-
         if (currentTab > 0) {
-
           changeTab(currentTab - 1);
-
-          var table = @json($activity);
-          let checkActivity = Number(document.getElementById('is_active_tab').value);
-          console.log('checkActivity', checkActivity);
-
-          let prevActivity = null;
-
-          if (checkActivity === 0) {
-            // Special case: previous = 2nd last item
-            prevActivity = table[table.length - 2] || null;
-          } else {
-            let checkIndex = table.findIndex(a => a.activity_id === checkActivity);
-            prevActivity = (checkIndex > 0) ?
-              table[checkIndex - 1] :
-              null;
-          }
-
-          if (prevActivity) {
-            document.querySelector(`button[value="${prevActivity.activity_id}"]`)?.click();
-          }
-
           scrollToTab(currentTab - 1);
-
         }
       });
-
 
       // Initialize tab and button visibility
       changeTab(currentTab);
@@ -1914,19 +1871,5 @@
     });
   </script>
 
-  <script>
-    $(document).ready(function() {
-      // Restore the Active Activity Tab
-      const urlParams = new URLSearchParams(window.location.search);
-      let restoreActivity = urlParams.get('restoreActivity');
-
-      if (restoreActivity) {
-        document.getElementById('is_active_tab').value = restoreActivity;
-        document.querySelector(`button[value="${restoreActivity}"]`).click();
-      } else {
-        console.error('restoreActivity not found');
-      }
-    });
-  </script>
   @include('activity_initiate.model')
   @endsection

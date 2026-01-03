@@ -496,8 +496,8 @@ class ParentvideouploadController extends BaseController
             $data['current_status'] = $request->current_status;
             $data['unable_flag'] = $request->unable;
             $data['sameVideoLink'] = $request->sameVideoLink;
-            $rejectedReOpen = $request->rejectedReOpen; 
-            $data['rejectedReOpen'] = $request->rejectedReOpen; 
+            $rejectedReOpen = $request->rejectedReOpen;
+            $data['rejectedReOpen'] = $request->rejectedReOpen;
             // dd('bulk', $data);
             $encryptArray = $this->encryptData($data);
 
@@ -513,7 +513,7 @@ class ParentvideouploadController extends BaseController
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
                     $rejectedReOpenID = $objData->Data;
-                    if($rejectedReOpenID == null){
+                    if ($rejectedReOpenID == null) {
                         return redirect(route('parent_video_upload.parentindex'))->with('success', 'Video uploaded successfully');
                     }
                     return redirect(route('parent_video_upload.parent_create', $this->EncryptData($rejectedReOpenID)))
@@ -878,6 +878,60 @@ class ParentvideouploadController extends BaseController
             $exceptionResponse['Exception'] = $exc->getMessage();
             $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
             $this->WriteFileLog($exceptionResponse);
+        }
+    }
+    public function video_parentstore_one(Request $request)
+    {
+        try {
+            // dd($request);
+            $method = 'Method => ParentvideouploadController => video_store';
+            $restorePage = $request->openID;
+            $submit_type = $request->submit_type;
+            $data = array();
+            $data['video_link'] = $request->video_link;
+            $data['parent_video_upload_id'] = $request->parent_video_upload_id;
+            $data['parent_video_upload_ids'] = $request->parent_video_upload_ids;
+            $data['comments'] = $request->comments;
+            $data['activity_description_id'] = $request->activity_description_id;
+            $data['current_status'] = $request->current_status;
+            $data['activity_name'] = $request->activity_name;
+            $data['submit_type'] = $request->submit_type;
+            $data['save_flag'] = $request->save_flag;
+            $data['restorePage'] = $restorePage;
+            // dd($data);
+            $encryptArray = $this->encryptData($data);
+
+            $request = array();
+            $request['requestData'] = $encryptArray;
+
+            $gatewayURL = config('setting.api_gateway_url') . '/videocreation/parentstore/bulk/one';
+            //   dd($this->decryptData($request['requestData']));
+            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+            // dd($response);
+
+            $response1 = json_decode($response);
+            if ($response1->Status == 200 && $response1->Success) {
+                $objData = json_decode($this->decryptData($response1->Data));
+                if ($objData->Code == 200) {
+                    $reid = $objData->Data;
+                    if ($submit_type == 'Save') {
+                        return redirect(route('parent_video_upload.parent_create', $this->EncryptData($reid)))->with('page', $restorePage)->with('info', 'Video Saved successfully');
+                    } else {
+                        return redirect(route('parent_video_upload.parent_create', $this->EncryptData($reid)))->with('success', 'Video uploaded successfully');
+                    }
+                }
+
+                if ($objData->Code == 400) {
+                    return Redirect::back()->with('fail', 'Activity Name Already Exists');
+                }
+            } else {
+                $objData = json_decode($this->decryptData($response1->Data));
+                echo json_encode($objData->Code);
+                exit;
+            }
+        } catch (\Exception $exc) {
+
+            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
 }

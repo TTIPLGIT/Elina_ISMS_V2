@@ -1,6 +1,6 @@
 <!--  -->
 <div style="font-weight:bold;font-style: italic;font-size: 15px;display: flex;align-items: center;">
-    <p style="color:red">* </p> &nbsp; Note: Text in the 'Evidence' column not to be exceeded more than 1500 characters.
+    <!-- <p style="color:red">* </p> &nbsp; Note: Text in the 'Evidence' column not to be exceeded more than 1500 characters. -->
 </div>
 
 <div id="table{{$page['page']}}">
@@ -10,12 +10,12 @@
                 <tr>
                     <th width="30%">{{ $perskills['skill_name'] ?? $page['tab_name'] }}</th>
                     <th width="30%">Observation</th>
-                    <th class="required" width="30%">
+                    <th class="required" width="40%">
                         Evidence
                     </th>
-                    <th width="10%">
+                    <th width="40%">
                         Recommendation
-                        <input type="checkbox" style="float:right" name="switch[]" value="{{ $perskills['skill_id'] }}" class="check checkAll" onclick="handleCheckboxTable(this);" @if(in_array($perskills['skill_id'], explode(',', $report['switch']))) checked @endif>
+                        <input type="checkbox" style="float:right" name="switch[]" value="{{ $perskills['skill_id'] }}" class="check" onclick="handleCheckboxTable(this)" @if(in_array($perskills['skill_id'], explode(',', $report['switch']))) checked @endif>
                     </th>
                 </tr>
             </thead>
@@ -41,7 +41,7 @@
     <table class="table table-bordered card-body" style="border-spacing: 0px;border-collapse: collapse;">
         <thead>
             <tr>
-                <th colspan="4" style="background-color: white !important;color: #141414;text-align: left;border: 1px solid #040404 !important;">{{$sskill['skill_name']}}<input type="checkbox" style="float:right" name="switch2[]" value="{{$sskill['skill_id']}}" class="check checkAll{{$sskill['primary_skill_id']}}" onclick="handleCheckboxTable(this); handlePageRemovalCheckboxA(this)" @if(in_array($sskill['skill_id'] , explode(',',$report['switch2']))) checked @endif><!--4--></th>
+                <th colspan="4" style="background-color: white !important;color: #141414;text-align: left;border: 1px solid #040404 !important;">{{$sskill['skill_name']}}<input type="checkbox" style="float:right" name="switch2[]" value="{{$sskill['skill_id']}}" class="check" onclick="handleCheckboxTable(this)" @if(in_array($sskill['skill_id'] , explode(',',$report['switch2']))) checked @endif><!--4--></th>
             </tr>
         </thead>
         <tbody id="tablebody_b{{$sskill['skill_id']}}" class="pageno_c{{$page['page']}}">
@@ -82,14 +82,14 @@
                         @endforeach
                     </select>
                 </td>
-                <td width="30%">
+                <td style="display: flex;align-items: center;height: fit-content;">
                     @if($fo == 1)
                     <textarea style="width: 100% !important;" class="observationSelect addProducttext_b{{$sskill['skill_id']}}" name="evidence[{{$page['assessment_skill']}}][]" oninput="checkCharCount(this)">{{$detail['evidence'] }}</textarea>
                     @else
                     <textarea style="width: 100% !important;" class="observationSelect addProducttext_b{{$sskill['skill_id']}}" name="evidence[{{$page['assessment_skill']}}][]" oninput="checkCharCount(this)"></textarea>
                     @endif
                 </td>
-                <td style="display: flex;align-items: center;height: fit-content;">
+                <td>
                     <textarea class="form-control default" name="recommendation[{{$page['assessment_skill']}}][]" id="recommendation[{{$page['assessment_skill']}}][]" placeholder="Enter recommendation for this skill area...">{{$detail['recommendation'] }}</textarea>
                     <a class="btn remove_b removeR" order="{{$page['page']}}" table="{{$sskill['skill_id']}}" title="Add" id="removeProduct"><i class="fa fa-times" order="{{$page['page']}}" table="{{$sskill['skill_id']}}"></i></a>
                 </td>
@@ -99,9 +99,9 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="4">
-                    <button type="button" class="btn btn-success add-row-btn col-4" data-skill-id="{{ $sskill['skill_id'] }}" data-assessment-id="{{ $page['assessment_skill'] }}" data-page-id="{{ $page['page'] }}">
-                        Add Activity
+                <td colspan="3">
+                    <button type="button" class="btn btn-sm btn-success add-row-btn" data-skill-id="{{ $sskill['skill_id'] }}" data-assessment-id="{{ $page['assessment_skill'] }}">
+                        <i class="fa fa-plus"></i> Add Row
                     </button>
                 </td>
             </tr>
@@ -130,25 +130,21 @@
 
 
 
-<script type="application/json" id="all-activities-data">
-    @json($activitys)
-</script>
-<script type="application/json" id="observations-data">
-    @json($observations)
-</script>
+<script type="application/json" id="all-activities-data">@json($activitys)</script>
+<script type="application/json" id="observations-data">@json($observations)</script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const allActivities = JSON.parse(document.getElementById('all-activities-data').textContent);
         const observations = JSON.parse(document.getElementById('observations-data').textContent);
 
         // Global character limit check for textarea
-        function checkCharCount(textarea) {
-            const maxLength = 1500;
-            if (textarea.value.length > maxLength) {
-                textarea.value = textarea.value.slice(0, maxLength);
-                alert("Maximum character limit of 1500 exceeded.");
-            }
-        }
+        // function checkCharCount(textarea) {
+        //     const maxLength = 1500;
+        //     if (textarea.value.length > maxLength) {
+        //         textarea.value = textarea.value.slice(0, maxLength);
+        //         alert("Maximum character limit of 1500 exceeded.");
+        //     }
+        // }
 
         // Get observation options HTML
         function getObservationOptions() {
@@ -166,17 +162,6 @@
 
             const skillId = btn.dataset.skillId;
             const assessmentId = btn.dataset.assessmentId;
-            const pageId = btn.dataset.pageId;
-
-            if (removedPages.includes(String(pageId))) {
-                Swal.fire('Warning', `The respective page has been removed. You can’t add a new activity to this page.`, 'warning');
-                return false;
-            }
-
-            if (pagesToRemove.includes(String('skill3-' + skillId))) {
-                Swal.fire('Warning', `The respective page has been removed. You can’t add a new activity to this page.`, 'warning');
-                return false;
-            }
 
             const tbody = document.getElementById('tablebody_b' + skillId);
             if (!tbody) {
@@ -244,30 +229,13 @@
                     insertRow(tbody, assessmentId, skillId, typedName, '');
                 } else {
                     Swal.fire({
-                        title: `Are you sure you want to submit?`,
-                        html: `It'll go to the IS Head, and you can't edit it after submission.`,
+                        title: `Add "${typedName}" to the database?`,
                         icon: 'question',
                         showCancelButton: true,
                         confirmButtonText: 'Yes, add it',
                     }).then(confirmResult => {
                         if (confirmResult.isConfirmed) {
-                            // add_new_sub_activity(tbody, assessmentId, skillId, typedName);
-                            $.ajax({
-                                url: "{{ url('/store/new/assessment/skill') }}",
-                                type: 'POST',
-                                data: {
-                                    'performanceAreaId': assessmentId,
-                                    'typedName': typedName,
-                                    // 'skillId': skillId,
-                                    'subSkillId': skillId,
-                                    _token: '{{csrf_token()}}'
-                                }
-                            }).done(function(data) {
-                                var activityID = data;
-                                // console.log("activityID",activityID);
-                                insertRow(tbody, assessmentId, skillId, typedName, activityID);
-                                // insertRow(tbody, assessmentId, skillId, typedName, '');
-                            })
+                            add_new_sub_activity(tbody, assessmentId, skillId, typedName);
                         }
                     });
                 }
@@ -289,10 +257,10 @@
                         ${getObservationOptions()}
                     </select>
                 </td>
-                <td width="30%">
+                <td>
                     <textarea style="width: 100% !important;" class="observationSelect" oninput="checkCharCount(this)" name="evidence[${assessmentId}][]"></textarea>
                 </td>
-                <td style="display: flex;align-items: center;height: fit-content;">
+                <td style="display: flex; align-items: center; height: fit-content;">
                     <textarea class="form-control default" name="recommendation[${assessmentId}][]" id="recommendation${activityId}" placeholder="Enter recommendation for this skill area..."></textarea>
                     <a class="btn remove_b" title="Remove" onclick="this.closest('tr').remove()">
                         <i class="fa fa-times"></i>
@@ -306,50 +274,4 @@
         // Expose checkCharCount globally since called inline in HTML
         window.checkCharCount = checkCharCount;
     });
-
-    function handlePageRemovalCheckboxA(pageCheckbox) {
-        var pageValue = pageCheckbox.value;
-        var pageIndex = pagesToRemove.indexOf('skill3-' + pageValue);
-
-        if (pageCheckbox.checked) {
-            if (pageIndex === -1) {
-                pagesToRemove.push('skill3-' + pageValue);
-            }
-        } else {
-            if (pageIndex !== -1) {
-                pagesToRemove.splice(pageIndex, 1);
-            }
-        }
-    }
-
-    function handleCheckboxTableAll(mainCheckbox) {
-
-        const primarySkillId = mainCheckbox.value;
-        const subSkillCheckboxes = document.querySelectorAll(
-            '.checkAll' + primarySkillId
-        );
-
-        subSkillCheckboxes.forEach(chk => {
-
-            chk.checked = mainCheckbox.checked;
-            const pageValue = chk.value;
-            const key = 'skill3-' + pageValue;
-            const index = pagesToRemove.indexOf(key);
-
-            if (mainCheckbox.checked) {
-                if (index === -1) {
-                    pagesToRemove.push(key);
-                }
-            }
-            
-            else {
-                if (index !== -1) {
-                    pagesToRemove.splice(index, 1);
-                }
-            }
-
-        });
-
-        // console.log("Updated pagesToRemove:", pagesToRemove);
-    }
 </script>

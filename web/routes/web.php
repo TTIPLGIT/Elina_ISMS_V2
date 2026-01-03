@@ -729,4 +729,7 @@ Route::group(['middleware' => 'usersession'], function () {
     Route::post('/service/briefing/master/store', [App\Http\Controllers\ServiceBriefingMasterController::class, 'store_data'])->name('service.briefing.store');
     Route::get('/service/briefing/master/getdata/{id}', [App\Http\Controllers\ServiceBriefingMasterController::class, 'getdata'])->name('service.briefing.getdata');
     Route::post('/service/briefing/master/update', [App\Http\Controllers\ServiceBriefingMasterController::class, 'update'])->name('service.briefing.update');
+    Route::post('/videocreation/parentstore/bulk/one', [App\Http\Controllers\ParentvideouploadController::class, 'video_parentstore_one'])->name('video.parentstore.one');
+    Route::post('/video-parentstore-one', [activityInitiationController::class, 'video_parentstore_one'])->name('activity.update.video.all');
+
 });

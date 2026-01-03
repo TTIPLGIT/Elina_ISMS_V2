@@ -676,3 +676,5 @@ Route::get('/dailyquotes', [App\Http\Controllers\WebpageController::class, 'dail
 Route::post('/newsletters/storedata', [App\Http\Controllers\WebpageController::class, 'storedata']);
 Route::post('/newinquires/storedata', [App\Http\Controllers\WebpageController::class, 'newinquires']);
 Route::get('/blog_comment', [App\Http\Controllers\WebpageController::class, 'blog_comment'])->name('blog_comment');
+Route::post('/videocreation/parentstore/bulk/one', [\App\Http\Controllers\ParentvideouploadController::class, 'parent_storedata_bulk_one']);
+Route::post('/activityinitiate/update/submit/one', [\App\Http\Controllers\activityInitiationController::class, 'update_video_one']);

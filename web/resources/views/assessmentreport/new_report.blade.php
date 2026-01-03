@@ -638,6 +638,7 @@
                     </div>
                 </div>
             </form>
+            
             <div class="col-md-12 text-center">
                 <a type="button" class="btn btn-labeled btn-info" onclick="PrevTab();" id="Previous" title="Previous" style="display:none;height: 35px;background: blue !important; border-color:blue !important; color:white !important">
                     <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Previous</a>
@@ -797,8 +798,7 @@
             selector: '.tinymce-textarea',
             height: 200,
             branding: false,
-            plugins: 'importcss link',
-            toolbar: 'undo redo | bold italic underline | link | fontsizeselect fontselect',
+            plugins: 'importcss',
             autosave_ask_before_unload: false, //Set True to for confirmation on unload
             toolbar: '',
             font_formats: "Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Barlow=Barlow, sans-serif; Barlow Condensed=Barlow Condensed, sans-serif; Barlow Semi Condensed=Barlow Semi Condensed, sans-serif; Plain Barlow Black=Barlow Black, sans-serif; Plain Barlow Bold=Barlow Bold, sans-serif; Plain Barlow Light=Barlow Light, sans-serif; Plain Barlow Medium=Barlow Medium, sans-serif; Plain Barlow Thin=Barlow Thin, sans-serif; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Oswald=oswald; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats",
@@ -1222,34 +1222,34 @@
 </script>
 
 <script>
-    function checkCharCount(textarea) {
-        var maxChar = 1500;
+    // function checkCharCount(textarea) {
+    //     var maxChar = 1500;
 
-        if (textarea.value.length >= maxChar) {
-            textarea.value = textarea.value.substring(0, maxChar);
-            textarea.removeEventListener("input", checkCharCount);
-            swal.fire("Info", "Note: Text in the 'Evidence' column not to be exceeded more than 1500 characters.", "info");
-        }
+    //     if (textarea.value.length >= maxChar) {
+    //         textarea.value = textarea.value.substring(0, maxChar);
+    //         textarea.removeEventListener("input", checkCharCount);
+    //         swal.fire("Info", "Note: Text in the 'Evidence' column not to be exceeded more than 5000 characters.", "info");
+    //     }
 
-        var remainingChars = maxChar - textarea.value.length;
-        // console.log("Remaining characters: " + remainingChars);
-    }
+    //     var remainingChars = maxChar - textarea.value.length;
+    //     // console.log("Remaining characters: " + remainingChars);
+    // }
 
-    function checkWordCount(textarea) {
-        var maxWords = 1500;
+    // function checkWordCount(textarea) {
+    //     var maxWords = 1500;
 
-        var words = textarea.value.trim().split(/\s+/);
-        var wordCount = words.length;
+    //     var words = textarea.value.trim().split(/\s+/);
+    //     var wordCount = words.length;
 
-        if (wordCount >= maxWords) {
-            textarea.value = words.slice(0, maxWords).join(' ');
-            textarea.removeEventListener("input", checkWordCount);
-            swal.fire("Info", "Note: Text in the 'Evidence' column not to be exceeded more than 1500 Words.", "info");
-        }
+    //     if (wordCount >= maxWords) {
+    //         textarea.value = words.slice(0, maxWords).join(' ');
+    //         textarea.removeEventListener("input", checkWordCount);
+    //         swal.fire("Info", "Note: Text in the 'Evidence' column not to be exceeded more than 1500 Words.", "info");
+    //     }
 
-        var remainingWords = maxWords - wordCount;
-        // console.log("Remaining words: " + remainingWords);
-    }
+    //     var remainingWords = maxWords - wordCount;
+    //     // console.log("Remaining words: " + remainingWords);
+    // }
 
     function detailsuggestion(Step, action) {
 
@@ -1296,8 +1296,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <textarea id="modalRecommendationInput" class="form-control tinymce-textarea" rows="10" maxlength="1500" style="resize: vertical;"></textarea>
-                
+                <textarea id="modalRecommendationInput" class="form-control" rows="10" maxlength="Infinity" style="resize: vertical;"></textarea>
+                <!-- <small class="text-muted" id="charCount">0 / 1500 characters</small> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="closeRecommendationModal()">Cancel</button>
@@ -1314,17 +1314,14 @@
             activeRecommendationTextarea = e.target;
             const currentText = activeRecommendationTextarea.value;
             console.log('asd', currentText);
-            // document.getElementById('modalRecommendationInput').value = currentText;
-            // updateCharCount();
-            tinyMCE.get('modalRecommendationInput').setContent(currentText);
+            document.getElementById('modalRecommendationInput').value = currentText;
+            updateCharCount();
             $('#recommendationModal').modal('show');
         }
-        $(document).off('focusin.bs.modal');
     });
 
     function saveRecommendation() {
-        // const modalText = document.getElementById('modalRecommendationInput').value;
-        const modalText = tinyMCE.get('modalRecommendationInput').getContent();
+        const modalText = document.getElementById('modalRecommendationInput').value;
         if (activeRecommendationTextarea) {
             activeRecommendationTextarea.value = modalText;
         }
@@ -1339,7 +1336,7 @@
 
     function updateCharCount() {
         const val = document.getElementById('modalRecommendationInput').value;
-        document.getElementById('charCount').textContent = `${val.length} / 1500 characters`;
+        // document.getElementById('charCount').textContent = `${val.length} / 1500 characters`;
     }
 </script>
 @endsection

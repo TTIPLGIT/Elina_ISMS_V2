@@ -6649,6 +6649,34 @@
         "POST"
       ]
     },
+      {
+      "DownstreamPathTemplate": "/api/videocreation/parentstore/bulk/one",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/videocreation/parentstore/bulk/one",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+     {
+      "DownstreamPathTemplate": "/api/activityinitiate/update/submit/one",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activityinitiate/update/submit/one",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    }
   ],
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:700"
