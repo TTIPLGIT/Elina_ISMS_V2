@@ -1655,4 +1655,208 @@ class activityInitiationController extends BaseController
             return $sendServiceResponse;
         }
     }
+    public function update_video_one(Request $request)
+    {
+
+        try {
+
+            $method = 'Method =>  activityInitiationController => update_video_one';
+
+            $inputArray = $this->decryptData($request->requestData);
+            $this->WriteFileLog("welcome to the one submit");
+            // $this->WriteFileLog($inputArray);
+
+            $input = [
+                'activity_initiation' => $inputArray['activity_initiation'],
+                'approval_status' => $inputArray['approval_status'],
+                'comments' => $inputArray['comments'],
+                // 'activity_description_id' => $inputArray['activity_description_id'],
+                'check_video' => $inputArray['check_video'],
+                'observation' => $inputArray['observation'],
+                'parent_video_upload' => $inputArray['parent_video_upload'],
+                'parent_video_uploads' => $inputArray['parent_video_uploads'],
+                'enrollment_id' => $inputArray['enrollment_id'],
+                'description' => $inputArray['description'],
+                'materials_required' => $inputArray['materials_required'],
+                'to_observe' => $inputArray['to_observe'],
+                'to_ask_parents' => $inputArray['to_ask_parents'],
+                'enablef2f' => $inputArray['enablef2f'],
+            ];
+
+            $this->WriteFileLog($input);
+            $approval_status = $input['approval_status'];
+            $matched_parent_video_id = in_array(
+                $input['parent_video_uploads'],
+                $input['parent_video_upload']
+            ) ? $input['parent_video_uploads'] : null;
+            $matched_approval_status = $approval_status[$matched_parent_video_id] ?? null;
+
+            $this->WriteFileLog("Parent_id" . $matched_parent_video_id);
+            $this->WriteFileLog("Approval_stauts" . $matched_approval_status);
+
+            DB::transaction(function () use ($input) {
+
+                $authID = Auth::id();
+                $enrollment_id = $input['enrollment_id'];
+                $role_name = DB::select("SELECT role_name FROM uam_roles ur INNER JOIN users us ON us.array_roles = ur.role_id WHERE us.id = $authID");
+                $enrollment_details = DB::select("SELECT * FROM enrollment_details WHERE enrollment_id = $enrollment_id");
+
+                $enrollment_user_id   = $enrollment_details[0]->user_id;
+                $child_contact_email  = $enrollment_details[0]->child_contact_email;
+                $child_name           = $enrollment_details[0]->child_name;
+                $enrollment_child_num = $enrollment_details[0]->enrollment_child_num;
+
+                $approval_status     = $input['approval_status'];
+                $comments            = $input['comments'];
+                $observation         = $input['observation'];
+                $activity_initiation = $input['activity_initiation'];
+                $description         = $input['description'];
+                $materials_required  = $input['materials_required'];
+                $to_observe          = $input['to_observe'];
+                $to_ask_parents      = $input['to_ask_parents'];
+                $enablef2f           = $input['enablef2f'];
+                $matched_parent_video_id = in_array($input['parent_video_uploads'], $input['parent_video_upload']) ? (int) $input['parent_video_uploads'] : null;
+
+                if (!$matched_parent_video_id) {
+                    return;
+                }
+
+                $status = $approval_status[$matched_parent_video_id] ?? null;
+                $status = in_array($status, ['Complete', 'Rejected']) ? $status : null;
+
+                $this->WriteFileLog('Parent_id ' . $matched_parent_video_id);
+                $this->WriteFileLog('Approval_status ' . ($status ?? 'NULL'));
+
+                if ($status === null) {
+                    return;
+                }
+
+                DB::table('parent_video_upload')
+                    ->where('parent_video_upload_id', $matched_parent_video_id)
+                    ->update([
+                        'status' => $status,
+                        'save_status' => $status,
+                        'save_status1' => $status,
+                        'last_modified_by' => $authID,
+                        'last_modified_date' => now(),
+                        'comments' => $observation[$matched_parent_video_id] ?? null,
+                    ]);
+
+                $activity_data = DB::table('parent_video_upload')
+                    ->select('activity_description_id', 'activity_id')
+                    ->where('parent_video_upload_id', $matched_parent_video_id)
+                    ->first();
+
+                if (!empty($observation[$matched_parent_video_id])) {
+                    DB::table('sail_activity_vlog_comments')->insert([
+                        'activity_id' => $activity_data->activity_id,
+                        'activity_description_id' => $activity_data->activity_description_id,
+                        'observation' => $observation[$matched_parent_video_id],
+                        'enrollment_id' => $enrollment_id,
+                        'created_at' => now(),
+                        'created_by' => $authID,
+                        'parent_video_upload_id' => $matched_parent_video_id,
+                    ]);
+                }
+
+
+                if (!empty($comments[$matched_parent_video_id])) {
+                    DB::table('latest_video_comments')->updateOrInsert(
+                        [
+                            'parent_video_upload_id' => $matched_parent_video_id,
+                            'created_by' => $authID,
+                        ],
+                        [
+                            'activity_initiation_id' => $activity_initiation[$matched_parent_video_id],
+                            'user_name' => auth()->user()->name,
+                            'active_status' => $status,
+                            'comments' => $comments[$matched_parent_video_id],
+                            'role' => $role_name[0]->role_name,
+                            'created_at' => now(),
+                        ]
+                    );
+                }
+                if ($status === 'Complete') {
+
+                    DB::table('activity_complete')
+                        ->where('parent_video_id', $matched_parent_video_id)
+                        ->update(['completed' => 1]);
+
+                    DB::table('notifications')->insert([
+                        'user_id' => $enrollment_user_id,
+                        'notification_type' => 'activity',
+                        'notification_status' => 'Initiated',
+                        'notification_url' => 'parent_video_upload/parent_create/' .
+                            encrypt($activity_initiation[$matched_parent_video_id]),
+                        'megcontent' => "Activity {$description[$matched_parent_video_id]} has been Approved.",
+                        'alert_meg' => "Activity {$description[$matched_parent_video_id]} has been Approved.",
+                        'created_by' => $authID,
+                        'created_at' => now(),
+                    ]);
+                } else {
+
+                    DB::table('notifications')->insert([
+                        'user_id' => $enrollment_user_id,
+                        'notification_type' => 'activity',
+                        'notification_status' => 'Initiated',
+                        'notification_url' => 'parent_video_upload/parent_create/' .
+                            encrypt($activity_initiation[$matched_parent_video_id]),
+                        'megcontent' => "Activity {$description[$matched_parent_video_id]} has been Rejected.",
+                        'alert_meg' => "Activity {$description[$matched_parent_video_id]} has been Rejected.",
+                        'created_by' => $authID,
+                        'created_at' => now(),
+                    ]);
+
+                    $data = [
+                        'status' => $status,
+                        'des' => $description[$matched_parent_video_id],
+                        'child_name' => $child_name,
+                        'en_no' => $enrollment_child_num,
+                        'isms_base' => config('setting.isms_base'),
+                    ];
+
+                    Mail::to($child_contact_email)->send(new ActivityMail($data));
+                }
+                if (!empty($enablef2f[$matched_parent_video_id])) {
+
+                    DB::table('parent_video_upload')
+                        ->where('parent_video_upload_id', $matched_parent_video_id)
+                        ->update(['f2f_flag' => 1]);
+
+                    DB::table('face_to_face_observation')->updateOrInsert(
+                        ['parent_video_id' => $matched_parent_video_id],
+                        [
+                            'materials_required' =>
+                            isset($materials_required[$matched_parent_video_id])
+                                ? implode(',', $materials_required[$matched_parent_video_id])
+                                : '',
+                            'to_observe' => $to_observe[$matched_parent_video_id] ?? '',
+                            'to_ask_parents' => $to_ask_parents[$matched_parent_video_id] ?? '',
+                        ]
+                    );
+                }
+            });
+
+
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.success');
+            $serviceResponse['Message'] = config('setting.status_message.success');
+            $serviceResponse['Data'] = 1;
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+            return $sendServiceResponse;
+        } catch (\Exception $exc) {
+            $exceptionResponse = array();
+            $exceptionResponse['ServiceMethod'] = $method;
+            $exceptionResponse['Exception'] = $exc->getMessage();
+            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+            $this->WriteFileLog($exceptionResponse);
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.exception');
+            $serviceResponse['Message'] = $exc->getMessage();
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+            return $sendServiceResponse;
+        }
+    }
 }

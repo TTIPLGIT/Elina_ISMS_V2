@@ -293,10 +293,11 @@
             </div>
         </div>
         <div class="col-lg-12 text-center">
-            <button class="btn btn-success saveButton_form" onclick="save()" type="button" id="saveButton">
+            <!-- FIXED: Give unique IDs to buttons to avoid duplicate IDs -->
+            <button class="btn btn-success saveButton_form" onclick="save()" type="button" id="saveButtonManual">
                 <i class="fa fa-fw fa-lg fa fa-bookmark"></i>Save</button>
 
-            <button class="btn btn-success saveButton_form" onclick="sub()" type="button" id="saveButton">
+            <button class="btn btn-success saveButton_form" onclick="sub()" type="button" id="submitButton">
                 <i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
         </div>
         <div class="col-lg-12 text-center">
@@ -316,7 +317,6 @@
 </div>
 <script>
     function save() {
-
         document.getElementById('btn_type').value = 'save';
         validateForm();
         var tabIDs = $('.tablinks.active').attr('id');
@@ -326,13 +326,6 @@
         document.getElementById('divQuestionnaireForm').submit();
     }
 
-    // function sub() {
-    //     document.getElementById('btn_type').value = 'submit';
-    //     validateForm();
-    //     $(".loader").show();
-    //     document.getElementById('divQuestionnaireForm').submit();
-
-    // }
     function sub() {
         document.getElementById('btn_type').value = 'submit';
 
@@ -730,19 +723,35 @@
 
         var prevButton = document.querySelector('#navPrev');
         var nextButton = document.querySelector('#navNext');
-        //alert(step);
-        // alert(divCount);
-        prevButton.style.display = 'inline-block';
-        nextButton.style.display = 'inline-block';
+        var submitButton = document.querySelector('#submitButton');
+        var saveButton = document.querySelector('#saveButtonManual');
+        var cancelButton = document.querySelector('.cancel-button');
+        
+        // FIXED: Button visibility logic based on your requirements
         if (step === 1) {
-            prevButton.style.display = 'none'; // Hide previous button in the first stage
+            // First page: Show Save, Cancel, and Next buttons
+            prevButton.style.display = 'none'; // Hide Previous button
+            nextButton.style.display = 'inline-block'; // Show Next button
+            submitButton.style.display = 'none'; // Hide Submit button
+            saveButton.style.display = 'inline-block'; // Show Save button
+            cancelButton.style.display = 'inline-block'; // Show Cancel button
         } else if (step === divCount) {
-            nextButton.style.display = 'none'; // Hide next button in the last stage
+            // Last page: Show Save, Cancel, Previous, and Submit buttons
+            prevButton.style.display = 'inline-block'; // Show Previous button
+            nextButton.style.display = 'none'; // Hide Next button
+            submitButton.style.display = 'inline-block'; // Show Submit button
+            saveButton.style.display = 'inline-block'; // Show Save button
+            cancelButton.style.display = 'inline-block'; // Show Cancel button
         } else {
-            prevButton.style.display = 'inline-block';
-            nextButton.style.display = 'inline-block';
+            // Middle pages: Show Save, Cancel, Previous, and Next buttons
+            prevButton.style.display = 'inline-block'; // Show Previous button
+            nextButton.style.display = 'inline-block'; // Show Next button
+            submitButton.style.display = 'none'; // Hide Submit button
+            saveButton.style.display = 'inline-block'; // Show Save button
+            cancelButton.style.display = 'inline-block'; // Show Cancel button
         }
-        validateForm()
+        
+        validateForm();
     }
 
     function validateForm() {
@@ -783,9 +792,7 @@
             var stepperID = element.replace('Step', '');
             console.log('valid', stepperID, allQuestionsAnswered);
             if (allQuestionsAnswered) {
-
                 document.getElementById('Stepper' + stepperID + 'ID').classList.add('done');
-
             } else {
                 document.getElementById('Stepper' + stepperID + 'ID').classList.remove('done');
             }

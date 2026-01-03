@@ -283,43 +283,77 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-12 text-center">
 
-        <div class="col-lg-12 text-center" id="saveButtonDiv">
+
             <button class="btn btn-success saveButton_form" onclick="sub()" type="button" id="saveButton">
                 <i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
+            <button class="btn btn-success saveButton_form" onclick="save(true)" type="button" id="saveButton">
+                <i class="fa fa-fw fa-lg fa fa-bookmark"></i>Save
+            </button>
 
-            <a type="button" href="{{ $role == 'Parent' ? route('questionnaire_for_user.index') : URL::previous() }}" class="btn btn-labeled responsive-button button-style cancel-button" title="Cancel">
-                <i class="fas fa-times"></i><span> Cancel </span>
-            </a>
         </div>
-
         <div class="col-lg-12 text-center">
             <a type="button" id="navPrev" onclick="navigate('prev')" class="btn btn-labeled responsive-button button-style back-button" title="Back">
                 <i class="fas fa-arrow-left"></i><span> Back </span>
             </a>
 
-            <button class="btn btn-success saveButton_form" onclick="save()" type="button" id="saveButton"> 
-                <i class="fa fa-fw fa-lg fa fa-bookmark"></i>Save</button>
+            <a type="button" href="{{ $role == 'Parent' ? route('questionnaire_for_user.index') : URL::previous() }}" class="btn btn-labeled responsive-button button-style cancel-button" title="Cancel">
+                <i class="fas fa-times"></i><span> Cancel </span>
+            </a>
 
             <a type="button" id="navNext" onclick="navigate('next')" class="btn btn-labeled responsive-button next-button button-style" title="Next">
                 <i class="fas fa-arrow-right"></i><span> Next </span>
             </a>
         </div>
-
     </div>
 </div>
 <script>
-    function save() {
+    let saveTimeout;
 
-        document.getElementById('btn_type').value = 'save';
+    // Listen to all relevant changes in the form
+    $(document).on('input change', '#divQuestionnaireForm input, #divQuestionnaireForm textarea, #divQuestionnaireForm select', function() {
+        clearTimeout(saveTimeout);
+
+        // Trigger auto-save after 1 second of inactivity
+        saveTimeout = setTimeout(function() {
+            save(false); // auto-save (loader hidden)
+        }, 1000);
+    });
+
+    function save(isManual = false) {
+        $('#btn_type').val('save');
+
         validateForm();
+
         var tabIDs = $('.tablinks.active').attr('id');
-        var ret1 = tabIDs.replace('Tab', '');
-        document.getElementById('restorePage').value = ret1;
-        completed_questions();
-        $(".loader").show();
-        document.getElementById('divQuestionnaireForm').submit();
+        var ret1 = tabIDs ? tabIDs.replace('Tab', '') : '';
+        $('#restorePage').val(ret1);
+
+        completed_questions(); // optional
+
+        if (isManual) {
+            $(".loader").show();
+        }
+
+        $.ajax({
+            url: $('#divQuestionnaireForm').attr('action'),
+            type: 'POST',
+            data: $('#divQuestionnaireForm').serialize(), // includes all input types
+            success: function(response) {
+                if (isManual) $(".loader").hide();
+                console.log('Form saved successfully!');
+            },
+            error: function(err) {
+                if (isManual) $(".loader").hide();
+                console.error('Form save failed', err);
+            }
+        });
     }
+
+
+
+
 
     // function sub() {
     //     document.getElementById('btn_type').value = 'submit';
@@ -344,22 +378,14 @@
             currentStep++;
             var presentSten = cindex;
             $('.pagination' + presentSten + '').each(function(i, el) {
-                var type = $(el).attr('type');
-                var name = $(el).attr('name');
-                var tag = $(el).prop("tagName");
+                var type = $(el).attr('type'); //alert(type);
+                var name = $(el).attr('name'); //alert(name);
+                var tag = $(el).prop("tagName"); //alert(tag);
                 var data = $(el).val();
                 var Qrequired = $(el).attr('data-required');
-                var idd = $(el).attr('id');
-                
-                // Get fieldName from name attribute (remove []) or use id
-                var fieldName = name ? name.replace('[]', '') : (idd || '');
-                var divErrorID = 'div' + fieldName;
-                var questionType = $(el).closest('.divClass').data('question-type');
+                var idd = $(el).attr('id'); //alert(idd);
 
-                // Skip if both name and id are undefined or empty
-                if ((!name || name === undefined || name === null) && (!idd || idd === undefined || idd === null)) {
-                    return true; // Continue to next iteration
-                }
+                var divErrorID = 'div'.concat(idd); //alert(divErrorID);
 
                 var subcat, getSelectedValue, checkbox;
                 if (type == 'radio') {
@@ -372,220 +398,38 @@
                     var subcat = document.getElementById(name);
                 }
 
-                // Validate text and textarea
                 if (type == 'text' || tag == 'TEXTAREA') {
-                    // Check if this is an "Others" field (has class otherField)
-                    var elClasses = $(el).attr('class') || '';
-                    var isOtherField = elClasses.indexOf('otherField') !== -1;
-                    
-                    if (isOtherField) {
-                        // For "Others" field, only validate if the corresponding checkbox is checked
-                        if (fieldName) {
-                            var divElement = document.getElementById(divErrorID);
-                            if (!divElement) {
-                                return true; // Skip if div doesn't exist
-                            }
-                            
-                            var othersCheckbox = document.getElementsByClassName("otherOption" + fieldName)[0];
-                            if (othersCheckbox != undefined && othersCheckbox.checked) {
-                                // Only validate if Others checkbox is checked
-                                if (Qrequired == 1) {
-                                    if (data == '' || data == null || data == undefined || (typeof data === 'string' && data.trim() === '')) {
-                                        divElement.classList.add('inputError');
-                                    } else {
-                                        divElement.classList.remove('inputError');
-                                    }
-                                }
-                            } else {
-                                // If Others checkbox is not checked, skip validation entirely and remove any error
-                                divElement.classList.remove('inputError');
-                                return true; // Skip to next element
-                            }
-                        } else {
-                            // If fieldName is not available, skip validation
-                            return true;
-                        }
-                    } else {
-                        // Regular text field validation
-                        if (Qrequired == 1) {
-                            var divElement = document.getElementById(divErrorID);
-                            if (!divElement) {
-                                return true; // Skip if div doesn't exist
-                            }
-                            if (data == '' || data == null || data == undefined || (typeof data === 'string' && data.trim() === '')) {
-                                divElement.classList.add('inputError');
-                            } else {
-                                divElement.classList.remove('inputError');
-                            }
-                        }
-                    }
-                } 
-                // Validate radio buttons
-                else if (type == 'radio') {
-                    // Skip QSub elements in regular validation - they are validated in radio-sub section below
-                    if (!$(el).hasClass('QSub')) {
-                        if (Qrequired == 1) {
-                            var divElement = document.getElementById(divErrorID);
-                            if (!divElement) {
-                                return true; // Skip if div doesn't exist
-                            }
-                            if (getSelectedValue == null) {
-                                divElement.classList.add("inputError");
-                            } else {
-                                // Check if "Others" option is selected and validate text field
-                                var inputElement = document.getElementsByClassName("otherOption" + idd)[0];
-                                if (inputElement != undefined) {
-                                    var computedStyle = window.getComputedStyle(inputElement);
-                                    if (computedStyle.display != "none" && computedStyle.visibility != "hidden") {
-                                        var inputValue = inputElement.value;
-                                        if (inputValue == '' || inputValue == null || inputValue == undefined || inputValue.trim() === "") {
-                                            divElement.classList.add("inputError");
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } 
-                // Validate checkboxes
-                else if (type == 'checkbox') {
-                    // Skip QSub elements in regular validation - they are validated in checkbox-sub section below
-                    if (!$(el).hasClass('QSub')) {
-                        if (Qrequired == 1) {
-                            // Check if divErrorID element exists
-                            var divElement = document.getElementById(divErrorID);
-                            if (!divElement) {
-                                return true; // Skip if div doesn't exist
-                            }
-                            
-                            // Check for checkbox arrays (name ends with [])
-                            var checkboxes = document.querySelectorAll('input[name="' + name + '"]:checked');
-                            var isChecked = checkboxes.length > 0;
-                            
-                            // Also check if "Others" checkbox is checked (it doesn't have name attribute)
-                            var othersCheckbox = document.getElementsByClassName("otherOption" + fieldName)[0];
-                            var othersChecked = (othersCheckbox != undefined && othersCheckbox.checked);
-                            
-                            // Consider checked if regular checkboxes OR Others checkbox is checked
-                            if (!isChecked && !othersChecked) {
-                                // No checkboxes selected at all - add error
-                                divElement.classList.add('inputError');
-                            } else if (isChecked && !othersChecked) {
-                                // Regular checkboxes are checked, but Others is not - remove all errors
-                                divElement.classList.remove('inputError');
-                                // Also ensure "Others" text field doesn't cause errors
-                                var otherField = document.getElementsByClassName("otherField" + fieldName)[0];
-                                if (otherField) {
-                                    // Remove error from Others field validation if it exists
-                                    divElement.classList.remove('inputError');
-                                }
-                            } else if (othersChecked) {
-                                // "Others" checkbox is selected - validate text field
-                                var otherField = document.getElementsByClassName("otherField" + fieldName)[0];
-                                if (otherField != undefined) {
-                                    if (otherField.value.trim() === "") {
-                                        // Others checkbox checked but text field is empty - add error
-                                        divElement.classList.add('inputError');
-                                    } else {
-                                        // Others checkbox checked and text field is filled - remove error
-                                        divElement.classList.remove('inputError');
-                                    }
-                                } else {
-                                    // If Others checkbox is checked but field doesn't exist, add error
-                                    divElement.classList.add('inputError');
-                                }
-                            }
-                        }
-                    }
-                } 
-                // Validate select dropdowns
-                else if (type == undefined && tag == 'SELECT') {
                     if (Qrequired == 1) {
-                        if (subcat.value == null || subcat.value == "" || subcat.value === "") {
+                        if (data == '' || data == null || data == undefined) {
                             document.getElementById(divErrorID).classList.add('inputError');
                         }
                     }
-                }
-                
-                // Validate radio-sub questions (fieldTypeID == 7)
-                if (questionType == 'radio-sub') {
+                } else if (type == 'radio') {
                     if (Qrequired == 1) {
-                        // For QSub elements, use the element's id attribute (not name) to find parent div
-                        var subDivErrorID = 'div' + idd;
-                        var subQuestionDiv = document.getElementById(subDivErrorID);
-                        if (subQuestionDiv) {
-                            // Get all unique sub-question names in this question group
-                            var allSubRadios = subQuestionDiv.querySelectorAll('.QSub[type="radio"]');
-                            var uniqueNames = [...new Set(Array.from(allSubRadios).map(r => r.name))];
-                            var allAnswered = true;
-                            
-                            // Check each sub-question has a selected option
-                            uniqueNames.forEach(function(subName) {
-                                if (!document.querySelector('input[name="' + subName + '"]:checked')) {
-                                    allAnswered = false;
-                                }
-                            });
-                            
-                            if (!allAnswered) {
-                                subQuestionDiv.classList.add('inputError');
-                            } else {
-                                subQuestionDiv.classList.remove('inputError');
-                            }
+                        if (getSelectedValue == null) {
+                            var element = document.getElementById(divErrorID); //console.log(element);alert(element);
+                            element.classList.add("inputError");
                         }
                     }
-                }
-                
-                // Validate checkbox-sub questions (fieldTypeID == 12)
-                if (questionType == 'checkbox-sub') {
+                } else if (type == 'checkbox') {
                     if (Qrequired == 1) {
-                        // For QSub elements, use the element's id attribute (not name) to find parent div
-                        var subDivErrorID = 'div' + idd;
-                        var subQuestionDiv = document.getElementById(subDivErrorID);
-                        if (subQuestionDiv) {
-                            // Get all unique sub-question names in this question group
-                            var allSubCheckboxes = subQuestionDiv.querySelectorAll('.QSub[type="checkbox"]');
-                            var uniqueNames = [...new Set(Array.from(allSubCheckboxes).map(c => c.name))];
-                            var allAnswered = true;
-                            
-                            // Check each sub-question has at least one selected option
-                            uniqueNames.forEach(function(subName) {
-                                if (!document.querySelector('input[name="' + subName + '"]:checked')) {
-                                    allAnswered = false;
-                                }
-                            });
-                            
-                            if (!allAnswered) {
-                                subQuestionDiv.classList.add('inputError');
-                            } else {
-                                subQuestionDiv.classList.remove('inputError');
-                            }
+                        if (checkbox == null) {
+                            document.getElementById(divErrorID).classList.add('inputError');
+                        }
+                    }
+                } else if (type == undefined && tag == 'SELECT') {
+                    if (Qrequired == 1) {
+                        if (subcat.value == null || subcat.value == "") {
+                            document.getElementById(divErrorID).classList.add('inputError');
                         }
                     }
                 }
             });
 
         }
-        
-        // Final cleanup: Remove errors from checkbox questions where regular checkboxes are selected
-        $('.divClass[data-question-type="checkbox"]').each(function() {
-            var divId = $(this).attr('id');
-            if (divId && divId.startsWith('div')) {
-                var fieldName = divId.replace('div', '');
-                var checkboxes = document.querySelectorAll('input[name="' + fieldName + '[]"]:checked');
-                var isChecked = checkboxes.length > 0;
-                
-                // Check if "Others" checkbox exists and is checked
-                var othersCheckbox = document.getElementsByClassName("otherOption" + fieldName)[0];
-                var othersChecked = (othersCheckbox != undefined && othersCheckbox.checked);
-                
-                // If regular checkboxes are checked but Others is not, remove error
-                if (isChecked && !othersChecked) {
-                    $(this).removeClass('inputError');
-                }
-            }
-        });
 
         var hasError = $(".inputError").length;
+        completed_questions();
         if (hasError == 0) {
             validateForm();
             Swal.fire({
@@ -606,15 +450,13 @@
                 }
             });
         } else {
-            var inputErrorElement = document.querySelector('.inputError');
-            var target = null;
-            if (inputErrorElement) {
-                target = inputErrorElement.querySelector('label.control-label');
-            }
-            if (target != null && target != undefined) {
+            var target = document.querySelector(".incomp label");
+            if (target != null || target != undefined) {
                 var errorQuestion = target.innerHTML;
                 swal.fire("Please Fill", errorQuestion, "error").then(() => {
-                    // Get the inputError element (already found above)
+                    // Get the inputError element
+                    var inputErrorElement = document.querySelector('.incomp');
+                    console.log(inputErrorElement);
                     // location.href="#questionnaire-intro";
                     if (inputErrorElement) {
                         var parentId = inputErrorElement.parentElement.id;
@@ -758,19 +600,16 @@
                         }
                     }
                 } else if (type == 'checkbox') {
-                    // Get the field name from the checkbox name (remove [])
-                    var checkboxName = name ? name.replace('[]', '') : idd;
-                    
                     // console.log('checkbox', checkbox)
                     // console.log('check', idd)
                     if (checkbox == null) {
                         console.log('if - null');
                         // S
-                        var otherField = document.getElementsByClassName("otherField" + checkboxName)[0];
-                        var othersCheckbox = document.getElementsByClassName("otherOption" + checkboxName)[0];
+                        var otherField = document.getElementsByClassName("otherField" + idd)[0];
+                        var othersCheckbox = document.getElementsByClassName("otherOption" + idd)[0];
                         if (othersCheckbox != undefined) {
                             console.log('else if');
-                            if (othersCheckbox.checked && otherField && otherField.value.trim() === "") {
+                            if (othersCheckbox.checked && otherField.value.trim() === "") {
                                 console.log('else if if');
                                 if (Qrequired == 1) {
                                     // console.log('else if if if');
@@ -796,11 +635,11 @@
                         // }
                     } else {
                         // console.log('else');
-                        var otherField = document.getElementsByClassName("otherField" + checkboxName)[0];
-                        var othersCheckbox = document.getElementsByClassName("otherOption" + checkboxName)[0];
+                        var otherField = document.getElementsByClassName("otherField" + idd)[0];
+                        var othersCheckbox = document.getElementsByClassName("otherOption" + idd)[0];
                         if (othersCheckbox != undefined) {
                             // console.log('else if');
-                            if (othersCheckbox.checked && otherField && otherField.value.trim() === "") {
+                            if (othersCheckbox.checked && otherField.value.trim() === "") {
                                 // console.log('else if if');
                                 if (Qrequired == 1) {
                                     // console.log('else if if if');
@@ -859,34 +698,7 @@
                 }
             });
         }
-        reVerify();
         return true;
-    }
-
-    function reVerify() {
-        const allInputs = document.querySelectorAll("[data-required]");
-
-        allInputs.forEach(input => {
-            const parentDiv = input.closest(".divClass");
-            const required = input.getAttribute("data-required");
-            toggleIncomp(input, parentDiv, required);
-            input.addEventListener("input", () => toggleIncomp(input, parentDiv, required));
-            input.addEventListener("change", () => toggleIncomp(input, parentDiv, required));
-        });
-    }
-
-    function toggleIncomp(input, parentDiv, required) {
-        if (!parentDiv) return;
-
-        if (required === "1") {
-            if (input.value.trim() === "") {
-                parentDiv.classList.add("incomp");
-            } else {
-                parentDiv.classList.remove("incomp");
-            }
-        } else if (required === "0") {
-            parentDiv.classList.remove("incomp");
-        }
     }
 </script>
 
@@ -915,15 +727,19 @@
 
         var prevButton = document.querySelector('#navPrev');
         var nextButton = document.querySelector('#navNext');
+        var submitButton = document.querySelector('#saveButton');
         prevButton.style.display = 'inline-block';
         nextButton.style.display = 'inline-block';
         if (step === 1) {
             prevButton.style.display = 'none'; // Hide previous button in the first stage
+            submitButton.style.display = 'none';
         } else if (step === divCount) {
             nextButton.style.display = 'none'; // Hide next button in the last stage
+            submitButton.style.display = 'inline-block';
         } else {
             prevButton.style.display = 'inline-block';
             nextButton.style.display = 'inline-block';
+
         }
         validateForm()
     }
@@ -984,28 +800,18 @@
         }
 
         if (nextStep) {
-            var stepNumber = nextStep.querySelector('.step-circle span').textContent.trim(); 
+            var stepNumber = nextStep.querySelector('.step-circle span').textContent.trim(); // Retrieve the step number
             var stageId = 'Step' + stepNumber;
             showStage(stageId, parseInt(stepNumber));
             $('html,body').scrollTop(0);
         }
+        // Call the function when needed, such as after form submission or input change
         updateStepStatus();
     }
 </script>
 <script>
     function showInput(nameField) {
-        // Check if nameField exists and has elements
-        if (!nameField || nameField.length === 0 || !nameField[0] || !nameField[0].id) {
-            return;
-        }
-        
         var otherInput = document.getElementsByClassName("otherOption" + nameField[0].id);
-        
-        // Check if otherInput exists before accessing its properties
-        if (!otherInput || otherInput.length === 0 || !otherInput[0]) {
-            return;
-        }
-        
         for (var i = 0; i < nameField.length; i++) {
             if (nameField[i].checked) {
                 if (nameField[i].value == 'Others') {
@@ -1021,33 +827,20 @@
     }
 
     function showInputSub(nameField, option_question_fields_id) {
-        // Check if nameField exists and has elements
-        if (!nameField || nameField.length === 0) {
-            return;
-        }
 
         for (var i = 0; i < nameField.length; i++) {
             var othersub = $(nameField[i]).attr('othersub');
             var othersub_flag = $(nameField[i]).attr('other_flag');
-            
-            // Check if othersub attribute exists
-            if (!othersub) {
-                continue;
-            }
-            
             var otherInput = document.getElementsByClassName(othersub);
             var othersubinputElement = document.getElementsByClassName(othersub)[0];
 
-            // Check if the input element exists before accessing its properties
-            if (otherInput && otherInput.length > 0 && otherInput[0]) {
-                if (nameField[i].checked) {
-                    otherInput[0].style.display = "inline";
-                    otherInput[0].style.border = "1px solid black";
-                    otherInput[0].disabled = false;
-                } else {
-                    otherInput[0].style.display = "none";
-                    otherInput[0].disabled = true;
-                }
+            if (nameField[i].checked) {
+                otherInput[0].style.display = "inline";
+                otherInput[0].style.border = "1px solid black";
+                otherInput[0].disabled = false;
+            } else {
+                otherInput[0].style.display = "none";
+                otherInput[0].disabled = true;
             }
         }
     }
@@ -1098,69 +891,17 @@
             }
         }
 
-        // Calculate questions per stage more evenly
-        var questionsPerStage = Math.floor(count / divCount);
-        var remainder = count % divCount;
-        
-        // Distribute remainder questions to first stages
-        var stageSizes = [];
-        for (let i = 0; i < divCount; i++) {
-            stageSizes.push(questionsPerStage + (i < remainder ? 1 : 0));
-        }
-        
-        // Build tab_content array based on actual stage sizes
+        var tab_count = Math.ceil(count / divCount);
         const tab_content = [0];
-        var currentIndex = 0;
-        for (i = 0; i < divCount; i++) {
-            currentIndex += stageSizes[i];
-            var pushNum = currentIndex;
-            var pushNum1 = currentIndex - 1;
+        for (i = 1; i <= divCount; i++) {
+            var pushNum = i * tab_count + 1;
+            var pushNum1 = i * tab_count;
 
             if (ttt.includes(pushNum1)) {
                 pushNumcount++;
                 pushNum = pushNum + pushNumcount;
             }
             tab_content.push(pushNum);
-        }
-        
-        // Check if last stage would be empty and adjust divCount
-        var lastStageStartIndex = tab_content[tab_content.length - 2];
-        if (lastStageStartIndex >= count) {
-            // Last stage would be empty, reduce divCount and recalculate
-            divCount = divCount - 1;
-            if (divCount < 1) divCount = 1;
-            
-            // Recalculate with new divCount
-            questionsPerStage = Math.floor(count / divCount);
-            remainder = count % divCount;
-            stageSizes = [];
-            for (let i = 0; i < divCount; i++) {
-                stageSizes.push(questionsPerStage + (i < remainder ? 1 : 0));
-            }
-            
-            // Rebuild tab_content
-            tab_content.length = 1; // Keep only [0]
-            currentIndex = 0;
-            pushNumcount = 0;
-            for (i = 0; i < divCount; i++) {
-                currentIndex += stageSizes[i];
-                pushNum = currentIndex;
-                pushNum1 = currentIndex - 1;
-
-                if (ttt.includes(pushNum1)) {
-                    pushNumcount++;
-                    pushNum = pushNum + pushNumcount;
-                }
-                tab_content.push(pushNum);
-            }
-            
-            // Hide unused stages
-            for (let hideStage = divCount + 1; hideStage <= 4; hideStage++) {
-                var tabElement = document.getElementById("Tab" + hideStage);
-                var stepperElement = document.getElementById("Stepper" + hideStage + "ID");
-                if (tabElement) tabElement.style.display = "none";
-                if (stepperElement) stepperElement.style.display = "none";
-            }
         }
         var step = '#Step';
         let num = 0;
@@ -1187,7 +928,6 @@
             const fieldID = DataFields[index]['question_details_id'];
             const fieldLabel = DataFields[index]['question'];
             const fieldName = DataFields[index]['question_field_name'];
-            const fieldDescription = DataFields[index]['question_description'];
             const fieldValue = DataFields[index][fieldName];
             const otherOption = DataFields[index]['other_option'];
             const requiredQuestion = DataFields[index]['required'];
@@ -1203,9 +943,6 @@
             if (fieldTypeID == 1) {
                 var textboxHtml = '<div class="col-md-12 divClass newQuestion" data-question-type="text" id="div' + fieldName + '"><div class="form-group pagination-element' + num + '">';
                 textboxHtml += '<label class="control-label ' + (requiredQuestion == 1 ? ' required' : '') + '">' + questionNum + ' . ' + fieldLabel + '</label>';
-                if(fieldDescription != null && fieldDescription != undefined){
-                    textboxHtml += '<p>' + fieldDescription + '</p>';
-                }  
                 if (fieldValue == null) {
                     textboxHtml += '<input class="form-control pagination' + num + '" type="text" id="' + fieldName + '" name="' + fieldName + '" placeholder="Your Answer" data-required="' + requiredQuestion + '"><i class="bar"></i>';
                 } else {
@@ -1218,9 +955,6 @@
             if (fieldTypeID == 2) {
                 var textboxHtml = '<div class="col-md-12 divClass newQuestion" data-question-type="textarea" id="div' + fieldName + '"><div class="form-group pagination-element' + num + '">';
                 textboxHtml += '<label class="control-label ' + (requiredQuestion == 1 ? ' required' : '') + '">' + questionNum + ' . ' + fieldLabel + '</label>';
-                if(fieldDescription != null && fieldDescription != undefined){
-                    textboxHtml += '<p>' + fieldDescription + '</p>';
-                }  
                 if (fieldValue == null) {
                     if (fieldID == 109) {
                         textboxHtml += '<input type="text" oninput="validateNumber(' + fieldName + ')" data-required="' + requiredQuestion + '" class="form-control pagination' + num + '" id="' + fieldName + '" name="' + fieldName + '" min="1" max="5">';
@@ -1244,9 +978,6 @@
                 var response = fieldOptionsDB;
                 var dropdownHtml = '<div class="col-md-12 divClass newQuestion" data-question-type="select" id="div' + fieldName + '"><div class="form-group pagination-element' + num + '">';
                 dropdownHtml += '<label class="control-label ' + (requiredQuestion == 1 ? ' required' : '') + '">' + questionNum + ' . ' + fieldLabel + '</label>';
-                if(fieldDescription != null && fieldDescription != undefined){
-                    dropdownHtml += '<p>' + fieldDescription + '</p>';
-                }  
                 dropdownHtml += '<select class="documentCategory pagination' + num + '" name="' + fieldName + '" id="' + fieldName + '" style="width: 50%;" data-required="' + requiredQuestion + '">';
                 dropdownHtml += '<option value=""> Choose </option>';
                 for (let index = 0; index < response.length; index++) {
@@ -1272,9 +1003,6 @@
                 var currentOption2 = [];
                 var radioButtonHtml = '<div class="col-md-12 divClass newQuestion" data-question-type="radio" id="div' + fieldName + '"><div class="form-radio pagination-element' + num + '">';
                 radioButtonHtml += '<label class="control-label ' + (requiredQuestion == 1 ? ' required' : '') + '" >' + questionNum + ' . ' + fieldLabel + '</label><div class="radio">';
-                if(fieldDescription != null && fieldDescription != undefined){
-                    radioButtonHtml += '<p>' + fieldDescription + '</p>';
-                }  
                 for (let index2 = 0; index2 < response.length; index2++) {
                     const question_details_id2 = response[index2]['question_details_id'];
                     const option_field_name2 = response[index2]['option_for_question'];
@@ -1293,11 +1021,8 @@
                         if (fieldValue == option_field_name) {
                             radioButtonHtml += '<div class="radio">';
                             if (other_flag == 1) {
-                                // When option is selected and has other_flag, text box should be visible
-                                // Check if fieldValue contains custom text (not in options list)
-                                var textValue = (!checkOther2 && fieldValue != option_field_name) ? fieldValue : '';
                                 radioButtonHtml += '<label><input style="margin-right: 10px;" class="pagination' + num + ' Qradio" other-flag=' + other_flag + ' othersub="otherOption_' + option_question_fields_id + '" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="' + option_field_name + '" onclick="showInputSub(' + fieldName + ',' + option_question_fields_id + ')" checked data-required="' + requiredQuestion + '"><i class="helper"></i> ' + option_field_name;
-                                radioButtonHtml += '<input type="text" class="otherOption_' + option_question_fields_id + ' otherOption' + fieldName + '" style="opacity: 1;display:inline;width: 589px;margin: -2px 0px 0px 80px;" name="' + fieldName + '" value="' + textValue + '" placeholder="If Yes please mention reason">';
+                                radioButtonHtml += '<input type="text" class="otherOption_' + option_question_fields_id + ' otherOption' + fieldName + '" style="opacity: 1;display:none;width: 589px;margin: -2px 0px 0px 80px;" name="' + fieldName + '" placeholder="If Yes please mention reason">';
                             } else {
                                 radioButtonHtml += '<label><input style="margin-right: 10px;" class="pagination' + num + ' Qradio" other-flag=' + other_flag + ' othersub="otherOption_' + option_question_fields_id + '" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="' + option_field_name + '" onclick="showInput(' + fieldName + ')" checked data-required="' + requiredQuestion + '"><i class="helper"></i> ' + option_field_name;
                             }
@@ -1305,7 +1030,6 @@
                         } else {
                             radioButtonHtml += '<div class="radio">';
                             if (other_flag == 1) {
-                                // When option is not selected but has other_flag, text box should be hidden
                                 radioButtonHtml += '<label><input style="margin-right: 10px;" class="pagination' + num + ' Qradio" other-flag=' + other_flag + ' othersub="otherOption_' + option_question_fields_id + '" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="' + option_field_name + '" onclick="showInputSub(' + fieldName + ',' + option_question_fields_id + ')" data-required="' + requiredQuestion + '" ><i class="helper"></i> ' + option_field_name;
                                 radioButtonHtml += '<input type="text" class="otherOption_' + option_question_fields_id + ' otherOption' + fieldName + '" style="opacity: 1;display:none;width: 589px;margin: -2px 0px 0px 80px;" name="' + fieldName + '" placeholder="If Yes please mention reason">';
                             } else {
@@ -1350,9 +1074,6 @@
                 }
                 var radioButtonHtml = '<div class="col-md-12 divClass newQuestion" data-question-type="checkbox" id="div' + fieldName + '"><div class="form-group pagination-element' + num + '">';
                 radioButtonHtml += '<label class="control-label ' + (requiredQuestion == 1 ? ' required' : '') + '">' + questionNum + ' . ' + fieldLabel + '</label><div class="checkbox">';
-                if(fieldDescription != null && fieldDescription != undefined){
-                    radioButtonHtml += '<p>' + fieldDescription + '</p>';
-                }  
                 for (let index = 0; index < response.length; index++) {
                     const question_details_id = response[index]['question_details_id'];
                     const option_field_name = response[index]['option_for_question'];
@@ -1384,9 +1105,6 @@
                 var fieldQuestions = response.fieldQuestions;
                 var radioButtonHtml = '<div class="col-md-12 divClass newQuestion multi-question" data-question-type="radio-sub" id="div' + fieldName + '"><div class="form-group pagination-element' + num + '">';
                 radioButtonHtml += '<label class="control-label ' + (requiredQuestion == 1 ? ' required' : '') + '">' + questionNum + ' . ' + fieldLabel + '</label><br>'; //Sub Question Radio
-                if(fieldDescription != null && fieldDescription != undefined){
-                    radioButtonHtml += '<p>' + fieldDescription + '</p>';
-                }  
                 radioButtonHtml += '<table class="table_content" style="border: 1px solid black !important;">';
                 radioButtonHtml += '<tr style="border: 1px solid black !important;">';
                 radioButtonHtml += '<th class="stickTd" width="30%" style="border: 1px solid black !important;"></th>';
@@ -1433,9 +1151,6 @@
                 var response = options;
                 var dropdownHtml = '<div class="col-md-12 divClass newQuestion" data-question-type="select" id="div' + fieldName + '"><div class="form-group pagination-element' + num + '">';
                 dropdownHtml += '<label class="control-label ' + (requiredQuestion == 1 ? ' required' : '') + '">' + questionNum + ' . ' + fieldLabel + '</label>';
-                if(fieldDescription != null && fieldDescription != undefined){
-                    dropdownHtml += '<p>' + fieldDescription + '</p>';
-                }  
                 dropdownHtml += '<select class="documentCategory pagination' + num + '" data-required="' + requiredQuestion + '" name="' + fieldName + '" id="' + fieldName + '" style="width: 50%;">';
                 dropdownHtml += '<option value=""> Choose </option>';
                 for (let index = 0; index < response.length; index++) {
@@ -1475,9 +1190,7 @@
                 var response = fieldOptionsDB;
                 var radioButtonHtml = '<div class="col-md-12 pagination-element' + num + '" style="background-color: rgb(218, 178, 55);font-weight: 900;font-size: 20px;">';
                 radioButtonHtml += '<label class="control-label">' + fieldLabel + '</label><br>';
-                if(fieldDescription != null && fieldDescription != undefined){
-                    radioButtonHtml += '<p>' + fieldDescription + '</p>';
-                }  
+
                 for (let index = 0; index < response.length; index++) {
                     var question_details_id = response[index]['question_details_id'];
                     var option_field_name = response[index]['option_for_question'];
@@ -1497,9 +1210,6 @@
                 var fieldQuestions = response.fieldQuestions;
                 var radioButtonHtml = '<div class="col-md-12 divClass newQuestion multi-question" data-question-type="checkbox-sub" id="div' + fieldName + '"><div class="form-group pagination-element' + num + '">';
                 radioButtonHtml += '<label class="control-label ' + (requiredQuestion == 1 ? ' required' : '') + '">' + questionNum + ' . ' + fieldLabel + '</label><br>'; //Sub Question Radio
-                if(fieldDescription != null && fieldDescription != undefined){
-                    radioButtonHtml += '<p>' + fieldDescription + '</p>';
-                }  
                 radioButtonHtml += '<table class="table_content" style="border: 1px solid black !important;">';
                 radioButtonHtml += '<tr style="border: 1px solid black !important;">';
                 radioButtonHtml += '<th class="stickTd" width="30%" style="border: 1px solid black !important;"></th>';
@@ -1583,4 +1293,31 @@
         }
     }
 </script>
+
+<script>
+    const questionnaireSaveRoute = "{{ route('questionnaire.form.save') }}";
+
+    function autoSaveQuestionnaire() {
+        let formData = new FormData($('#divQuestionnaireForm')[0]);
+
+        $.ajax({
+            url: questionnaireSaveRoute,
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                console.log("Auto saved successfully", response);
+            },
+            error: function(xhr) {
+                console.error("Auto save failed:", xhr.responseText);
+            }
+        });
+    }
+
+    $(document).on('change keyup', '#divQuestionnaireForm :input', function() {
+        autoSaveQuestionnaire();
+    });
+</script>
+
 @endsection

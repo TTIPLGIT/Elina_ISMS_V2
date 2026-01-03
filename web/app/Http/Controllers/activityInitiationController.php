@@ -67,7 +67,7 @@ class activityInitiationController extends BaseController
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -86,7 +86,7 @@ class activityInitiationController extends BaseController
             $actionBtn = $request->actionBtn;
             $value = $request->enrollment_id;
             $request = array();
-            $request['requestData'] = $encryptArray;            
+            $request['requestData'] = $encryptArray;
 
             $gatewayURL = config('setting.api_gateway_url') . '/activityinitiate/storedata';
 
@@ -96,7 +96,7 @@ class activityInitiationController extends BaseController
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
-                    if($actionBtn == 'Save'){
+                    if ($actionBtn == 'Save') {
                         return Redirect::back()->with('restore', ['message' => 'Activity Saved Successfully', 'value' => $value]);
                     }
                     return redirect(route('activity_initiate.index'))->with('success', 'Activity Initiated Successfully');
@@ -209,26 +209,26 @@ class activityInitiationController extends BaseController
                     $activity = $parant_data['activity'];
                     $lastactivity = $parant_data['lastactivity'];
                     $comments = $parant_data['comments'];
-                    $video_link = $parant_data['video_link'];//dd($video_link);
+                    $video_link = $parant_data['video_link']; //dd($video_link);
                     $currentactivity = $parant_data['currentactivity'];
                     $activity_materials = $parant_data['activity_materials'];
                     $activity_materials_mapping = $parant_data['activity_materials_mapping'];
                     $f2f_observation = $parant_data['f2f_observation'];
                     $lastactivity1 = $parant_data['lastactivity1'];
-                    $datalist= json_decode($parant_data['datalist']);
+                    $datalist = json_decode($parant_data['datalist']);
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
 
-                    return view('activity_initiate.activityedit', compact('activity_materials_mapping' , 'activity_materials' ,'currentactivity', 'comments', 'lastactivity', 'rows', 'video_link', 'screens', 'modules', 'activity','lastactivity1','datalist'));
-                  }
+                    return view('activity_initiate.activityedit', compact('activity_materials_mapping', 'activity_materials', 'currentactivity', 'comments', 'lastactivity', 'rows', 'video_link', 'screens', 'modules', 'activity', 'lastactivity1', 'datalist'));
+                }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));
                 echo json_encode($objData->Code);
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -263,7 +263,7 @@ class activityInitiationController extends BaseController
                     //     ->with('success', 'Activity status Updated Successfully');
                     $returnTab = $objData->Data;
                     return Redirect::back()
-                        ->with('success', 'Activity status Updated Successfully')->with('key' , $returnTab);
+                        ->with('success', 'Activity status Updated Successfully')->with('key', $returnTab);
                 }
                 if ($objData->Code == 400) {
                     return Redirect::back()
@@ -303,7 +303,7 @@ class activityInitiationController extends BaseController
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
 
-                    return view('activity_initiate.activity_observation', compact('comments', 'lastactivity', 'rows', 'screens', 'modules', 'activity','activity_set'));
+                    return view('activity_initiate.activity_observation', compact('comments', 'lastactivity', 'rows', 'screens', 'modules', 'activity', 'activity_set'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));
@@ -311,7 +311,7 @@ class activityInitiationController extends BaseController
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -493,7 +493,7 @@ class activityInitiationController extends BaseController
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -534,7 +534,7 @@ class activityInitiationController extends BaseController
                 if ($objData->Code == 200) {
                     // return redirect(route('activity_initiate.index'))
                     //     ->with('success', 'Activity status Updated Successfully');
-                    return Redirect::back()->with('success', 'Activity status Updated Successfully')->with('key' , $returnTab);
+                    return Redirect::back()->with('success', 'Activity status Updated Successfully')->with('key', $returnTab);
                 }
                 if ($objData->Code == 400) {
                     return Redirect::back()->with('fail', 'Activitylist Name Already Exists');
@@ -570,9 +570,9 @@ class activityInitiationController extends BaseController
             $data['enablef2f'] = $request->enablef2f;
             $data['pvID'] = $request->pvID;
             $encryptArray = $this->encryptData($data);
-            
+
             // dd($data);
-            
+
             $request = array();
             $request['requestData'] = $encryptArray;
             $gatewayURL = config('setting.api_gateway_url') . '/activityinitiate/save/video';
@@ -618,11 +618,12 @@ class activityInitiationController extends BaseController
         }
     }
 
-    public function reload($id){
+    public function reload($id)
+    {
         //dd($id);
     }
     public function activity_f2fstore(Request $request)
-    {  
+    {
         try { //dd($request);
             $method = 'Method => activityInitiationController => activity_f2fstore';
             $data = array();
@@ -637,14 +638,14 @@ class activityInitiationController extends BaseController
             $data['Observation'] = $request->Observation;
             $data['materials'] = $selectedMaterials; // Assigning selected materials to your data array
             $data['actionf2f'] = $request->actionf2f;
-           
+
             $encryptArray = $this->encryptData($data);
             $actionBtn = $request->actionf2f;
             $value = $request->enrollment_id;
             $activityID = $request->activity_set;
             $descriptionID = $request->description;
             $request = array();
-            $request['requestData'] = $encryptArray;            
+            $request['requestData'] = $encryptArray;
 
             $gatewayURL = config('setting.api_gateway_url') . '/activity/f2f/store';
 
@@ -654,14 +655,14 @@ class activityInitiationController extends BaseController
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
-                    if($actionBtn == 'Submit'){
+                    if ($actionBtn == 'Submit') {
                         return Redirect::back()->with('success', 'F2F Submitted Successfully');
                     }
-                    if($actionBtn == 'Save'){
+                    if ($actionBtn == 'Save') {
                         return Redirect::back()
-                        ->with('save', 'F2F Saved Successfully')
-                        ->with('activityID', $activityID)
-						->with('descriptionID', $descriptionID);
+                            ->with('save', 'F2F Saved Successfully')
+                            ->with('activityID', $activityID)
+                            ->with('descriptionID', $descriptionID);
                     }
                 }
                 if ($objData->Code == 400) {
@@ -678,7 +679,7 @@ class activityInitiationController extends BaseController
     }
     public function activity_f2fedit($id)
     {
-        
+
         try {
             $method = 'Method => activityInitiationController => activity_f2fedit';
             $id = $this->decryptData($id);
@@ -687,25 +688,26 @@ class activityInitiationController extends BaseController
             $response = json_decode($response);
 
             if ($response->Status == 200 && $response->Success) {
-                
+
                 $objData = json_decode($this->decryptData($response->Data));
                 if ($objData->Code == 200) {
                     $rows = json_decode(json_encode($objData->Data), true);
                     return $rows;
-                    echo json_encode($rows);                }
+                    echo json_encode($rows);
+                }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));
                 echo json_encode($objData->Code);
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
-   
+
     public function activity_f2fdelete($id)
-    {      
+    {
         // $this->WriteFileLog($id);
 
         try {
@@ -724,7 +726,7 @@ class activityInitiationController extends BaseController
             $rows = json_decode(json_encode($objData->Data), true);
             return $rows;
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -757,8 +759,8 @@ class activityInitiationController extends BaseController
         }
     }
     public function activity_f2fupdate(Request $request)
-    {  
-        try { 
+    {
+        try {
             $method = 'Method => activityInitiationController => activity_f2fupdate';
             $data = array();
             $data['enrollment_id'] = $request->enrollment_id;
@@ -771,13 +773,13 @@ class activityInitiationController extends BaseController
             $data['Observation'] = $request->Observation_edit;
             $data['materials'] = $request->materials_edit; // Assigning selected materials to your data array
             $data['parent_video_id'] = $request->parent_video_id; // Assigning selected materials to your data array
-           
+
             $encryptArray = $this->encryptData($data);
             $actionBtn = $request->actionBtn;
             $value = $request->enrollment_id;
             $activity_initiation_id = $this->encryptData($request->activity_initiation_id);
             $request = array();
-            $request['requestData'] = $encryptArray;            
+            $request['requestData'] = $encryptArray;
 
             $gatewayURL = config('setting.api_gateway_url') . '/activity/f2f/update';
 
@@ -788,7 +790,7 @@ class activityInitiationController extends BaseController
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
                     // if($actionBtn == 'Submit'){
-                        return redirect(route('activityinitiate.observation',$activity_initiation_id))->with('success', 'F2F Updated Successfully');
+                    return redirect(route('activityinitiate.observation', $activity_initiation_id))->with('success', 'F2F Updated Successfully');
                     // }
                 }
                 if ($objData->Code == 400) {
@@ -803,5 +805,55 @@ class activityInitiationController extends BaseController
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
+    public function video_parentstore_one(Request $request)
+    {
+        try {
 
+            $method = 'Method =>  activityInitiationController => update_data';
+            $returnTab = $request->is_active_tab;
+            $data = array();
+            $data['approval_status'] = $request->approval_status;
+            $data['comments'] = $request->comments;
+            $data['activity_initiation'] = $request->activity_initiation_id;
+            $data['check_video'] = $request->check_video;
+            $data['observation'] = $request->observation;
+            $data['parent_video_upload'] = $request->parent_video_upload_id;
+            $data['parent_video_uploads'] = $request->openID;
+            $data['enrollment_id'] = $request->enrollment_id;
+            $data['description'] = $request->description_id;
+            $data['materials_required'] = $request->material;
+            $data['to_observe'] = $request->to_observe;
+            $data['to_ask_parents'] = $request->to_ask_parents;
+            $data['enablef2f'] = $request->enablef2f;
+            $encryptArray = $this->encryptData($data);
+            // dd($data);
+            $request = array();
+
+
+            $request['requestData'] = $encryptArray;
+            $gatewayURL = config('setting.api_gateway_url') . '/activityinitiate/update/submit/one';
+            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+            $response1 = json_decode($response);
+
+            if ($response1->Status == 200 && $response1->Success) {
+
+                $objData = json_decode($this->decryptData($response1->Data));
+                if ($objData->Code == 200) {
+                    // return redirect(route('activity_initiate.index'))
+                    //     ->with('success', 'Activity status Updated Successfully');
+                    return Redirect::back()->with('success', 'Activity status Updated Successfully')->with('key', $returnTab);
+                }
+                if ($objData->Code == 400) {
+                    return Redirect::back()->with('fail', 'Activitylist Name Already Exists');
+                }
+            } else {
+                $objData = json_decode($this->decryptData($response1->Data));
+                echo json_encode($objData->Code);
+                exit;
+            }
+        } catch (\Exception $e) {
+
+            return $this->sendLog($method, $e->getCode(), $e->getMessage(), $e->getLine(), $e->getTrace()[0]['args'][2]);
+        }
+    }
 }

@@ -15,7 +15,7 @@
             <tr>
                 <th colspan="4" style="background-color: white !important; color: #141414; text-align: left; border: 1px solid #040404 !important;">
                     {{ $perskills['skill_name'] }}
-                    <input type="checkbox" style="float:right" name="switch[]" onclick="handleCheckboxTable(this); handlePageRemovalCheckbox(this)" value="{{ $perskills['skill_id'] }}" class="check">
+                    <input type="checkbox" style="float:right" name="switch[]" onclick="handleCheckboxTable(this)" value="{{ $perskills['skill_id'] }}" class="check">
                 </th>
             </tr>
         </thead>
@@ -44,10 +44,10 @@
                         @endforeach
                     </select>
                 </td>
-                <td width="30%">
+                <td> 
                     <textarea class="observationSelect" style="width: 100%;" id="evidence{{ $activity['activity_id'] }}" name="evidence[{{ $page['assesment_skill_id'] }}][]" oninput="checkCharCount(this)"></textarea>
                 </td>
-                <td style="display: flex;align-items: center;height: fit-content;">
+                <td style="display: flex;align-items: center;"> 
                     <textarea class="form-control default" name="recommendation[{{ $page['assesment_skill_id'] }}][]" id="recommendation_a{{ $activity['activity_id'] }}" placeholder="Enter recommendation..."></textarea>
                     <a class="btn remove_a" title="Remove" onclick="this.closest('tr').remove()">
                         <i class="fa fa-times"></i>
@@ -66,12 +66,10 @@
     </div> -->
 
     <!-- Add Activity Button -->
-    <div class="d-flex justify-content-center align-items-center">
-        <button type="button" class="btn btn-success mt-2"
-            onclick="addNewRowWithInputA({{ $page['page'] }}, {{ $page['assesment_skill_id'] }}, {{ $perskills['skill_id'] }})">
-            Add Activity
-        </button>
-    </div>
+    <button type="button" class="btn btn-success mt-2"
+        onclick="addNewRowWithInputA({{ $page['page'] }}, {{ $page['assesment_skill_id'] }}, {{ $perskills['skill_id'] }})">
+        Add Activity Row
+    </button>
 </div>
 
 <script>
@@ -90,27 +88,19 @@
         return name.trim().toLowerCase().replace(/s$/, '');
     }
 
-    function checkCharCount(textarea) {
-        const maxLength = 1500;
-        if (textarea.value.length > maxLength) {
-            textarea.value = textarea.value.slice(0, maxLength);
-            alert("Maximum character limit of 1500 exceeded.");
-        }
-    }
+    // function checkCharCount(textarea) {
+    //     const maxLength = 1500;
+    //     if (textarea.value.length > maxLength) {
+    //         textarea.value = textarea.value.slice(0, maxLength);
+    //         alert("Maximum character limit of 1500 exceeded.");
+    //     }
+    // }
 
     function getObservationOptions() {
         return observations.map(o => `<option value="${o.observation_id}">${o.observation_name}</option>`).join('');
     }
 
     function addNewRowWithInputA(pageId, assesmentSkillId, skillId) {
-        if (removedPages.includes(String(pageId))) {
-            Swal.fire('Warning', `The respective page has been removed. You can’t add a new activity to this page.`, 'warning');
-            return false;
-        }
-        if (pagesToRemove.includes(String('skill2-' + skillId))) {
-            Swal.fire('Warning', `The respective page has been removed. You can’t add a new activity to this page.`, 'warning');
-            return false;
-        }
         const filteredActivities = allActivities.filter(act =>
             act.performance_area_id == assesmentSkillId &&
             act.skill_type == 2 &&
@@ -166,7 +156,7 @@
                         confirmButtonText: 'Confirm',
                     }).then(confirmResult => {
                         if (confirmResult.isConfirmed) {
-                            add_new_activity(assesmentSkillId, typedName, skillId, pageId, 'skill2');
+                            add_new_activity(assesmentSkillId, typedName, skillId, pageId , 'skill2');
                             // insertRowToTableA(pageId, assesmentSkillId, skillId, typedName, '');
                         }
                     });
@@ -191,10 +181,10 @@
                     ${getObservationOptions()}
                 </select>
             </td>
-            <td width="30%">
+            <td>
                 <textarea class="observationSelect" style="width: 100%;" oninput="checkCharCount(this)" name="evidence[${assesmentSkillId}][]"></textarea>
             </td>
-            <td style="display: flex;align-items: center;height: fit-content;">
+            <td style="display: flex; align-items: center;">
                 <textarea class="form-control default" name="recommendation[ ${assesmentSkillId} ][]" id="recommendation_a${activityId}" placeholder="Enter recommendation..."></textarea>
                 <a class="btn remove_a" title="Remove" onclick="this.closest('tr').remove()">
                     <i class="fa fa-times"></i>
@@ -210,21 +200,5 @@
         const checked = checkbox.checked;
         // console.log(`Skill ID: ${skillId}, Checked: ${checked}`);
         // You can toggle enabling/disabling the entire section here
-    }
-
-    var pagesToRemove = [];
-    function handlePageRemovalCheckbox(pageCheckbox) {
-        var pageValue = pageCheckbox.value;
-        var pageIndex = pagesToRemove.indexOf('skill2-' + pageValue);
-
-        if (pageCheckbox.checked) {
-            if (pageIndex === -1) {
-                pagesToRemove.push('skill2-' + pageValue);
-            }
-        } else {
-            if (pageIndex !== -1) {
-                pagesToRemove.splice(pageIndex, 1);
-            }
-        }
     }
 </script>

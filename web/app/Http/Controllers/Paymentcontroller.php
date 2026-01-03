@@ -130,7 +130,7 @@ class Paymentcontroller extends BaseController
 
     public function create1($id)
     {
-        try {
+        try { 
             $method = 'Method => Paymentcontroller => create';
 
             $ids = $this->DecryptData($id);

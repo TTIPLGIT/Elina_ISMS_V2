@@ -113,7 +113,7 @@ class OVMAllocationController extends BaseController
             $data['meeting_location2'] = $request->meeting_location2;
             $data['meeting_description'] = $request->meeting_description;
             $data['meeting_status'] = $request->meeting_status;
-          
+        //   dd($data);
             $url = URL::signedRoute('ovm.allocation.signed', ['id' => encrypt($request->user_id)]);
             $data['url'] = $url;
             $encryptArray = $this->encryptData($data);
@@ -122,7 +122,7 @@ class OVMAllocationController extends BaseController
             $gatewayURL = config('setting.api_gateway_url') . '/ovm_allocation/store';
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
             $response1 = json_decode($response);
-            
+            // dd($response1);
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
 

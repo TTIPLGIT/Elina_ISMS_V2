@@ -446,7 +446,7 @@ class SaildocumentController extends BaseController
     public function delete($id)
     {
         try {
-// dd($this->decryptData($id));
+            // dd($this->decryptData($id));
             $method = 'Method => SaildocumentController => delete';
 
             //  $id = $this->decryptData($id);
@@ -1042,7 +1042,6 @@ class SaildocumentController extends BaseController
             $request['requestData'] = $encryptArray;
             $response1 = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
             $response = json_decode($response1);
-
             if ($response->Status == 401) {
                 return back()->withErrors(['recaptcha' => ['Invalid User']]);
             }
@@ -1096,8 +1095,8 @@ class SaildocumentController extends BaseController
             $parentName = $ResponseData->childGuardianName;
             $sailDate = Carbon::now()->format('d-m-Y');
             $consentData1 = str_replace(
-                ['%SAIL_FEE%', '%SAIL_PARENT_NAME%', '%SAIL_DATE%'], 
-                [$payableAmount, $parentName, $sailDate],            
+                ['%SAIL_FEE%', '%SAIL_PARENT_NAME%', '%SAIL_DATE%'],
+                [$payableAmount, $parentName, $sailDate],
                 $policyContent
             );
             $pdf = PDF::loadView('pdfTemplates.SAIL_Consent', compact('consentData1'));
@@ -1135,7 +1134,7 @@ class SaildocumentController extends BaseController
                     // return redirect(route('sail.consent'));
                     $vData = $objData->Data;
                     $consent_aggrement = $objData->consent_aggrement;
-                    if($consent_aggrement == 'Declined'){
+                    if ($consent_aggrement == 'Declined') {
                         return redirect(route('newenrollment.show', $this->encryptData($vData->enrollment_id)))->with('success', 'Your SAIL Process has been Already Submitted.');
                     }
                     if ($consent_aggrement != 'Agreed') {
@@ -1277,7 +1276,7 @@ class SaildocumentController extends BaseController
                     $data = $parant_data['data'];
                     $consentData = $parant_data['consentData'];
                     $answered = $parant_data['agreed'];
-                    
+
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];

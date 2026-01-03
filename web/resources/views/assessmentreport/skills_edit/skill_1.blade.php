@@ -1,5 +1,5 @@
 <div style="font-weight:bold;font-style: italic;font-size: 15px;display: flex;align-items: center;">
-    <p style="color:red">* </p> &nbsp; Note: Text in the 'Evidence' column not to be exceeded more than 1500 characters.
+    <!-- <p style="color:red">* </p> &nbsp; Note: Text in the 'Evidence' column not to be exceeded more than 1500 characters. -->
 </div>
 <div id="table{{$page['page']}}">
     <div class="table-responsive">
@@ -8,8 +8,8 @@
                 <tr>
                     <th width="30%">{{ $perskills['skill_name'] ?? $page['tab_name'] }}</th>
                     <th width="30%">Observation</th>
-                    <th class="required" width="30%">Evidence</th>
-                    <th class="required" width="10%">Recomendation</th>
+                    <th class="required" width="40%">Evidence</th>
+                    <th class="required" width="40%">Recomendation</th>
                 </tr>
             </thead>
             <tbody id="tablebody{{$page['page']}}">
@@ -49,7 +49,7 @@
                         <textarea style="width: 100% !important;" class="observationSelect addProducttext{{$page['page']}}" name="evidence[{{$page['assessment_skill']}}][]" oninput="checkCharCount(this)">{{$detail['evidence']}}</textarea>
                     </td>
                     <td style="display: flex;align-items: center;height: fit-content;">
-                        <textarea style="width: 100% !important;" class="form-control default" name="recommendation[{{$page['assessment_skill']}}][]">{{$detail['recommendation']}}</textarea>
+                        <textarea style="width: 100% !important;" class="form-control default" name="recommendation[{{$page['assessment_skill']}}][]" >{{$detail['recommendation']}}</textarea>
                         <a class="btn remove removeR" order="{{$page['page']}}" title="Add" id="removeProduct"><i class="fa fa-times" order="{{$page['page']}}"></i></a>
                     </td>
                 </tr>
@@ -60,15 +60,14 @@
     </div>
 </div>
 
-<div class="d-flex justify-content-center align-items-center">
-    <button type="button" class="btn btn-success col-4" onclick="addNewRowWithInput({{ $page['page'] }}, {{ $page['assessment_skill'] }}, {{ $perskills['skill_id'] }})">
-        Add Activity
-    </button>
-</div>
+
+<button type="button" class="btn btn-success" onclick="addNewRowWithInput({{ $page['page'] }}, {{ $page['assessment_skill'] }}, {{ $perskills['skill_id'] }})">
+    Add Activity Row
+</button>
 @php
-$skill_id = $page['assessment_skill'] ?? 'null';
-$skill_type = $perskills['skill_type'];
-$recommendation = $recommendation_lookup[$skill_id][$skill_type] ?? '';
+    $skill_id = $page['assessment_skill'] ?? 'null';
+    $skill_type = $perskills['skill_type'];
+    $recommendation = $recommendation_lookup[$skill_id][$skill_type] ?? '';
 @endphp
 
 <!-- Recommendation Field -->
@@ -84,13 +83,6 @@ $recommendation = $recommendation_lookup[$skill_id][$skill_type] ?? '';
     }
 
     function addNewRowWithInput(pageId, assesmentSkillId, skillId) {
-
-        if (removedPages.includes(String(pageId))) {
-            Swal.fire('Warning', `The respective page has been removed. You can’t add a new activity to this page.`, 'warning');
-            // console.log(`${pageId} is already in removedPages`);
-            return false;
-        }
-        
         const allActivities = @json($activitys);
 
         // Filter activities by performance area & skill
@@ -202,11 +194,11 @@ $recommendation = $recommendation_lookup[$skill_id][$skill_type] ?? '';
         return observations.map(o => `<option value="${o.observation_id}">${o.observation_name}</option>`).join('');
     }
 
-    function checkCharCount(textarea) {
-        const maxLength = 1500;
-        if (textarea.value.length > maxLength) {
-            textarea.value = textarea.value.slice(0, maxLength);
-            alert("Maximum character limit of 1500 exceeded.");
-        }
-    }
+    // function checkCharCount(textarea) {
+    //     const maxLength = 1500;
+    //     if (textarea.value.length > maxLength) {
+    //         textarea.value = textarea.value.slice(0, maxLength);
+    //         alert("Maximum character limit of 1500 exceeded.");
+    //     }
+    // }
 </script>
