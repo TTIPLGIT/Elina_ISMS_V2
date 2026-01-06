@@ -840,30 +840,33 @@
                                     @endif
                                     @endforeach
                                     <!-- f2f_observation -->
-
-                                    <select data-placeholder="Select Materials" multiple class="chosen-select" name="material[{{$data['parent_video_upload_id']}}][]" style="width: 100% !important;">
-                                      @foreach($activity_materials as $material)
-
-                                      @if(in_array($material['id'] , explode(',', $activity_materials_id) ))
-                                      @if(in_array($material['materials'] , explode(',', $data['materials_required']) ))
-                                      <option value="{{$material['materials']}}" selected>{{$material['materials']}}</option>
-
-                                      @else
-                                      <option value="{{$material['materials']}}">{{$material['materials']}}</option>
-                                      @endif
-                                      @endif
+                                    @php
+                                    $requiredMaterials = array_filter(array_map('trim', explode(',', $data['materials_required'])));
+                                    $availableMaterials = collect($activity_materials)->pluck('materials')->toArray();
+                                    @endphp
+                                    <select data-placeholder="Select Materials"
+                                      multiple
+                                      class="chosen-select"
+                                      name="material[{{$data['parent_video_upload_id']}}][]"
+                                      style="width:100%">
+                                      @foreach($requiredMaterials as $material)
+                                      <option value="{{ $material }}" selected>
+                                        {{ $material }}
+                                      </option>
                                       @endforeach
-                                      <optgroup label="------------------------------------------------">
+
+                                      <optgroup label="Available Materials">
                                         @foreach($activity_materials as $material)
-                                        @if(!in_array($material['id'] , explode(',', $activity_materials_id) ))
-                                        @if(in_array($material['materials'] , explode(',', $data['materials_required']) ))
-                                        <option value="{{$material['materials']}}" selected>{{$material['materials']}}</option>
-                                        @else
-                                        <option value="{{$material['materials']}}">{{$material['materials']}}</option>
-                                        @endif
+                                        @if(!in_array($material['materials'], $requiredMaterials))
+                                        <option value="{{ $material['materials'] }}">
+                                          {{ $material['materials'] }}
+                                        </option>
                                         @endif
                                         @endforeach
+                                      </optgroup>
+
                                     </select>
+
 
                                   </td>
                                   <td><textarea class="form-control" name="to_observe[{{$data['parent_video_upload_id']}}]" id="">{{$data['to_observe']}}</textarea></td>
@@ -885,15 +888,15 @@
                   @endif
                   <a type="button"
                     onclick="oneSubmit('{{$data['parent_video_upload_id']}}')"
-                    class="btn btn-labeled btn-succes"
+                    class="btn btn-labeled btn-succes" title="Submit"
                     style="background: green !important; border-color:green !important; color:white !important">
-                    <span class="btn-label"><i class="fa fa-check"></i></span> oneSubmit
+                    <span class="btn-label"><i class="fa fa-check"></i></span> Submit
                   </a>
 
                   <a type="button" onclick="tempSave('{{$data['parent_video_upload_id']}}')" id="submitbutton" class="btn btn-labeled btn-succes" title="Save" style="background: green !important; border-color:green !important; color:white !important">
                     <span class="btn-label" style="font-size:13px !important;"><i id="checkIcon{{$data['parent_video_upload_id']}}" class="fa fa-check"></i></span>Save</a>
-                  <a type="button" onclick="saveall()" id="submitbutton" class="btn btn-labeled btn-succes" title="Submit" style="background: green !important; border-color:green !important; color:white !important">
-                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span>Submit</a>
+                  <a type="button" onclick="saveall()" id="submitbutton" class="btn btn-labeled btn-succes" title="Submit All" style="background: green !important; border-color:green !important; color:white !important">
+                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span>Submit All</a>
                   <a type="button" class="btn btn-labeled back-btn" onclick="confirmclose('{{$loop->iteration}}')" data-dismiss="modal" aria-hidden="true" title="Close" style="color:white !important"><span class="btn-label" style="font-size:13px !important;"><i class="fa fa-times-circle-o"></i></span> Close</a>
                   @if($loop->iteration != count($currentactivity))
                   <a type="button" class="btn btn-labeled btn-info" onclick="showModalNext('{{$loop->iteration}}')" id="Next" title="Next" style="background: blue !important; border-color:#4d94ff !important; color:white !important;height: 35px;">
