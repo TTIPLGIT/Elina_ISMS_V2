@@ -122,6 +122,8 @@ class InPersonMeetingController extends BaseController
                         return redirect(route('inperson_meeting.index'))->with('success', 'F2F Meeting has been Completed for ' . $alert);
                     } elseif ($type == 'Declined') {
                         return redirect(route('inperson_meeting.index'))->with('success', 'F2F Meeting ' . $alert . ' has been declined');
+                    } elseif ($type == 'Saved') {
+                        return redirect(route('inperson_meeting.index'))->with('success', 'F2F Meeting has been  successfully saved for ' . $alert);
                     } else {
                         return redirect(route('inperson_meeting.index'))->with('success', 'F2F Meeting has been Updated for ' . $alert);
                     }
@@ -271,6 +273,8 @@ class InPersonMeetingController extends BaseController
                         return redirect(route('inperson_meeting.index'))->with('success', 'F2F Meeting has been Completed for ' . $alert);
                     } elseif ($type == 'Declined') {
                         return redirect(route('inperson_meeting.index'))->with('success', 'F2F Meeting ' . $alert . ' has been declined');
+                    } elseif ($type == 'Saved') {
+                        return redirect(route('inperson_meeting.index'))->with('success', 'F2F Meeting has been successfully saved for ' . $alert);
                     } else {
                         return redirect(route('inperson_meeting.index'))->with('success', 'F2F Meeting has been Updated for ' . $alert);
                     }

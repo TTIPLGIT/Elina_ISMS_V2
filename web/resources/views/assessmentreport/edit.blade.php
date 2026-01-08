@@ -2132,8 +2132,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <textarea id="modalRecommendationInput" class="form-control" rows="10" maxlength="Infinity" style="resize: vertical;"></textarea>
-                <!-- <small class="text-muted" id="charCount">0 / 5000 characters</small> -->
+                <!-- Use the same class as your other editors -->
+                <textarea id="modalRecommendationEditor" class="meeting_description" style="height: 350px;"></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="closeRecommendationModal()">Cancel</button>
@@ -2142,37 +2142,96 @@
         </div>
     </div>
 </div>
+
 <script>
     let activeRecommendationTextarea = null;
+
+    // Initialize TinyMCE for modal editor once when page loads
+    $(document).ready(function() {
+        tinymce.init({
+            selector: '#modalRecommendationEditor',
+            // ... keep all your existing TinyMCE configuration exactly as in your other init ...
+            // Copy ALL the settings from your other tinymce.init() call
+            plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons',
+            // ... include ALL other settings ...
+            height: 350,
+            setup: function(editor) {
+                // Store reference to editor
+                window.modalEditor = editor;
+            }
+        });
+    });
 
     document.addEventListener('click', function(e) {
         if (e.target && e.target.matches('textarea[name^="recommendation["]')) {
             activeRecommendationTextarea = e.target;
-            const currentText = activeRecommendationTextarea.value;
-            console.log('asd', currentText);
-            document.getElementById('modalRecommendationInput').value = currentText;
-            updateCharCount();
+
+            // Get current text
+            let currentText = activeRecommendationTextarea.value;
+
+            // Set content in modal editor
+            if (window.modalEditor) {
+                window.modalEditor.setContent(currentText);
+            } else if (tinymce && tinymce.get('modalRecommendationEditor')) {
+                tinymce.get('modalRecommendationEditor').setContent(currentText);
+            } else {
+                document.getElementById('modalRecommendationEditor').value = currentText;
+            }
+
             $('#recommendationModal').modal('show');
         }
     });
 
     function saveRecommendation() {
-        const modalText = document.getElementById('modalRecommendationInput').value;
-        if (activeRecommendationTextarea) {
-            activeRecommendationTextarea.value = modalText;
+        if (!activeRecommendationTextarea) return;
+
+        let modalText = '';
+
+        // Get content from modal editor
+        if (window.modalEditor) {
+            modalText = window.modalEditor.getContent();
+        } else if (tinymce && tinymce.get('modalRecommendationEditor')) {
+            modalText = tinymce.get('modalRecommendationEditor').getContent();
+        } else {
+            modalText = document.getElementById('modalRecommendationEditor').value;
         }
-        $('#recommendationModal').modal('hide');
+
+        // Update the original textarea
+        activeRecommendationTextarea.value = modalText;
+
+        // If the original textarea has TinyMCE, update it too
+        if (tinymce && tinymce.get(activeRecommendationTextarea.id)) {
+            tinymce.get(activeRecommendationTextarea.id).setContent(modalText);
+        }
+
+        // Trigger change event
+        $(activeRecommendationTextarea).trigger('change');
+
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: 'Recommendation saved',
+            showConfirmButton: false,
+            timer: 1500
+        });
+
+        closeRecommendationModal();
     }
 
     function closeRecommendationModal() {
         $('#recommendationModal').modal('hide');
     }
 
-    document.getElementById('modalRecommendationInput').addEventListener('input', updateCharCount);
-
-    function updateCharCount() {
-        const val = document.getElementById('modalRecommendationInput').value;
-        // document.getElementById('charCount').textContent = `${val.length} / 5000 characters`;
-    }
+    // Clear content when modal is hidden
+    $('#recommendationModal').on('hidden.bs.modal', function() {
+        if (window.modalEditor) {
+            window.modalEditor.setContent('');
+        } else if (tinymce && tinymce.get('modalRecommendationEditor')) {
+            tinymce.get('modalRecommendationEditor').setContent('');
+        }
+        document.getElementById('modalRecommendationEditor').value = '';
+        activeRecommendationTextarea = null;
+    });
 </script>
 @endsection
