@@ -129,9 +129,9 @@ class CustomizedPaymentController extends BaseController
         $response1 = json_decode($response);
         if ($response1->Status == 200 && $response1->Success) {
             $objData = json_decode($this->decryptData($response1->Data));
-
+       
             if ($objData->Code == 200) {
-                return redirect(url('payment/customized/sail'))->with('success', 'Payment Master Added Successfully');
+                return redirect(url('payment/customized/sail'))->with('success', 'Payment Added Successfully');
             }
 
             if ($objData->Code == 400) {

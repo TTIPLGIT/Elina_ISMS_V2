@@ -3,7 +3,8 @@
 @section('content')
 <div class="main-content">
     <section class="section">
-        {{ Breadcrumbs::render('payment_master.create') }}
+        {{ Breadcrumbs::render('paymentmaster.customized.create') }}
+
         <div class="section-body mt-1">
             <h5 class="text-center" style="color:darkblue">Payment Master Creation</h5>
             <div class="row">
@@ -19,7 +20,7 @@
                                         <div class="form-group">
                                             <label class="required">Child Name:</label>
                                             <select class="form-control" id="child_enrollment" name="child_enrollment" required>
-                                                <option value="">Select-Category</option>
+                                                <option value="">Select Child</option>
                                                 @foreach($childDetails as $key => $data)
                                                 <option value="{{ $data['enrollment_id'] }}">{{ $data['child_name'] }} ( {{ $data['enrollment_child_num'] }} ) </option>
                                                 @endforeach
@@ -27,39 +28,39 @@
                                         </div>
                                     </div>
                                     <div style="display: none;">
-                                    <div class="col-md-6" style="display: none;">
-                                        <div class="form-group">
-                                            <label class="required">Category:</label>
-                                            <select class="form-control" id="Category" name="Category" onchange="toggleSchoolDropdown()" required>
-                                                <option value="">Select-Category</option>
-                                                <option value="1" {{ isset($rows['category_id']) && $rows['category_id'] == '1' ? 'selected' : '' }}>General</option>
-                                                <option value="2" {{ isset($rows['category_id']) && $rows['category_id'] == '2' ? 'selected' : '' }}>School</option>
-                                            </select>
+                                        <div class="col-md-6" style="display: none;">
+                                            <div class="form-group">
+                                                <label class="required">Category:</label>
+                                                <select class="form-control" id="Category" name="Category" onchange="toggleSchoolDropdown()" required>
+                                                    <option value="">Select-Category</option>
+                                                    <option value="1" {{ isset($rows['category_id']) && $rows['category_id'] == '1' ? 'selected' : '' }}>General</option>
+                                                    <option value="2" {{ isset($rows['category_id']) && $rows['category_id'] == '2' ? 'selected' : '' }}>School</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="required">Fees Type</label>
-                                            <select class="form-control" id="fees_type" name="fees_type" required>
-                                                <option value="">Select- Fees Type</option>
-                                                <option value="1" {{ isset($rows['fees_type_id']) && $rows['fees_type_id'] == '1' ? 'selected' : '' }}>Registration</option>
-                                                <option value="2" {{ isset($rows['fees_type_id']) && $rows['fees_type_id'] == '2' ? 'selected' : '' }}>SAIL</option>
-                                            </select>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="required">Fees Type</label>
+                                                <select class="form-control" id="fees_type" name="fees_type" required>
+                                                    <option value="">Select- Fees Type</option>
+                                                    <option value="1" {{ isset($rows['fees_type_id']) && $rows['fees_type_id'] == '1' ? 'selected' : '' }}>Registration</option>
+                                                    <option value="2" {{ isset($rows['fees_type_id']) && $rows['fees_type_id'] == '2' ? 'selected' : '' }}>SAIL</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-6" id="school_dropdown" style="display:none;">
-                                        <div class="form-group">
-                                            <label class="required">School</label>
-                                            <select class="form-control" id="school" name="school" required>
-                                                <option value="">Select-School</option>
-                                                @foreach($schoolists as $key => $schoolist)
-                                                <option value="{{$schoolist['id']}}" {{ isset($rows['school_enrollment_id']) && $rows['school_enrollment_id'] == $schoolist['id'] ? 'selected' : '' }}>{{ $schoolist['school_name'] }}</option>
-                                                @endforeach
-                                            </select>
+                                        <div class="col-md-6" id="school_dropdown" style="display:none;">
+                                            <div class="form-group">
+                                                <label class="required">School</label>
+                                                <select class="form-control" id="school" name="school" required>
+                                                    <option value="">Select-School</option>
+                                                    @foreach($schoolists as $key => $schoolist)
+                                                    <option value="{{$schoolist['id']}}" {{ isset($rows['school_enrollment_id']) && $rows['school_enrollment_id'] == $schoolist['id'] ? 'selected' : '' }}>{{ $schoolist['school_name'] }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -307,9 +308,7 @@
     // Handle adding service rows dynamically
     document.getElementById('addServiceButton').addEventListener('click', function() {
         const table = document.getElementById('serviceTable').getElementsByTagName('tbody')[0];
-        const rowCount = table.rows.length + 1;
-
-        const row = table.insertRow(rowCount - 1);
+        const row = table.insertRow(table.rows.length);
 
         const cell1 = row.insertCell(0);
         const cell2 = row.insertCell(1);
@@ -317,8 +316,6 @@
         const cell4 = row.insertCell(3);
         const cell5 = row.insertCell(4);
         const cell6 = row.insertCell(5);
-
-        cell1.textContent = rowCount;
 
         cell2.innerHTML = `<input class="form-control" type="text" name="serviceBriefing[]" placeholder="Service Briefing" required>`;
         cell3.innerHTML = `<input class="form-control qty" type="number" name="qty[]" min="0" step="any" required>`;
@@ -328,6 +325,8 @@
 
         row.querySelector('.qty').addEventListener('input', calculateServiceAmount);
         row.querySelector('.rate').addEventListener('input', calculateServiceAmount);
+
+        updateServiceSerialNumbers();
     });
 
     // Loop through the serviceList if it's not null and populate the rows
@@ -344,7 +343,8 @@
             const cell5 = row.insertCell(4);
             const cell6 = row.insertCell(5);
 
-            cell1.textContent = table.rows.length + 1; // Auto-increment row number
+            updateServiceSerialNumbers();
+
 
             cell2.innerHTML = `<input class="form-control" type="text" name="serviceBriefing[]" value="${service.service_briefing}" required>`;
             cell3.innerHTML = `<input class="form-control qty" type="number" name="qty[]" value="${service.quantity}" min="0" step="any" required>`;
@@ -380,14 +380,30 @@
     function removeRow(button) {
         const row = button.closest('tr');
         row.remove();
-        calculateServiceAmount();
+
+        totalServiceAmount = 0;
+        document.querySelectorAll('#serviceTable tbody tr').forEach(function(row) {
+            const rowAmount = parseFloat(row.querySelector('.amount').value) || 0;
+            totalServiceAmount += rowAmount;
+        });
+
+        updateServiceSerialNumbers();
+        calculateFinalAmount();
     }
+
 
     // Add the first service row when the page loads
     document.addEventListener('DOMContentLoaded', function() {
         // Programmatically trigger the click event to add the first service row
         document.getElementById('addServiceButton').click();
     });
+
+    function updateServiceSerialNumbers() {
+        const rows = document.querySelectorAll('#serviceTable tbody tr');
+        rows.forEach((row, index) => {
+            row.cells[0].textContent = index + 1;
+        });
+    }
 </script>
 
 <style>
@@ -411,6 +427,14 @@
 
     #serviceTable input {
         margin-right: 10px;
+    }
+
+    #serviceTable input.form-control {
+        background-color: #ffffff !important;
+    }
+
+    #child_enrollment {
+        background-color: #ffffff !important;
     }
 </style>
 

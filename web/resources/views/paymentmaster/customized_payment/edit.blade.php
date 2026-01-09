@@ -3,7 +3,7 @@
 @section('content')
 <div class="main-content">
     <section class="section">
-        {{ Breadcrumbs::render('payment_master.create') }}
+        {{ Breadcrumbs::render('paymentmaster.customized.create') }}
         <div class="section-body mt-1">
             <h5 class="text-center" style="color:darkblue">Payment Master Creation</h5>
             <div class="row">
@@ -18,7 +18,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="required">Child Name:</label>
-                                            <select class="form-control" id="child_enrollment" name="child_enrollment" required>
+                                            <select class="form-control" id="child_enrollment" name="child_enrollment" required disabled>
                                                 @foreach($childDetails as $data)
                                                 @if($rows['enrollment_id']==$data['enrollment_id'])
                                                 <option value="{{ $data['enrollment_id'] }}"
@@ -322,7 +322,7 @@
         const cell5 = row.insertCell(4);
         const cell6 = row.insertCell(5);
 
-        cell1.textContent = rowCount;
+        updateServiceSerialNumbers();
 
         cell2.innerHTML = `<input class="form-control" type="text" name="serviceBriefing[]" placeholder="Service Briefing" required>`;
         cell3.innerHTML = `<input class="form-control qty" type="number" name="qty[]" min="0" step="any" required>`;
@@ -360,6 +360,7 @@
             row.querySelector('.rate').addEventListener('input', calculateServiceAmount);
         });
     }
+    updateServiceSerialNumbers();
 
 
     // Function to calculate the service amounts (qty * rate)
@@ -384,7 +385,15 @@
     function removeRow(button) {
         const row = button.closest('tr');
         row.remove();
-        calculateServiceAmount();
+
+        totalServiceAmount = 0;
+        document.querySelectorAll('#serviceTable tbody tr').forEach(function(row) {
+            const rowAmount = parseFloat(row.querySelector('.amount').value) || 0;
+            totalServiceAmount += rowAmount;
+        });
+
+        updateServiceSerialNumbers();
+        calculateFinalAmount();
     }
 
     // Add the first service row when the page loads
@@ -392,6 +401,13 @@
         // Programmatically trigger the click event to add the first service row
         document.getElementById('addServiceButton').click();
     });
+
+    function updateServiceSerialNumbers() {
+        const rows = document.querySelectorAll('#serviceTable tbody tr');
+        rows.forEach((row, index) => {
+            row.cells[0].textContent = index + 1;
+        });
+    }
 </script>
 
 <style>
@@ -415,6 +431,10 @@
 
     #serviceTable input {
         margin-right: 10px;
+    }
+
+    #serviceTable input.form-control {
+        background-color: #ffffff !important;
     }
 </style>
 

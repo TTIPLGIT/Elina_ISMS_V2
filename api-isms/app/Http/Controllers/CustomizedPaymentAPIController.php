@@ -11,7 +11,7 @@ class CustomizedPaymentAPIController extends BaseController
     {
         $method = 'Method => CustomizedPaymentAPIController => index';
         try {
-            $rows = DB::select("SELECT ppc.id, ed.child_name, ed.enrollment_id, ed.enrollment_child_num, ppcs.name AS category_name, 
+            $rows = DB::select("SELECT ppc.id,ppc.final_amount, ed.child_name, ed.enrollment_id, ed.enrollment_child_num, ppcs.name AS category_name, 
             ppft.name AS fee_type FROM payment_process_customized AS ppc 
             INNER JOIN enrollment_details AS ed ON ed.enrollment_id = ppc.enrollment_id
             INNER JOIN payment_process_categories AS ppcs ON ppcs.id = ppc.category_id
@@ -53,6 +53,15 @@ class CustomizedPaymentAPIController extends BaseController
 
             $childDetails = DB::select("SELECT enrollment_id , enrollment_child_num, child_name FROM enrollment_details WHERE STATUS = 'Submitted'  AND 
             enrollment_child_num NOT IN (SELECT enrollment_id FROM sail_details)");
+            // $childDetails = DB::table('enrollment_details')
+            //     ->select('enrollment_id', 'enrollment_child_num', 'child_name')
+            //     ->where('status', 'Submitted')
+            //     ->whereIn('enrollment_id', function ($query) {
+            //         $query->select('enrollment_id')
+            //             ->from('sail_details')
+            //             ->where('consent_aggrement', 'Agreed');
+            //     })
+            //     ->get();
 
             $rows = DB::table('payment_process_masters as ppm')
                 ->join('payment_process_categories as ppc', 'ppm.category_id', '=', 'ppc.id')
