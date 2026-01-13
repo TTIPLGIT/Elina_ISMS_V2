@@ -89,7 +89,7 @@
                                         </div>
                                         <div class="widget-content-right">
                                             <div class="widget-numbers text-white numberfontsize"><span>{{ $rows['elinalead'] ?? '' }}
-                                            </span></div>
+                                                </span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                                         </div>
                                         <div class="widget-content-right">
                                             <div class="widget-numbers text-white numberfontsize"><span> {{ $rows['chart2'][0]['ovm_count'] ?? '' }}
-                                            </span></div>
+                                                </span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -120,7 +120,7 @@
                                         </div>
                                         <div class="widget-content-right">
                                             <div class="widget-numbers text-white numberfontsize"><span> {{ $rows['chart2'][0]['sail_count'] ?? '' }}
-                                            </span></div>
+                                                </span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -231,7 +231,7 @@
 
                                         <li class="list-group-item d-flex justify-content-between align-items-center ">
                                             <p style=" font-weight: bold;color:#6b747b;" href="#" title="{{ __('View') }}">Search By </p>
-                                            <select class="form-control wp px-auto" name="elinalead" id="searchuserdata" onchange="selectfn(event)">
+                                            <select class="form-control wp px-auto" name="elinalead" id="searchuserdata" style="background-color: #ffffff !important;" onchange="selectfn(event)">
                                                 <option value="">Select-Category</option>
                                                 <option Value="child_name">Child Name</option>
                                                 <option Value="enrollment_child_num">Child Enrollment Id</option>
@@ -241,7 +241,7 @@
                                             </select>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center" id="SearchByChild" style="display: none !important;">
-                                            <a style=" font-weight: bold;color:#6b747b; " id="selectedcategory" class="text-capitalize" href="#" title="{{ __('View') }}">Category </a><input type="text" id="searchinput" class="form-control wp">
+                                            <a style=" font-weight: bold;color:#6b747b; " id="selectedcategory" class="text-capitalize" href="#" title="{{ __('View') }}">Category </a><input  style="background-color: #ffffff !important;" type="text" id="searchinput" class="form-control wp">
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center" id="SearchByCoordinators" style="display: none !important;">
                                             <p style=" font-weight: bold;color:#6b747b;" class="text-capitalize">Coordinator</p>

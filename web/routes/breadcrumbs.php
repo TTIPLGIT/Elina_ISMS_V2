@@ -654,3 +654,21 @@ Breadcrumbs::for('paymentmaster.customized.create', function (BreadcrumbTrail $t
     $trail->parent('paymentmaster.customized'); 
     $trail->push('Create Payment', route('paymentmaster.customized.create'));
 });
+Breadcrumbs::for('service_briefing.index', function (BreadcrumbTrail $trail) {
+    $trail->push('Service Briefing', route('service_briefing.index'));
+});
+
+Breadcrumbs::for('service_briefing.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('service_briefing.index');
+    $trail->push('Create Service Briefing', route('service_briefing.create'));
+});
+
+Breadcrumbs::for('service_briefing.show', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('service_briefing.index');
+    $trail->push('View Service Briefing', route('service_briefing.show', $id));
+});
+
+Breadcrumbs::for('service_briefing.edit', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('service_briefing.index');
+    $trail->push('Edit Service Briefing', route('service_briefing.edit', $id));
+});

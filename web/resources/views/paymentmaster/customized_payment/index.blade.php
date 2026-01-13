@@ -44,6 +44,7 @@
     <div class="section-body mt-2">
 
 
+      <h5 class="text-center" style="color:darkblue">Customized Payment Master </h5>
 
       <div class="d-flex flex-row justify-content-between px-3">
         <a type="button" style="margin: 0 0px 5px 0px;" class="btn btn-success" href="{{ route('paymentmaster.customized.create') }}">Create</a>
@@ -142,12 +143,12 @@
 </div>
 @if(session('success'))
 <script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: "{{ session('success') }}",
-        confirmButtonText: 'OK'
-    });
+  Swal.fire({
+    icon: 'success',
+    title: 'Success',
+    text: "{{ session('success') }}",
+    confirmButtonText: 'OK'
+  });
 </script>
 @endif
 

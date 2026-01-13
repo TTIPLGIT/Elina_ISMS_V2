@@ -678,3 +678,14 @@ Route::post('/newinquires/storedata', [App\Http\Controllers\WebpageController::c
 Route::get('/blog_comment', [App\Http\Controllers\WebpageController::class, 'blog_comment'])->name('blog_comment');
 Route::post('/videocreation/parentstore/bulk/one', [\App\Http\Controllers\ParentvideouploadController::class, 'parent_storedata_bulk_one']);
 Route::post('/activityinitiate/update/submit/one', [\App\Http\Controllers\activityInitiationController::class, 'update_video_one']);
+
+
+Route::get('/service_briefing_master/index', [\App\Http\Controllers\ServiceBriefingController::class, 'index']);
+Route::get('/service/briefing/create_data', [\App\Http\Controllers\ServiceBriefingController::class, 'create']);
+Route::get('/service_briefing_master/create', [\App\Http\Controllers\ServiceBriefingController::class, 'create']);
+Route::post('/service_briefing_master/storedata', [\App\Http\Controllers\ServiceBriefingController::class, 'storedata']);
+Route::get('/service_briefing_master/delete/{id}', [\App\Http\Controllers\ServiceBriefingController::class, 'data_delete']);
+Route::get('/service_briefing/show/{id}', [\App\Http\Controllers\ServiceBriefingController::class, 'data_update']);
+Route::get('/service_briefing/edit/{id}',[App\Http\Controllers\ServiceBriefingController::class, 'data_edit']);
+Route::post('/service_briefing_master/updatedata',[\App\Http\Controllers\ServiceBriefingController::class, 'updatedata']);
+

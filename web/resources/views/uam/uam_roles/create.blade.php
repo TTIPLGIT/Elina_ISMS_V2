@@ -24,7 +24,7 @@
                               <div class="col-md-6">
                                  <div class="form-group">
                                     <label class="control-label">Role Name <span style="color: red; font-size: 16px;">*</span></label>
-                                    <input class="form-control" type="text" id="role_name" name="role_name" placeholder="Enter Role Name" autocomplete="off">
+                                    <input class="form-control" style="background-color: #ffffff !important;" type="text" id="role_name" name="role_name" placeholder="Enter Role Name" autocomplete="off">
                                  </div>
                                  @error('role_name')
                                  <div class="error">{{ $message }}</div>

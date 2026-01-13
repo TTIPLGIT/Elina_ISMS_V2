@@ -732,4 +732,15 @@ Route::group(['middleware' => 'usersession'], function () {
     Route::post('/videocreation/parentstore/bulk/one', [App\Http\Controllers\ParentvideouploadController::class, 'video_parentstore_one'])->name('video.parentstore.one');
     Route::post('/video-parentstore-one', [activityInitiationController::class, 'video_parentstore_one'])->name('activity.update.video.all');
 
+
+
+    //Serivce Masters
+    Route::get('/service/briefing/index', [App\Http\Controllers\ServiceBriefingController::class, 'index'])->name('service_briefing.index');
+    Route::get('/service/briefing/create_data', [App\Http\Controllers\ServiceBriefingController::class, 'create'])->name('service_briefing.creat');
+    Route::get('/service/briefing/create', [App\Http\Controllers\ServiceBriefingController::class, 'create'])->name('service_briefing.create');
+    Route::post('/service/briefing/store', [App\Http\Controllers\ServiceBriefingController::class, 'store'])->name('service_briefing.store');
+    Route::get('/service/briefing/delete/{id}', [\App\Http\Controllers\ServiceBriefingController::class, 'delete'])->name('service_briefing.delete');
+    Route::get('/service_briefing/show/{id}', [\App\Http\Controllers\ServiceBriefingController::class, 'show'])->name('service_briefing.show');
+    Route::get('/service-briefing/edit/{id}', [App\Http\Controllers\ServiceBriefingController::class, 'edit'])->name('service_briefing.edit');
+    Route::post('/service-briefing/update/{id}',[App\Http\Controllers\ServiceBriefingController::class, 'update'])->name('service_briefing.update');
 });

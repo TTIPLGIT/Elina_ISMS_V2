@@ -26,28 +26,28 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="control-label">Screen Name <span style="color: red;font-size: 16px;">*</span></label>
-                      <input class="form-control" type="text" id="screen_name" name="screen_name" placeholder="Enter Screen Name" autocomplete="off">
+                      <input class="form-control"  style="background-color: #ffffff !important;" type="text" id="screen_name" name="screen_name" placeholder="Enter Screen Name" autocomplete="off">
                     </div>
                   </div>
 
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="control-label">Screen URL <span style="color: red;font-size: 16px;">*</span></label>
-                      <input class="form-control" type="text" id="screen_url" name="screen_url" placeholder="Enter Screen URL" autocomplete="off">
+                      <input class="form-control"  style="background-color: #ffffff !important;" type="text" id="screen_url" name="screen_url" placeholder="Enter Screen URL" autocomplete="off">
                     </div>
                   </div>
 
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="control-label">Route URL <span style="color: red;font-size: 16px;">*</span></label>
-                      <input class="form-control" type="text" id="route_url" name="route_url" placeholder="Enter Route URL" autocomplete="off">
+                      <input class="form-control" style="background-color: #ffffff !important;" type="text" id="route_url" name="route_url" placeholder="Enter Route URL" autocomplete="off">
                     </div>
                   </div>
 
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="control-label">Display Order </label>
-                      <input class="form-control" type="text" id="display_order" name="display_order" placeholder="Enter Display Order" autocomplete="off">
+                      <input class="form-control"  style="background-color: #ffffff !important;" type="text" id="display_order" name="display_order" placeholder="Enter Display Order" autocomplete="off">
                     </div>
                   </div>
 

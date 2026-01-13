@@ -80,7 +80,7 @@
 
                                         <div class="form-group">
                                             <label class="control-label">User Name <span style="color: red;font-size: 16px;">*</span></label>
-                                            <input class="form-control" type="text" id="name" name="name" placeholder="Enter User Name">
+                                            <input class="form-control" type="text"style="background-color: #ffffff !important;" id="name" name="name" placeholder="Enter User Name">
                                             @error('name')
                                             <div class="error">{{ $message }}</div>
                                             @enderror
@@ -90,7 +90,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Email <span style="color: red;font-size: 16px;">*</span></label>
-                                            <input class="form-control" type="email" id="email" name="email" placeholder="Enter Email">
+                                            <input class="form-control" type="email" style="background-color: #ffffff !important;"   id="email" name="email" placeholder="Enter Email">
                                             @error('email')
                                             <div class="error">{{ $message }}</div>
                                             @enderror
@@ -99,7 +99,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Password <span style="color: red;font-size: 16px;">*</span></label>
-                                            <input class="form-control" type="text" id="password" name="password" placeholder="Enter Password">
+                                            <input class="form-control" type="text"  style="background-color: #ffffff !important;"  id="password" name="password" placeholder="Enter Password">
                                             <label style="color:#f30202!important">Notes</label>
                                             <p> Password Format - at least 1 uppercase character (A-Z),
                                                 at least 1 lowercase character (a-z),
@@ -115,7 +115,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Confirm Password <span style="color: red;font-size: 16px;">*</span></label>
-                                            <input class="form-control" type="password" id="confirm_password" name="confirm_password" placeholder="Enter Password">
+                                            <input class="form-control"  style="background-color: #ffffff !important;"  type="password" id="confirm_password" name="confirm_password" placeholder="Enter Password">
                                             @error('confirm_password')
                                             <div class="error">{{ $message }}</div>
                                             @enderror
@@ -125,7 +125,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Screen Roles <span style="color: red;font-size: 16px;">*</span></label>
-                                            <select class="form-control" id="roles_id" name="roles_id">
+                                            <select class="form-control" style="background-color: #ffffff !important;"  id="roles_id" name="roles_id">
 
                                                 <option value="">Please Select Role</option>
                                                 @foreach($rows as $key=>$row)
@@ -141,7 +141,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Additional Roles & Responsibilities</label>
-                                            <select class="form-control js-select2" id="additional_roles_id" name="additional_roles_id[]" multiple>
+                                            <select class="form-control js-select2"  id="additional_roles_id" name="additional_roles_id[]" multiple>
                                                 <option value="">Please Select Roles</option>
                                                 @foreach($rows as $key=>$row)
                                                 <option value="{{ $row['role_id']}}">{{ $row['role_name'] }}</option>
@@ -156,7 +156,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Designation <span style="color: red;font-size: 16px;">*</span></label>
-                                            <select class="form-control" id="designation" name="designation">
+                                            <select class="form-control" style="background-color: #ffffff !important;"   id="designation" name="designation">
                                                 <option value="">Please Select Designation</option>
                                                 @foreach($designation as $key=>$row)
                                                 <option value="{{ $row['designation_id'] }}">{{ $row['designation_name'] }}</option>

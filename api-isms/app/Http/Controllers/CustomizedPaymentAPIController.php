@@ -16,7 +16,7 @@ class CustomizedPaymentAPIController extends BaseController
             INNER JOIN enrollment_details AS ed ON ed.enrollment_id = ppc.enrollment_id
             INNER JOIN payment_process_categories AS ppcs ON ppcs.id = ppc.category_id
             INNER JOIN payment_process_fees_types AS ppft ON ppft.id = ppc.fees_type_id
-            WHERE ed.enrollment_child_num NOT IN (SELECT enrollment_id FROM sail_details WHERE consent_aggrement = 'Agreed');");
+            WHERE ed.enrollment_child_num NOT IN (SELECT enrollment_id FROM sail_details WHERE consent_aggrement = 'Agreed') ORDER BY ppc.id DESC;");
 
             $response = [
                 'rows' => $rows,
@@ -73,13 +73,15 @@ class CustomizedPaymentAPIController extends BaseController
             $schoolists = DB::select("select * from schools_registration");
             $serviceList = DB::select("SELECT * FROM payment_process_services WHERE payment_process_master_id = $payment_id");
             $taxList = DB::select("SELECT * FROM payment_process_taxes WHERE payment_process_master_id = $payment_id");
+            $serviceData = DB::table('payment_services_master')->get();
 
             $response = [
                 'rows' => $rows,
                 'schoolists' => $schoolists,
                 'serviceList' => $serviceList,
                 'taxList' => $taxList,
-                'childDetails' => $childDetails
+                'childDetails' => $childDetails,
+                'serviceData' =>  $serviceData 
             ];
 
             $serviceResponse = array();
@@ -203,13 +205,16 @@ class CustomizedPaymentAPIController extends BaseController
             $schoolists = DB::select("select * from schools_registration");
             $serviceList = DB::select("SELECT * FROM payment_process_services_customized WHERE payment_process_master_id = $payment_id");
             $taxList = DB::select("SELECT * FROM payment_process_taxes WHERE payment_process_master_id = $payment_id");
+            $serviceData = DB::table('payment_services_master')->get();
+
 
             $response = [
                 'rows' => $rows,
                 'schoolists' => $schoolists,
                 'serviceList' => $serviceList,
                 'taxList' => $taxList,
-                'childDetails' => $childDetails
+                'childDetails' => $childDetails,
+                'serviceData' => $serviceData,
             ];
 
             $serviceResponse = array();

@@ -18,7 +18,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="control-label"> FAQ Module Name <span style="color: red;font-size: 16px;">*</span></label>
-                      <input class="form-control" type="text" id="module_name" name="module_name" placeholder="Enter Module Name" autocomplete="off">
+                      <input class="form-control" type="text" id="module_name" name="module_name" style="background-color: #ffffff !important;"placeholder="Enter Module Name" autocomplete="off">
                     </div>
                   </div>
 
