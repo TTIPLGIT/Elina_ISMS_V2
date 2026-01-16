@@ -778,7 +778,7 @@
                     <input type="hidden" id="activity_initiation_id" name="activity_initiation_id[{{$data['parent_video_upload_id']}}]" value="{{$data['activity_initiation_id']}}">
                     <div class="col-md-6">
                       <label class="control-label comments_label">Previous Notes </label><br>
-                      <div class="form-group scroll_flow_class">
+                      <div  style="background-color:#E9ECEF !important; color: #000000;" class="form-group scroll_flow_class">
                         @foreach($comments as $key=>$note_data)
                         @if($data['parent_video_upload_id'] == $note_data['parent_video_upload_id'])
                         <span> {{ $note_data['role'] }} ({{ $note_data['user_name'] }}) - {{ $note_data['active_status'] }} </span> <br>
@@ -1045,8 +1045,8 @@
                             <input type="hidden" id="activity_description_id" name="activity_description_id" value="{{$data['activity_description_id']}}">
                             <input type="hidden" id="parent_video_upload_id" name="parent_video_upload_id" value="{{$data['parent_video_upload_id']}}">
                             <div class="col-md-6">
-                              <label class="control-label comments_label">Previous Notes </label><br>
-                              <div class="form-group scroll_flow_class">
+                              <label class="control-label comments_label">Previous Notes</label><br>
+                              <div style="background-color:#E9ECEF !important; color: #000000;"class="form-group scroll_flow_class">
                                 @foreach($comments as $key1=>$note_data)
                                 @if($data['parent_video_upload_id'] == $note_data['parent_video_upload_id'])
                                 <span> {{ $note_data['role'] }} ({{ $note_data['user_name'] }}) - {{ $note_data['active_status'] }} </span> <br>
@@ -1214,7 +1214,7 @@
                             <input type="hidden" id="parent_video_upload_id" name="parent_video_upload_id" value="{{$data['parent_video_upload_id']}}">
                             <div class="col-md-6">
                               <label class="control-label">Previous Notes </label><br>
-                              <div class="form-group scroll_flow_class">
+                              <div  class="form-group scroll_flow_class">
                                 @foreach($comments as $key=>$note_data)
                                 @if($data['parent_video_upload_id'] == $note_data['parent_video_upload_id'])
                                 <span> {{ $note_data['role'] }} ({{ $note_data['user_name'] }}) - {{ $note_data['active_status'] }} </span> <br>
