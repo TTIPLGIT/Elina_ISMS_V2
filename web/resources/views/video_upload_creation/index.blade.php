@@ -3,23 +3,23 @@
 @section('content')
 
 <div class="main-content">
-      @if (session('success'))
-  <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
-  <script type="text/javascript">
-    window.onload = function() {
-      var message = $('#session_data').val();
-      Swal.fire('Success!', message, 'success');
-    }
-  </script>
-  @elseif(session('fail'))
-  <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('fail') }}">
-  <script type="text/javascript">
-    window.onload = function() {
-      var message = $('#session_data1').val();
-      Swal.fire('Info!', message, 'info');
-    }
-  </script>
-  @endif
+    @if (session('success'))
+    <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
+    <script type="text/javascript">
+        window.onload = function() {
+            var message = $('#session_data').val();
+            Swal.fire('Success!', message, 'success');
+        }
+    </script>
+    @elseif(session('fail'))
+    <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('fail') }}">
+    <script type="text/javascript">
+        window.onload = function() {
+            var message = $('#session_data1').val();
+            Swal.fire('Info!', message, 'info');
+        }
+    </script>
+    @endif
     {{ Breadcrumbs::render('video_creation.index') }}
 
     <!-- Page Heading -->
@@ -79,7 +79,7 @@
                                 <a href="{{ route('activitymaster.show_1', Crypt::encrypt($row['activity_id'])) }}" title="View" class="btn btn-sm btn-outline-success me-1"><i class="fas fa-eye"></i></a>
                                 <a href="{{ route('activitymaster.edit_1', Crypt::encrypt($row['activity_id'])) }}" title="Edit" class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-edit"></i></a>
                                 <a href="{{ route('activitymaster.mapping', Crypt::encrypt($row['activity_id'])) }}" title="Mapping" class="btn btn-sm btn-outline-info me-1"><i class="fa fa-link"></i></a>
-                                <a href="javascript:void(0)" onclick="return myFunction('{{ $row['activity_id'] }}')" title="Delete" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i></a>
+                                <a href="javascript:void(0)" onclick=" myFunction('{{ encrypt($row['activity_id']) }}')" title="Delete" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i></a>
                                 <input type="hidden" id="delete_id_{{ $row['activity_id'] }}" value="{{ route('video_creation.delete', $row['activity_id']) }}">
                             </td>
                         </tr>
@@ -157,7 +157,7 @@
     function openApprovalModal(id, name) {
         document.getElementById('modalActivityId').value = id;
         document.getElementById('modalActivityName').innerText = name;
-        
+
         new bootstrap.Modal(document.getElementById('approvalModal')).show();
     }
 </script>
@@ -181,5 +181,25 @@
         }
     }
 </script>
+<script>
+    function myFunction(activityId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This record will be permanently deleted!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect to Laravel route
+                window.location.href = "/activity/delete/" + activityId;
+            }
+        });
+    }
+</script>
+
 
 @endsection

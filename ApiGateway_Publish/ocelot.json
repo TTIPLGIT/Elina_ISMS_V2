@@ -6771,10 +6771,24 @@
     ],
       "UpstreamPathTemplate": "/api/gateway/service_briefing_master/updatedata",
       "UpstreamHttpMethod": [ "POST" ]
-    }
-
+    },
+ {
+      "DownstreamPathTemplate": "/api/activity/delete_activity/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activity/delete_activity/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
    
   ],
+  
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:700"
   }

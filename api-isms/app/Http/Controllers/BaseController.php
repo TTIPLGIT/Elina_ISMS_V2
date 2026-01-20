@@ -399,7 +399,7 @@ class BaseController extends Controller
                 // $this->WriteFileLog('Else if -paymentCategory == 2 ');
                 $activePayment = DB::table('payment_process_customized')
                     ->where('fees_type_id', $feeType)
-                    ->where('category_id', $paymentCategory)
+                    // ->where('category_id', $paymentCategory)
                     // ->where('school_enrollment_id', $schoolID)
                     ->where('enrollment_id', $enrollmentID)
                     ->select('final_amount', 'id', 'base_amount', 'gst_rate')
@@ -408,7 +408,7 @@ class BaseController extends Controller
                 // $this->WriteFileLog('Else');
                 $activePayment = DB::table('payment_process_customized')
                     ->where('fees_type_id', $feeType)
-                    ->where('category_id', $paymentCategory)
+                    // ->where('category_id', $paymentCategory)
                     ->where('enrollment_id', $enrollmentID)
                     ->select('final_amount', 'id', 'base_amount', 'gst_rate')
                     ->first();

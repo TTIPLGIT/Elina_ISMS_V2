@@ -179,7 +179,7 @@
                                             <a class="borderBoard" href="{{route('newenrollment.index')}}">
                                                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                                     <div class="float-left" style="font-weight:bold;color:#6b747b;">Enrolled</div>
-                                                    <div class="float-right newcolor">{{$rows['blackboard'][0]['child_enrollement_count']}}</div>
+                                                    <div class="float-right newcolor">{{$rows['totalenrolled']}}</div>
                                                 </li>
                                             </a>
 
@@ -195,11 +195,16 @@
                                                     <div class="float-right newcolor">{{$rows['blackboard'][0]['ovm2_count']}}</div>
                                                 </li>
                                             </a>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                            <!-- <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                                 <div class="float-left" style="font-weight:bold;color:#6b747b;">Completed Assessment</div>
                                                 <div class="float-right newcolor">0</div>
-                                            </li>
-
+                                            </li> -->
+                                            <a class="borderBoard" href="{{route('sail.index')}}">
+                                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                    <div class="float-left" style="font-weight:bold;color:#6b747b;">Sail </div>
+                                                    <div class="float-right newcolor">{{$rows['totalsail']}}</div>
+                                                </li>
+                                            </a>
                                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                                 <div class="float-left" style="font-weight:bold;color:#6b747b;">CoMPASS Process</div>
                                                 <div class="float-right newcolor">0</div>
@@ -241,7 +246,7 @@
                                             </select>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center" id="SearchByChild" style="display: none !important;">
-                                            <a style=" font-weight: bold;color:#6b747b; " id="selectedcategory" class="text-capitalize" href="#" title="{{ __('View') }}">Category </a><input  style="background-color: #ffffff !important;" type="text" id="searchinput" class="form-control wp">
+                                            <a style=" font-weight: bold;color:#6b747b; " id="selectedcategory" class="text-capitalize" href="#" title="{{ __('View') }}">Category </a><input style="background-color: #ffffff !important;" type="text" id="searchinput" class="form-control wp">
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center" id="SearchByCoordinators" style="display: none !important;">
                                             <p style=" font-weight: bold;color:#6b747b;" class="text-capitalize">Coordinator</p>
@@ -489,59 +494,93 @@
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
             google.charts.load('current', {
-                'packages': ['corechart']
+                packages: ['corechart']
             });
             google.charts.setOnLoadCallback(drawChart);
 
             function drawChart() {
+
                 var chart2 = <?php echo json_encode($rows['chart2']); ?>;
                 console.log('chart2', chart2);
-                // console.log(chart2[0]['dropped']);
-                var data = google.visualization.arrayToDataTable([
-                    ['Year', 'Dropped', 'OVM Participated', 'Sail Participated'],
-                    //['2019', 0, 0, 0, 0],
-                    //['2020', 0, 0, 0, 0],
-                    ['2023', 0, 70, 54],
-                    ['2024', 0, 75, 50],
-                    // [chart2[0]['c_year'], chart2[0]['dropped'], chart2[0]['ovm_count'], chart2[0]['sail_count'], 0],
 
-                ]);
+                // Force previous year if only one year exists (so line/area is visible)
+                if (chart2.length === 1) {
+                    var y = parseInt(chart2[0].c_year);
+                    chart2.unshift({
+                        c_year: y - 1,
+                        ovm_count: 0,
+                        sail_count: 0,
+                        dropped: 0
+                    });
+                }
+
+                var chartData = [
+                    ['Year', 'Dropped', 'OVM Participated', 'Sail Participated']
+                ];
+
+                chart2.forEach(function(row) {
+                    chartData.push([
+                        row.c_year.toString(),
+                        Number(row.dropped),
+                        Number(row.ovm_count),
+                        Number(row.sail_count)
+                    ]);
+                });
+
+                var data = google.visualization.arrayToDataTable(chartData);
 
                 var options = {
                     backgroundColor: 'transparent',
-                    is3D: true,
-                    'width': 550,
-                    'height': 250,
-                    pointSize: 7,
+                    width: 550,
+                    height: 250,
+
+                    isStacked: false,
+                    pointSize: 6,
+                    lineWidth: 3,
+
                     hAxis: {
-                        title: 'Year',
-                        formate: 'MMM yy',
-                        curveType: 'function',
-                        pointSize: 100,
-                        viewWindow: {
-                            min: new Date(2022, 1),
-                        }
+                        title: 'Year'
                     },
+
+                    vAxis: {
+                        minValue: 0,
+                        title: 'No of Enrollment'
+                    },
+
                     legend: {
-                        maxLines: 10,
                         position: 'bottom',
                         alignment: 'start',
                         textStyle: {
-                            color: 'blue',
+                            color: '#333',
                             fontSize: 12
                         }
                     },
-                    vAxis: {
-                        minValue: 0,
-                        //maxValue: 100, //Remove maxValue if dont have end point
-                        title: 'No of Enrollment'
+
+                    curveType: 'function',
+
+                    // Area-style look like your screenshot
+                    series: {
+                        0: {
+                            areaOpacity: 0.15
+                        }, // Dropped
+                        1: {
+                            areaOpacity: 0.25
+                        }, // OVM
+                        2: {
+                            areaOpacity: 0.25
+                        } // Sail
                     }
                 };
 
-                var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+                // 🔹 Use AreaChart to match your UI
+                var chart = new google.visualization.AreaChart(
+                    document.getElementById('chart_div')
+                );
+
                 chart.draw(data, options);
             }
         </script>
+
 
 
 
@@ -679,6 +718,7 @@
                 const ustDate = new Date(inputDateTime + ' UTC');
                 ustDate.setHours(ustDate.getHours() + 5);
                 ustDate.setMinutes(ustDate.getMinutes() + 30);
+
                 const options = {
                     day: '2-digit',
                     month: 'short',
@@ -692,8 +732,8 @@
             }
 
             function overallStatus(id, Sname) {
-                // $(".loader").show();
                 var enrollment_id = id;
+
                 $.ajax({
                     url: '/user/status/view',
                     type: 'GET',
@@ -703,29 +743,88 @@
                     }
                 }).done(function(data) {
                     console.log(data);
+
                     if (data != '[]') {
                         var user_select = data;
-                        var ddd;
+                        var ddd = "";
                         var modalHeader = document.getElementById('modalHeader');
                         modalHeader.textContent = 'Overall Activity of ' + Sname;
+
+                        // 1️⃣ Find Consent Sent time
+                        var consentSentTime = null;
+
+                        for (var i = 0; i < user_select.length; i++) {
+                            var desc = user_select[i].description;
+                            if (desc.includes("Consent Sent")) {
+                                consentSentTime = new Date(
+                                    user_select[i].action_date_time.replace(/-/g, '/')
+                                ).getTime();
+                                break;
+                            }
+                        }
+
+                        var rowIndex = 1;
+
+                        // 2️⃣ Build table rows
                         for (var i = 0; i < user_select.length; i++) {
                             var description = user_select[i].description;
-                            var action_date_time = formatDate(user_select[i].action_date_time);
-                            // Input date and time string
                             var inputDateString = user_select[i].action_date_time;
 
-                            // Parse the input string into a Date object
+                            var currentTime = new Date(
+                                inputDateString.replace(/-/g, '/')
+                            ).getTime();
 
+                            // 🔴 AFTER Consent → remove SAIL payment rows
+                            if (
+                                consentSentTime !== null &&
+                                currentTime >= consentSentTime &&
+                                (
+                                    description.includes("SAIL Register Fee Payment Initiated") ||
+                                    description.includes("SAIL Register Fee Payment Completed")
+                                )
+                            ) {
+                                continue; // remove these rows
+                            }
 
+                            // 🔁 BEFORE Consent → rename SAIL → USER
+                            if (
+                                consentSentTime !== null &&
+                                currentTime < consentSentTime
+                            ) {
+                                if (description.includes("SAIL Register Fee Payment Initiated")) {
+                                    description = "User Register Fee Payment Initiated";
+                                }
+
+                                if (description.includes("SAIL Register Fee Payment Completed")) {
+                                    description = "User Register Fee Payment Completed";
+                                }
+                            }
+
+                            // 🔁 AFTER Consent → rename generic Payment → SAIL
+                            if (
+                                consentSentTime !== null &&
+                                currentTime >= consentSentTime
+                            ) {
+                                if (description === "Payment Initiated") {
+                                    description = "SAIL Register Fee Payment Initiated";
+                                }
+
+                                if (description === "Payment Completed") {
+                                    description = "SAIL Register Fee Payment Completed";
+                                }
+                            }
+
+                            // Convert UTC to IST
                             var utcTime = new Date(inputDateString.replace(/-/g, '/'));
                             utcTime.setHours(utcTime.getHours() + 5);
                             utcTime.setMinutes(utcTime.getMinutes() + 30);
+
                             var istTime = utcTime.toLocaleString('en-US', {
                                 timeZone: 'Asia/Kolkata'
                             });
+
                             var dateObj = new Date(istTime);
 
-                            // Format the date object into the desired format
                             var formattedDate = dateObj.toLocaleString('en-US', {
                                 year: 'numeric',
                                 month: 'short',
@@ -736,19 +835,24 @@
                                 hour12: true
                             });
 
-                            console.log('formattedDate', formattedDate);
+                            ddd += "<tr><td>" + rowIndex +
+                                "</td><td>" + description +
+                                "</td><td>" + formattedDate +
+                                "</td></tr>";
 
-                            ddd += "<tr><td >" + (parseInt(i) + 1) + "</td><td>" + description + "</td><td> " + formattedDate + " </td></tr>";
+                            rowIndex++;
                         }
-                        var demonew = $('#logTable').html(ddd);
-                    } else {
-                        var stageoption = ddd.concat(optionsdata);
+
+                        $('#logTable').html(ddd);
                     }
-                    // $(".loader").hide();
+
                     $("#logModal").modal();
-                })
+                });
             }
         </script>
+
+
+
         <script type="text/javascript">
             // window.onload = function() {
             //     // Full screen

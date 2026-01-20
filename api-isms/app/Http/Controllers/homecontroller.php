@@ -176,6 +176,11 @@ class homecontroller extends BaseController
                 ->where('active_flag', 0)
                 ->where('delete_status', 0)
                 ->get();
+            $totalenrolled = DB::table('enrollment_details')->count();
+            $totalsail = DB::table('sail_details')->where('consent_aggrement', 'Agreed')->count();
+            $enrollments   = DB::table('enrollment_details')->get();
+            $sailDetails   = DB::table('sail_details')->get();
+
 
             $response = [
                 'users' => $users,
@@ -189,9 +194,13 @@ class homecontroller extends BaseController
                 'elinalead' => $elinalead,
                 'enrollment_details' => $enrollment_details,
                 'report' => $report,
-                'coordinators' => $coordinators
+                'coordinators' => $coordinators,
+                'totalenrolled' => $totalenrolled,
+                'totalsail' => $totalsail,
+                'enrollments' => $enrollments,
+                'sailDetails'=>$sailDetails
             ];
-            // $this->WriteFileLog($response);
+            $this->WriteFileLog($response);
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');

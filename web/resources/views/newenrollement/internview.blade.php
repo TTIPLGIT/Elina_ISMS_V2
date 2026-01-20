@@ -81,39 +81,102 @@
                     <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="home-tab">
                         <section class="section">
                             <div class="section-body mt-1">
-                                <table class="table table-bordered" id="align1" style="text-align:center;table-layout: fixed;">
-                                    <thead>
-                                        <tr>
-                                            <!-- <th style="width: 7%">S.No</th> -->
-                                            <th style="width: 10%"> Name</th>
-                                            <th style="width: 15%">Date of Birth</th>
-                                            <th style="width: 20%">Contact Number</th>
-                                            <th style="width: 20%"> Email Address</th>
-                                            <th style="width: 20%">Parent / Guardian Contact number</th>
-                                            <th style="width: 20%"> Start Date With Elina</th>
-                                            <th style="width: 20%"> Hours Intern per Week</th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="trc">
-                                            <!-- <td>1</td> -->
-                                            <td style="word-break: break-all;">{{$row['name']}}</td>
-                                            <td style="word-break: break-all;">{{$row['date_of_birth']}}</td>
-                                            <td style="word-break: break-all;">{{$row['contact_number']}}</td>
-                                            <td style="word-break: break-all;">{{$row['email_address']}}</td>
-                                            <td style="word-break: break-all;">{{$row['parent_guardian_contact_number']}}</td>
-                                            <td style="word-break: break-all;">{{$row['start_date_with_elina']}}</td>
-                                            <td style="word-break: break-all;">{{$row['hours_intern_elina_per_week']}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <!-- Desktop Table -->
+                                <div class="table-responsive d-none d-md-block">
+                                    <table class="table table-bordered" id="align1" style="text-align:center; table-layout: fixed;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 10%">Name</th>
+                                                <th style="width: 15%">Date of Birth</th>
+                                                <th style="width: 20%">Contact Number</th>
+                                                <th style="width: 20%">Email Address</th>
+                                                <th style="width: 20%">Parent / Guardian Contact number</th>
+                                                <th style="width: 20%">Start Date With Elina</th>
+                                                <th style="width: 20%">Hours Intern per Week</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="word-break: break-word;">{{ $row['name'] }}</td>
+                                                <td style="word-break: break-word;">{{ $row['date_of_birth'] }}</td>
+                                                <td style="word-break: break-word;">{{ $row['contact_number'] }}</td>
+                                                <td style="word-break: break-word;">{{ $row['email_address'] }}</td>
+                                                <td style="word-break: break-word;">{{ $row['parent_guardian_contact_number'] }}</td>
+                                                <td style="word-break: break-word;">{{ $row['start_date_with_elina'] }}</td>
+                                                <td style="word-break: break-word;">{{ $row['hours_intern_elina_per_week'] }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- Mobile Card View -->
+                                <div class="d-block d-md-none">
+                                    <div class="card mb-2 shadow-sm">
+                                        <div class="card-body p-2">
+
+                                            <div class="row mb-1">
+                                                <div class="col-5 font-weight-bold">Name</div>
+                                                <div class="col-7 text-break">{{ $row['name'] }}</div>
+                                            </div>
+
+                                            <div class="row mb-1">
+                                                <div class="col-5 font-weight-bold">Date of Birth</div>
+                                                <div class="col-7 text-break">{{ $row['date_of_birth'] }}</div>
+                                            </div>
+
+                                            <div class="row mb-1">
+                                                <div class="col-5 font-weight-bold">Contact No</div>
+                                                <div class="col-7 text-break">{{ $row['contact_number'] }}</div>
+                                            </div>
+
+                                            <div class="row mb-1">
+                                                <div class="col-5 font-weight-bold">Email</div>
+                                                <div class="col-7 text-break">{{ $row['email_address'] }}</div>
+                                            </div>
+
+                                            <div class="row mb-1">
+                                                <div class="col-5 font-weight-bold">Parent Contact</div>
+                                                <div class="col-7 text-break">{{ $row['parent_guardian_contact_number'] }}</div>
+                                            </div>
+
+                                            <div class="row mb-1">
+                                                <div class="col-5 font-weight-bold">Start Date</div>
+                                                <div class="col-7 text-break">{{ $row['start_date_with_elina'] }}</div>
+                                            </div>
+
+                                            <div class="row mb-1">
+                                                <div class="col-5 font-weight-bold">Hours / Week</div>
+                                                <div class="col-7 text-break">{{ $row['hours_intern_elina_per_week'] }}</div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                            <div class="col-md-12 text-center">
-                                <a type="button" class="btn btn-labeled btn-info" onclick="DoAction('tab2');" title="Next" style="background: blue !important; border-color:#4d94ff !important; color:white !important">
-                                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-right"></i></span>Next</a>
-                                <a type="button" class="btn btn-labeled back-btn" title="Cancel" href="{{ route('internlist') }}" style="color:white !important">
-                                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-times"></i></span> Cancel</a>
+
+                            <!-- Buttons -->
+                            <div class="col-md-12 text-center mt-2">
+                                <a type="button" class="btn btn-labeled btn-info"
+                                    onclick="DoAction('tab2');"
+                                    title="Next"
+                                    style="background: blue !important; border-color:#4d94ff !important; color:white !important">
+                                    <span class="btn-label" style="font-size:13px !important;">
+                                        <i class="fa fa-arrow-right"></i>
+                                    </span>
+                                    Next
+                                </a>
+
+                                <a type="button" class="btn btn-labeled back-btn"
+                                    title="Cancel"
+                                    href="{{ route('internlist') }}"
+                                    style="color:white !important">
+                                    <span class="btn-label" style="font-size:13px !important;">
+                                        <i class="fa fa-times"></i>
+                                    </span>
+                                    Cancel
+                                </a>
                             </div>
                         </section>
                     </div>
@@ -122,58 +185,247 @@
                     <div class="tab-pane fade show" id="tab2" role="tabpanel" aria-labelledby="contact-tab">
                         <section class="section">
                             <div class="section-body mt-1">
-                                <table class="table table-bordered" id="align1" style="text-align:center;table-layout: fixed;">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 10%">S.No</th>
-                                            <th style="width: 35%">Document Name</th>
-                                            <th style="width: 35%">Attachment</th>
-                                            <th style="width: 20%">View</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="trc">
-                                            <td>1</td>
-                                            <td style="word-break: break-all;">Short Introduction</td>
-                                            <td> <img style="width: 26px;" src="https://fia-uganda-edrms.com/images/pdf.png">
-                                                <a href="{{$row['short_introduction_fp']}}/{{$row['short_introduction_fn']}}" download="">{{$row['short_introduction_fn']}}</a>
-                                            </td>
-                                            <td style="word-break: break-all;">
-                                            <a class="btn btn-primary" title="View Document" href="{{$row['short_introduction_fp']}}/{{$row['short_introduction_fn']}}" target="_blank" style="margin-inline:5px;cursor:pointer;"><i class="fa fa-eye" style="color:white!important"></i></a> 
-                                            <a class="btn btn-info" title="Download Document" href="{{$row['short_introduction_fp']}}/{{$row['short_introduction_fn']}}" download="" style="margin-inline:5px;cursor:pointer;"><i class="fa fa-download" style="color:white!important"></i></a> 
-                                        </td>
-                                        </tr>
-                                        <tr class="trc">
-                                            <td>2</td>
-                                            <td style="word-break: break-all;">About Elina</td>
-                                            <td> <img style="width: 26px;" src="https://fia-uganda-edrms.com/images/pdf.png">
-                                                <a href="{{$row['about_elina_fp']}}/{{$row['about_elina_fn']}}" download="">{{$row['about_elina_fn']}}</a>
-                                            </td>
-                                            <td style="word-break: break-all;"><a class="btn btn-primary" title="View Document" target="_blank" href="{{$row['about_elina_fp']}}/{{$row['about_elina_fn']}}" style="margin-inline:5px;cursor:pointer;"><i class="fa fa-eye" style="color:white!important"></i></a>
-                                            <a class="btn btn-info" title="Download Document" href="{{$row['about_elina_fp']}}/{{$row['about_elina_fn']}}" download="" style="margin-inline:5px;cursor:pointer;"><i class="fa fa-download" style="color:white!important"></i></a>  </td>
-                                        </tr>
-                                        <tr class="trc">
-                                            <td>3</td>
-                                            <td style="word-break: break-all;">Intern With Elina</td>
-                                            <td> <img style="width: 26px;" src="https://fia-uganda-edrms.com/images/pdf.png">
-                                                <a href="{{$row['intern_with_elina_fp']}}/{{$row['intern_with_elina_fn']}}" download="">{{$row['intern_with_elina_fn']}}</a>
-                                            </td>
-                                            <td style="word-break: break-all;"><a class="btn btn-primary" title="View Document" target="_blank" href="{{$row['intern_with_elina_fp']}}/{{$row['intern_with_elina_fn']}}" style="margin-inline:5px;cursor:pointer;"><i class="fa fa-eye" style="color:white!important"></i></a> 
-                                            <a class="btn btn-info" title="Download Document" href="{{$row['intern_with_elina_fp']}}/{{$row['intern_with_elina_fn']}}" download="" style="margin-inline:5px;cursor:pointer;"><i class="fa fa-download" style="color:white!important"></i></a> 
-                                        </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+
+                                <!-- Desktop Table -->
+                                <div class="table-responsive d-none d-md-block">
+                                    <table class="table table-bordered" id="align2" style="text-align:center; table-layout: fixed;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 10%">S.No</th>
+                                                <th style="width: 35%">Document Name</th>
+                                                <th style="width: 35%">Attachment</th>
+                                                <th style="width: 20%">View</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="trc">
+                                                <td>1</td>
+                                                <td style="word-break: break-word;">Short Introduction</td>
+                                                <td style="word-break: break-word;">
+                                                    <img style="width: 26px;" src="https://fia-uganda-edrms.com/images/pdf.png">
+                                                    <a href="{{ $row['short_introduction_fp'] }}/{{ $row['short_introduction_fn'] }}" download="">
+                                                        {{ $row['short_introduction_fn'] }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-primary" title="View Document" target="_blank"
+                                                        href="{{ $row['short_introduction_fp'] }}/{{ $row['short_introduction_fn'] }}"
+                                                        style="margin-inline:5px;cursor:pointer;">
+                                                        <i class="fa fa-eye" style="color:white!important"></i>
+                                                    </a>
+                                                    <a class="btn btn-info" title="Download Document"
+                                                        href="{{ $row['short_introduction_fp'] }}/{{ $row['short_introduction_fn'] }}"
+                                                        download="" style="margin-inline:5px;cursor:pointer;">
+                                                        <i class="fa fa-download" style="color:white!important"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="trc">
+                                                <td>2</td>
+                                                <td style="word-break: break-word;">About Elina</td>
+                                                <td style="word-break: break-word;">
+                                                    <img style="width: 26px;" src="https://fia-uganda-edrms.com/images/pdf.png">
+                                                    <a href="{{ $row['about_elina_fp'] }}/{{ $row['about_elina_fn'] }}" download="">
+                                                        {{ $row['about_elina_fn'] }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-primary" title="View Document" target="_blank"
+                                                        href="{{ $row['about_elina_fp'] }}/{{ $row['about_elina_fn'] }}"
+                                                        style="margin-inline:5px;cursor:pointer;">
+                                                        <i class="fa fa-eye" style="color:white!important"></i>
+                                                    </a>
+                                                    <a class="btn btn-info" title="Download Document"
+                                                        href="{{ $row['about_elina_fp'] }}/{{ $row['about_elina_fn'] }}"
+                                                        download="" style="margin-inline:5px;cursor:pointer;">
+                                                        <i class="fa fa-download" style="color:white!important"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="trc">
+                                                <td>3</td>
+                                                <td style="word-break: break-word;">Intern With Elina</td>
+                                                <td style="word-break: break-word;">
+                                                    <img style="width: 26px;" src="https://fia-uganda-edrms.com/images/pdf.png">
+                                                    <a href="{{ $row['intern_with_elina_fp'] }}/{{ $row['intern_with_elina_fn'] }}" download="">
+                                                        {{ $row['intern_with_elina_fn'] }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-primary" title="View Document" target="_blank"
+                                                        href="{{ $row['intern_with_elina_fp'] }}/{{ $row['intern_with_elina_fn'] }}"
+                                                        style="margin-inline:5px;cursor:pointer;">
+                                                        <i class="fa fa-eye" style="color:white!important"></i>
+                                                    </a>
+                                                    <a class="btn btn-info" title="Download Document"
+                                                        href="{{ $row['intern_with_elina_fp'] }}/{{ $row['intern_with_elina_fn'] }}"
+                                                        download="" style="margin-inline:5px;cursor:pointer;">
+                                                        <i class="fa fa-download" style="color:white!important"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- Mobile Card View -->
+                                <div class="d-block d-md-none">
+
+                                    <!-- Card 1 -->
+                                    <div class="card mb-2 shadow-sm">
+                                        <div class="card-body p-2">
+
+                                            <div class="row mb-1">
+                                                <div class="col-5 font-weight-bold">S.No</div>
+                                                <div class="col-7">1</div>
+                                            </div>
+
+                                            <div class="row mb-1">
+                                                <div class="col-5 font-weight-bold">Document</div>
+                                                <div class="col-7">Short Introduction</div>
+                                            </div>
+
+                                            <div class="row mb-1">
+                                                <div class="col-5 font-weight-bold">File</div>
+                                                <div class="col-7 text-break">
+                                                    <img style="width: 20px;" src="https://fia-uganda-edrms.com/images/pdf.png">
+                                                    <a href="{{ $row['short_introduction_fp'] }}/{{ $row['short_introduction_fn'] }}" download="">
+                                                        {{ $row['short_introduction_fn'] }}
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12 text-center">
+                                                    <a class="btn btn-primary btn-sm" title="View Document" target="_blank"
+                                                        href="{{ $row['short_introduction_fp'] }}/{{ $row['short_introduction_fn'] }}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </a>
+                                                    <a class="btn btn-info btn-sm" title="Download Document"
+                                                        href="{{ $row['short_introduction_fp'] }}/{{ $row['short_introduction_fn'] }}"
+                                                        download="">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Card 2 -->
+                                    <div class="card mb-2 shadow-sm">
+                                        <div class="card-body p-2">
+
+                                            <div class="row mb-1">
+                                                <div class="col-5 font-weight-bold">S.No</div>
+                                                <div class="col-7">2</div>
+                                            </div>
+
+                                            <div class="row mb-1">
+                                                <div class="col-5 font-weight-bold">Document</div>
+                                                <div class="col-7">About Elina</div>
+                                            </div>
+
+                                            <div class="row mb-1">
+                                                <div class="col-5 font-weight-bold">File</div>
+                                                <div class="col-7 text-break">
+                                                    <img style="width: 20px;" src="https://fia-uganda-edrms.com/images/pdf.png">
+                                                    <a href="{{ $row['about_elina_fp'] }}/{{ $row['about_elina_fn'] }}" download="">
+                                                        {{ $row['about_elina_fn'] }}
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12 text-center">
+                                                    <a class="btn btn-primary btn-sm" title="View Document" target="_blank"
+                                                        href="{{ $row['about_elina_fp'] }}/{{ $row['about_elina_fn'] }}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </a>
+                                                    <a class="btn btn-info btn-sm" title="Download Document"
+                                                        href="{{ $row['about_elina_fp'] }}/{{ $row['about_elina_fn'] }}"
+                                                        download="">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Card 3 -->
+                                    <div class="card mb-2 shadow-sm">
+                                        <div class="card-body p-2">
+
+                                            <div class="row mb-1">
+                                                <div class="col-5 font-weight-bold">S.No</div>
+                                                <div class="col-7">3</div>
+                                            </div>
+
+                                            <div class="row mb-1">
+                                                <div class="col-5 font-weight-bold">Document</div>
+                                                <div class="col-7">Intern With Elina</div>
+                                            </div>
+
+                                            <div class="row mb-1">
+                                                <div class="col-5 font-weight-bold">File</div>
+                                                <div class="col-7 text-break">
+                                                    <img style="width: 20px;" src="https://fia-uganda-edrms.com/images/pdf.png">
+                                                    <a href="{{ $row['intern_with_elina_fp'] }}/{{ $row['intern_with_elina_fn'] }}" download="">
+                                                        {{ $row['intern_with_elina_fn'] }}
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12 text-center">
+                                                    <a class="btn btn-primary btn-sm" title="View Document" target="_blank"
+                                                        href="{{ $row['intern_with_elina_fp'] }}/{{ $row['intern_with_elina_fn'] }}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </a>
+                                                    <a class="btn btn-info btn-sm" title="Download Document"
+                                                        href="{{ $row['intern_with_elina_fp'] }}/{{ $row['intern_with_elina_fn'] }}"
+                                                        download="">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
                             </div>
 
-                            <div class="col-md-12 text-center">
-                                <a type="button" class="btn btn-labeled btn-info" onclick="DoAction('tab1');" title="Previous" style="background: blue !important; border-color:#4d94ff !important; color:white !important">
-                                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span>Previous</a>
-                                <a type="button" class="btn btn-labeled back-btn" title="Cancel" href="{{ route('internlist') }}" style="color:white !important">
-                                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-times"></i></span> Cancel</a>
+                            <!-- Buttons -->
+                            <div class="col-md-12 text-center mt-2">
+                                <a type="button" class="btn btn-labeled btn-info"
+                                    onclick="DoAction('tab1');"
+                                    title="Previous"
+                                    style="background: blue !important; border-color:#4d94ff !important; color:white !important">
+                                    <span class="btn-label" style="font-size:13px !important;">
+                                        <i class="fa fa-arrow-left"></i>
+                                    </span>
+                                    Previous
+                                </a>
+
+                                <a type="button" class="btn btn-labeled back-btn"
+                                    title="Cancel"
+                                    href="{{ route('internlist') }}"
+                                    style="color:white !important">
+                                    <span class="btn-label" style="font-size:13px !important;">
+                                        <i class="fa fa-times"></i>
+                                    </span>
+                                    Cancel
+                                </a>
                             </div>
+
                         </section>
                     </div>
+
 
                 </div>
                 @endforeach

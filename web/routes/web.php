@@ -321,6 +321,8 @@ Route::group(['middleware' => 'usersession'], function () {
     Route::match(['get', 'post'], '/auditlog/login', [\App\Http\Controllers\AuditlogController::class, 'login_search'])->name('auditlog.login');
     //video upload creation
     Route::resource('video_creation', ParentvideouploadController::class);
+    Route::get('/activity/delete/{id}', [ParentvideouploadController::class, 'delete_activity'])->name('activity.delete');
+
     Route::get('/parent_video_upload/parentindex', [\App\Http\Controllers\ParentvideouploadController::class, 'parentindex'])->name('parent_video_upload.parentindex');
     Route::get('/parent_video_upload/parent_create/{id}', [\App\Http\Controllers\ParentvideouploadController::class, 'parent_create'])->name('parent_video_upload.parent_create');
     Route::get('/activitymaster/show_1/{id}', [\App\Http\Controllers\ParentvideouploadController::class, 'show_1'])->name('activitymaster.show_1');

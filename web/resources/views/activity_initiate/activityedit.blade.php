@@ -367,7 +367,7 @@
                         </select>
                       </div>
                       <div class="col-3 dropdown form-control bulkapproved" style="float:right; display:none" name="bulkapproved" id="bulkapproved{{$row1['activity_id']}}">
-                        <div class="dropbtn" style="color: #212529;font-size: 15px;"> Selected Approval Status </div>
+                        <div class="dropbtn" style="background-color: #ffffff !important; color: #000000 !important;"> Selected Approval Status </div>
                         <div class="dropdown-content">
                           <a href="#" onclick="setBulkAction('Complete')">Approve</a>
                           <a href="#" onclick="setBulkAction('Reject')">Reject</a>
@@ -753,7 +753,7 @@
 
                       <div class="form-group">
                         <label class="control-label">Approval Status</label><span class="error-star" style="color:red;">*</span>
-                        <select class="form-control cuModalSelect bsjcxsd" name="approval_status[{{$data['parent_video_upload_id']}}]" id="approval_status{{$data['parent_video_upload_id']}}" onchange="app_status('{{$data['parent_video_upload_id']}}')">
+                        <select class="form-control cuModalSelect bsjcxsd"  style="background-color: #ffffff !important; color: #000000 !important;" name="approval_status[{{$data['parent_video_upload_id']}}]" id="approval_status{{$data['parent_video_upload_id']}}" onchange="app_status('{{$data['parent_video_upload_id']}}')">
                           <option value="">Select Status</option>
                           @if($data['save_status1'] == 'Complete')
                           <option value="Complete" selected>Approve</option>
@@ -778,7 +778,7 @@
                     <input type="hidden" id="activity_initiation_id" name="activity_initiation_id[{{$data['parent_video_upload_id']}}]" value="{{$data['activity_initiation_id']}}">
                     <div class="col-md-6">
                       <label class="control-label comments_label">Previous Notes </label><br>
-                      <div  style="background-color:#E9ECEF !important; color: #000000;" class="form-group scroll_flow_class">
+                      <div style="background-color:#E9ECEF !important; color: #000000;" class="form-group scroll_flow_class">
                         @foreach($comments as $key=>$note_data)
                         @if($data['parent_video_upload_id'] == $note_data['parent_video_upload_id'])
                         <span> {{ $note_data['role'] }} ({{ $note_data['user_name'] }}) - {{ $note_data['active_status'] }} </span> <br>
@@ -804,14 +804,14 @@
                         <div class="form-group" id="observationDiv{{$data['parent_video_upload_id']}}" style="display: none;">
                           @endif
                           <label class="control-label">Observation</label>
-                          <textarea class="form-control cuModaltextarea" name="observation[{{$data['parent_video_upload_id']}}]" id="observation{{$data['parent_video_upload_id']}}">{{$data['comments']}}</textarea>
+                          <textarea class="form-control cuModaltextarea" style="background-color: #ffffff !important; color: #000000 !important;" name="observation[{{$data['parent_video_upload_id']}}]" id="observation{{$data['parent_video_upload_id']}}">{{$data['comments']}}</textarea>
                         </div>
                       </div>
 
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="control-label">Comments for Parent</label>
-                          <textarea class="form-control cuModaltextarea" name="comments[{{$data['parent_video_upload_id']}}]" id="comments"></textarea>
+                          <textarea class="form-control cuModaltextarea" style="background-color: #ffffff !important; color: #000000 !important;" name="comments[{{$data['parent_video_upload_id']}}]" id="comments"></textarea>
                         </div>
                       </div>
                       <!-- F2F -->
@@ -821,8 +821,8 @@
                             <table class="table table-bordered" id="activity">
                               <thead>
                                 <tr>
-                                  <th width="40%" style="height: 20px;">Materials required</th>
-                                  <th width="30%" style="height: 20px;">To observe</th>
+                                  <th width="40%" style="height: 20px;">Materials required<span class="error-star" style="color:red;">*</span> </th>
+                                  <th width="30%" style="height: 20px;">To observe <span class="error-star" style="color:red;">*</span></th>
                                   <th width="30%" style="height: 20px;">To ask parents</th>
                                 </tr>
                               </thead>
@@ -848,6 +848,7 @@
                                       multiple
                                       class="chosen-select"
                                       name="material[{{$data['parent_video_upload_id']}}][]"
+                                      id="material{{$data['parent_video_upload_id']}}"
                                       style="width:100%">
                                       @foreach($requiredMaterials as $material)
                                       <option value="{{ $material }}" selected>
@@ -869,8 +870,21 @@
 
 
                                   </td>
-                                  <td><textarea class="form-control" name="to_observe[{{$data['parent_video_upload_id']}}]" id="">{{$data['to_observe']}}</textarea></td>
-                                  <td><textarea class="form-control" name="to_ask_parents[{{$data['parent_video_upload_id']}}]" id="">{{$data['to_ask_parents']}}</textarea></td>
+                                  <td>
+                                    <textarea
+                                      class="form-control"
+                                      id="to_observe{{$data['parent_video_upload_id']}}"
+                                      name="to_observe[{{$data['parent_video_upload_id']}}]"
+                                      style="background-color: #ffffff !important; color: #000000 !important;">{{$data['to_observe']}}</textarea>
+                                  </td>
+
+                                  <td>
+                                    <textarea
+                                      class="form-control"
+                                      id="to_ask_parents{{$data['parent_video_upload_id']}}"
+                                      name="to_ask_parents[{{$data['parent_video_upload_id']}}]"
+                                      style="background-color: #ffffff !important; color: #000000 !important;">{{$data['to_ask_parents']}}</textarea>
+                                  </td>
                                 </tr>
                               </tbody>
                             </table>
@@ -1033,7 +1047,7 @@
 
                               <div class="form-group">
                                 <label class="control-label">Approval Status</label><span class="error-star" style="color:red;">*</span>
-                                <select class="form-control" name="approval_status" id="approval_status{{$data['parent_video_upload_id']}}" onchange="app_status('{{$data['parent_video_upload_id']}}')">
+                                <select class="form-control" name="approval_status"  style="background-color: #ffffff !important; color: #000000 !important;" id="approval_status{{$data['parent_video_upload_id']}}" onchange="app_status('{{$data['parent_video_upload_id']}}')">
                                   <!-- <option value="">Select Status</option> -->
                                   <option value="Complete" {{ $data['status'] == 'Complete' ? 'selected' : '' }}>Approved</option>
                                   <!-- <option value="Rejected" {{ $data['status'] == 'Rejected' ? 'selected' : '' }}>Reject</option> -->
@@ -1046,7 +1060,7 @@
                             <input type="hidden" id="parent_video_upload_id" name="parent_video_upload_id" value="{{$data['parent_video_upload_id']}}">
                             <div class="col-md-6">
                               <label class="control-label comments_label">Previous Notes</label><br>
-                              <div style="background-color:#E9ECEF !important; color: #000000;"class="form-group scroll_flow_class">
+                              <div style="background-color:#E9ECEF !important; color: #000000;" class="form-group scroll_flow_class">
                                 @foreach($comments as $key1=>$note_data)
                                 @if($data['parent_video_upload_id'] == $note_data['parent_video_upload_id'])
                                 <span> {{ $note_data['role'] }} ({{ $note_data['user_name'] }}) - {{ $note_data['active_status'] }} </span> <br>
@@ -1214,7 +1228,7 @@
                             <input type="hidden" id="parent_video_upload_id" name="parent_video_upload_id" value="{{$data['parent_video_upload_id']}}">
                             <div class="col-md-6">
                               <label class="control-label">Previous Notes </label><br>
-                              <div  class="form-group scroll_flow_class">
+                              <div class="form-group scroll_flow_class">
                                 @foreach($comments as $key=>$note_data)
                                 @if($data['parent_video_upload_id'] == $note_data['parent_video_upload_id'])
                                 <span> {{ $note_data['role'] }} ({{ $note_data['user_name'] }}) - {{ $note_data['active_status'] }} </span> <br>
@@ -1596,12 +1610,47 @@
 
     function oneSubmit(parentId) {
 
-      document.getElementById('submit_type').value = 'oneSubmit';
+      const checkbox = document.getElementById('enablef2f' + parentId);
+      const f2fTable = document.getElementById('f2ftable' + parentId);
 
+      if (checkbox && checkbox.checked && f2fTable && f2fTable.style.display !== 'none') {
+
+        const material = document.getElementById('material' + parentId);
+        const toObserve = document.getElementById('to_observe' + parentId);
+        const toAskParents = document.getElementById('to_ask_parents' + parentId);
+
+
+        if (!material || material.selectedOptions.length === 0) {
+          Swal.fire({
+            title: 'Missing Field',
+            text: 'Please select at least one Material.',
+            icon: 'warning',
+            confirmButtonColor: "#d33",
+            confirmButtonText: "OK"
+          });
+          return;
+        }
+
+
+        if (!toObserve || toObserve.value.trim() === '') {
+          Swal.fire({
+            title: 'Missing Field',
+            text: 'Please fill "To observe".',
+            icon: 'warning',
+            confirmButtonColor: "#d33",
+            confirmButtonText: "OK"
+          });
+          return;
+        }
+
+
+      }
+
+      document.getElementById('submit_type').value = 'oneSubmit';
       document.getElementById('openID').value = parentId;
 
-      console.log(document.getElementById('openID').value)
       document.getElementById('video_update').action = "{{ route('activity.update.video.all') }}";
+
       Swal.fire({
         title: 'Are you sure you want to update this Activity ?',
         text: 'Please review before updating.',
@@ -1616,6 +1665,7 @@
         }
       });
     }
+
 
 
     function tempSave(pID) {

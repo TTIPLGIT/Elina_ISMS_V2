@@ -417,6 +417,7 @@ Route::middleware('auth:api')->group(function () {
   Route::post('videocreation/policyaggrement', [\App\Http\Controllers\ParentvideouploadController::class, 'policyaggrement']);
   Route::get('/activity/data_delete/{id}', [\App\Http\Controllers\ParentvideouploadController::class, 'delete']);
   Route::post('/video/creation/action', [\App\Http\Controllers\ParentvideouploadController::class, 'activityAction']);
+  Route::get('/activity/delete_activity/{id}', [\App\Http\Controllers\ParentvideouploadController::class, 'delete_activity']);
 
   // Assessment Mapping
   Route::get('/assessment/mapping/index', [App\Http\Controllers\AssessmentMapping::class, 'index']);
