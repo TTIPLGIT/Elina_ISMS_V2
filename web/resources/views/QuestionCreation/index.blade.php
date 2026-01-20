@@ -188,7 +188,7 @@
                                 <td>{{$data['no_questions']}}</td>
                                 <td>{{$data['questionnaire_type']}}</td>
                                 <td>
-                                    <a class="btn btn-link" title="View" href="{{ route('question_creation.show', \Crypt::encrypt($data['questionnaire_details_id'])) }}"><i class="fas fa-eye" style="color:green"></i></a>
+                                    <!-- <a class="btn btn-link" title="View" href="{{ route('question_creation.show', \Crypt::encrypt($data['questionnaire_details_id'])) }}"><i class="fas fa-eye" style="color:green"></i></a> -->
                                     <a class="btn btn-link" title="Edit" href="{{ route('question_creation.add_questions', \Crypt::encrypt($data['questionnaire_details_id'])) }}"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
                                     @csrf
                                     <input type="hidden" name="delete_id" id="<?php echo $data['questionnaire_id']; ?>" value="{{ route('question_creation.delete', $data['questionnaire_id']) }}">

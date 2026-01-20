@@ -1380,7 +1380,7 @@ class ParentvideouploadController extends BaseController
             return $sendServiceResponse;
         }
     }
-      public function parent_storedata_bulk_one(Request $request)
+    public function parent_storedata_bulk_one(Request $request)
     {
         $inputArray = $this->DecryptData($request->requestData);
         $this->WriteFileLog("Welcome to the balde");
@@ -1478,7 +1478,7 @@ class ParentvideouploadController extends BaseController
                             // ->where('created_by', auth()->user()->id)
                             ->update([
                                 'comments' => $comments[$matchedKey],
-                                'active_status' =>"Submitted",
+                                'active_status' => "Submitted",
                                 'created_at' => NOW(),
                                 'role' => $role_name[0]->role_name,
                                 'user_name' => auth()->user()->name
@@ -1553,6 +1553,40 @@ class ParentvideouploadController extends BaseController
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
             $serviceResponse['Data'] = $restorePage;
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+            return $sendServiceResponse;
+        } catch (\Exception $exc) {
+            $exceptionResponse = array();
+            $exceptionResponse['ServiceMethod'] = $method;
+            $exceptionResponse['Exception'] = $exc->getMessage();
+            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+            $this->WriteFileLog($exceptionResponse);
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.exception');
+            $serviceResponse['Message'] = $exc->getMessage();
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
+            return $sendServiceResponse;
+        }
+    }
+    public function delete_activity($id)
+    {
+        try {
+
+            $method = 'Method => ParentvideouploadController => delete_activity';
+            $id = $this->decryptData($id);
+
+            DB::table('activity')
+                ->where('activity_id', $id)
+                ->update([
+                    'active_flag' => 1
+                ]);
+
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.success');
+            $serviceResponse['Message'] = config('setting.status_message.success');
+            $serviceResponse['Data'] = 1;
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
             $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
             return $sendServiceResponse;

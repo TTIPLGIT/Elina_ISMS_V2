@@ -139,10 +139,10 @@
                     <div class="col-md-12" style="display: flex;justify-content: center;">
                         <div class="form-group">
                             <div class="input-container">
-                                <input type='text' class="form-control custom-month-input col-md-5" id='month' name="month" title="Monthly Allocation" onfocus="clearPlaceholder(event)" onblur="setPlaceholder()" value="Select a month"><br>
+                                <input type='text' style="background-color: #ffffff !important; color: #000000;" class="form-control custom-month-input col-md-5" id='month' name="month" title="Monthly Allocation" onfocus="clearPlaceholder(event)" onblur="setPlaceholder()" value="Select a month"><br>
                                 <!-- <div class="custom-month-placeholder" id="placeholder">Select a Month</div> -->
 
-                                <select id="weekDropdown" class="form-control weekDropdown col-md-8" name="weekDropdown" disabled>
+                                <select id="weekDropdown" style="background-color: #ffffff !important; color: #000000;" class="form-control weekDropdown col-md-8" name="weekDropdown" disabled>
                                     <option value="" disabled selected>Select a week</option>
                                 </select>
 
@@ -203,7 +203,7 @@
                                                         <div class="form-group">
 
                                                             <label class="control-label">Enrollment ID<span class="error-star" style="color:red;">*</span></label>
-                                                            <select class="form-control" id="enrollment_child_num" name="enrollment_child_num" onchange="GetChilddetails()">
+                                                            <select class="form-control" style="background-color: #ffffff !important; color: #000000;" id="enrollment_child_num" name="enrollment_child_num" onchange="GetChilddetails()">
                                                                 <option value="">Select-Enrollment</option>
                                                                 @foreach($rows2['enrollment_details'] as $key=>$row)
                                                                 <option value="{{$row['enrollment_child_num']}}">{{ $row['enrollment_child_num']}} ( {{$row['child_name']}} )</option>

@@ -1296,8 +1296,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <textarea id="modalRecommendationInput" class="form-control" rows="10" maxlength="Infinity" style="resize: vertical;"></textarea>
-                <!-- <small class="text-muted" id="charCount">0 / 1500 characters</small> -->
+                <!-- Add the same class as your other TinyMCE editors -->
+                <textarea id="modalRecommendationEditor" class="meeting_description" style="height: 350px;"></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="closeRecommendationModal()">Cancel</button>
@@ -1306,37 +1306,136 @@
         </div>
     </div>
 </div>
+
+
 <script>
     let activeRecommendationTextarea = null;
+    let isModalEditorInitialized = false;
 
     document.addEventListener('click', function(e) {
         if (e.target && e.target.matches('textarea[name^="recommendation["]')) {
             activeRecommendationTextarea = e.target;
-            const currentText = activeRecommendationTextarea.value;
-            console.log('asd', currentText);
-            document.getElementById('modalRecommendationInput').value = currentText;
-            updateCharCount();
+            let currentText = activeRecommendationTextarea.value;
+            
+            // Initialize modal editor if not already done
+            if (!isModalEditorInitialized) {
+                initModalEditor(currentText);
+                isModalEditorInitialized = true;
+            } else {
+                // Update existing modal editor content
+                if (tinymce && tinymce.get('modalRecommendationEditor')) {
+                    tinymce.get('modalRecommendationEditor').setContent(currentText);
+                } else {
+                    document.getElementById('modalRecommendationEditor').value = currentText;
+                }
+            }
+            
             $('#recommendationModal').modal('show');
         }
     });
 
+    function initModalEditor(initialContent) {
+        // Initialize TinyMCE for the modal editor with the same configuration
+        tinymce.init({
+            selector: '#modalRecommendationEditor',
+            plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons',
+            imagetools_cors_hosts: ['picsum.photos'],
+            menubar: 'file edit view insert format table help',
+            toolbar: 'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media link anchor codesample | ltr rtl',
+            toolbar_sticky: true,
+            autosave_ask_before_unload: false,
+            autosave_interval: "30s",
+            autosave_prefix: "{path}{query}-{id}-",
+            autosave_restore_when_empty: false,
+            autosave_retention: "2m",
+            image_advtab: true,
+            content_css: "{{url('assets/css/css2.css')}}",
+            font_formats: "Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Barlow=Barlow, sans-serif; Barlow Condensed=Barlow Condensed, sans-serif; Barlow Semi Condensed=Barlow Semi Condensed, sans-serif; Plain Barlow Black=Barlow Black, sans-serif; Plain Barlow Bold=Barlow Bold, sans-serif; Plain Barlow Light=Barlow Light, sans-serif; Plain Barlow Medium=Barlow Medium, sans-serif; Plain Barlow Thin=Barlow Thin, sans-serif; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Oswald=oswald; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats",
+            content_style: "@import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');",
+            content_style: "@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');",
+            content_style: "@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');",
+            importcss_append: true,
+            file_picker_callback: function(cb, value, meta) {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+                input.onchange = function() {
+                    var file = this.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function() {
+                        var id = 'blobid' + (new Date()).getTime();
+                        var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                        var base64 = reader.result.split(',')[1];
+                        var blobInfo = blobCache.create(id, file, base64);
+                        blobCache.add(blobInfo);
+                        cb(blobInfo.blobUri(), {
+                            title: file.name
+                        });
+                    };
+                    reader.readAsDataURL(file);
+                };
+                input.click();
+            },
+            height: 350,
+            image_caption: true,
+            quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+            noneditable_noneditable_class: "mceNonEditable",
+            toolbar_mode: 'sliding',
+            contextmenu: "link image imagetools table",
+            setup: function(editor) {
+                editor.on('init', function() {
+                    editor.setContent(initialContent);
+                });
+            }
+        });
+    }
+
     function saveRecommendation() {
-        const modalText = document.getElementById('modalRecommendationInput').value;
-        if (activeRecommendationTextarea) {
-            activeRecommendationTextarea.value = modalText;
+        if (!activeRecommendationTextarea) return;
+        
+        let modalText = '';
+        
+        // Get content from modal editor
+        if (tinymce && tinymce.get('modalRecommendationEditor')) {
+            modalText = tinymce.get('modalRecommendationEditor').getContent();
+        } else {
+            modalText = document.getElementById('modalRecommendationEditor').value;
         }
-        $('#recommendationModal').modal('hide');
+        
+        // Update the original textarea
+        activeRecommendationTextarea.value = modalText;
+        
+        // If the original textarea has TinyMCE, update it too
+        if (tinymce && tinymce.get(activeRecommendationTextarea.id)) {
+            tinymce.get(activeRecommendationTextarea.id).setContent(modalText);
+        }
+        
+        // Trigger change event to ensure form submission captures the change
+        $(activeRecommendationTextarea).trigger('change');
+        
+        // Show success message
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: 'Recommendation saved',
+            showConfirmButton: false,
+            timer: 1500
+        });
+        
+        closeRecommendationModal();
     }
 
     function closeRecommendationModal() {
         $('#recommendationModal').modal('hide');
     }
 
-    document.getElementById('modalRecommendationInput').addEventListener('input', updateCharCount);
-
-    function updateCharCount() {
-        const val = document.getElementById('modalRecommendationInput').value;
-        // document.getElementById('charCount').textContent = `${val.length} / 1500 characters`;
-    }
+    // Clean up when modal is hidden
+    $('#recommendationModal').on('hidden.bs.modal', function() {
+        if (tinymce && tinymce.get('modalRecommendationEditor')) {
+            tinymce.get('modalRecommendationEditor').setContent('');
+        }
+        activeRecommendationTextarea = null;
+    });
 </script>
 @endsection

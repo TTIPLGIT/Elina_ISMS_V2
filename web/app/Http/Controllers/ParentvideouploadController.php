@@ -934,4 +934,27 @@ class ParentvideouploadController extends BaseController
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
+    public function delete_activity($id)
+    { {
+
+            try {
+                $method = 'Method => ParentvideouploadController => delete_activity';
+                $gatewayURL = config('setting.api_gateway_url') . '/activity/delete_activity/' . $id;
+                $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
+                $response1 = json_decode($response);
+                if ($response1->Status == 200 && $response1->Success) {
+                    $objData = json_decode($this->decryptData($response1->Data));
+                    if ($objData->Code == 200) {
+                        return redirect()->back()->with('success', 'Activity deleted successfully.');
+                    }
+                    if ($objData->Code == 400) {
+                        return redirect(route('video_creation.index'))->with('fail', 'Something Went Wrong');
+                    }
+                }
+            } catch (\Exception $exc) {
+
+                return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
+            }
+        }
+    }
 }

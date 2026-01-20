@@ -33,7 +33,7 @@ class ParentsQuestionnaireController extends BaseController
 					if ($user_role != 'Parent') {
 						return Redirect::back();
 					}
-					return view('questionnaire_for_parents.index', compact('initiated_form', 'modules', 'screens','encUser','sail'));
+					return view('questionnaire_for_parents.index', compact('initiated_form', 'modules', 'screens', 'encUser', 'sail'));
 				}
 			} else {
 				$objData = json_decode($this->decryptData($response->Data));
@@ -137,10 +137,10 @@ class ParentsQuestionnaireController extends BaseController
 					$screens = $menus['screens'];
 					$modules = $menus['modules'];
 					if ($currentstatus == 'new') {
-						return view('questionnaire_for_parents.fill_form', compact('role','options', 'questionDetails', 'fieldQuestionsDB', 'fieldOptionsDB', 'currentstatus', 'questionnaire_initiation_id', 'screens', 'modules', 'question_details', 'question'));
+						return view('questionnaire_for_parents.fill_form', compact('role', 'options', 'questionDetails', 'fieldQuestionsDB', 'fieldOptionsDB', 'currentstatus', 'questionnaire_initiation_id', 'screens', 'modules', 'question_details', 'question'));
 					} elseif ($currentstatus == 'update') {
 						if ($submit_status == 'save') {
-							return view('questionnaire_for_parents.edit_form', compact('role','options', 'questionDetails', 'fieldQuestionsDB', 'fieldOptionsDB', 'currentstatus', 'questionnaire_initiation_id', 'screens', 'modules', 'question_details', 'question'));
+							return view('questionnaire_for_parents.edit_form', compact('role', 'options', 'questionDetails', 'fieldQuestionsDB', 'fieldOptionsDB', 'currentstatus', 'questionnaire_initiation_id', 'screens', 'modules', 'question_details', 'question'));
 						} elseif ($submit_status == 'submit') {
 							return redirect()->route('questionnaire.submitted.form', $id);
 							// return view('questionnaire_for_parents.edit_form', compact('currentstatus', 'questionnaire_initiation_id', 'screens', 'modules', 'question_details', 'question'));
@@ -387,7 +387,11 @@ class ParentsQuestionnaireController extends BaseController
 			if ($serviceResponse->Code == 201) {
 				if ($btn_type == 'submit') {
 					return redirect()->route('questionnaire_for_user.index')->with('success', 'Thank you for taking the time to fill out the questionnaire. It has been submitted.');
-				} else {
+				}
+				else if ($btn_type == 'save') {
+					return redirect()->route('questionnaire_for_user.index')->with('success', 'Your Questionnaire has been saved.');
+				} 
+				else {
 					return redirect()
 						->route('questionnaire_for_user.form.edit', $this->encryptData($serviceResponse->Data))
 						->with('success', 'Your answers have been saved successfully.')
@@ -462,8 +466,7 @@ class ParentsQuestionnaireController extends BaseController
 
 					if ($role == 'Parent') {
 						return view('questionnaire_for_parents.submitted_form', compact('enrollmentDetails', 'questionDetails', 'fieldOptionsDB', 'fieldQuestionsDB', 'role', 'questionnaire_initiation_id', 'screens', 'modules', 'question_details', 'question'));
-					}
-					else {
+					} else {
 						return view('questionnaire_for_parents.submitted_form_admin', compact('enrollmentDetails', 'questionDetails', 'fieldOptionsDB', 'fieldQuestionsDB', 'role', 'questionnaire_initiation_id', 'screens', 'modules', 'question_details', 'question'));
 					}
 				}
@@ -540,64 +543,60 @@ class ParentsQuestionnaireController extends BaseController
 		}
 	}
 	public function upload_update(Request $request)
-    {
+	{
 
-        try { //dd($request);
-            $method = 'Method =>  ParentsQuestionnaireController => bulk_update';
-            $data = array();
-            $data['enrollment_id'] = $request->enrollment_id;
-            $data['questionnaire_initiation_id'] = $request->questionnaire_initiation_id;
-			
-            $encryptArray = $this->encryptData($data);
-            $request = array();
-            //dd($data);
-            $request['requestData'] = $encryptArray;
-            $gatewayURL = config('setting.api_gateway_url') . '/questionnaire/updateoption';
-            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
-            $response1 = json_decode($response);
+		try { //dd($request);
+			$method = 'Method =>  ParentsQuestionnaireController => bulk_update';
+			$data = array();
+			$data['enrollment_id'] = $request->enrollment_id;
+			$data['questionnaire_initiation_id'] = $request->questionnaire_initiation_id;
 
-            if ($response1->Status == 200 && $response1->Success) {
-                $objData = json_decode($this->decryptData($response1->Data));
-                return $objData;
-                echo json_encode($objData);
+			$encryptArray = $this->encryptData($data);
+			$request = array();
+			//dd($data);
+			$request['requestData'] = $encryptArray;
+			$gatewayURL = config('setting.api_gateway_url') . '/questionnaire/updateoption';
+			$response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+			$response1 = json_decode($response);
 
-               
-            }
-        } catch (\Exception $exc) {
-            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
-        }
-    }
+			if ($response1->Status == 200 && $response1->Success) {
+				$objData = json_decode($this->decryptData($response1->Data));
+				return $objData;
+				echo json_encode($objData);
+			}
+		} catch (\Exception $exc) {
+			return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
+		}
+	}
 	public function upload_update_parent(Request $request)
-    {
+	{
 
-        try { //dd($request);
+		try { //dd($request);
 			// $this->WriteFileLog("web");
 
-            $method = 'Method =>  ParentsQuestionnaireController => upload_update_parent';
-            $data = array();
-            $data['enrollment_id'] = $request->enrollment_id;
-            $data['questionnaire_initiation_id'] = $request->questionnaire_initiation_id;
+			$method = 'Method =>  ParentsQuestionnaireController => upload_update_parent';
+			$data = array();
+			$data['enrollment_id'] = $request->enrollment_id;
+			$data['questionnaire_initiation_id'] = $request->questionnaire_initiation_id;
 			$data['que_id'] = $request->q_id;
-            $encryptArray = $this->encryptData($data);
-            $request = array();
+			$encryptArray = $this->encryptData($data);
+			$request = array();
 			// $this->WriteFileLog($data);
 
-            //dd($data);
-            $request['requestData'] = $encryptArray;
-            $gatewayURL = config('setting.api_gateway_url') . '/questionnaire/updateoption/parent';
+			//dd($data);
+			$request['requestData'] = $encryptArray;
+			$gatewayURL = config('setting.api_gateway_url') . '/questionnaire/updateoption/parent';
 			// $this->WriteFileLog($gatewayURL);
 
-            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+			$response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
 			$response1 = json_decode($response);
 			if ($response1->Status == 200 && $response1->Success) {
-                $objData = json_decode($this->decryptData($response1->Data));
-                return $objData;
-                echo json_encode($objData);
-
-               
-            }
-        } catch (\Exception $exc) {
-            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
-        }
-    }
+				$objData = json_decode($this->decryptData($response1->Data));
+				return $objData;
+				echo json_encode($objData);
+			}
+		} catch (\Exception $exc) {
+			return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
+		}
+	}
 }

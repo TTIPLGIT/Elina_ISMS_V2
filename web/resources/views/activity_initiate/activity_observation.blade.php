@@ -351,7 +351,7 @@
                 </div>
                 <div class="col-md-4" id="">
                   <div class="form-group questionnaire">
-                    <label class="control-label">Observation</label>
+                    <label class="control-label">Observation</label><span class="error-star" style="color:red;">*</span>
                     <textarea class="form-control default" name="Observation_edit" id="Observation_edit" autocomplete="off"></textarea>
                   </div>
                 </div>

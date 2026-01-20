@@ -66,7 +66,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="control-label required">Child ID</label>
-                      <input class="form-control" type="text" id="child_id" name="child_id" placeholder="Child ID" autocomplete="off">
+                      <input class="form-control" type="text"  style="background-color:#E9ECEF !important" id="child_id" name="child_id" placeholder="Child ID" autocomplete="off">
                     </div>
                   </div>
 
@@ -75,7 +75,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="control-label required">Child Name</label>
-                      <input class="form-control" type="text" id="child_name" name="child_name" oninput="Childname(event)" maxlength="20" value="" placeholder="Enter Name" autocomplete="off">
+                      <input class="form-control" type="text" id="child_name" style="background-color:#E9ECEF !important" name="child_name" oninput="Childname(event)" maxlength="20" value="" placeholder="Enter Name" autocomplete="off">
                     </div>
                   </div>
 

@@ -74,11 +74,12 @@ class CustomizedPaymentController extends BaseController
                     $serviceList = $parant_data['serviceList'];
                     $taxList = $parant_data['taxList'];
                     $childDetails = $parant_data['childDetails'];
-
+                    $serviceData = $parant_data['serviceData'];
+                  
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
-                    return view('paymentmaster.customized_payment.create', compact('rows', 'screens', 'modules', 'schoolists', 'serviceList', 'taxList', 'childDetails'));
+                    return view('paymentmaster.customized_payment.create', compact('rows', 'screens', 'modules', 'schoolists', 'serviceList', 'taxList', 'childDetails','serviceData'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));
@@ -131,7 +132,7 @@ class CustomizedPaymentController extends BaseController
             $objData = json_decode($this->decryptData($response1->Data));
 
             if ($objData->Code == 200) {
-                return redirect(url('payment/customized/sail'))->with('success', 'Payment Master Added Successfully');
+                return redirect(url('payment/customized/sail'))->with('success', 'Payment Added Successfully');
             }
 
             if ($objData->Code == 400) {
@@ -172,11 +173,11 @@ class CustomizedPaymentController extends BaseController
                 $serviceList = $parant_data['serviceList'];
                 $taxList = $parant_data['taxList'];
                 $childDetails = $parant_data['childDetails'];
-
+                $serviceData = $parant_data['serviceData'];
                 $menus = $this->FillMenu();
                 $screens = $menus['screens'];
                 $modules = $menus['modules'];
-                return view('paymentmaster.customized_payment.edit', compact('rows', 'screens', 'modules', 'schoolists', 'serviceList', 'taxList', 'childDetails'));
+                return view('paymentmaster.customized_payment.edit', compact('rows', 'screens', 'modules', 'schoolists', 'serviceList', 'taxList', 'childDetails', 'serviceData'));
             } else {
                 $objData = json_decode($this->decryptData($response1->Data));
                 echo json_encode($objData->Code);

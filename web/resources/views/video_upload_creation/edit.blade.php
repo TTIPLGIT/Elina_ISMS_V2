@@ -63,9 +63,9 @@
                                 <div class="multi-fields">
                                     @foreach($rows as $key=>$row)
                                     <div class="multi-field" style="display: flex;margin-bottom: 5px;">
-                                        <input type="text" class="form-control default col-4" name="description[{{$row['activity_description_id']}}]" id="description" value="{{ $row['description']}}">
+                                        <input type="text" class="form-control default col-4" name="description[{{$row['activity_description_id']}}]" style="background-color:#E2E4E6 !important; color: #000000;" id="description" value="{{ $row['description']}}">
                                         <!-- <input class="form-control default col-3" type="file" id="file" name="file[{{$row['activity_description_id']}}]" value="{{ $row['file_attachment']}}" autocomplete="off"> -->
-                                        <div style="height: auto;" class="form-control default tinymce-body" id="instruction[{{$row['activity_description_id']}}]" name="instruction[{{$row['activity_description_id']}}]">{!! $row['instruction'] !!}</div>
+                                        <div style="height: auto;" class="form-control default tinymce-body" style="background-color:#E2E4E6 !important; color: #000000;" id="instruction[{{$row['activity_description_id']}}]" name="instruction[{{$row['activity_description_id']}}]">{!! $row['instruction'] !!}</div>
                                         <button class="remove-field btn btn-danger pull-right" id="remove-f" type='button'>X </button>
                                         &nbsp;
                                     </div>
@@ -103,13 +103,13 @@
             height: 180,
             menubar: false,
             branding: false,
-            inline: true,
+            inline: false,
             plugins: 'link',
             toolbar: 'undo redo | formatselect | ' +
                 'bold italic backcolor link | alignleft aligncenter ' +
                 'alignright alignjustify | bullist numlist outdent indent | ' +
                 'removeformat | help',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif;font-size:14px; background-color:#E2E4E6 !important; color: #000000;  }'
         });
     });
 </script>

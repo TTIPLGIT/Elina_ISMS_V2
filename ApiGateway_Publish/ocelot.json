@@ -6676,8 +6676,119 @@
       "UpstreamHttpMethod": [
         "POST"
       ]
-    }
+    },
+     {
+      "DownstreamPathTemplate": "/api/service_briefing_master/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/service_briefing_master/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+      {
+      "DownstreamPathTemplate": "/api/service_briefing_master/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/service_briefing_master/create",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+     {
+      "DownstreamPathTemplate": "/api/service_briefing_master/storedata",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/service_briefing_master/storedata",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+      {
+      "DownstreamPathTemplate": "/api/service_briefing_master/delete/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/service_briefing_master/delete/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+     {
+      "DownstreamPathTemplate": "/api/service_briefing/show/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/service_briefing/show/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+       "DownstreamPathTemplate": "/api/service_briefing/edit/{id}",
+       "DownstreamScheme": "http",
+       "DownstreamHostAndPorts": [
+       {
+          "Host": "localhost",
+          "Port": 60162
+       }
+      ],
+        "UpstreamPathTemplate": "/api/gateway/service_briefing/edit/{id}",
+        "UpstreamHttpMethod": [ "GET" ]
+    },   
+       
+    {
+       "DownstreamPathTemplate": "/api/service_briefing_master/updatedata",
+       "DownstreamScheme": "http",
+       "DownstreamHostAndPorts": [
+       {
+        "Host": "localhost",
+        "Port": 60162
+      }
+    ],
+      "UpstreamPathTemplate": "/api/gateway/service_briefing_master/updatedata",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+ {
+      "DownstreamPathTemplate": "/api/activity/delete_activity/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/activity/delete_activity/{id}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+   
   ],
+  
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:700"
   }

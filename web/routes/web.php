@@ -321,6 +321,8 @@ Route::group(['middleware' => 'usersession'], function () {
     Route::match(['get', 'post'], '/auditlog/login', [\App\Http\Controllers\AuditlogController::class, 'login_search'])->name('auditlog.login');
     //video upload creation
     Route::resource('video_creation', ParentvideouploadController::class);
+    Route::get('/activity/delete/{id}', [ParentvideouploadController::class, 'delete_activity'])->name('activity.delete');
+
     Route::get('/parent_video_upload/parentindex', [\App\Http\Controllers\ParentvideouploadController::class, 'parentindex'])->name('parent_video_upload.parentindex');
     Route::get('/parent_video_upload/parent_create/{id}', [\App\Http\Controllers\ParentvideouploadController::class, 'parent_create'])->name('parent_video_upload.parent_create');
     Route::get('/activitymaster/show_1/{id}', [\App\Http\Controllers\ParentvideouploadController::class, 'show_1'])->name('activitymaster.show_1');
@@ -732,4 +734,15 @@ Route::group(['middleware' => 'usersession'], function () {
     Route::post('/videocreation/parentstore/bulk/one', [App\Http\Controllers\ParentvideouploadController::class, 'video_parentstore_one'])->name('video.parentstore.one');
     Route::post('/video-parentstore-one', [activityInitiationController::class, 'video_parentstore_one'])->name('activity.update.video.all');
 
+
+
+    //Serivce Masters
+    Route::get('/service/briefing/index', [App\Http\Controllers\ServiceBriefingController::class, 'index'])->name('service_briefing.index');
+    Route::get('/service/briefing/create_data', [App\Http\Controllers\ServiceBriefingController::class, 'create'])->name('service_briefing.creat');
+    Route::get('/service/briefing/create', [App\Http\Controllers\ServiceBriefingController::class, 'create'])->name('service_briefing.create');
+    Route::post('/service/briefing/store', [App\Http\Controllers\ServiceBriefingController::class, 'store'])->name('service_briefing.store');
+    Route::get('/service/briefing/delete/{id}', [\App\Http\Controllers\ServiceBriefingController::class, 'delete'])->name('service_briefing.delete');
+    Route::get('/service_briefing/show/{id}', [\App\Http\Controllers\ServiceBriefingController::class, 'show'])->name('service_briefing.show');
+    Route::get('/service-briefing/edit/{id}', [App\Http\Controllers\ServiceBriefingController::class, 'edit'])->name('service_briefing.edit');
+    Route::post('/service-briefing/update/{id}',[App\Http\Controllers\ServiceBriefingController::class, 'update'])->name('service_briefing.update');
 });

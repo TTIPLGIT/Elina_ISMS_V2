@@ -36,13 +36,13 @@
           <div class="col-md-6" style="margin: 15px 0px 0px 0px;">
             <div class="form-group">
               <label class="control-label">Questionnaire Name<span style="color: red;font-size: 16px;">*</span></label>
-              <input class="form-control" type="text" id="questionnaire_name" name="questionnaire_name" placeholder="Enter Questionnaire Name">
+              <input class="form-control" type="text" id="questionnaire_name" style="background-color: #ffffff !important; color: #000000;"name="questionnaire_name" placeholder="Enter Questionnaire Name">
             </div>
           </div>
           <div class="col-md-6" style="margin: 15px 0px 0px 0px;">
             <div class="form-group questionnaire">
               <label class="control-label required">Questionnaire Type</label>
-              <select class="form-control" name="questionnaire_type" id="questionnaire_type">
+              <select  style="background-color: #ffffff !important; color: #000000;" class="form-control" name="questionnaire_type" id="questionnaire_type">
                 <option value="">Select Questionnaire Type</option>
                 <option value="OVM">OVM</option>
                 <option value="Sail">Sail</option>

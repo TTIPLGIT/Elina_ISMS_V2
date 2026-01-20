@@ -42,7 +42,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="control-label">Module Name <span style="color: red;font-size: 16px;">*</span></label>
-                      <select name="module_id" class="form-control" id="module_id" onChange="moduleChange()">
+                      <select name="module_id" style="background-color: #ffffff !important;"class="form-control" id="module_id" onChange="moduleChange()">
                         <option value=""> Select Module Name </option>
                         @foreach($modulesdata as $key=>$module)
 
@@ -151,7 +151,7 @@
           
           document.getElementById('module_type').value = 'SM';
 
-          var optionDiv = '<div class="col-md-12"><div class="form-group"><label class="control-label required">Sub Module</label><select class="form-control" name="sub_module" id="sub_module" onChange="sub_moduleChange()">';
+          var optionDiv = '<div class="col-md-12"><div class="form-group"><label class="control-label required">Sub Module</label><select class="form-control" style="background-color: #ffffff !important;" name="sub_module" id="sub_module" onChange="sub_moduleChange()">';
           optionDiv += '<option value=""> Select Sub Module </option>';
           for (let index = 0; index < response.length; index++) {
             const moduleID = response[index]['module_id'];

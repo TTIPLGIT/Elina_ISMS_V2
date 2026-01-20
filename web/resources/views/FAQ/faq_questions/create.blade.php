@@ -11,57 +11,57 @@
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-            <form class="form-horizontal" name ="faq_questions" method="POST" action="{{ route('FAQ_questions.store') }}">
+              <form class="form-horizontal" name="faq_questions" method="POST" action="{{ route('FAQ_questions.store') }}">
                 @csrf
-                    <div class="row">
-                       <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">FAQ Module Name<span style="color: red;font-size: 16px;">*</span></label>
-                                 <select class="form-control" name="module_id">
-                                    <option value="">--- Select FAQ Module Name ---</option>
-                             @foreach($rows as $key=>$row)
-                                    <option value="{{ $row['id'] }}">{{ $row['module_name'] }}</option>
-                                  @endforeach
-                                </select>
-                                @error('module_id')
-                           <div class="error">{{ $message }}</div>
-                           @enderror
-                            </div>
-                            
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Question <span style="color: red;font-size: 16px;">*</span></label>
-                                <input class="form-control" type="text"  id="question" name="question"  placeholder="Enter Question">
-                            </div>
-                            @error('question')
-                           <div class="error">{{ $message }}</div>
-                           @enderror
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Answer<span style="color: red;font-size: 16px;">*</span></label>
-                              
-                                <textarea class="form-control" type="text" id="answer" name="answer"  placeholder="Enter Answer"></textarea>
-                            </div>
-                            @error('answer')
-                           <div class="error">{{ $message }}</div>
-                           @enderror
-                        </div>
-                       
-                        				
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">FAQ Module Name<span style="color: red;font-size: 16px;">*</span></label>
+                      <select class="form-control" name="module_id" style="background-color: #ffffff !important;">
+                        <option value="">--- Select FAQ Module Name ---</option>
+                        @foreach($rows as $key=>$row)
+                        <option value="{{ $row['id'] }}">{{ $row['module_name'] }}</option>
+                        @endforeach
+                      </select>
+                      @error('module_id')
+                      <div class="error">{{ $message }}</div>
+                      @enderror
                     </div>
-                    
-                     <div class="row text-center">
-                        <div class="col-md-12">
-                             <button class="btn btn-success" type="submit"><i class="fa fa-check"></i> Submit</button>&nbsp;
-                              <button class="btn btn-primary" type="reset"><i class="fa fa-undo"></i> Reset </button>&nbsp;
-                             <a class="btn btn-danger" href="{{ route('FAQ_questions.index') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>
-                           
-                           
-                        </div>                
+
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Question <span style="color: red;font-size: 16px;">*</span></label>
+                      <input class="form-control" type="text" id="question" name="question" style="background-color: #ffffff !important;" placeholder=" Enter Question">
                     </div>
-                </form>
+                    @error('question')
+                    <div class="error">{{ $message }}</div>
+                    @enderror
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">Answer<span style="color: red;font-size: 16px;">*</span></label>
+
+                      <textarea class="form-control" type="text" id="answer" name="answer" style="background-color: #ffffff !important;" placeholder=" Enter Answer"></textarea>
+                    </div>
+                    @error('answer')
+                    <div class="error">{{ $message }}</div>
+                    @enderror
+                  </div>
+
+
+                </div>
+
+                <div class="row text-center">
+                  <div class="col-md-12">
+                    <button class="btn btn-success" type="submit"><i class="fa fa-check"></i> Submit</button>&nbsp;
+                    <button class="btn btn-primary" type="reset"><i class="fa fa-undo"></i> Reset </button>&nbsp;
+                    <a class="btn btn-danger" href="{{ route('FAQ_questions.index') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>
+
+
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>

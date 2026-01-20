@@ -94,7 +94,7 @@
                 <div class="col-md-4">
                     <div class="form-group questionnaire">
                         <label class="control-label required">Questionnaire Name</label>
-                        <select class="form-control" name="questionnaire_id" id="questionnaire_id" onchange="questionnaireChange()">
+                        <select class="form-control" name="questionnaire_id" style="background-color: #ffffff !important; color: #000000;"id="questionnaire_id" onchange="questionnaireChange()">
                             <option value="">Select Questionnaire</option>
                             @foreach($questionnaire_list as $data)
                             <option value="{{$data['questionnaire_id']}}">{{$data['questionnaire_name']}}</option>
@@ -105,7 +105,7 @@
                 <div class="col-md-4">
                     <div class="form-group questionnaire">
                         <label class="control-label required">No.Of.Questions</label>
-                        <input class="form-control" type="number" id="no_of_ques" name="no_of_ques" autocomplete="off">
+                        <input class="form-control" type="number" style="background-color: #ffffff !important; color: #000000;" id="no_of_ques" name="no_of_ques" autocomplete="off">
                     </div>
                 </div>
                 <div class="col-md-12">

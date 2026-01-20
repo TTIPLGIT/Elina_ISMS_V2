@@ -19,7 +19,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="control-label">Module Category <span style="color: red;font-size: 16px;">*</span></label>
-                      <select class="form-control" name="module_type" id="module_type" onChange="typeChange()">
+                      <select class="form-control" name="module_type" id="module_type" style="background-color: #ffffff !important;" onChange="typeChange()">
                         <option value="01">Module</option>
                         <option value="02">Sub Module</option>
                       </select>
@@ -29,7 +29,7 @@
                   <div class="col-md-6" id="module">
                     <div class="form-group">
                       <label class="control-label">Parent Module Name</label>
-                      <select class="form-control" name="parent_module_id">
+                      <select class="form-control" name="parent_module_id" style="background-color: #ffffff !important;">
                         <option value="1">Home</option>
                       </select>
                     </div>
@@ -38,7 +38,7 @@
                   <div class="col-md-6" id="sub_module" style="display: none;">
                     <div class="form-group">
                       <label class="control-label">Parent Module Name</label>
-                      <select class="form-control" name="sub_module_id">
+                      <select class="form-control" name="sub_module_id" style="background-color: #ffffff !important;">
                         <option value="">Select Parent Module</option>
                         @foreach($rows as $key=>$row)
                         <option value="{{ $row['module_id'] }}">{{ $row['module_name'] }}</option>
@@ -50,21 +50,21 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="control-label">Module Name <span style="color: red;font-size: 16px;">*</span></label>
-                      <input class="form-control" type="text" id="module_name" name="module_name" placeholder="Enter Module Name" autocomplete="off">
+                      <input class="form-control" type="text" id="module_name" name="module_name" style="background-color: #ffffff !important;" placeholder="Enter Module Name" autocomplete="off">
                     </div>
                   </div>
 
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="control-label">Icon Class Name <span style="color: red;font-size: 16px;">*</span></label>
-                      <input class="form-control" type="text" id="class_name" name="class_name" placeholder="Enter Class Name" autocomplete="off">
+                      <input class="form-control" type="text" id="class_name" style="background-color: #ffffff !important;" name="class_name" placeholder="Enter Class Name" autocomplete="off">
                     </div>
                   </div>
 
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="control-label">Display Order </label>
-                      <input class="form-control" type="text" id="display_order" name="display_order" placeholder="Enter Display Order" autocomplete="off">
+                      <input class="form-control" type="text" id="display_order" style="background-color: #ffffff !important;" name="display_order" placeholder="Enter Display Order" autocomplete="off">
                     </div>
                   </div>
 
