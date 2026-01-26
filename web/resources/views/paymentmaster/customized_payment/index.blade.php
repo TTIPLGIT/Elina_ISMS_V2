@@ -108,7 +108,7 @@
                   <table class="table table-bordered" id="align">
                     <thead>
                       <tr>
-                        <th width="50px">#</th>
+                        <th width="50px">SI.NO.</th>
                         <th>Name</th>
                         <th>Enrollment ID</th>
                         <th>Fee Type</th>

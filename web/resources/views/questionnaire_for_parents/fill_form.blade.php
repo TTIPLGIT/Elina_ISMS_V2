@@ -200,8 +200,32 @@
     .multi-question {
         text-align: center;
         width: 100%;
-        overflow-x: scroll;
-        overflow-y: hidden;
+        /* Remove overflow properties to eliminate forced scrolling */
+        overflow: visible;
+    }
+
+    /* Add responsive table container */
+    .multi-question .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        /* Only shows scrollbar when needed on small screens */
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Make table responsive */
+    .multi-question table {
+        min-width: 600px;
+        /* Set a minimum width for the table */
+        width: 100%;
+        table-layout: auto;
+    }
+
+    .stickTd {
+        position: sticky;
+        left: 0;
+        background: #f5f5f5;
+        z-index: 1;
     }
 
     .stickTd {
