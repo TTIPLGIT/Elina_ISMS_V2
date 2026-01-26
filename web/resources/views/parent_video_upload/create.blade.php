@@ -61,6 +61,27 @@
     font-size: 15px;
     letter-spacing: .5px;
   }
+
+  /* Save - Green */
+  .btn-save-green {
+    background-color: #1f9d3a !important;
+    border-color: #1f9d3a !important;
+    color: #fff !important;
+  }
+
+  /* Submit & Submit All - Orange */
+  .btn-submit-orange {
+    background-color: #f5a623 !important;
+    border-color: #f5a623 !important;
+    color: #fff !important;
+  }
+
+  /* Back - Red (already existing, just for reference) */
+  .back-button {
+    background-color: #e53935 !important;
+    border-color: #e53935 !important;
+    color: #fff !important;
+  }
 </style>
 
 <div class="main-content" style="min-height:'60px'">
@@ -348,25 +369,41 @@
                   <div class="col-md-12  text-center" style="padding-top: 1rem;">
 
 
-                    <a type="button" onclick="saveBulk('Submit' , '{{$row['activity_description_id']}}')" id="submitbuttonbulk" class="btn btn-labeled btn-succes" title="Submit ALL" style="background: green !important; border-color:green !important; color:white !important">
-                      <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span>Submit All</a>
-
+                    <!-- Submit All -->
                     <a type="button"
-                      onclick="oneSubmit('oneSubmit', '{{$row['activity_description_id']}}', '{{$row['parent_video_upload_id']}}')"
-                      title="Submit "
-                      class="btn btn-labeled btn-success">
+                      onclick="saveBulk('Submit','{{$row['activity_description_id']}}')"
+                      class="btn btn-labeled btn-submit-orange"
+                      title="Submit All">
+                      <span class="btn-label"><i class="fa fa-check"></i></span>
+                      Submit All
+                    </a>
+
+                    <!-- Submit -->
+                    <a type="button"
+                      onclick="oneSubmit('oneSubmit','{{$row['activity_description_id']}}','{{$row['parent_video_upload_id']}}')"
+                      class="btn btn-labeled btn-submit-orange"
+                      title="Submit">
                       <span class="btn-label"><i class="fa fa-check"></i></span>
                       Submit
                     </a>
 
-
-
-                    <a type="button" onclick="saveBulk('Save' , '{{$row['activity_description_id']}}')" id="submitbuttonbulk" class="btn btn-labeled btn-succes" title="Save" style="background: green !important; border-color:green !important; color:white !important">
-                      <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-bookmark-o"></i></span>Save</a>
-
-                    <a type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-labeled responsive-button button-style back-button" title="Back">
-                      <i class="fas fa-arrow-left"></i><span> Back </span>
+                    <!-- Save -->
+                    <a type="button"
+                      onclick="saveBulk('Save','{{$row['activity_description_id']}}')"
+                      class="btn btn-labeled btn-save-green"
+                      title="Save">
+                      <span class="btn-label"><i class="fa fa-bookmark-o"></i></span>
+                      Save
                     </a>
+
+                    <!-- Back (existing red color stays) -->
+                    <a type="button"
+                      data-dismiss="modal"
+                      class="btn btn-labeled back-button"
+                      title="Back">
+                      <i class="fas fa-arrow-left"></i> Back
+                    </a>
+
                   </div>
                   <div class="col-md-12  text-center" style="padding-top: 1rem;">
                     @if ($loop->iteration > 1)

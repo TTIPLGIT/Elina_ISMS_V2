@@ -1,5 +1,24 @@
 @extends('layouts.parent')
 @section('content')
+<style>
+    /* Space between DataTable buttons */
+    .dt-buttons .btn {
+        margin-right: 8px;
+        /* space between buttons */
+        margin-bottom: 5px;
+        /* small vertical space (mobile safe) */
+    }
+
+    /* Space between "Show entries" and buttons */
+    .dataTables_length {
+        margin-bottom: 12px;
+    }
+
+    /* Align buttons nicely */
+    .dt-buttons {
+        margin-left: 10px;
+    }
+</style>
 
 <div class="main-content">
     @if (session('success'))

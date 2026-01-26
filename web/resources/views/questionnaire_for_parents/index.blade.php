@@ -9,6 +9,10 @@
         height: 20px;
     }
 
+    div.dt-buttons {
+        margin-top: 10px;
+    }
+
     .container {
         width: 100vw;
         height: 100vh;
@@ -156,7 +160,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card mt-3">
-                <div class="card-body">
+                <div class="card-body ">
                     <div class="table-wrapper">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="tableList">

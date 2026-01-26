@@ -50,6 +50,19 @@
   /* #invite{
     display: none;
   } */
+  /* Save - Green */
+  .btn-save-green {
+    background-color: #1f9d3a !important;
+    border-color: #1f9d3a !important;
+    color: #fff !important;
+  }
+
+  /* Submit & Submit All - Orange */
+  .btn-submit-orange {
+    background-color: #f5a623 !important;
+    border-color: #f5a623 !important;
+    color: #fff !important;
+  }
 </style>
 <style>
   .wrapper {
@@ -753,7 +766,7 @@
 
                       <div class="form-group">
                         <label class="control-label">Approval Status</label><span class="error-star" style="color:red;">*</span>
-                        <select class="form-control cuModalSelect bsjcxsd"  style="background-color: #ffffff !important; color: #000000 !important;" name="approval_status[{{$data['parent_video_upload_id']}}]" id="approval_status{{$data['parent_video_upload_id']}}" onchange="app_status('{{$data['parent_video_upload_id']}}')">
+                        <select class="form-control cuModalSelect bsjcxsd" style="background-color: #ffffff !important; color: #000000 !important;" name="approval_status[{{$data['parent_video_upload_id']}}]" id="approval_status{{$data['parent_video_upload_id']}}" onchange="app_status('{{$data['parent_video_upload_id']}}')">
                           <option value="">Select Status</option>
                           @if($data['save_status1'] == 'Complete')
                           <option value="Complete" selected>Approve</option>
@@ -895,28 +908,71 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-12  text-center" style="padding: 5px;">
+                <div class="col-md-12 text-center" style="padding: 5px;">
+
                   @if($loop->iteration > 1)
-                  <a type="button" class="btn btn-labeled btn-info" onclick="showModalPrev('{{$loop->iteration}}')" id="Previous" title="Previous" style="height: 35px;background: blue !important; border-color:blue !important; color:white !important">
-                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Previous</a>
+                  <a type="button"
+                    class="btn btn-labeled btn-info"
+                    onclick="showModalPrev('{{$loop->iteration}}')"
+                    id="Previous"
+                    title="Previous"
+                    style="height:35px;background:blue !important;border-color:blue !important;color:white !important">
+                    <span class="btn-label"><i class="fa fa-arrow-left"></i></span> Previous
+                  </a>
                   @endif
+
+                  <!-- Submit -->
                   <a type="button"
                     onclick="oneSubmit('{{$data['parent_video_upload_id']}}')"
-                    class="btn btn-labeled btn-succes" title="Submit"
-                    style="background: green !important; border-color:green !important; color:white !important">
+                    class="btn btn-labeled btn-submit-orange"
+                    title="Submit">
                     <span class="btn-label"><i class="fa fa-check"></i></span> Submit
                   </a>
 
-                  <a type="button" onclick="tempSave('{{$data['parent_video_upload_id']}}')" id="submitbutton" class="btn btn-labeled btn-succes" title="Save" style="background: green !important; border-color:green !important; color:white !important">
-                    <span class="btn-label" style="font-size:13px !important;"><i id="checkIcon{{$data['parent_video_upload_id']}}" class="fa fa-check"></i></span>Save</a>
-                  <a type="button" onclick="saveall()" id="submitbutton" class="btn btn-labeled btn-succes" title="Submit All" style="background: green !important; border-color:green !important; color:white !important">
-                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span>Submit All</a>
-                  <a type="button" class="btn btn-labeled back-btn" onclick="confirmclose('{{$loop->iteration}}')" data-dismiss="modal" aria-hidden="true" title="Close" style="color:white !important"><span class="btn-label" style="font-size:13px !important;"><i class="fa fa-times-circle-o"></i></span> Close</a>
+                  <!-- Save -->
+                  <a type="button"
+                    onclick="tempSave('{{$data['parent_video_upload_id']}}')"
+                    id="submitbutton"
+                    class="btn btn-labeled btn-save-green"
+                    title="Save">
+                    <span class="btn-label">
+                      <i id="checkIcon{{$data['parent_video_upload_id']}}" class="fa fa-check"></i>
+                    </span> Save
+                  </a>
+
+                  <!-- Submit All -->
+                  <a type="button"
+                    onclick="saveall()"
+                    id="submitbutton"
+                    class="btn btn-labeled btn-submit-orange"
+                    title="Submit All">
+                    <span class="btn-label"><i class="fa fa-check"></i></span> Submit All
+                  </a>
+
+                  <!-- Close (unchanged) -->
+                  <a type="button"
+                    class="btn btn-labeled back-btn"
+                    onclick="confirmclose('{{$loop->iteration}}')"
+                    data-dismiss="modal"
+                    aria-hidden="true"
+                    title="Close"
+                    style="color:white !important">
+                    <span class="btn-label"><i class="fa fa-times-circle-o"></i></span> Close
+                  </a>
+
                   @if($loop->iteration != count($currentactivity))
-                  <a type="button" class="btn btn-labeled btn-info" onclick="showModalNext('{{$loop->iteration}}')" id="Next" title="Next" style="background: blue !important; border-color:#4d94ff !important; color:white !important;height: 35px;">
-                    <span class="btn-label" style="font-size:13px !important;">Next</span> <i class="fa fa-arrow-right"></i></a>
+                  <a type="button"
+                    class="btn btn-labeled btn-info"
+                    onclick="showModalNext('{{$loop->iteration}}')"
+                    id="Next"
+                    title="Next"
+                    style="background:blue !important;border-color:#4d94ff !important;color:white !important;height:35px;">
+                    <span class="btn-label">Next</span> <i class="fa fa-arrow-right"></i>
+                  </a>
                   @endif
+
                 </div>
+
 
               </div>
             </div>
@@ -1047,7 +1103,7 @@
 
                               <div class="form-group">
                                 <label class="control-label">Approval Status</label><span class="error-star" style="color:red;">*</span>
-                                <select class="form-control" name="approval_status"  style="background-color: #ffffff !important; color: #000000 !important;" id="approval_status{{$data['parent_video_upload_id']}}" onchange="app_status('{{$data['parent_video_upload_id']}}')">
+                                <select class="form-control" name="approval_status" style="background-color: #ffffff !important; color: #000000 !important;" id="approval_status{{$data['parent_video_upload_id']}}" onchange="app_status('{{$data['parent_video_upload_id']}}')">
                                   <!-- <option value="">Select Status</option> -->
                                   <option value="Complete" {{ $data['status'] == 'Complete' ? 'selected' : '' }}>Approved</option>
                                   <!-- <option value="Rejected" {{ $data['status'] == 'Rejected' ? 'selected' : '' }}>Reject</option> -->

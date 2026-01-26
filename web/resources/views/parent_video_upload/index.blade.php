@@ -1,6 +1,55 @@
 @extends('layouts.parent')
 @section('content')
+<style>
+    .modal-header {
+        position: relative;
+        padding: 20px 20px;
+        /* ⬅ adds space top & bottom */
+        min-height: 60px;
+        /* ⬅ increases header height */
+    }
 
+    .modal-header .close {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        float: none;
+
+        padding: 8px 12px;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 4px;
+
+        color: white;
+        font-size: 24px;
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    /* Hover */
+    .modal-header .close:hover {
+        border: 1px solid #000;
+    }
+
+    /* Space between DataTable buttons */
+    .dt-buttons .btn {
+        margin-right: 8px;
+        /* space between buttons */
+        margin-bottom: 5px;
+        /* small vertical space (mobile safe) */
+    }
+
+    /* Space between "Show entries" and buttons */
+    .dataTables_length {
+        margin-bottom: 12px;
+    }
+
+    /* Align buttons nicely */
+    .dt-buttons {
+        margin-left: 10px;
+    }
+</style>
 <div class="main-content">
     {{ Breadcrumbs::render('parent_video_upload.parentindex') }}
     <style>
@@ -36,19 +85,24 @@
             <div class="card mt-3">
                 <div class="card-body">
                     <h6 style="color:red !important;">NOTE:-</h6>
-                    <div class="col-md-12" style="display: flex;flex-direction: row; align-items: center;">
-                        <p class="mr-1" style="font-weight: 900 !important;">1)</p>
-                        <span class="text-inherit mr-1 fa fa-circle" style="color:red !important;font-weight: 900;" title=""></span>
-                        <p style="font-weight: 900 !important;">This symbol implies number of Rejected Activities(when mouse hovered).</p>
+                    <div class="col-md-12" style="display: flex;flex-direction: row; align-items: flex-start;">
+                        <p class="mr-1" style="font-weight: 900 !important; margin: 0; line-height: 1.4;">1)</p>
+                        <span class="text-inherit mr-1 fa fa-circle" style=" padding-left:10px ; padding-right:10px; padding-top:3px; color:red !important;font-weight: 900; margin-top: 2px;" title=""></span>
+                        <p style="font-weight: 900 !important; margin: 0; line-height: 1.4;">This symbol implies number of Rejected Activities(when mouse hovered).</p>
                     </div>
-                    <div class="col-md-12" style="display: flex;flex-direction: row;align-items: center;">
-                        <p class="mr-1" style="font-weight: 900 !important;">2)</p>
-                        <p style="font-weight: 900 !important;">By clicking the<a class="btn btn-success" id="btn_complete_edit58" title="Upload Video" type="button"><i class="fa fa-plus" style="font-size: 10px;"></i><span style="font-size: 10px;">Upload</span></a>you will be able to the see the list of Activities under the Activity Sets.</p>
-
+                    <div class="col-md-12" style="padding-top:10px;display: flex;flex-direction: row; align-items: flex-start;">
+                        <p class="mr-1" style="font-weight: 900 !important; margin: 0; line-height: 1.4;">2)</p>
+                        <p style="padding-left:10px ;font-weight: 900 !important; margin: 0; line-height: 1.4;">By clicking the
+                            <a class="btn btn-success btn-sm" id="btn_complete_edit58" title="Upload Video" type="button" style="display: inline-flex; align-items: center; padding: 0.15rem 0.4rem; margin: 0 4px; vertical-align: middle; height: 22px;">
+                                <i class="fa fa-plus" style="font-size: 9px; margin-right: 2px;"></i>
+                                <span style="font-size: 11px;">Upload</span>
+                            </a>
+                            you will be able to see the list of Activities under the Activity Sets.
+                        </p>
                     </div>
-                    <div class="table-wrapper">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="tableList">
+                    <div class="table-wrapper" style="padding-top: 10px">
+                        <div class="table-responsive" style="padding-top: 10px">
+                            <table class="table table-bordered" style="padding-top: 10px" id="tableList">
                                 <thead>
                                     <tr>
                                         <!-- <th>Sl.No</th> -->
@@ -282,7 +336,7 @@
             });
             return false;
         }
-        
+
         return true;
     }
 </script>
