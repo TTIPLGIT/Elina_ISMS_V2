@@ -488,20 +488,20 @@
 
 
 <script>
-    // var phone_number = document.querySelector("#child_contact_phone");
-    // var phone_number2 = document.querySelector("#child_alter_phone");
+    var phone_number = document.querySelector("#child_contact_phone");
+    var phone_number2 = document.querySelector("#child_alter_phone");
 
-    // var iti = window.intlTelInput(phone_number, {
-    //     initialCountry: "in",
-    //     separateDialCode: true,
-    //     utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
-    // });
+    var iti = window.intlTelInput(phone_number, {
+        initialCountry: "in",
+        separateDialCode: true,
+        utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
+    });
 
-    // var iti = window.intlTelInput(phone_number2, {
-    //     initialCountry: "in",
-    //     separateDialCode: true,
-    //     utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
-    // });
+    var iti = window.intlTelInput(phone_number2, {
+        initialCountry: "in",
+        separateDialCode: true,
+        utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
+    });
 </script>
 <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
 

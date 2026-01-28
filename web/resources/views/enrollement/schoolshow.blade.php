@@ -59,7 +59,43 @@
         padding: 5px;
     }
 </style>
+<style>
+    /* Your existing styles... */
 
+    input[type="tel"]#phone_number {
+        padding-left: 95px !important;
+        padding-right: 95px !important;
+    }
+
+    /* Or more specific */
+    .form-control.default#phone_number {
+        padding-left: 95px !important;
+        padding-right: 95px !important;
+    }
+
+    /* Or even more specific */
+    .main-content .card .section-body .row .col-md-4 .form-group input#phone_number {
+        padding-left: 95px !important;
+        padding-right: 95px !important;
+    }
+
+    input[type="tel"]#telephone_number {
+        padding-left: 95px !important;
+        padding-right: 95px !important;
+    }
+
+    /* Or more specific */
+    .form-control.default#telephone_number {
+        padding-left: 95px !important;
+        padding-right: 95px !important;
+    }
+
+    /* Or even more specific */
+    .main-content .card .section-body .row .col-md-4 .form-group input#telephone_number {
+        padding-left: 95px !important;
+        padding-right: 95px !important;
+    }
+</style>
 <div class="main-content">
     {{ Breadcrumbs::render('enrollement.schoolshow',$rows[0]['school_enrollment_id']) }}
 
@@ -172,7 +208,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label childname">Phone Number:</label><span class="error-star" style="color:red;">*</span>
-                                            <input class="form-control default" type="text" id="phone_number" name="phone_number" oninput="PhoneNumber(event)" maxlength="10" value="{{ $row['phone_number']}}" autocomplete="off" disabled>
+                                            <input class="form-control default" type="tel" id="phone_number" name="phone_number" oninput="PhoneNumber(event)" maxlength="10" value="{{ $row['phone_number']}}" autocomplete="off" disabled>
                                         </div>
                                     </div>
 
@@ -950,6 +986,21 @@
         document.getElementById('newenrollement').submit('saved');
     }
 </script>
+<script>
+    var phone_number = document.querySelector("#phone_number");
+    var phone_number2 = document.querySelector("#telephone_number");
 
+    var iti = window.intlTelInput(phone_number, {
+        initialCountry: "in",
+        separateDialCode: true,
+        utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
+    });
+
+    var iti = window.intlTelInput(phone_number2, {
+        initialCountry: "in",
+        separateDialCode: true,
+        utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
+    });
+</script>
 
 @endsection
