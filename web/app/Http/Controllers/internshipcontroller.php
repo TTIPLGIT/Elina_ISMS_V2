@@ -40,7 +40,7 @@ class internshipcontroller extends BaseController
     public function store(Request $request)
     {
         //
-        try {
+        try { 
             $method = 'Method => ovm1Controller => store';
             $validator = Validator::make($request->all(), [
                 // 'file' => 'mimes:pdf,doc,docx|max:5000',
@@ -70,7 +70,7 @@ class internshipcontroller extends BaseController
             $data['contact_number'] = $request->contact_number;
             $data['parent_guardian_contact_number'] = $request->parent_guardian_contact_number;
             $data['start_date_with_elina'] = $request->start_date_with_elina;
-            $data['hours_intern_elina_per_week'] = $request->hours_intern_elina_per_week;
+            $data['hours_intern_elina_per_week'] = $request->hours_intern_ELiNA_per_week;
             $data['email_address'] = $request->email_address;
 
             $data['agreement'] = $request->agreement;
