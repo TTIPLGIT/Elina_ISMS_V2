@@ -40,7 +40,7 @@ class EnrollementController extends BaseController
             if ($validator->fails()) {
                 return back()->with('error', 'Recaptcha Failed');
             }
-            
+
             $method = 'Method => EnrollementController => store';
             // Folder creation
             $folderPath = $request->child_contact_email;
@@ -160,19 +160,19 @@ class EnrollementController extends BaseController
             $data['email'] = $request->email;
             $data['password'] = bcrypt($request->password);
             $data['password_confirmation'] = $request->password_confirmation;
-             $data['Mobile_no'] = $request->Mobile_no;
+            $data['Mobile_no'] = $request->Mobile_no;
             $data['dor'] = $request->dor;
             $data['child_school'] = $request->child_school;
-            $react_web = isset($request->react_web)?$request->react_web:FALSE;
-                
+            $react_web = isset($request->react_web) ? $request->react_web : FALSE;
+
             $providerId = $request->providerId;
             $encryptArray = $this->encryptData($data);
             $request = array();
             $request['requestData'] = $encryptArray;
-            if ($react_web){
-            $gatewayURL = config('setting.api_gateway_url') . '/beforeenrollment/storedata';
-            }else{
-            $gatewayURL = config('setting.api_gateway_url') . '/v1/beforeenrollment/storedata';
+            if ($react_web) {
+                $gatewayURL = config('setting.api_gateway_url') . '/beforeenrollment/storedata';
+            } else {
+                $gatewayURL = config('setting.api_gateway_url') . '/v1/beforeenrollment/storedata';
             }
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
             $response1 = json_decode($response);
@@ -188,23 +188,23 @@ class EnrollementController extends BaseController
                     session(['sessionTimer' => $row['formattedDateTime']]);
                     $enrollment = $objData->Data;
                     $enrollment_id = $enrollment->enrollment_id;
-                    if($providerId == 1){
-                    $url = URL::temporarySignedRoute(
-                        'payuserfees.create1',
-                        now()->addMinutes('3600'),
-                        ['id' => encrypt($row['user']['id'])]
-                    );
-                    return $url;
-                }
+                    if ($providerId == 1) {
+                        $url = URL::temporarySignedRoute(
+                            'payuserfees.create1',
+                            now()->addMinutes('3600'),
+                            ['id' => encrypt($row['user']['id'])]
+                        );
+                        return $url;
+                    }
 
-                if ($react_web) {
-                    return response()->json([
-                        'message' => 'Enrollment Submitted and Payment Initiated Successfully.',
-                        'code' => 200
-                    ], 200);
-                } else {
-                    return redirect(route('payuserfee.create'))->with('success', 'Enrollment Submitted and Payment Initiated Successfully');
-                }
+                    if ($react_web) {
+                        return response()->json([
+                            'message' => 'Enrollment Submitted and Payment Initiated Successfully.',
+                            'code' => 200
+                        ], 200);
+                    } else {
+                        return redirect(route('payuserfee.create'))->with('success', 'Enrollment Submitted and Payment Initiated Successfully');
+                    }
 
                     // return redirect(route('newenrollment.edit' , $this->encryptData($enrollment_id)))->with('success', 'Enrollment Updated Successfully');
                     // return redirect(route('home'))->with('success', 'You have been Enrolled and Consent form sent successfully');
@@ -220,7 +220,17 @@ class EnrollementController extends BaseController
                         return redirect()->back()->with('error', 'The provided email address has already been registered. Please log in using this email or register with a different email address.');
                     }
                 }
-            } else {
+                if ($objData->Code == 409) { 
+                    if ($react_web) {
+                        return response()->json([
+                            'message' => $objData->Message,
+                            'code' => 400
+                        ], 400);  
+                    } else {
+                        return redirect()->back()->with('error', 'The provided email address has already been registered. Please log in using this email or register with a different email address.');
+                    }
+                }
+            } else { 
                 $objData = json_decode($this->decryptData($response1->Data));
                 echo json_encode($objData->Code);
                 exit;

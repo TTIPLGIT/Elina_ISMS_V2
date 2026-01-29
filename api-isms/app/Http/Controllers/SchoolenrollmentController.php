@@ -108,7 +108,44 @@ class SchoolenrollmentController extends BaseController
                 ->toArray();
             $react_web = isset($request->react_web) ? $request->react_web : FALSE;
             $inputArraycount = count((array) $claimdetails);
-
+            // $this->WriteFileLog($inputArray);
+            $emailToCheck = $inputArray['school_email'];
+            if (DB::table('enrollment_details')
+                ->where('child_contact_email', $emailToCheck)
+                ->exists()
+            ) {
+                  return response()->json([
+                        'message' => "You have already registered as a parent. Please use another email to register as a school.",
+                        'code' => 400
+                    ], 400);
+            }
+            if (DB::table('school_enrollment_details')
+                ->where('school_email', $emailToCheck)
+                ->exists()
+            ) {
+                  return response()->json([
+                        'message' => "You have already registered as a school. Please use another email to register again.",
+                        'code' => 400
+                    ], 400);
+            }
+            if (DB::table('internship_application_form')
+                ->where('email_address', $emailToCheck)
+                ->exists()
+            ) {
+                 return response()->json([
+                        'message' => "You have already registered as an intern. Please use another email to register as a school.",
+                        'code' => 400
+                    ], 400);
+            }
+            if (DB::table('service_provider')
+                ->where('email_address', $emailToCheck)
+                ->exists()
+            ) {
+                   return response()->json([
+                        'message' => "You have already registered as a professional. Please use another email to register as a school.",
+                        'code' => 400
+                    ], 400);
+            }
             // return $inputArray;
             if ($inputArraycount <= 0) {
                 $input = [
