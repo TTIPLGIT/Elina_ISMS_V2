@@ -61,7 +61,6 @@ class EnrollementController extends BaseController
         try {
             $method = 'Method => EnrollementController => storedata';
             $inputArray = $this->decryptData($request->requestData);
-
             $date = DateTime::createFromFormat('Y-m-d', $inputArray['child_dob']);
             $formattedDoB = $date->format('d/m/Y');
             $input = [
@@ -96,6 +95,7 @@ class EnrollementController extends BaseController
                 'Through my therapists' => "Recommended by Child's therapist",
                 'others' => 'others'
             );
+          
 
             foreach ($input['how_knowabt_elina'] as $key => $value) {
                 if (array_key_exists($value, $mapping)) {
@@ -106,6 +106,58 @@ class EnrollementController extends BaseController
             $child_contact_email = $inputArray['child_contact_email'];
             $services_from_elina = json_encode($input['services_from_elina'], JSON_FORCE_OBJECT);
             $how_knowabt_elina = json_encode($input['how_knowabt_elina'], JSON_FORCE_OBJECT);
+            $emailToCheck = $input['email'];
+            if (DB::table('enrollment_details')
+                ->where('child_contact_email', $emailToCheck)
+                ->exists()
+            ) {
+                $serviceResponse = array();
+                $serviceResponse['Code'] = 409;
+                $serviceResponse['Message'] = 'You have already registered as a parent. Please use another email to enroll.';
+                $serviceResponse['Data'] = 1;
+                $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+                return $sendServiceResponse;
+            }
+            if (DB::table('school_enrollment_details')
+                ->where('school_email', $emailToCheck)
+                ->exists()
+            ) {
+                $serviceResponse = array();
+                $serviceResponse['Code'] = 409;
+                $serviceResponse['Message'] = 'You have already registered as a school. Please use another email to enroll as a parent.';
+                $serviceResponse['Data'] = 1;
+                $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+                return $sendServiceResponse;
+            }
+            if (DB::table('internship_application_form')
+                ->where('email_address', $emailToCheck)
+                ->exists()
+            ) {
+                $serviceResponse = array();
+                $serviceResponse['Code'] = 409;
+                $serviceResponse['Message'] = 'You have already registered as an intern. Please use another email to enroll as a parent.';
+                $serviceResponse['Data'] = 1;
+                $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+                return $sendServiceResponse;
+            }
+            if (DB::table('service_provider')
+                ->where('email_address', $emailToCheck)
+                ->exists()
+            ) {
+                $this->WriteFileLog("Welcome as Intern");
+                $serviceResponse = array();
+                $serviceResponse['Code'] = 409;
+                $serviceResponse['Message'] = 'You have already registered as a professional. Please use another email to enroll as a parent.';
+                $serviceResponse['Data'] = 1;
+                $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+                return $sendServiceResponse;
+            }
+
+
 
             $email = $input['email'];
             $email_check = DB::select("select * from users where email = '$email'");
@@ -162,19 +214,18 @@ class EnrollementController extends BaseController
                         $paymentCategory = 2;
                     }
                     // $this->WriteFileLog($input['child_school_name_address']);
-                    
+
                     if ($input['child_school_name_address'] == null) {
-                        
+
                         $schoolAddress = DB::table('schools_registration')
                             ->where('id', $inputArray['child_school'])
                             ->value('school_address');
-                    
-                            // $this->WriteFileLog($schoolAddress);
-                    
-                            $input['child_school_name_address'] = $schoolAddress ?? null;
 
+                        // $this->WriteFileLog($schoolAddress);
+
+                        $input['child_school_name_address'] = $schoolAddress ?? null;
                     }
-                    
+
                     // $this->WriteFileLog($input['child_contact_address']);
                     $screen_permission_id1 = DB::table('enrollment_details')->insertGetId([
                         'enrollment_child_num' =>  $enrollmentnum,
@@ -521,7 +572,43 @@ class EnrollementController extends BaseController
                 'specification_limitation_constraint' => $inputArray['specification_limitation_constraint'],
                 'agree_of_acknowledgement' => $inputArray['agree_of_acknowledgement'],
             ];
-
+            $emailToCheck = $input['email_address']; $this->WriteFileLog($emailToCheck);
+            if (DB::table('enrollment_details')
+                ->where('child_contact_email', $emailToCheck)
+                ->exists()
+            ) {
+               return response()->json([
+                        'message' => "You have already registered as a parent. Please use another email to register as a professional.",
+                        'code' => 400
+                    ], 400);
+            }
+            if (DB::table('school_enrollment_details')
+                ->where('school_email', $emailToCheck)
+                ->exists()
+            ) {
+                return response()->json([
+                        'message' => "You have already registered as a school. Please use another email to register as a professional.",
+                        'code' => 400
+                    ], 400);
+            }
+            if (DB::table('internship_application_form')
+                ->where('email_address', $emailToCheck)
+                ->exists()
+            ) {
+               return response()->json([
+                        'message' => "You have already registered as an intern. Please use another email to register as a professional.",
+                        'code' => 400
+                    ], 400);
+            }
+            if (DB::table('service_provider')
+                ->where('email_address', $emailToCheck)
+                ->exists()
+            ) {
+                return response()->json([
+                        'message' => "You have already registered as a professional. Please use another email to register again.",
+                        'code' => 400
+                    ], 400);
+            }
             if ($inputArraycount <= 0) {
                 $mode_of_service = json_encode($input['mode_of_service'], JSON_FORCE_OBJECT);
                 // $internship_application_form = json_encode($input['rnship_application_form'], JSON_FORCE_OBJECT);
@@ -670,6 +757,61 @@ class EnrollementController extends BaseController
                 ->toArray();
             $react_web = isset($request->react_web) ? $request->react_web : FALSE;
             $inputArraycount = count((array) $claimdetails);
+            $emailToCheck = $inputArray['email_address'];
+            if (DB::table('enrollment_details')
+                ->where('child_contact_email', $emailToCheck)
+                ->exists()
+            ) {
+                $this->WriteFileLog("Already Registered as School");
+                $serviceResponse = array();
+                $serviceResponse['Code'] = 409;
+                $serviceResponse['Message'] = 'You have already registered as a parent. Please use another email to enroll as an intern.';
+                $serviceResponse['Data'] = 1;
+                $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+                return $sendServiceResponse;
+            }
+            if (DB::table('school_enrollment_details')
+                ->where('school_email', $emailToCheck)
+                ->exists()
+            ) {
+                $this->WriteFileLog("Already registered  as School");
+
+                $serviceResponse = array();
+                $serviceResponse['Code'] = 409;
+                $serviceResponse['Message'] = 'You have already registered as a school. Please use another email to enroll as intern.';
+                $serviceResponse['Data'] = 1;
+                $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+                return $sendServiceResponse;
+            }
+            if (DB::table('internship_application_form')
+                ->where('email_address', $emailToCheck)
+                ->exists()
+            ) {
+                $this->WriteFileLog("Already as Intern");
+                $serviceResponse = array();
+                $serviceResponse['Code'] = 409;
+                $serviceResponse['Message'] = 'You have already registered as an intern. Please use another email to enroll as intern.';
+                $serviceResponse['Data'] = 1;
+                $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+                return $sendServiceResponse;
+            }
+            if (DB::table('service_provider')
+                ->where('email_address', $emailToCheck)
+                ->exists()
+            ) {
+                $this->WriteFileLog("Welcome as Intern");
+                $serviceResponse = array();
+                $serviceResponse['Code'] = 409;
+                $serviceResponse['Message'] = 'You have already registered as Professional. Please use another email to enroll as Intern';
+                $serviceResponse['Data'] = 1;
+                $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+                return $sendServiceResponse;
+            }
+
             if ($inputArraycount <= 0) {
                 $input = [
                     'name' => $inputArray['name'],
@@ -972,23 +1114,22 @@ class EnrollementController extends BaseController
                         $school_id = $inputArray['child_school'];
                         $paymentCategory = 2;
                     }
-                    
+
                     // $this->WriteFileLog($input['child_school_name_address']);
-                    
+
                     if ($input['child_school_name_address'] == null) {
 
                         $schoolAddress = DB::table('schools_registration')
                             ->where('id', $inputArray['child_school'])
                             ->value('school_address');
-                    
-                            // $this->WriteFileLog($schoolAddress);
-                    
-                            $input['child_school_name_address'] = $schoolAddress ?? null;
 
+                        // $this->WriteFileLog($schoolAddress);
+
+                        $input['child_school_name_address'] = $schoolAddress ?? null;
                     }
-                    
+
                     // $this->WriteFileLog($input['child_contact_address']);
-                    
+
                     $screen_permission_id1 = DB::table('enrollment_details')->insertGetId([
                         'enrollment_child_num' =>  $enrollmentnum,
                         'child_name' => $input['child_name'],
