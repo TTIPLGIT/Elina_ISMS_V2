@@ -51,9 +51,9 @@
         padding: 1rem;
     }
 
-    #question5 {
+    /* #question5 {
         display: none;
-    }
+    } */
 
     .questionpadding {
         padding: 5px;
@@ -693,17 +693,18 @@
                                             <input type="radio" id="question4" name="multidisciplinary_team" value="No" {{ ($row['multidisciplinary_team']=="No")? "checked" : "disabled" }} onchange="profileval(this)"><label class="questionpadding" for="featured-2">NO</label>
                                         </div>
                                     </div>
-
+                                    @if($row['multidisciplinary_team']==="Yes")
                                     <div class="col-md-12" id="question5">
                                         <div class="form-group">
                                             <label class="control-label heading">3.Is there a shared framework for goals and outcomes of multidisciplinary teams work in your school:</label><span class="error-star" style="color:red;">*</span>
 
-                                            <textarea class="form-control" name="multidisciplinary_team_desc" value="{{ $row['multidisciplinary_team_desc']}}" onchange="profileval(this)" disabled></textarea>
+                                            <textarea class="form-control" name="multidisciplinary_team_desc" value="{{ $row['multidisciplinary_team_desc']}}" onchange="profileval(this)" disabled>{{ $row['multidisciplinary_team_desc']}}</textarea>
 
 
 
                                         </div>
                                     </div>
+                                    @endif
 
                                 </div>
                                 <div class="col-md-12 text-center">
