@@ -34,7 +34,7 @@ class inquriesmail extends Mailable
     $data = $this->data;
     $email_id = config('setting.email_id');
     // $attachment  = 'C:\Apache24\htdocs\Elina_ISMS\api-isms/.env'; //Location of the File to be sent
-    return $this->from($email_id)->subject('New Elina Lead Registration - '.$data['name'] )->view('email.inquriemail')->with('data', $this->data);
+    return $this->from($email_id)->subject('Acknowledgement of Your Enquiry - '.$data['name'] )->view('email.inquriemail')->with('data', $this->data);
     // return $this->from($email_id)->subject('From Elina - Recommendation Report')->view('email.Webportal_Mail')->with('data', $this->data)->attach($ovm_report);
   }
 }
