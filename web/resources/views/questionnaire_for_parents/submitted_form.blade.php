@@ -915,9 +915,11 @@
                     var missingValues = '';
                     if (obj) {
                         for (var i = 0; i < obj.length; i++) {
-                            if (!currentOption.includes(obj[i])) {
+                            var val = obj[i];
+                            var isEmptyOrNull = val == null || val === '' || (typeof val === 'string' && val.trim() === '') || val === 'null';
+                            if (!isEmptyOrNull && !currentOption.includes(val)) {
                                 setcheckOther = true;
-                                missingValues = obj[i];
+                                missingValues = val;
                                 break;
                             }
                         }
@@ -926,8 +928,8 @@
                         radioButtonHtml += '<label style="display:block;margin-bottom:4px;"><input disabled class="pagination' + num + ' otherOption' + fieldName + '" type="checkbox" id="' + fieldName + '" checked><i class="helper"></i>Others</label>';
                         radioButtonHtml += '<input type="text" disabled class="otherField' + fieldName + '" value="' + missingValues + '" placeholder="Please specify" style="display:block;margin: 0 0 24px 25px;width: 50%;opacity: 1;border: 1px solid;pointer-events:none !important;background-color:white !important;color:black !important;" name="' + fieldName + '[]">';
                     } else {
-                        radioButtonHtml += '<label style="display:block;margin-bottom:4px;"><input disabled class="pagination' + num + ' otherOption' + fieldName + '" type="checkbox" id="' + fieldName + '" ' + (obj && obj.length ? 'checked' : '') + '><i class="helper" style="' + ((obj && obj.length) ? '' : 'opacity: 0.1;') + '"></i>Others</label>';
-                        radioButtonHtml += '<input disabled type="text" class="otherField' + fieldName + '" value="' + (obj && obj.length ? obj[0] : '') + '" placeholder="Please specify" style="opacity: 1;' + ((obj && obj.length) ? 'display:block;' : 'display:none;') + 'margin: 0 0 24px 25px;width: 50%;border: 1px solid;pointer-events:none !important;background-color:white !important;color:black !important;" name="' + fieldName + '[]">';
+                        radioButtonHtml += '<label style="display:block;margin-bottom:4px;"><input disabled class="pagination' + num + ' otherOption' + fieldName + '" type="checkbox" id="' + fieldName + '" ' + '' + '><i class="helper" style="opacity: 0.1;"></i>Others</label>';
+                        radioButtonHtml += '<input disabled type="text" class="otherField' + fieldName + '" value="" placeholder="Please specify" style="opacity: 1;display:none;margin: 0 0 24px 25px;width: 50%;border: 1px solid;pointer-events:none !important;background-color:white !important;color:black !important;" name="' + fieldName + '[]">';
                     }
                 }
                 radioButtonHtml += `</div></div>`;

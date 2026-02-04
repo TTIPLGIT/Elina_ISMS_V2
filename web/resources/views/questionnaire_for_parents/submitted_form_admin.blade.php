@@ -915,9 +915,11 @@
                     var missingValues = '';
                     if (obj) {
                         for (var i = 0; i < obj.length; i++) {
-                            if (!currentOption.includes(obj[i])) {
+                            var val = obj[i];
+                            var isEmptyOrNull = val == null || val === '' || (typeof val === 'string' && val.trim() === '') || val === 'null';
+                            if (!isEmptyOrNull && !currentOption.includes(val)) {
                                 setcheckOther = true;
-                                missingValues = obj[i];
+                                missingValues = val;
                                 break;
                             }
                         }

@@ -200,32 +200,8 @@
     .multi-question {
         text-align: center;
         width: 100%;
-        /* Remove overflow properties to eliminate forced scrolling */
-        overflow: visible;
-    }
-
-    /* Add responsive table container */
-    .multi-question .table-responsive {
-        display: block;
-        width: 100%;
-        overflow-x: auto;
-        /* Only shows scrollbar when needed on small screens */
-        -webkit-overflow-scrolling: touch;
-    }
-
-    /* Make table responsive */
-    .multi-question table {
-        min-width: 600px;
-        /* Set a minimum width for the table */
-        width: 100%;
-        table-layout: auto;
-    }
-
-    .stickTd {
-        position: sticky;
-        left: 0;
-        background: #f5f5f5;
-        z-index: 1;
+        overflow-x: scroll;
+        overflow-y: hidden;
     }
 
     .stickTd {
@@ -253,7 +229,7 @@
             <div id="questionnaire-description">
                 {!! $questionDetails[0]['questionnaire_description'] !!}
             </div>
-            <p><strong>Note:</strong> required fields are marked with an asterisk (*)</p>
+            <p><strong>Note:</strong> required fields are marked with an asterisk-c (*)</p>
         </div>
     </div>
     <!--  -->
@@ -307,77 +283,43 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-12 text-center">
 
-
+        <div class="col-lg-12 text-center" id="saveButtonDiv">
             <button class="btn btn-success saveButton_form" onclick="sub()" type="button" id="saveButton">
                 <i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
-            <button class="btn btn-success saveButton_form" onclick="save(true)" type="button" id="saveButton">
-                <i class="fa fa-fw fa-lg fa fa-bookmark"></i>Save
-            </button>
 
+            <a type="button" href="{{ $role == 'Parent' ? route('questionnaire_for_user.index') : URL::previous() }}" class="btn btn-labeled responsive-button button-style cancel-button" title="Cancel">
+                <i class="fas fa-times"></i><span> Cancel </span>
+            </a>
         </div>
+
         <div class="col-lg-12 text-center">
             <a type="button" id="navPrev" onclick="navigate('prev')" class="btn btn-labeled responsive-button button-style back-button" title="Back">
                 <i class="fas fa-arrow-left"></i><span> Back </span>
             </a>
 
-            <a type="button" href="{{ $role == 'Parent' ? route('questionnaire_for_user.index') : URL::previous() }}" class="btn btn-labeled responsive-button button-style cancel-button" title="Cancel">
-                <i class="fas fa-times"></i><span> Cancel </span>
-            </a>
+            <button class="btn btn-success saveButton_form" onclick="save()" type="button" id="saveButton"> 
+                <i class="fa fa-fw fa-lg fa fa-bookmark"></i>Save</button>
 
             <a type="button" id="navNext" onclick="navigate('next')" class="btn btn-labeled responsive-button next-button button-style" title="Next">
                 <i class="fas fa-arrow-right"></i><span> Next </span>
             </a>
         </div>
+
     </div>
 </div>
 <script>
-    let saveTimeout;
+    function save() {
 
-    // Listen to all relevant changes in the form
-    $(document).on('input change', '#divQuestionnaireForm input, #divQuestionnaireForm textarea, #divQuestionnaireForm select', function() {
-        clearTimeout(saveTimeout);
-
-        // Trigger auto-save after 1 second of inactivity
-        saveTimeout = setTimeout(function() {
-            save(false); // auto-save (loader hidden)
-        }, 1000);
-    });
-
-    function save(isManual = false) {
-        $('#btn_type').val('save');
-
+        document.getElementById('btn_type').value = 'save';
         validateForm();
-
         var tabIDs = $('.tablinks.active').attr('id');
-        var ret1 = tabIDs ? tabIDs.replace('Tab', '') : '';
-        $('#restorePage').val(ret1);
-
-        completed_questions(); // optional
-
-        if (isManual) {
-            $(".loader").show();
-        }
-
-        $.ajax({
-            url: $('#divQuestionnaireForm').attr('action'),
-            type: 'POST',
-            data: $('#divQuestionnaireForm').serialize(), // includes all input types
-            success: function(response) {
-                if (isManual) $(".loader").hide();
-                console.log('Form saved successfully!');
-            },
-            error: function(err) {
-                if (isManual) $(".loader").hide();
-                console.error('Form save failed', err);
-            }
-        });
+        var ret1 = tabIDs.replace('Tab', '');
+        document.getElementById('restorePage').value = ret1;
+        completed_questions();
+        $(".loader").show();
+        document.getElementById('divQuestionnaireForm').submit();
     }
-
-
-
-
 
     // function sub() {
     //     document.getElementById('btn_type').value = 'submit';
@@ -416,7 +358,23 @@
                     var getSelectedValue = document.querySelector("input[name=" + name + "]:checked");
                 }
                 if (type == 'checkbox') {
-                    var checkbox = document.querySelector('input[name="' + name + '"]:checked');
+                    // fieldType 5 "Others" checkbox has no name - resolve group from div
+                    var checkName = name;
+                    if (!checkName && idd) {
+                        var divForGroup = document.getElementById('div' + idd);
+                        if (divForGroup) {
+                            var firstNamed = divForGroup.querySelector('input[type="checkbox"][name]');
+                            if (firstNamed) checkName = firstNamed.getAttribute('name');
+                        }
+                    }
+                    var sameNameInputs = checkName ? document.getElementsByName(checkName) : [];
+                    checkbox = null;
+                    for (var ci = 0; ci < sameNameInputs.length; ci++) {
+                        if (sameNameInputs[ci].checked) {
+                            checkbox = sameNameInputs[ci];
+                            break;
+                        }
+                    }
                 }
                 if (tag == 'SELECT') {
                     var subcat = document.getElementById(name);
@@ -424,27 +382,59 @@
 
                 if (type == 'text' || tag == 'TEXTAREA') {
                     if (Qrequired == 1) {
+                        var isOtherField = (el.className && (el.className.indexOf('otherField') !== -1 || el.className.indexOf('otherOption') !== -1));
+                        if (isOtherField) {
+                            var style = window.getComputedStyle(el);
+                            if (style.display === 'none') return; // skip when "Other" not selected
+                        }
                         if (data == '' || data == null || data == undefined) {
-                            document.getElementById(divErrorID).classList.add('inputError');
+                            var divEl = document.getElementById(divErrorID);
+                            if (divEl) divEl.classList.add('inputError');
                         }
                     }
                 } else if (type == 'radio') {
                     if (Qrequired == 1) {
-                        if (getSelectedValue == null) {
-                            var element = document.getElementById(divErrorID); //console.log(element);alert(element);
-                            element.classList.add("inputError");
+                        var inputElement = document.getElementsByClassName("otherOption" + idd)[0];
+                        if (inputElement != undefined) {
+                            var computedStyle = window.getComputedStyle(inputElement);
+                            if (computedStyle.display != "none") {
+                                var inputValue = inputElement.value;
+                                if (inputValue == '' || inputValue == null || inputValue == undefined) {
+                                    var divEl = document.getElementById(divErrorID);
+                                    if (divEl) divEl.classList.add("inputError");
+                                }
+                            } else {
+                                if (getSelectedValue == null) {
+                                    var divEl = document.getElementById(divErrorID);
+                                    if (divEl) divEl.classList.add("inputError");
+                                }
+                            }
+                        } else {
+                            if (getSelectedValue == null) {
+                                var divEl = document.getElementById(divErrorID);
+                                if (divEl) divEl.classList.add("inputError");
+                            }
                         }
                     }
                 } else if (type == 'checkbox') {
                     if (Qrequired == 1) {
                         if (checkbox == null) {
-                            document.getElementById(divErrorID).classList.add('inputError');
+                            var divEl = document.getElementById(divErrorID);
+                            if (divEl) {
+                                var othersCb = divEl.querySelector('.otherOption' + idd);
+                                var otherTxt = divEl.querySelector('.otherField' + idd);
+                                var othersFilled = othersCb && othersCb.checked && otherTxt && window.getComputedStyle(otherTxt).display !== 'none' && otherTxt.value && otherTxt.value.trim() !== '';
+                                if (!othersFilled) {
+                                    divEl.classList.add('inputError');
+                                }
+                            }
                         }
                     }
                 } else if (type == undefined && tag == 'SELECT') {
                     if (Qrequired == 1) {
                         if (subcat.value == null || subcat.value == "") {
-                            document.getElementById(divErrorID).classList.add('inputError');
+                            var divEl = document.getElementById(divErrorID);
+                            if (divEl) divEl.classList.add('inputError');
                         }
                     }
                 }
@@ -452,9 +442,56 @@
 
         }
 
+        // Explicit pass: validate every required checkbox question (fieldType 5) inside the form
+        var formEl = document.getElementById('divQuestionnaireForm');
+        if (formEl) {
+            var requiredCheckboxQuestions = formEl.querySelectorAll('[data-question-type="checkbox"]');
+            for (var rq = 0; rq < requiredCheckboxQuestions.length; rq++) {
+                var qDiv = requiredCheckboxQuestions[rq];
+                var hasRequired = qDiv.querySelector('input[data-required="1"]') || qDiv.querySelector('label.required');
+                if (!hasRequired) continue;
+                var firstNamedCheckbox = qDiv.querySelector('input[type="checkbox"][name]');
+                if (!firstNamedCheckbox) continue;
+                var name = firstNamedCheckbox.getAttribute('name');
+                if (!name) continue;
+                var sameName = document.getElementsByName(name);
+                var anyChecked = false;
+                for (var sn = 0; sn < sameName.length; sn++) {
+                    if (sameName[sn].checked) {
+                        anyChecked = true;
+                        break;
+                    }
+                }
+                if (!anyChecked && qDiv.id) {
+                    var fieldName = qDiv.id.replace(/^div/, '');
+                    var othersCheckbox = qDiv.querySelector('.otherOption' + fieldName);
+                    var otherField = qDiv.querySelector('.otherField' + fieldName);
+                    if (othersCheckbox && othersCheckbox.checked && otherField) {
+                        var style = window.getComputedStyle(otherField);
+                        if (style.display !== 'none' && otherField.value && otherField.value.trim() !== '') {
+                            anyChecked = true;
+                        }
+                    }
+                }
+                if (!anyChecked) {
+                    qDiv.classList.add('inputError');
+                } else if (qDiv.id) {
+                    var fieldNameVal = qDiv.id.replace(/^div/, '');
+                    var othersCb = qDiv.querySelector('.otherOption' + fieldNameVal);
+                    var otherTxt = qDiv.querySelector('.otherField' + fieldNameVal);
+                    if (othersCb && othersCb.checked && otherTxt) {
+                        var ostyle = window.getComputedStyle(otherTxt);
+                        if (ostyle.display !== 'none' && (!otherTxt.value || otherTxt.value.trim() === '')) {
+                            qDiv.classList.add('inputError');
+                        }
+                    }
+                }
+            }
+        }
+
         var hasError = $(".inputError").length;
-        completed_questions();
         if (hasError == 0) {
+            completed_questions();
             validateForm();
             Swal.fire({
                 title: "Do you want to Submit the form",
@@ -474,17 +511,21 @@
                 }
             });
         } else {
-            var target = document.querySelector(".incomp label");
-            if (target != null || target != undefined) {
-                var errorQuestion = target.innerHTML;
-                swal.fire("Please Fill", errorQuestion, "error").then(() => {
+            var target = document.querySelector(".inputError label");
+            if (target == null || target == undefined) {
+                target = document.querySelector(".incomp label");
+            }
+            console.log('target', target);
+            var errorQuestion = (target != null && target != undefined) ? target.innerHTML : "Please fill all required questions.";
+            swal.fire("Please Fill", errorQuestion, "error").then(() => {
                     // Get the inputError element
-                    var inputErrorElement = document.querySelector('.incomp');
+                    var inputErrorElement = document.querySelector('.inputError') || document.querySelector('.incomp');
                     console.log(inputErrorElement);
                     // location.href="#questionnaire-intro";
                     if (inputErrorElement) {
-                        var parentId = inputErrorElement.parentElement.id;
-                        var stepNumber = parentId.replace('Step', '');
+                        var parentEl = inputErrorElement.parentElement;
+                        var parentId = parentEl ? parentEl.id : '';
+                        var stepNumber = parentId ? parentId.replace('Step', '') : '1';
                         console.log(stepNumber);
                         var stepperId = 'Stepper' + stepNumber + 'ID';
                         if (stepperId) {
@@ -511,27 +552,6 @@
                         }
                     }
                 });
-            } else {
-                Swal.fire({
-                    title: "Do you want to Submit the form",
-                    text: "Please click 'Yes' to Submit the form",
-                    icon: "warning",
-                    customClass: 'swalalerttext',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: "Yes",
-                    cancelButtonText: "No",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $(".loader").show();
-                        document.getElementById('divQuestionnaireForm').submit();
-                    } else {
-                        return false;
-                    }
-                });
-
-                // document.getElementById('divQuestionnaireForm').submit();
-            }
 
         }
     }
@@ -541,6 +561,8 @@
         for (i = 0; i < divClass.length; i++) {
             divClass[i].className = divClass[i].className.replace(" inputError", "");
             divClass[i].className = divClass[i].className.replace(" comp", "");
+            divClass[i].className = divClass[i].className.replace(" incomp", "");
+            divClass[i].className = divClass[i].className.replace(" incompCount", "");
         }
         var divClass = $(".divClass").length;
         for (cindex = 1; cindex < divCount + 1; cindex++) {
@@ -562,7 +584,15 @@
                     var getSelectedValue = document.querySelector("input[name=" + name + "]:checked");
                 }
                 if (type == 'checkbox') {
-                    var checkbox = document.querySelector('input[name="' + name + '"]:checked');
+                    // getElementsByName works with names containing [] (e.g. fieldTypeID 12)
+                    var sameNameInputs = document.getElementsByName(name);
+                    var checkbox = null;
+                    for (var ci = 0; ci < sameNameInputs.length; ci++) {
+                        if (sameNameInputs[ci].checked) {
+                            checkbox = sameNameInputs[ci];
+                            break;
+                        }
+                    }
                 }
                 if (tag == 'SELECT') {
                     var subcat = document.getElementById(name);
@@ -624,39 +654,16 @@
                         }
                     }
                 } else if (type == 'checkbox') {
-                    // console.log('checkbox', checkbox)
-                    // console.log('check', idd)
                     if (checkbox == null) {
-                        console.log('if - null');
-                        // S
-                        var otherField = document.getElementsByClassName("otherField" + idd)[0];
-                        var othersCheckbox = document.getElementsByClassName("otherOption" + idd)[0];
-                        if (othersCheckbox != undefined) {
-                            console.log('else if');
-                            if (othersCheckbox.checked && otherField.value.trim() === "") {
-                                console.log('else if if');
-                                if (Qrequired == 1) {
-                                    // console.log('else if if if');
-                                    document.getElementById(divErrorID).classList.add('incompCount'); //3
-                                }
-                                document.getElementById(divErrorID).classList.add('incomp');
-                            } else {
-                                // console.log('else if if else');
-                                document.getElementById(divErrorID).classList.add('comp');
-                                document.getElementById(divErrorID).classList.remove('incomp');
-                            }
-                        } else {
-                            document.getElementById(divErrorID).classList.add('incomp');
+                        // No option selected: always mark as incomplete for required (fieldType 5 or any checkbox group)
+                        var divEl = document.getElementById(divErrorID);
+                        if (divEl) {
+                            divEl.classList.add('incomp');
+                            divEl.classList.remove('comp');
                             if (Qrequired == 1) {
-                                document.getElementById(divErrorID).classList.add('incompCount'); //2
+                                divEl.classList.add('incompCount');
                             }
                         }
-                        // E
-                        // BAL
-                        // document.getElementById(divErrorID).classList.add('incomp');
-                        // if (Qrequired == 1) {
-                        //     document.getElementById(divErrorID).classList.add('incompCount'); //2
-                        // }
                     } else {
                         // console.log('else');
                         var otherField = document.getElementsByClassName("otherField" + idd)[0];
@@ -676,33 +683,38 @@
                                 document.getElementById(divErrorID).classList.remove('incomp');
                             }
                         } else {
-                            // console.log('else else');
+                            // fieldTypeID 12 (checkbox-sub): validate each sub-question row has at least one checked
                             var mainQuestion = document.getElementById(divErrorID);
-                            if (mainQuestion.querySelector('label.required') != null) {
-                                // console.log('else else else');
-                                var mainQuestionName = mainQuestion.querySelector('label.required').innerText.trim();
-                                var subquestions = mainQuestion.querySelectorAll('input[type="checkbox"]');
-
+                            if (mainQuestion && mainQuestion.querySelector('label.required') != null) {
+                                var subquestions = mainQuestion.querySelectorAll('input[type="checkbox"].QSub');
                                 var isValid = true;
-
-                                subquestions.forEach(function(subquestion) {
-                                    if (subquestion.parentNode.parentNode.querySelector('td:first-child') != null) {
-                                        var subquestionName = subquestion.parentNode.parentNode.querySelector('td:first-child').innerText.trim();
-                                        var subquestionOptions = mainQuestion.querySelectorAll('input[name="' + subquestion.getAttribute('name') + '"]:checked');
-
-                                        if (subquestionOptions.length === 0) {
+                                var seenNames = {};
+                                for (var sq = 0; sq < subquestions.length; sq++) {
+                                    var subq = subquestions[sq];
+                                    var subqName = subq.getAttribute('name');
+                                    if (subqName && !seenNames[subqName]) {
+                                        seenNames[subqName] = true;
+                                        var sameName = document.getElementsByName(subqName);
+                                        var anyChecked = false;
+                                        for (var si = 0; si < sameName.length; si++) {
+                                            if (sameName[si].checked) {
+                                                anyChecked = true;
+                                                break;
+                                            }
+                                        }
+                                        if (!anyChecked) {
                                             isValid = false;
-                                            subquestion.parentNode.classList.add('error');
-                                            console.log('Please select an option for subquestion: ' + subquestionName);
+                                            if (subq.parentNode && subq.parentNode.classList) subq.parentNode.classList.add('error');
                                         } else {
-                                            subquestion.parentNode.classList.remove('error');
+                                            if (subq.parentNode && subq.parentNode.classList) subq.parentNode.classList.remove('error');
                                         }
                                     }
-                                });
+                                }
                                 if (isValid) {
                                     document.getElementById(divErrorID).classList.add('comp');
                                     document.getElementById(divErrorID).classList.remove('incomp');
                                 } else {
+                                    document.getElementById(divErrorID).classList.add('incomp');
                                     if (Qrequired == 1) {
                                         document.getElementById(divErrorID).classList.add('incompCount'); //3
                                     }
@@ -722,7 +734,102 @@
                 }
             });
         }
+        reVerify();
+        // Dedicated pass: mark required checkbox questions (fieldType 5) as incomp when nothing selected
+        var checkboxQuestions = document.querySelectorAll('.divClass.newQuestion[data-question-type="checkbox"]');
+        for (var cq = 0; cq < checkboxQuestions.length; cq++) {
+            var qDiv = checkboxQuestions[cq];
+            if (!qDiv.querySelector('label.required')) continue;
+            var firstNamedCheckbox = qDiv.querySelector('input[type="checkbox"][name]');
+            if (!firstNamedCheckbox || firstNamedCheckbox.getAttribute('data-required') !== '1') continue;
+            var name = firstNamedCheckbox.getAttribute('name');
+            var sameName = document.getElementsByName(name);
+            var anyChecked = false;
+            for (var sn = 0; sn < sameName.length; sn++) {
+                if (sameName[sn].checked) {
+                    anyChecked = true;
+                    break;
+                }
+            }
+            if (!anyChecked) {
+                qDiv.classList.add('incomp');
+                qDiv.classList.add('incompCount');
+                qDiv.classList.remove('comp');
+            }
+        }
         return true;
+    }
+
+    function reVerify() {
+        const allInputs = document.querySelectorAll("[data-required]");
+
+        allInputs.forEach(input => {
+            const parentDiv = input.closest(".divClass");
+            const required = input.getAttribute("data-required");
+            toggleIncomp(input, parentDiv, required);
+            input.addEventListener("input", () => toggleIncomp(input, parentDiv, required));
+            input.addEventListener("change", () => toggleIncomp(input, parentDiv, required));
+        });
+    }
+
+    function toggleIncomp(input, parentDiv, required) {
+        if (!parentDiv) return;
+
+        if (required === "1") {
+            // Other-option text fields: only validate when visible (e.g. "Others" is selected)
+            var isOtherField = (input.className && (input.className.indexOf('otherField') !== -1 || input.className.indexOf('otherOption') !== -1)) && (input.type === 'text' || input.tagName === 'INPUT');
+            if (isOtherField) {
+                var style = window.getComputedStyle(input);
+                if (style.display === 'none') {
+                    parentDiv.classList.remove("incomp");
+                    return;
+                }
+            }
+            // Checkbox: required = at least one in same name group is checked (e.g. fieldTypeID 5)
+            if (input.type === 'checkbox') {
+                var name = input.getAttribute('name');
+                if (!name && parentDiv) {
+                    var firstNamed = parentDiv.querySelector('input[type="checkbox"][name]');
+                    if (firstNamed) name = firstNamed.getAttribute('name');
+                }
+                if (name) {
+                    var sameName = document.getElementsByName(name);
+                    var anyChecked = false;
+                    for (var si = 0; si < sameName.length; si++) {
+                        if (sameName[si].checked) {
+                            anyChecked = true;
+                            break;
+                        }
+                    }
+                    if (!anyChecked) {
+                        parentDiv.classList.add("incomp");
+                    } else {
+                        // fieldType 5: if "Others" is checked, other text must be filled
+                        var fieldName = parentDiv.id ? parentDiv.id.replace(/^div/, '') : '';
+                        if (fieldName) {
+                            var othersCheckbox = parentDiv.querySelector('.otherOption' + fieldName);
+                            var otherField = parentDiv.querySelector('.otherField' + fieldName);
+                            if (othersCheckbox && othersCheckbox.checked && otherField) {
+                                var style = window.getComputedStyle(otherField);
+                                if (style.display !== 'none' && (!otherField.value || otherField.value.trim() === '')) {
+                                    parentDiv.classList.add("incomp");
+                                    return;
+                                }
+                            }
+                        }
+                        parentDiv.classList.remove("incomp");
+                    }
+                }
+                return;
+            }
+            if (input.value.trim() === "") {
+                parentDiv.classList.add("incomp");
+            } else {
+                parentDiv.classList.remove("incomp");
+            }
+        } else if (required === "0") {
+            parentDiv.classList.remove("incomp");
+        }
     }
 </script>
 
@@ -751,21 +858,17 @@
 
         var prevButton = document.querySelector('#navPrev');
         var nextButton = document.querySelector('#navNext');
-        var submitButton = document.querySelector('#saveButton');
         prevButton.style.display = 'inline-block';
         nextButton.style.display = 'inline-block';
         if (step === 1) {
             prevButton.style.display = 'none'; // Hide previous button in the first stage
-            submitButton.style.display = 'none';
         } else if (step === divCount) {
             nextButton.style.display = 'none'; // Hide next button in the last stage
-            submitButton.style.display = 'inline-block';
         } else {
             prevButton.style.display = 'inline-block';
             nextButton.style.display = 'inline-block';
-
         }
-        validateForm()
+        validateForm();
     }
 
     function validateForm() {
@@ -824,12 +927,11 @@
         }
 
         if (nextStep) {
-            var stepNumber = nextStep.querySelector('.step-circle span').textContent.trim(); // Retrieve the step number
+            var stepNumber = nextStep.querySelector('.step-circle span').textContent.trim(); 
             var stageId = 'Step' + stepNumber;
             showStage(stageId, parseInt(stepNumber));
             $('html,body').scrollTop(0);
         }
-        // Call the function when needed, such as after form submission or input change
         updateStepStatus();
     }
 </script>
@@ -851,13 +953,12 @@
     }
 
     function showInputSub(nameField, option_question_fields_id) {
-
+        if (!nameField || !nameField.length) return;
         for (var i = 0; i < nameField.length; i++) {
             var othersub = $(nameField[i]).attr('othersub');
-            var othersub_flag = $(nameField[i]).attr('other_flag');
+            if (!othersub) continue;
             var otherInput = document.getElementsByClassName(othersub);
-            var othersubinputElement = document.getElementsByClassName(othersub)[0];
-
+            if (!otherInput || !otherInput[0]) continue;
             if (nameField[i].checked) {
                 otherInput[0].style.display = "inline";
                 otherInput[0].style.border = "1px solid black";
@@ -1045,8 +1146,9 @@
                         if (fieldValue == option_field_name) {
                             radioButtonHtml += '<div class="radio">';
                             if (other_flag == 1) {
-                                radioButtonHtml += '<label><input style="margin-right: 10px;" class="pagination' + num + ' Qradio" other-flag=' + other_flag + ' othersub="otherOption_' + option_question_fields_id + '" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="' + option_field_name + '" onclick="showInputSub(' + fieldName + ',' + option_question_fields_id + ')" checked data-required="' + requiredQuestion + '"><i class="helper"></i> ' + option_field_name;
-                                radioButtonHtml += '<input type="text" class="otherOption_' + option_question_fields_id + ' otherOption' + fieldName + '" style="opacity: 1;display:none;width: 589px;margin: -2px 0px 0px 80px;" name="' + fieldName + '" placeholder="If Yes please mention reason">';
+                                var selectedOtherValue = (fieldValue != null && fieldValue !== undefined && fieldValue !== 'null' && fieldValue !== option_field_name) ? fieldValue : '';
+                                radioButtonHtml += '<label><input style="margin-right: 10px;" class="pagination' + num + ' Qradio" other-flag=' + other_flag + ' othersub="otherOption_' + option_question_fields_id + '" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="' + option_field_name + '" onclick="showInputSub(document.getElementsByName(\'' + fieldName + '\'), ' + option_question_fields_id + ')" checked data-required="' + requiredQuestion + '"><i class="helper"></i> ' + option_field_name;
+                                radioButtonHtml += '<input type="text" class="otherOption_' + option_question_fields_id + ' otherOption' + fieldName + '" style="opacity: 1;width: 589px;margin: -2px 0px 0px 80px;" name="' + fieldName + '" value="' + selectedOtherValue + '" placeholder="If Yes please mention reason">';
                             } else {
                                 radioButtonHtml += '<label><input style="margin-right: 10px;" class="pagination' + num + ' Qradio" other-flag=' + other_flag + ' othersub="otherOption_' + option_question_fields_id + '" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="' + option_field_name + '" onclick="showInput(' + fieldName + ')" checked data-required="' + requiredQuestion + '"><i class="helper"></i> ' + option_field_name;
                             }
@@ -1054,7 +1156,7 @@
                         } else {
                             radioButtonHtml += '<div class="radio">';
                             if (other_flag == 1) {
-                                radioButtonHtml += '<label><input style="margin-right: 10px;" class="pagination' + num + ' Qradio" other-flag=' + other_flag + ' othersub="otherOption_' + option_question_fields_id + '" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="' + option_field_name + '" onclick="showInputSub(' + fieldName + ',' + option_question_fields_id + ')" data-required="' + requiredQuestion + '" ><i class="helper"></i> ' + option_field_name;
+                                radioButtonHtml += '<label><input style="margin-right: 10px;" class="pagination' + num + ' Qradio" other-flag=' + other_flag + ' othersub="otherOption_' + option_question_fields_id + '" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="' + option_field_name + '" onclick="showInputSub(document.getElementsByName(\'' + fieldName + '\'), ' + option_question_fields_id + ')" data-required="' + requiredQuestion + '" ><i class="helper"></i> ' + option_field_name;
                                 radioButtonHtml += '<input type="text" class="otherOption_' + option_question_fields_id + ' otherOption' + fieldName + '" style="opacity: 1;display:none;width: 589px;margin: -2px 0px 0px 80px;" name="' + fieldName + '" placeholder="If Yes please mention reason">';
                             } else {
                                 radioButtonHtml += '<label><input style="margin-right: 10px;" class="pagination' + num + ' Qradio" other-flag=' + other_flag + ' othersub="otherOption_' + option_question_fields_id + '" type="radio" name="' + fieldName + '" id="' + fieldName + '" value="' + option_field_name + '" onclick="showInput(' + fieldName + ')" data-required="' + requiredQuestion + '" ><i class="helper"></i> ' + option_field_name;
@@ -1117,7 +1219,7 @@
                 }
                 if (otherOption == 1) {
                     radioButtonHtml += '<label><input data-required="' + requiredQuestion + '" class="pagination' + num + ' otherOption' + fieldName + '" type="checkbox" id="' + fieldName + '" onclick="showInputOthers(' + fieldName + ')"><i class="helper"></i> Others<br>';
-                    radioButtonHtml += '<input type="text" data-required="' + requiredQuestion + '" class="otherField' + fieldName + '" style="opacity: 1;display:none;border: 1px solid;" name="' + fieldName + '[]"></label><br>';
+                    radioButtonHtml += '<input type="text" placeholder="Please Specify" data-required="' + requiredQuestion + '" class="otherField' + fieldName + '" style="opacity: 1;display:none;border: 1px solid;" name="' + fieldName + '[]"></label><br>';
                 }
                 radioButtonHtml += '</div></div>';
                 $(stage).append(radioButtonHtml);
@@ -1289,8 +1391,25 @@
         });
 
         var allQuestionsFilled = true;
+        var seenCheckboxNames = {};
         questions.forEach(function(question) {
-            if (!question.value.trim()) {
+            if (question.type === 'checkbox') {
+                var name = question.getAttribute('name');
+                if (name && !seenCheckboxNames[name]) {
+                    seenCheckboxNames[name] = true;
+                    var sameName = document.getElementsByName(name);
+                    var anyChecked = false;
+                    for (var si = 0; si < sameName.length; si++) {
+                        if (sameName[si].checked) {
+                            anyChecked = true;
+                            break;
+                        }
+                    }
+                    if (!anyChecked) {
+                        allQuestionsFilled = false;
+                    }
+                }
+            } else if (!question.value.trim()) {
                 allQuestionsFilled = false;
             }
         });
@@ -1317,31 +1436,4 @@
         }
     }
 </script>
-
-<script>
-    const questionnaireSaveRoute = "{{ route('questionnaire.form.save') }}";
-
-    function autoSaveQuestionnaire() {
-        let formData = new FormData($('#divQuestionnaireForm')[0]);
-
-        $.ajax({
-            url: questionnaireSaveRoute,
-            type: "POST",
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function(response) {
-                console.log("Auto saved successfully", response);
-            },
-            error: function(xhr) {
-                console.error("Auto save failed:", xhr.responseText);
-            }
-        });
-    }
-
-    $(document).on('change keyup', '#divQuestionnaireForm :input', function() {
-        autoSaveQuestionnaire();
-    });
-</script>
-
 @endsection
