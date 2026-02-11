@@ -15,14 +15,14 @@
                             <table class="table table-bordered" id="align">
                                 <thead>
                                     <tr>
-                                        <th>S.No</th>
-                                        <th>Service Provider Name</th>
+                                        <th class='col-1'>S.No</th>
+                                        <th class='col-2'>Service Provider Name</th>
                                         <th>Email Address</th>
                                         <th>Contact number</th>
                                         <th>Type of Service</th>
                                         <th>Charge Per Session</th>
                                         <!-- <th>Status</th> -->
-                                        <th>Action</th>
+                                        <th class='col-1'>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
