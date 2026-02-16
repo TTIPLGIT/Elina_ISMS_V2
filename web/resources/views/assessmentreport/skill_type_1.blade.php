@@ -19,7 +19,7 @@
                 <tr>
                     <th width="30%">{{ $perskills['skill_name'] ?? $page['tab_name'] }}</th>
                     <th width="30%">Observation</th>
-                    <th class="required" width="40%">Evidence</th>
+                    <th width="40%">Evidence</th>
                     <th width="40%">Recommendation</th>
                 </tr>
             </thead>

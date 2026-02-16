@@ -111,18 +111,18 @@
     }
 </style>
 <div class="main-content">
-    {{ Breadcrumbs::render('question_creation.add_questions',['question_details_id']) }}
+
     <div class="section-body mt-0">
 
         <div class="col-md-12">
-            <h4 style="text-align:center; color:darkblue"> Questionnaire Creation <a style="float:right; position:relative;background-color: #2196f3ab;" class="btn" href="{{ route('question_creation.index') }}"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Back </a> </h4>
+            <h4 style="text-align:center; color:darkblue"> Questionnaire Creation Show <a style="float:right; position:relative;background-color: #2196f3ab;" class="btn" href="{{ route('question_creation.index') }}"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Back </a> </h4>
         </div>
         <div class="card question">
             <div class="row" style="margin-bottom: 15px;margin-top: 20px;">
                 <div class="col-md-4">
                     <div class="form-group questionnaire">
                         <label class="control-label required">Questionnaire Name </label>
-                        <select class="form-control" name="questionnaire_id" id="questionnaire_id">
+                        <select class="form-control" name="questionnaire_id" id="questionnaire_id" disabled>
                             <option value="{{$questionnaire_list[0]['questionnaire_id']}}">{{$questionnaire_list[0]['questionnaire_name']}}</option>
                         </select>
                     </div>
@@ -133,20 +133,19 @@
                             <label class="control-label required">No.Of.Questions</label><br>
                         </div>
                         <div style="display: flex;">
-                            <input class="form-control" type="text" value="{{$questionnaire_list[0]['question_count']}}" style="width:40%" readonly />
+                            <input class="form-control" type="text" disabled value="{{$questionnaire_list[0]['question_count']}}" style="width:40%" readonly />
                             <p style="width:10%"> Of </p>
-                            <input class="form-control" type="number" id="no_of_ques" name="no_of_ques" value="{{$questionnaire_list[0]['no_questions']}}" style="width:50%" autocomplete="off">
+                            <input class="form-control" type="number" disabled id="no_of_ques" name="no_of_ques" value="{{$questionnaire_list[0]['no_questions']}}" style="width:50%" autocomplete="off">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-group questionnaire">
+                    <div class="form-group questionnaire" disabled>
                         <label class="control-label required">Description</label>
-                        <textarea class="form-control" type="text" id="discription1" name="discription" placeholder="" autocomplete="off">{{$questionnaire_list[0]['q_desc']}}</textarea>
+                        <textarea class="form-control bg-light" id="discription1" name="discription" autocomplete="off" readonly>{{ $questionnaire_list[0]['q_desc'] }}</textarea>
                     </div>
                 </div>
                 <input type="hidden" id="questionnaire_details_id" name="questionnaire_details_id" value="{{$questionnaire_list[0]['questionnaire_details_id']}}">
-                <button type="button" class="btn btn-success" id="saveButton">Update</button>
             </div>
         </div>
         @if($questionnaire_list[0]['question_count'] != $questionnaire_list[0]['no_questions'])
@@ -366,8 +365,7 @@
                                 <tr>
                                     <th>Sl.No</th>
                                     <th>Question</th>
-                                    <th width="20%">Action</th>
-                                    <th>Active Status</th>
+                                  
                                 </tr>
                             </thead>
                             <tbody>
@@ -375,27 +373,7 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$data['question']}}</td>
-                                    <td>
-                                        <a class="btn btn-link" onclick="edit_question('{{$data['question_details_id']}}')" title="Edit" data-toggle="modal" data-target="#editmodulemodal{{$data['question_details_id']}}" style="color:darkblue"><i class="fas fa-pencil-alt"></i></a>
-                                        @csrf
-                                        <a class="btn btn-link"
-                                            title="Delete"
-                                            onclick="confirmDelete('{{ route('question_creation.data_delete', $data['question_details_id']) }}')"
-                                            style="color:red">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
-                                        <!-- <input type="hidden" name="delete_id" id="<?php echo $data['question_details_id']; ?>" value="{{ route('question_creation.data_delete', $data['question_details_id']) }}">
-                                        <a class="btn btn-link" title="Delete" onclick="return myFunction(<?php echo $data['question_details_id']; ?>);" class="btn btn-link"><i class="far fa-trash-alt"></i></a>
-                                     -->
-                                    </td>
-                                    <td style="text-align: center;">
-                                        <label class="switch " data-bs-toggle="tooltip" data-bs-placement="top" title="Enable / Disable">
-                                            <input type="hidden" name="toggle_id" value="{{$data['question_details_id']}}">
-                                            <input type="checkbox" class="toggle_status" onclick="functiontoggle('{{$data['question_details_id']}}')" id="is_active{{$data['question_details_id']}}" name="is_active" @if($data['enable_flag']=='1' ) checked @endif>
-                                            <span class="slider round"></span>
-                                        </label>
-
-                                    </td>
+                                   
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -457,391 +435,6 @@
         });
     }
 </script>
-<script>
-    $("#saveButton").click(function(event) {
-        event.preventDefault();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
 
-        var questionnaire_id = document.getElementById("questionnaire_id").value;
-        if (questionnaire_id == null || questionnaire_id == "") {
-            swal.fire("Please Select Questionnaire Name", "", "error");
-            return false;
-        }
-        var editor = tinymce.get('discription1');
-        var content = editor.getContent();
-        // var discription1 = document.getElementById("discription1").value;
-        var discription1 = content;
-        // console.log(content);
-        if (discription1 == null || discription1 == '') {
-            swal.fire("Please Fill Description", "", "error");
-            return false;
-        }
-
-        var no_of_ques = document.getElementById("no_of_ques").value;
-        if (no_of_ques == '' || no_of_ques == null) {
-            swal.fire("Please Enter No Of Questions", "", "error");
-            return false;
-        }
-
-        var questionnaire_details_id = document.getElementById("questionnaire_details_id").value;
-
-        $('#saveButton').prop('disabled', true);
-
-        $.ajax({
-            url: "{{ url('/question_creation/question_update') }}",
-            type: "POST",
-            data: {
-                _token: '{{csrf_token()}}',
-                questionnaire_id: questionnaire_id,
-                discription: discription1,
-                no_of_ques: no_of_ques,
-                questionnaire_details_id: questionnaire_details_id
-            },
-
-            success: function(data) {
-                window.location.href = "/question_creation/add_questions/" + data;
-            },
-            error: function(data) {
-                swal.fire({
-                    title: "Error",
-                    text: data,
-                    type: "error",
-                    confirmButtonColor: '#e73131',
-                    confirmButtonText: 'OK',
-                });
-
-            }
-        });
-
-    });
-</script>
-<script>
-    function newsection() {
-        document.getElementById('next-section').style.display = "block";
-
-    }
-</script>
-<script type="text/javascript">
-    $('.multi-field-wrapper').each(function() {
-        var $wrapper = $('.multi-fields', this);
-        $(".add-field", $(this)).click(function(e) {
-            $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
-        });
-        $('.multi-field .remove-field', $wrapper).click(function() {
-            if ($('.multi-field', $wrapper).length > 2)
-                $(this).parent('.multi-field').remove();
-            else swal.fire("Required Two Option", "", "error");
-        });
-    });
-</script>
-
-<script type="text/javascript">
-    function typeChange() {
-        var fieldtype = $('#field_type_id').val();
-
-        if (fieldtype == 4 || fieldtype == 5) {
-            $('#option').show();
-            $('#sub_questions').hide();
-            $('#multiple_questions').hide();
-            $('#question_field').show();
-            $('#header_field').hide();
-            $('#footerDiv').show();
-            $('.otherBtn').show();
-        } else if (fieldtype == 3) {
-            $('#option').show();
-            $('#sub_questions').hide();
-            $('#multiple_questions').hide();
-            $('#question_field').show();
-            $('#header_field').hide();
-            $('#footerDiv').show();
-            $('.otherBtn').hide();
-        } else if (fieldtype == 6 || fieldtype == 7) {
-            $('#option').hide();
-            $('#header_field').hide();
-            $('#sub_questions').show();
-            $('#question_field').show();
-            $('#multiple_questions').hide();
-            $('#footerDiv').show();
-            $('.otherBtn').hide();
-        } else if (fieldtype == 8) {
-            $('#header_field').hide();
-            $('#multiple_questions').show();
-            $('#sub_questions').hide();
-            $('#option').hide();
-            $('#question_field').show();
-            $('#footerDiv').show();
-            $('.otherBtn').hide();
-        } else if (fieldtype == 9) {
-            $('#header_field').show();
-            $('#footerDiv').hide();
-            $('#option').hide();
-            $('#sub_questions').hide();
-            $('#multiple_questions').hide();
-            $('#question_field').hide();
-            $('.otherBtn').hide();
-        } else {
-            $('#footerDiv').show();
-            $('#header_field').hide();
-            $('#question_field').show();
-            $('#option').hide();
-            $('#sub_questions').hide();
-            $('#multiple_questions').hide();
-            $('.otherBtn').hide();
-        }
-    }
-</script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
-<script>
-    function submit() {
-
-        var fieldtype = $('#field_type_id').val();
-        // alert(fieldtype);
-        if (fieldtype == null || fieldtype == "") {
-            swal.fire("Please Select Question Type", "", "error");
-            return false;
-        }
-        if (fieldtype == 9) {
-            var header_title = $('#header_title').val();
-            var header_description = $('#header_description').val();
-            if (header_title == "" || header_title == null) {
-                if (header_description == "" || header_description == null) {
-                    swal.fire("No Data To Update", "", "error");
-                    return false;
-                }
-            }
-        } else {
-            var field_question = $('#field_question').val();
-            if (field_question == null || field_question == "") {
-                swal.fire("Please Enter Question", "", "error");
-                return false;
-            }
-        }
-
-        if (fieldtype == 3 || fieldtype == 4 || fieldtype == 5) {
-
-            var que = document.getElementsByName('options_questions[]');
-            var QueLength = que.length;
-            // alert(QueLength);
-
-            if (QueLength < 2) {
-                swal.fire("Required Two Option!", "", "error");
-                return false;
-            }
-            for (i = 0; i < QueLength; i++) {
-                if (que[i].value == "") {
-                    swal.fire("Please Fill Option Field!", "", "error");
-                    return false;
-                }
-            }
-
-        } else if (fieldtype == 6 || fieldtype == 7) {
-
-
-            var Subque = document.getElementsByName('sub_question[]'); //console.log(Subque);
-            var SubLength = Subque.length; //alert(SubLength);
-
-            if (SubLength < 1) {
-                swal.fire("Required Two Question!", "", "error");
-                return false;
-            }
-            for (i = 0; i < SubLength; i++) {
-                if (Subque[i].value == "") {
-                    swal.fire("Please Fill Sub Question Field!", "", "error");
-                    return false;
-                }
-            }
-
-            var queOpt = document.getElementsByName('sub_options[]'); //console.log(queOpt);
-            var QueOpLength = queOpt.length; //alert(QueOpLength);
-
-            if (QueOpLength < 2) {
-                swal.fire("Required Two Option!", "", "error");
-                return false;
-            }
-            for (i = 0; i < QueOpLength; i++) {
-                if (queOpt[i].value == "") {
-                    swal.fire("Please Fill Option Field!", "", "error");
-                    return false;
-                }
-            }
-
-        }
-        // alert('End');
-        document.getElementById('add_Question').submit();
-    }
-</script>
-<script type="application/javascript">
-    function myFunction(id) {
-        swal.fire({
-                title: "Confirmation For Delete ?",
-                text: "Are You Sure to delete this data.",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: '#DD6B55',
-                confirmButtonText: 'Yes, I am sure!',
-                cancelButtonText: "No, cancel it!",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            },
-            function(isConfirm) {
-
-                if (isConfirm) {
-                    swal.fire("Deleted!", "Data Deleted successfully!", "success");
-                    var url = $('#' + id).val();
-                    window.location.href = url;
-                } else {
-                    swal.fire("Cancelled", "Your Data is safe :)", "error");
-                    e.preventDefault();
-                }
-            });
-    }
-</script>
-<script>
-    function open_description() {
-        if ($('#add_description').prop('checked')) {
-            $('#question_descriptionDiv').show();
-        } else {
-            $('#question_descriptionDiv').hide();
-        }
-    }
-
-    function responsevalidation() {
-        if ($('#response_validation').prop('checked')) {
-            $('#response_validationDiv').show();
-        } else {
-            $('#response_validationDiv').hide();
-        }
-    }
-
-    function validationType() {
-
-        $('#validation_conditionDiv').hide();
-        $('#validation_operationDiv').hide();
-        var validation_type = document.getElementById('validation_type').value;
-        $.ajax({
-            url: "{{ route('questionnaire.validation') }}",
-            type: 'POST',
-            data: {
-                validation_type: validation_type,
-                _token: '{{csrf_token()}}'
-            },
-            error: function() {
-                alert('Something is wrong');
-            },
-            success: function(data) {
-                var ddd = "<option value=''>Select</option>";
-                for (var i = 0; i < data.length; i++) {
-                    var id = data[i]['id'];
-                    var operation = data[i]['operation'];
-                    ddd += "<option value=" + id + ">" + operation + "</option>";
-                }
-                $('#validation_operation').html(ddd);
-                $('#validation_operationDiv').show();
-            }
-
-
-        });
-    }
-
-    function validationoperation() {
-        $('#validation_conditionDiv').show();
-    }
-
-    function functiontoggle(id) {
-        // alert(id);
-        if ($('#is_active' + id).prop('checked')) {
-            var is_active = '1';
-        } else {
-            var is_active = '0';
-        }
-        var f_id = id;
-
-        $.ajax({
-            url: "{{ route('questionnaire.update_toggle') }}",
-            type: 'POST',
-            data: {
-                is_active: is_active,
-                f_id: f_id,
-                _token: '{{csrf_token()}}'
-            },
-            error: function() {
-                alert('Something is wrong');
-            },
-            success: function(data) {
-
-                var data_convert = $.parseJSON(data);
-
-                // console.log(data_convert.Data);
-                if (data_convert.Data == 0) {
-                    swal.fire({
-                        title: "Success",
-                        text: "Question Deactivated",
-                        type: "success"
-                    }, );
-                } else {
-                    swal.fire({
-                        title: "Success",
-                        text: "Question Activated",
-                        type: "success"
-                    }, );
-                }
-
-            }
-
-
-        });
-    }
-</script>
-<script>
-    function add_other() {
-        var others = '<div class="multi-field" style="display: flex;margin-bottom: 5px;" id="others_field">';
-        others += '<input type="hidden" id="other_option" name="other_option" value="1"><input type="text" class="form-control" readonly style="margin-right: 10px;">';
-        others += '<button class="remove-field btn btn-danger pull-right" id="remove" onclick="remove_other()" type="button">X </button>&nbsp;</div>';
-        $('#add_other').append(others);
-        $('.otherBtn').hide();
-    }
-
-    function remove_other() {
-        // alert('remove_other');
-        var divToRemove = document.getElementById("others_field");
-        divToRemove.remove();
-        $('.otherBtn').show();
-    }
-</script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script>
-    function confirmDelete(url) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "This action cannot be undone!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'Cancel'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = url;
-            }
-        });
-    }
-    
-</script>
-@if(session('success'))
-<script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: "{{ session('success') }}",
-        confirmButtonText: 'OK'
-    });
-</script>
-@endif
 
 @endsection

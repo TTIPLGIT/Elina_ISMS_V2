@@ -316,36 +316,44 @@
         </div>
     </section>
 </div>
+
+<script>
+    let existingServices = @json(collect($serviceList) -> pluck('service_briefing'));
+
+</script>
+
 <script>
     function Submit_form() {
-        let service = document.getElementById('service_briefings').value;
-        let amount = document.getElementById('amount').value;
+
+        let service = document.getElementById('service_briefings').value.trim();
+        let amount = document.getElementById('amount').value.trim();
+
         if (service === '') {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Required',
-                text: 'Service Briefing is required',
-                confirmButtonColor: '#3085d6'
-            });
+            Swal.fire('Required', 'Service Briefing is required', 'warning');
             return false;
         }
+
         if (amount === '') {
+            Swal.fire('Required', 'Amount is required', 'warning');
+            return false;
+        }
+
+        // case-insensitive duplicate check
+        let exists = existingServices.some(
+            s => s.toLowerCase() === service.toLowerCase()
+        );
+
+        if (exists) {
             Swal.fire({
-                icon: 'warning',
-                title: 'Required',
-                text: 'Amount is required',
-                confirmButtonColor: '#3085d6'
+                icon: 'error',
+                title: 'Duplicate Entry',
+                text: 'This service briefing already exists!'
             });
             return false;
         }
 
-
-
-
-        // success – submit form
         document.getElementById('service_briefing').submit();
     }
 </script>
-
 
 @endsection

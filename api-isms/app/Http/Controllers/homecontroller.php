@@ -54,7 +54,7 @@ class homecontroller extends BaseController
                 GROUP BY c_year ORDER BY c_year; ");
             if (in_array(4, $rolesArray)) {
 
-                $userRow = DB::select("SELECT COUNT(*) as register_count FROM users WHERE array_roles = 3;");
+                $userRow = DB::select("SELECT COUNT(*) as register_count FROM users;");
                 $ovm1Row = DB::select("SELECT COUNT(*) as ovm_count FROM ovm_meeting_details;");
                 $ovm2Row = DB::select("SELECT COUNT(*) as ovm2_count FROM ovm_meeting_2_details;");
 

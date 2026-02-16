@@ -942,7 +942,7 @@
 
                   <!-- Submit All -->
                   <a type="button"
-                    onclick="saveall()"
+                    onclick="saveall('{{$data['parent_video_upload_id']}}')"
                     id="submitbutton"
                     class="btn btn-labeled btn-submit-orange"
                     title="Submit All">
@@ -1648,20 +1648,109 @@
 
     }
 
-    function saveall() {
+    function saveall(parentId) {
+
+  
+      if (!parentId) {
+        console.error('ERROR: No parent ID received!');
+        Swal.fire({
+          title: 'Error',
+          text: 'No activity ID found',
+          icon: 'error',
+          confirmButtonColor: "#d33",
+          confirmButtonText: "OK"
+        });
+        return;
+      }
+
+    
+      const checkbox = document.getElementById('enablef2f' + parentId);
+      const f2fTable = document.getElementById('f2ftable' + parentId);
+
+  
+      if (checkbox && checkbox.checked && f2fTable && f2fTable.style.display !== 'none') {
+
+        const material = document.getElementById('material' + parentId);
+        const toObserve = document.getElementById('to_observe' + parentId);
+
+
+        // Get activity description
+        const descInput = $(`input[name="description_id[${parentId}]"]`).val();
+
+        // Check Select2 selected values
+        let selectedMaterials = [];
+        if (material) {
+          if ($(material).data('select2')) {
+            selectedMaterials = $(material).val() || [];
+          } else {
+            selectedMaterials = Array.from(material.selectedOptions || []).map(opt => opt.value);
+          }
+        }
+
+
+        if (!selectedMaterials || selectedMaterials.length === 0) {
+          Swal.fire({
+            title: 'Validation Error',
+            text: `Please select at least one Material`,
+            icon: 'warning',
+            confirmButtonColor: "#d33",
+            confirmButtonText: "OK"
+          });
+          return;
+        } else {
+          console.log('✅ VALIDATION PASSED: Materials selected');
+        }
+
+        if (!toObserve || toObserve.value.trim() === '') {
+       
+          Swal.fire({
+            title: 'Validation Error',
+            text: `Please fill "To observe"`,
+            icon: 'warning',
+            confirmButtonColor: "#d33",
+            confirmButtonText: "OK"
+          });
+          return;
+        } else {
+          console.log('✅ VALIDATION PASSED: To observe =', toObserve.value.trim());
+        }
+
+        console.log('🎉 ALL VALIDATIONS PASSED for Parent ID:', parentId);
+      } else {
+        console.log('⏭️ F2F is NOT enabled for Parent ID:', parentId);
+      }
+
+
       const video_checks = document.querySelectorAll('#video_check');
+
       var check = [];
       var i = 0;
       for (let video_check of video_checks) {
         if (video_check.checked == false) {
           check[i] = video_check.value;
+          console.log(`Video check ${i}:`, video_check.value, 'checked:', video_check.checked);
           i++;
         }
       }
       document.getElementById('check_video').value = check;
-      // $(".loader").show();
-      document.getElementById('video_update').submit();
 
+      Swal.fire({
+        title: 'Are you sure you want to submit all activities?',
+        text: 'This will submit all pending activities.',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Submit All"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          console.log('✅ User confirmed, submitting form...');
+          console.log('Form submission with Parent ID:', parentId);
+          document.getElementById('video_update').submit();
+        } else {
+          console.log('❌ User cancelled submission');
+        }
+      });
     }
 
     function oneSubmit(parentId) {

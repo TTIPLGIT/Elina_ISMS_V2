@@ -60,36 +60,70 @@
 
 
                                     @foreach($rows['rows'] as $data)
+
+                                    @php
+                                    $isCompleted = in_array($data['enrollment_child_num'], $completedEnrollments);
+                                    @endphp
+
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$data['enrollment_child_num']}}({{$data['child_name']}})</td>
-                                        <td>{{$data['is_coordinator1_name']}}(1),<br>{{$data['is_coordinator2_name']}}(2)</td>
-                                        <td>{{date('d-m-Y', strtotime($data['created_date']))}}</td>
+
+                                        <td>{{$data['enrollment_child_num']}} ({{$data['child_name']}})</td>
+
                                         <td>
-                                            @if($data['status']== 1)
+                                            {{$data['is_coordinator1_name']}}(1),<br>
+                                            {{$data['is_coordinator2_name']}}(2)
+                                        </td>
+
+                                        <td>{{ date('d-m-Y', strtotime($data['created_date'])) }}</td>
+
+                                        <td>
+                                            @if($data['status'] == 1)
                                             <p>Allocated</p>
-                                            @elseif($data['status']== 2)
+                                            @elseif($data['status'] == 2)
                                             <p>Reallocated</p>
-                                            @elseif($data['status']== 3)
+                                            @elseif($data['status'] == 3)
                                             <p>Cancelled</p>
                                             @endif
                                         </td>
+
                                         <td>
-                                            @if($data['status']== 1)
-                                            <a class="btn btn-link" title="Reallocation" href="{{ route('coordinator.edit', Crypt::encrypt($data['id'])) }}" style="background-color: orange;color:white;text-decoration: none;">Reallocation</a>
+                                            @if(!$isCompleted)
+
+                                            @if($data['status'] == 1)
+                                            <a class="btn btn-link"
+                                                title="Reallocation"
+                                                href="{{ route('coordinator.edit', Crypt::encrypt($data['id'])) }}"
+                                                style="background-color: orange;color:white;text-decoration: none;">
+                                                Reallocation
+                                            </a>
                                             @endif
+
                                             @if($data['status'] != 3)
                                             @php
                                             $encryptedId = Crypt::encrypt($data['id']);
                                             @endphp
-                                            <a class="btn btn-link" title="Cancel" onclick="validateAndAllocate('Cancel', '{{$encryptedId}}', '{{$data['child_name']}}')" style="background-color:red;color:white;text-decoration: none;">Cancellation</a>
+                                            <a class="btn btn-link"
+                                                title="Cancel"
+                                                onclick="validateAndAllocate('Cancel', '{{$encryptedId}}', '{{$data['child_name']}}')"
+                                                style="background-color:red;color:white;text-decoration: none;">
+                                                Cancellation
+                                            </a>
                                             @endif
-                                            <a class="btn btn-link" title="View" href="{{ route('coordinator.show', Crypt::encrypt($data['id'])) }}"><i class="fas fa-eye" style="color:blue"></i></a>
 
+                                            @endif
+
+                                            <a class="btn btn-link"
+                                                title="View"
+                                                href="{{ route('coordinator.show', Crypt::encrypt($data['id'])) }}">
+                                                <i class="fas fa-eye" style="color:blue"></i>
+                                            </a>
 
                                         </td>
+
                                     </tr>
                                     @endforeach
+
                                     <!-- <tr>
                                         <td>2</td>
                                         <td>EN/2023/05/003(Kaviya)</td>

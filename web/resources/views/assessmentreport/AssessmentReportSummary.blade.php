@@ -408,6 +408,7 @@
 </head>
 
 <body style="font-family: 'Barlow Semi Condensed', sans-serif !important;">
+  <div class='loader'></div>
   <div id="report2">
     <p style="text-align: justify;font-family: 'Barlow Semi Condensed', sans-serif !important;font-size:14pt">Our functional assessment is based on the developmental domains and is designed to understand a child&rsquo;s profile and potential. While observing a child, many important facets of a child's development are revealed simultaneously and factors that may be impeding the child's overall performance are also identified. Developmental assessment observes how your child grows and changes over time and whether your child meets the typical developmental milestones in all the domains of development.</p>
     <table style="font-family: 'Barlow Semi Condensed', sans-serif !important;border-collapse: collapse; width: 100%; border: 1px solid rgb(0, 0, 0); margin-left: auto; margin-right: auto;" border="1">
@@ -805,7 +806,7 @@
   </form>
 </body>
 <script>
-  const BARLOW_FONT_URL ='https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&display=swap';
+  const BARLOW_FONT_URL = 'https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&display=swap';
   document.addEventListener("DOMContentLoaded", function() {
     const LINE_HEIGHT = 18;
     const MAX_LINES = 18;
@@ -1171,4 +1172,5 @@
     }
   });
 </script>
+
 </html>

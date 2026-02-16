@@ -20,7 +20,7 @@ class ovm1Controller extends BaseController
 
     public function index(Request $request)
     {
-        
+
 
         $user_id = $request->session()->get("userID");
         $method = 'Method => LoginController => Register_screen';
@@ -120,7 +120,7 @@ class ovm1Controller extends BaseController
                 if ($objData->Code == 200) {
                     $parant_data = json_decode(json_encode($objData->Data), true);
                     $email = $parant_data['email'];
-                   
+
                     $rows =  $parant_data['rows'];
                     $iscoordinators = $rows['iscoordinators'];
                     $users = $parant_data['users'];
@@ -130,7 +130,7 @@ class ovm1Controller extends BaseController
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
 
-                    return view('ovm1.newmeetinginvite', compact('default_cc','user_id', 'users', 'email', 'rows', 'screens', 'modules', 'iscoordinators'));
+                    return view('ovm1.newmeetinginvite', compact('default_cc', 'user_id', 'users', 'email', 'rows', 'screens', 'modules', 'iscoordinators'));
                 }
             }
         } catch (\Exception $exc) {
@@ -223,7 +223,7 @@ class ovm1Controller extends BaseController
             $data['mail_cc'] = $request->mail_cc;
 
             $data['g2form_url'] = URL::signedRoute('g2form.signed', ['id' => encrypt($request->user_id)]);
-            //    dd($data);
+
             $encryptArray = $this->encryptData($data);
             $request = array();
             $request['requestData'] = $encryptArray;
@@ -234,7 +234,6 @@ class ovm1Controller extends BaseController
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
 
-
                 if ($objData->Code == 200) {
                     if ($type == 'Sent') {
                         return redirect(route('ovm1.index'))->with('success', 'OVM-1 Meeting Scheduled Successfully for ' . $alert);
@@ -244,8 +243,10 @@ class ovm1Controller extends BaseController
                         return redirect(route('ovm1.index'))->with('success', 'OVM-1 Meeting has been Completed for ' . $alert);
                     } elseif ($type == 'Declined') {
                         return redirect(route('ovm1.index'))->with('success', 'OVM-1 Meeting ' . $alert . ' has been declined');
+                    } elseif ($type == 'Saved') {
+                        return redirect(route('ovm1.index'))->with('success', 'OVM-1 Meeting has been Saved for ' . $alert);
                     } else {
-                        return redirect(route('ovm1.index'))->with('success', 'OVM-1 Meeting has been Updated for ' . $alert);
+                        return redirect(route('ovm1.index'))->with('success', 'OVM-1 Meeting has been  Updated for ' . $alert);
                     }
                 }
 
@@ -298,7 +299,7 @@ class ovm1Controller extends BaseController
 
                         $menus = $this->FillMenu();
                         $screens = $menus['screens'];
-                        $modules = $menus['modules'];
+                        $modules = $menus['modules']; 
                         return view('ovm1.show', compact('cc', 'rows', 'users', 'screens', 'modules'));
                     }
                 } else {
@@ -350,7 +351,7 @@ class ovm1Controller extends BaseController
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
-                    return view('ovm1.edit', compact('cc', 'users', 'rows', 'screens', 'modules', 'iscoordinators','enrollment_user'));
+                    return view('ovm1.edit', compact('cc', 'users', 'rows', 'screens', 'modules', 'iscoordinators', 'enrollment_user'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));
@@ -396,15 +397,10 @@ class ovm1Controller extends BaseController
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
-                    if($rows[0]['meeting_status'] == "Completed")
-                    {
+                    if ($rows[0]['meeting_status'] == "Completed") {
                         return view('ovm1.show', compact('cc', 'rows', 'users', 'screens', 'modules'));
-
-                    }
-                    else
-                    {
+                    } else {
                         return view('ovm1.ovmsent', compact('attendeeID', 'cc', 'users', 'attendee', 'rows', 'authID', 'screens', 'modules'));
-
                     }
                 }
             } else {
@@ -592,9 +588,9 @@ class ovm1Controller extends BaseController
                     $rows1 = $parant_data['rows1'];
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
-                    $modules = $menus['modules'];
+                    $modules = $menus['modules'];  
                     $editusername = 'IS Head';
-                    return view('ovm1.ovmcompleted_edit', compact('rows', 'screens', 'modules', 'editusername', 'role', 'rolename', 'fetchdata1', 'fetchdata', 'questions', 'group','rows1'));
+                    return view('ovm1.ovmcompleted_edit', compact('rows', 'screens', 'modules', 'editusername', 'role', 'rolename', 'fetchdata1', 'fetchdata', 'questions', 'group', 'rows1'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));
@@ -651,7 +647,7 @@ class ovm1Controller extends BaseController
             $data['notes'] = $request->notes;
             $data['mail_cc'] = $request->mail_cc;
             $data['g2form_url'] = URL::signedRoute('g2form.signed', ['id' => encrypt($request->en_user)]);
-          
+      
             $encryptArray = $this->encryptData($data);
             $request = array();
             $request['requestData'] = $encryptArray;
@@ -672,6 +668,8 @@ class ovm1Controller extends BaseController
                         return redirect(route('ovm1.index'))->with('success', 'OVM-1 Meeting has been Completed for ' . $alert);
                     } elseif ($type == 'Declined') {
                         return redirect(route('ovm1.index'))->with('success', 'OVM-1 Meeting ' . $alert . ' has been declined');
+                    } elseif ($type == 'Saved') {
+                        return redirect(route('ovm1.index'))->with('success', 'OVM-1 Meeting  has been Saved for ' . $alert);
                     } else {
                         return redirect(route('ovm1.index'))->with('success', 'OVM-1 Meeting has been Updated for ' . $alert);
                     }
@@ -729,7 +727,7 @@ class ovm1Controller extends BaseController
     public function ovmiscfeedbackstore(Request $request, $id)
     {
         try {
-          
+
             $user_id = $request->session()->get("userID");
             $t = $request->type;
             $currentPage = $request->currentPage; //dd($currentPage);
@@ -814,7 +812,7 @@ class ovm1Controller extends BaseController
     }
     public function ovmiscfeedback_update(Request $request, $id)
     {
-       
+
         try {
 
             $user_id = $request->session()->get("userID");
@@ -831,7 +829,7 @@ class ovm1Controller extends BaseController
             $data['child_name'] = $request->child_name;
             $data['user_id'] = $user_id;
             $data['type'] = $request->type;
-            $data['meet_id']= $request->ovm_meeting_id;
+            $data['meet_id'] = $request->ovm_meeting_id;
             $editusername = $request->editusername;
 
             $encryptArray = $this->encryptData($data);
@@ -1449,7 +1447,7 @@ class ovm1Controller extends BaseController
             $response = json_decode($response);
             $objData = json_decode($this->decryptData($response->Data));
             $parant_data = json_decode(json_encode($objData->Data), true);
-            
+
             $rows = $parant_data['rows'];
             $report = $parant_data['report'];
             $email = $parant_data['email'];
@@ -1458,7 +1456,7 @@ class ovm1Controller extends BaseController
             $menus = $this->FillMenu();
             $screens = $menus['screens'];
             $modules = $menus['modules'];
-            return view('ovm1.preview', compact('modules', 'screens', 'report', 'email', 'rows', 'users','ccEmails'));
+            return view('ovm1.preview', compact('modules', 'screens', 'report', 'email', 'rows', 'users', 'ccEmails'));
         } catch (\Exception $exc) {
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
@@ -1602,38 +1600,33 @@ class ovm1Controller extends BaseController
     {
         try {
             $method = 'Method => ovm1Controller => sailguideSave';
-            $data = array(); 
+            $data = array();
             // dd($request);
             $data['page'] = $request->section;
             $data['enrollment_id'] = $request->enrollment_id;
             $data['status'] = $request->status;
-            $data['email_draft']=$request->email_content;
-            $data['mail_cc']=$request->mail_cc;
-           
+            $data['email_draft'] = $request->email_content;
+            $data['mail_cc'] = $request->mail_cc;
+
             $encryptArray = $this->encryptData($data);
             $request = array();
             $request['requestData'] = $encryptArray;
             $gatewayURL = config('setting.api_gateway_url') . '/sail/guide/save';
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
             $response1 = json_decode($response);
-        
+
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
-                    if( $data['status'] == 'Save')
-                    {
+                    if ($data['status'] == 'Save') {
                         $parant_data = json_decode(json_encode($objData->Data), true);
                         return Redirect::back()->with('success', 'Saved Successfully');
-                    }
-                    else if( $data['status'] == 'Submitted')
-                    {
+                    } else if ($data['status'] == 'Submitted') {
                         $parant_data = json_decode(json_encode($objData->Data), true);
                         //return redirect(route('ovm.generatePDFPreview'))->with('success', 'Submitted Successfully');
 
                         return Redirect::back()->with('success', 'Submitted Successfully');
                     }
-
-                  
                 }
                 if ($objData->Code == 400) {
                     return Redirect::back();
@@ -1715,12 +1708,11 @@ class ovm1Controller extends BaseController
                     $user_role = $modules['user_role'];
 
                     if ($user_role == 'Parent') {
-                        return view('ovm1.g2form', compact('child_name', 'screens', 'modules', 'questions', 'answers', 'enrollId','role'));
+                        return view('ovm1.g2form', compact('child_name', 'screens', 'modules', 'questions', 'answers', 'enrollId', 'role'));
+                    } else {
+                        return view('ovm1.g2form_head', compact('child_name', 'screens', 'modules', 'questions', 'answers', 'enrollId', 'role'));
                     }
-                    else {
-                        return view('ovm1.g2form_head', compact('child_name', 'screens', 'modules', 'questions', 'answers', 'enrollId','role'));
-                    }
-                   // return view('ovm1.g2form', compact('child_name', 'screens', 'modules', 'questions', 'answers', 'enrollId','role'));
+                    // return view('ovm1.g2form', compact('child_name', 'screens', 'modules', 'questions', 'answers', 'enrollId','role'));
                 }
             }
         } catch (\Exception $exc) {
@@ -1778,18 +1770,17 @@ class ovm1Controller extends BaseController
         $rows = json_decode(json_encode($objData->Data), true);
         // dd($rows);
         // $submitted = $response_data['submitted'];
-       
-    
+
+
         $menus = $this->FillMenu();
         $screens = $menus['screens'];
         $modules = $menus['modules'];
         $user_role = $modules['user_role'];
 
         if ($user_role == 'Parent') {
-            return view('ovm1.g2formlist', compact('rows', 'modules', 'screens','user_id'));
-        }
-        else {
-            return view('ovm1.g2formlist_head', compact('rows', 'modules', 'screens','user_id'));
+            return view('ovm1.g2formlist', compact('rows', 'modules', 'screens', 'user_id'));
+        } else {
+            return view('ovm1.g2formlist_head', compact('rows', 'modules', 'screens', 'user_id'));
         }
         //
     }
@@ -1834,7 +1825,7 @@ class ovm1Controller extends BaseController
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
-    public function resend(Request $request,$a,$id)
+    public function resend(Request $request, $a, $id)
     {
         try {
             $method = 'Method => ovm1Controller => resend';
@@ -1844,30 +1835,25 @@ class ovm1Controller extends BaseController
             $user_id = $request->session()->get("userID");
 
             $data = array();
-            $data['event_id']=$eventId;
-            $data['ovm']=$a;
-            
+            $data['event_id'] = $eventId;
+            $data['ovm'] = $a;
+
             $encryptArray = $this->encryptData($data);
             $request = array();
             $request['requestData'] = $encryptArray;
             $gatewayURL = config('setting.api_gateway_url') . '/ovm1/resend';
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
             $response1 = json_decode($response);
-         
+
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
-             
+
 
                 if ($objData->Code == 200) {
-                    if($a == 'ovm1')
-                    {
+                    if ($a == 'ovm1') {
                         return redirect(route('ovm1.index'))->with('success', 'OVM-1 Meeting Resended ');
-
-                    }
-                    else
-                    {
+                    } else {
                         return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting Resended ');
- 
                     }
                 }
 

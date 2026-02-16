@@ -32,9 +32,9 @@ class OVMAllocationController extends BaseController
                 $menus = $this->FillMenu();
                 $screens = $menus['screens'];
                 $modules = $menus['modules'];
-             
 
-                return view('ovm_allocation.index', compact('screens', 'modules', 'rows','screen_permission'));
+
+                return view('ovm_allocation.index', compact('screens', 'modules', 'rows', 'screen_permission'));
             } catch (\Exception $exc) {
 
                 return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
@@ -113,7 +113,7 @@ class OVMAllocationController extends BaseController
             $data['meeting_location2'] = $request->meeting_location2;
             $data['meeting_description'] = $request->meeting_description;
             $data['meeting_status'] = $request->meeting_status;
-        //   dd($data);
+            //   dd($data);
             $url = URL::signedRoute('ovm.allocation.signed', ['id' => encrypt($request->user_id)]);
             $data['url'] = $url;
             $encryptArray = $this->encryptData($data);
@@ -126,7 +126,6 @@ class OVMAllocationController extends BaseController
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
 
-
                 if ($objData->Code == 200) {
                     if ($type == 'Sent') {
                         return redirect(route('ovm_allocation.index'))->with('success', 'OVM Meeting Scheduled Successfully for ' . $alert);
@@ -134,6 +133,8 @@ class OVMAllocationController extends BaseController
                         return redirect(route('ovm_allocation.index'))->with('success', 'OVM Meeting Declined for ' . $alert);
                     } elseif ($type == 'Accept') {
                         return redirect(route('ovm_allocation.index'))->with('success', 'OVM Meeting Accepted Successfully for ' . $alert);
+                    } elseif (($type == 'Saved')) {
+                        return redirect(route('ovm_allocation.index'))->with('success', 'OVM Meeting Saved Successfully for ' . $alert);
                     } else {
                         return redirect(route('ovm_allocation.index'))->with('success', 'OVM Meeting Saved Successfully for ' . $alert);
                     }
@@ -417,8 +418,8 @@ class OVMAllocationController extends BaseController
 
     public function user_edit($id)
     {
-       
-// dd($id);
+
+        // dd($id);
         $method = 'Method => OVMAllocationController => ovm_accept';
         $gatewayURL = config('setting.api_gateway_url') . '/ovm_allocation/data_edit/' . $id;
 
@@ -427,7 +428,7 @@ class OVMAllocationController extends BaseController
         $objData = json_decode($this->decryptData($response->Data));
         $responseData = json_decode(json_encode($objData->Data), true);
         $rows = $responseData['rows'];
-        
+
         $menus = $this->FillMenu();
         $screens = $menus['screens'];
         $modules = $menus['modules'];

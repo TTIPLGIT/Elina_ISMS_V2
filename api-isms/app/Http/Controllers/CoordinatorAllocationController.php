@@ -250,9 +250,19 @@ class CoordinatorAllocationController extends BaseController
             INNER JOIN users AS u1 ON u1.id = o.is_coordinator1
             INNER JOIN users AS u2 ON u2.id = o.is_coordinator2
             WHERE o.STATUS !=""  ORDER BY o.id DESC');
+            $ovmCompleted = DB::select("
+    SELECT *
+    FROM ovm_meeting_2_details
+    WHERE meeting_status = 'Completed'
+");
+            $completedEnrollments = collect($ovmCompleted)->pluck('enrollment_id')->toArray();
 
+            $this->WriteFileLog($ovmCompleted);
             $response = [
                 'rows' => $rows,
+                'ovmCompleted' => $ovmCompleted,
+                'completedEnrollments' => $completedEnrollments
+
             ];
 
             $serviceResponse = array();

@@ -130,7 +130,7 @@
                                         <div class="widget-content-left">
                                             <div class="widget-heading fontsweight fontsizes">CoMPASS</div>
                                             <div style="text-align: left;">
-                                                <a class="dbox__title fontsweight" onclick="alert('No Data Found')">View</a>
+                                                <!-- <a class="dbox__title fontsweight" onclick="alert('No Data Found')">View</a> -->
                                                 <!-- <a class="dbox__title fontsweight" href="#addModal" data-toggle="modal" data-target="#addModal">View</a> -->
                                             </div>
                                         </div>

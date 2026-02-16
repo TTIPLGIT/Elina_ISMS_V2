@@ -57,9 +57,11 @@
                                             <label>Created At</label>
                                             <input class="form-control"
                                                 type="text"
-                                                value="{{ $data['created_at'] ?? '' }}"
+                                                value="{{ isset($data['created_at']) ? \Carbon\Carbon::parse($data['created_at'])->timezone('Asia/Kolkata')->format('d-m-Y') : '' }}"
                                                 disabled
                                                 style="background-color:#f5f5f5;">
+
+
                                         </div>
                                     </div>
 

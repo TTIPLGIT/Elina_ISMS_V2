@@ -357,19 +357,26 @@ class ParentsQuestionnaireController extends BaseController
 
 	public function QuestionnaireFormSave(Request $request)
 	{
-		// dd($request);
 		$logMethod = 'Method => DocumentProcessingController => ProcessingDocumentCreate';
 		try {
 			$btn_type = $request->progress_status;
 			$restorePage = $request->restorePage;
 			$restorePagination = $request->restorePagination;
 			$restorepaginationPage = $request->restorepaginationPage;
-			// dd($restorePage, $restorePagination, $restorepaginationPage);
+
+			// Check if this is an auto-save request
+			$isAutoSave = $request->ajax() || $request->wantsJson() || $request->has('is_auto_save');
+
 			$data = $request->except('_token');
 			unset($data['restorePage']);
 			unset($data['restorePagination']);
 			unset($data['restorepaginationPage']);
-			// dd($data);
+
+			// Remove auto-save flag from data if present
+			if (isset($data['is_auto_save'])) {
+				unset($data['is_auto_save']);
+			}
+
 			$user_id = $request->session()->get("userID");
 			$url = URL::signedRoute('signed.sail.initiate', ['user_id' => $this->encryptData($user_id)]);
 			$serviceRequest = array();
@@ -384,24 +391,43 @@ class ParentsQuestionnaireController extends BaseController
 
 			$objSrviceResponse = json_decode($serviceResponse);
 			$serviceResponse = json_decode($this->decryptData($objSrviceResponse->Data));
+
 			if ($serviceResponse->Code == 201) {
+				// For auto-save requests, return JSON response
+				if ($isAutoSave) {
+					return response()->json([
+						'success' => true,
+						'message' => 'Auto-save successful',
+						'timestamp' => now()->format('Y-m-d H:i:s'),
+						'data' => $serviceResponse->Data
+					]);
+				}
+
+				// For regular requests, continue with existing flow
 				if ($btn_type == 'submit') {
 					return redirect()->route('questionnaire_for_user.index')->with('success', 'Thank you for taking the time to fill out the questionnaire. It has been submitted.');
-				}
-				else if ($btn_type == 'save') {
+				} else if ($btn_type == 'save') {
 					return redirect()->route('questionnaire_for_user.index')->with('success', 'Your Questionnaire has been saved.');
-				} 
-				else {
+				} else {
+					// This handles the "Save & Continue" case
 					return redirect()
 						->route('questionnaire_for_user.form.edit', $this->encryptData($serviceResponse->Data))
 						->with('success', 'Your answers have been saved successfully.')
 						->with('page', $restorePage)
 						->with('restorePagination', $restorePagination)
 						->with('restorepaginationPage', $restorepaginationPage);
-					return redirect()->route('questionnaire_for_user.form.edit', $this->encryptData($serviceResponse->Data))->with('success', 'Your answers has been saved successfully.');
 				}
-				// echo $this->encryptData($serviceResponse->Data);
 			} else {
+				// For auto-save requests, return JSON error
+				if ($isAutoSave) {
+					return response()->json([
+						'success' => false,
+						'message' => 'Auto-save failed: ' . ($serviceResponse->Message ?? 'Unknown error'),
+						'timestamp' => now()->format('Y-m-d H:i:s')
+					], 500);
+				}
+
+				// For regular requests, show error page
 				return Redirect::back()->with('error', 'Something Went Wrong');
 			}
 		} catch (\Exception $exc) {
@@ -410,9 +436,20 @@ class ParentsQuestionnaireController extends BaseController
 			$exceptionResponse['Exception'] = $exc->getMessage();
 			$exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
 			$this->WriteFileLog($exceptionResponse);
+
+			// For auto-save requests, return JSON error
+			if ($request->ajax() || $request->wantsJson() || $request->has('is_auto_save')) {
+				return response()->json([
+					'success' => false,
+					'message' => 'Auto-save failed: ' . $exc->getMessage(),
+					'timestamp' => now()->format('Y-m-d H:i:s')
+				], 500);
+			}
+
+			// For regular requests, show error page
+			return Redirect::back()->with('error', 'Something Went Wrong: ' . $exc->getMessage());
 		}
 	}
-
 	public function GetAllSubmittedForm(Request $request)
 	{
 		try {

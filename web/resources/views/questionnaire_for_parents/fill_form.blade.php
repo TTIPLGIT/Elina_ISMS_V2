@@ -298,7 +298,7 @@
                 <i class="fas fa-arrow-left"></i><span> Back </span>
             </a>
 
-            <button class="btn btn-success saveButton_form" onclick="save()" type="button" id="saveButton"> 
+            <button class="btn btn-success saveButton_form" onclick="save()" type="button" id="saveButton">
                 <i class="fa fa-fw fa-lg fa fa-bookmark"></i>Save</button>
 
             <a type="button" id="navNext" onclick="navigate('next')" class="btn btn-labeled responsive-button next-button button-style" title="Next">
@@ -518,40 +518,40 @@
             console.log('target', target);
             var errorQuestion = (target != null && target != undefined) ? target.innerHTML : "Please fill all required questions.";
             swal.fire("Please Fill", errorQuestion, "error").then(() => {
-                    // Get the inputError element
-                    var inputErrorElement = document.querySelector('.inputError') || document.querySelector('.incomp');
-                    console.log(inputErrorElement);
-                    // location.href="#questionnaire-intro";
-                    if (inputErrorElement) {
-                        var parentEl = inputErrorElement.parentElement;
-                        var parentId = parentEl ? parentEl.id : '';
-                        var stepNumber = parentId ? parentId.replace('Step', '') : '1';
-                        console.log(stepNumber);
-                        var stepperId = 'Stepper' + stepNumber + 'ID';
-                        if (stepperId) {
-                            // Get the stepper element
-                            var stepperElement = document.getElementById(stepperId);
+                // Get the inputError element
+                var inputErrorElement = document.querySelector('.inputError') || document.querySelector('.incomp');
+                console.log(inputErrorElement);
+                // location.href="#questionnaire-intro";
+                if (inputErrorElement) {
+                    var parentEl = inputErrorElement.parentElement;
+                    var parentId = parentEl ? parentEl.id : '';
+                    var stepNumber = parentId ? parentId.replace('Step', '') : '1';
+                    console.log(stepNumber);
+                    var stepperId = 'Stepper' + stepNumber + 'ID';
+                    if (stepperId) {
+                        // Get the stepper element
+                        var stepperElement = document.getElementById(stepperId);
 
-                            if (stepperElement) {
-                                // Click the stepper element
-                                stepperElement.click();
+                        if (stepperElement) {
+                            // Click the stepper element
+                            stepperElement.click();
 
-                                // Set a timeout to scroll to the question ID
-                                setTimeout(() => {
-                                    // Get the ID of the inputError element
-                                    var questionId = inputErrorElement.id;
-                                    console.log(questionId);
-                                    inputErrorElement.scrollIntoView({
-                                        behavior: 'smooth',
-                                        block: 'center'
-                                    });
-                                    // Set location.href to include the question ID as fragment identifier
-                                    // location.href = "#" + questionId;
-                                }, 500); // Adjust the delay time as needed
-                            }
+                            // Set a timeout to scroll to the question ID
+                            setTimeout(() => {
+                                // Get the ID of the inputError element
+                                var questionId = inputErrorElement.id;
+                                console.log(questionId);
+                                inputErrorElement.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'center'
+                                });
+                                // Set location.href to include the question ID as fragment identifier
+                                // location.href = "#" + questionId;
+                            }, 500); // Adjust the delay time as needed
                         }
                     }
-                });
+                }
+            });
 
         }
     }
@@ -927,7 +927,7 @@
         }
 
         if (nextStep) {
-            var stepNumber = nextStep.querySelector('.step-circle span').textContent.trim(); 
+            var stepNumber = nextStep.querySelector('.step-circle span').textContent.trim();
             var stageId = 'Step' + stepNumber;
             showStage(stageId, parseInt(stepNumber));
             $('html,body').scrollTop(0);
@@ -1436,4 +1436,232 @@
         }
     }
 </script>
+<script>
+    let autoSaveTimer = null;
+    let isAutoSaving = false;
+    let lastSaveTime = null;
+    const AUTO_SAVE_DELAY = 2000; // 2 seconds after user stops
+
+    // Function to calculate completed questions (similar to completed_questions() but returns count)
+    function calculateCompletedQuestions() {
+        let answeredCount = 0;
+        const allDivClasses = document.querySelectorAll('.divClass');
+
+        allDivClasses.forEach(div => {
+            const isRequired = div.querySelector('label.required') !== null;
+            if (!isRequired) {
+                // Optional questions are considered completed
+                answeredCount++;
+                return;
+            }
+
+            const questionType = div.getAttribute('data-question-type');
+            let isAnswered = false;
+
+            switch (questionType) {
+                case 'text':
+                case 'textarea':
+                    const textInput = div.querySelector('input[type="text"], textarea');
+                    isAnswered = textInput && textInput.value.trim() !== '';
+                    break;
+
+                case 'radio':
+                    const radioName = div.querySelector('input[type="radio"]')?.getAttribute('name');
+                    if (radioName) {
+                        const selectedRadio = document.querySelector(`input[name="${radioName}"]:checked`);
+                        if (selectedRadio) {
+                            // Check if "Others" with text field
+                            if (selectedRadio.value === 'Others') {
+                                const otherField = div.querySelector(`.otherOption${div.id.replace('div', '')}`);
+                                isAnswered = otherField && otherField.value.trim() !== '';
+                            } else {
+                                isAnswered = true;
+                            }
+                        }
+                    }
+                    break;
+
+                case 'checkbox':
+                    const firstCheckbox = div.querySelector('input[type="checkbox"]');
+                    if (firstCheckbox) {
+                        const name = firstCheckbox.getAttribute('name').replace('[]', '');
+                        const checkboxes = document.querySelectorAll(`input[name="${name}[]"]:checked`);
+                        if (checkboxes.length > 0) {
+                            // Check if "Others" is checked and has text
+                            const othersCheckbox = div.querySelector(`.otherOption${div.id.replace('div', '')}`);
+                            if (othersCheckbox && othersCheckbox.checked) {
+                                const otherField = div.querySelector(`.otherField${div.id.replace('div', '')}`);
+                                isAnswered = !otherField || (otherField.value && otherField.value.trim() !== '');
+                            } else {
+                                isAnswered = true;
+                            }
+                        }
+                    }
+                    break;
+
+                case 'select':
+                    const select = div.querySelector('select');
+                    isAnswered = select && select.value !== '' && select.value !== null;
+                    break;
+
+                case 'radio-sub':
+                    const subRadios = div.querySelectorAll('input[type="radio"]:checked');
+                    isAnswered = subRadios.length > 0;
+                    break;
+
+                case 'checkbox-sub':
+                    // For checkbox-sub, we need to check each row has at least one checked
+                    const checkSubGroups = {};
+                    const subCheckboxes = div.querySelectorAll('input[type="checkbox"]');
+                    subCheckboxes.forEach(cb => {
+                        const name = cb.getAttribute('name').replace('[]', '');
+                        if (!checkSubGroups[name]) {
+                            checkSubGroups[name] = false;
+                        }
+                        if (cb.checked) {
+                            checkSubGroups[name] = true;
+                        }
+                    });
+                    // All groups should have at least one checked
+                    isAnswered = Object.values(checkSubGroups).every(val => val === true);
+                    break;
+            }
+
+            if (isAnswered) {
+                answeredCount++;
+            }
+        });
+
+        return answeredCount;
+    }
+
+    // Silent auto-save function
+    function triggerAutoSave() {
+        if (isAutoSaving) return;
+        if ($(".loader").is(":visible")) return;
+        if (lastSaveTime && (Date.now() - lastSaveTime < 1000)) return;
+
+        isAutoSaving = true;
+
+        // Calculate completed questions
+        const completedQuestionCount = calculateCompletedQuestions();
+
+        // Store original values
+        const originalBtnType = document.getElementById('btn_type').value;
+        const originalRestorePage = document.getElementById('restorePage').value;
+        const originalCompleteQuestion = document.getElementById('complete_question').value;
+
+        // Set values for save
+        document.getElementById('btn_type').value = 'save';
+        document.getElementById('complete_question').value = completedQuestionCount;
+
+        // Get current active tab
+        const activeTab = document.querySelector('.tablinks.active');
+        if (activeTab) {
+            const tabId = activeTab.id.replace('Tab', '');
+            document.getElementById('restorePage').value = tabId;
+        }
+
+        // Collect form data
+        const form = document.getElementById('divQuestionnaireForm');
+        const formData = new FormData(form);
+
+        // Add auto-save flag
+        formData.append('is_auto_save', 'true');
+
+        // Submit via AJAX - completely silent
+        fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Auto-save successful:', data);
+            })
+            .catch(error => {
+                console.error('Auto-save error:', error);
+            })
+            .finally(() => {
+                // Restore original values
+                document.getElementById('btn_type').value = originalBtnType;
+                document.getElementById('restorePage').value = originalRestorePage;
+                document.getElementById('complete_question').value = originalCompleteQuestion;
+                lastSaveTime = Date.now();
+                isAutoSaving = false;
+            });
+    }
+
+    // Start auto-save timer
+    function startAutoSaveTimer() {
+        clearTimeout(autoSaveTimer);
+        autoSaveTimer = setTimeout(triggerAutoSave, AUTO_SAVE_DELAY);
+    }
+
+    // Setup event listeners
+    function setupAutoSaveListeners() {
+        const form = document.getElementById('divQuestionnaireForm');
+        if (!form) return;
+
+        const inputs = form.querySelectorAll('input, textarea, select');
+
+        inputs.forEach(input => {
+            if (input.type === 'hidden' || !input.name) return;
+
+            // Check if already has listener
+            if (input.hasAttribute('data-auto-save')) return;
+
+            input.setAttribute('data-auto-save', 'true');
+
+            if (input.type === 'radio' || input.type === 'checkbox') {
+                input.addEventListener('change', startAutoSaveTimer);
+            } else {
+                input.addEventListener('input', startAutoSaveTimer);
+            }
+        });
+
+        // Handle "Other" fields
+        const otherFields = form.querySelectorAll('[class*="otherOption"], [class*="otherField"]');
+        otherFields.forEach(field => {
+            if (field.type === 'text' && !field.hasAttribute('data-auto-save')) {
+                field.setAttribute('data-auto-save', 'true');
+                field.addEventListener('input', startAutoSaveTimer);
+            }
+        });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+        // Wait for form to load
+        setTimeout(setupAutoSaveListeners, 2000);
+
+        // Handle tab changes
+        const originalShowStage = window.showStage;
+        if (originalShowStage) {
+            window.showStage = function(stageId, step) {
+                originalShowStage(stageId, step);
+                setTimeout(setupAutoSaveListeners, 300);
+            };
+        }
+
+        // Also trigger auto-save when navigating
+        const originalNavigate = window.navigate;
+        if (originalNavigate) {
+            window.navigate = function(direction) {
+                originalNavigate(direction);
+                // Trigger auto-save when moving between tabs
+                setTimeout(triggerAutoSave, 1000);
+            };
+        }
+    });
+</script>
+
 @endsection

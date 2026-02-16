@@ -251,7 +251,7 @@
 
         document.getElementById('payment_status').value = action;
 
-        var swalText = (action == 'Saved') ? 'Save' : 'Submit';
+        var swalText = (action == 'Saved') ? 'Save' : 'Update';
 
         Swal.fire({
             title: "Would you like to " + swalText + " the new Payment details?",

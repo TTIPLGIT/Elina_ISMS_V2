@@ -154,7 +154,7 @@
                                                         <th>Sl.No</th>
                                                         <th>Activity Description</th>
                                                         <!-- <th>status</th> -->
-                                                        <th> File Attachment </th>
+                                                        <th> Instruction </th>
 
 
                                                     </tr>
@@ -164,7 +164,7 @@
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $row['description']}}</td>
-                                                        <td> {{ $row['file_attachment']}}</td>
+                                                        <td>{{ strip_tags($row['instruction']) }}</td>
 
 
 
@@ -184,7 +184,7 @@
 
                     <div class="col-md-12 text-center">
 
-                        <a class="btn btn-danger" href="{{route('video_creation.index')}}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>&nbsp;
+                        <a class="btn btn-danger mt-3" href="{{route('video_creation.index')}}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>&nbsp;
                     </div>
                 </div>
             </div>

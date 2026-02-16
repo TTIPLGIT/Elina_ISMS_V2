@@ -168,6 +168,14 @@
                     </div>
                     <br>
                   </div>
+                  @if($row['video_link'])
+                  <div class="col-lg-6" style="margin: 20px 0px 0px 0px;">
+                    <div class="form-group">
+                      <label class="form-label">Video Link</label>
+                      <textarea class="form-control" id="video_link" name="video_link" readonly>{{ $row['video_link']}}</textarea>
+                    </div>
+                  </div>
+                  @endif
                   <div class="col-lg-12" style="margin: 20px 0px 0px 0px;">
                     <div class="form-group">
                       <label class="form-label">Meeting Description</label>
@@ -176,6 +184,7 @@
                   </div>
 
                 </div>
+
 
               </div>
             </div>

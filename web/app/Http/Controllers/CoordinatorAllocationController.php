@@ -17,7 +17,7 @@ class CoordinatorAllocationController extends BaseController
     public function index(Request $request)
     {
         try {
-             
+
             $user_id = $request->session()->get("userID");
             $method = 'Method => CoordinatorAllocationController => Index';
             $is_ajax = 0;
@@ -65,7 +65,7 @@ class CoordinatorAllocationController extends BaseController
 
 
             $objData = json_decode($this->decryptData($response->Data));
-            //dd($objData);
+            // dd($objData);
             $code = $objData->Code;
 
             if ($code == "401") {
@@ -73,14 +73,16 @@ class CoordinatorAllocationController extends BaseController
                 return redirect()->route('unauthenticated')->send();
             }
             $rows = json_decode(json_encode($objData->Data), true);
-            //dd($rows);
+            $rows = json_decode(json_encode($objData->Data), true);
+            $ovmCompleted=$rows['ovmCompleted']; 
+            $completedEnrollments= $rows['completedEnrollments'];
             $menus = $this->FillMenu();
             if ($menus == "401") {
                 return redirect(url('/'))->with('danger', 'User session Exipired');
             }
             $screens = $menus['screens'];
             $modules = $menus['modules'];
-            return view('ovm_allocation.allocationlist', compact('user_id', 'rows', 'menus', 'screens', 'modules'));
+            return view('ovm_allocation.allocationlist', compact('user_id', 'rows', 'menus', 'screens', 'modules','ovmCompleted','completedEnrollments'));
         } catch (\Exception $exc) {
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
@@ -290,7 +292,6 @@ class CoordinatorAllocationController extends BaseController
     public function cancellation($id)
     {
 
-
         try {
 
             $method = 'Method => CoordinatorAllocationController =>edit';
@@ -394,12 +395,12 @@ class CoordinatorAllocationController extends BaseController
             $gatewayURL = config('setting.api_gateway_url') . '/ovm_allocation/meetinginvite';
             $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
             $response = json_decode($response);
-           
+
             $menus = $this->FillMenu();
             if ($response->Status == 200 && $response->Success) {
                 $objData = json_decode($this->decryptData($response->Data));
                 if ($objData->Code == 200) {
-                  
+
                     $parant_data = json_decode(json_encode($objData->Data), true);
                     $email = $parant_data['email'];
                     $rows =  $parant_data['rows'];
@@ -409,7 +410,7 @@ class CoordinatorAllocationController extends BaseController
                     $allocation_details = $parant_data['allocation_details'];
                     $this->WriteFileLog($allocation_details);
                     $screens = $menus['screens'];
-                    $modules = $menus['modules'];                   
+                    $modules = $menus['modules'];
                     return view('ovm_allocation.ovmcreate', compact('email_allocation', 'users', 'email', 'rows', 'screens', 'modules', 'iscoordinators', 'allocation_details'));
                 }
             }
@@ -439,7 +440,7 @@ class CoordinatorAllocationController extends BaseController
             $data['meeting_endtime2'] = $request->meeting_endtime2;
             $data['is_coordinator1'] = $request->is_coordinator1;
             $data['is_coordinator2'] = $request->is_coordinator2;
-            
+
             $data['is_coordinator1'] = $request->is_coordinator1id;
             $data['is_coordinator2'] = $request->is_coordinator2id;
 
