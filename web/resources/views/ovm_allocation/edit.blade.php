@@ -32,6 +32,15 @@
     .select2-container--default .select2-selection--multiple .select2-selection__choice {
         color: black !important;
     }
+
+    .action-btn {
+        min-width: 150px;
+        height: 42px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 5px;
+    }
 </style>
 
 
@@ -162,14 +171,14 @@
                                                                 <option value="Forced Closure">Force Closure</option>
                                                             </select>
                                                             @elseif($row['rsvp1'] == 'Accept' && $row['rsvp2'] == 'Reschedule' && $row['reschedule_count'] > 2) <select class="form-control" id="status" name="status" style="display: block;" onchange="coonotes()">
-                                                            <option value="">Select Status</option>
-                                                            <option value="Accept">Force Acceptance</option>
-                                                            <option value="Declined">Declined</option>
+                                                                <option value="">Select Status</option>
+                                                                <option value="Accept">Force Acceptance</option>
+                                                                <option value="Declined">Declined</option>
                                                             </select>
                                                             @elseif($row['rsvp1'] == 'Reschedule' &&$row['rsvp2'] == 'Accept' && $row['reschedule_count'] > 2) <select class="form-control" id="status" name="status" style="display: block;" onchange="coonotes()">
-                                                            <option value="">Select Status</option>
-                                                            <option value="Accept">Force Acceptance</option>
-                                                            <option value="Declined">Declined</option>
+                                                                <option value="">Select Status</option>
+                                                                <option value="Accept">Force Acceptance</option>
+                                                                <option value="Declined">Declined</option>
                                                             </select>
                                                             @elseif($row['rsvp1'] == 'Forced Closure')
                                                             <select class="form-control" id="status" name="status" style="display: block;" onchange="coonotes()">
@@ -400,23 +409,59 @@
         </div>
 
 
-        <div class="row text-center">
+        <div class="row text-center mt-3">
             <div class="col-md-12">
-                <!-- <a type="button" class="btn btn-success text-white" onclick="validateForm('Accept')">Accept</a> -->
+
                 @if(($row['meeting_status'] == "Sent" && $row['rsvp1'] ==""))
-                <a type="button" class="btn btn-warning text-white" id="actionButton" onclick="validateForm('Reschedule')" style="display:none !important;">Reschedule</a>
-                @elseif(($row['rsvp1'] == "Accept") &&($row['rsvp2'] == "Accept"))<a type="button" class="btn btn-warning text-white" id="actionButton" onclick="validateForm('Reschedule')" style="display:none !important;">Reschedule</a>
-                @elseif(($row['rsvp1'] != "Declined") && ($row['reschedule_count'] < 2)) <a type="button" class="btn btn-warning text-white" id="actionButton" onclick="validateForm('Reschedule')" style="color:black !important;display:inline-block !important;">Reschedule</a>
+                <a type="button"
+                    class="btn btn-warning text-white action-btn"
+                    id="actionButton"
+                    onclick="validateForm('Reschedule')"
+                    style="display:none !important;">
+                    Reschedule
+                </a>
+
+                @elseif(($row['rsvp1'] == "Accept") && ($row['rsvp2'] == "Accept"))
+                <a type="button"
+                    class="btn btn-warning text-white action-btn"
+                    id="actionButton"
+                    onclick="validateForm('Reschedule')"
+                    style="display:none !important;">
+                    Reschedule
+                </a>
+
+                @elseif(($row['rsvp1'] != "Declined") && ($row['reschedule_count'] < 2))
+                    <a type="button"
+                    class="btn btn-warning text-white action-btn"
+                    id="actionButton"
+                    onclick="validateForm('Reschedule')"
+                    style="color:black !important;display:inline-block !important;">
+                    Reschedule
+                    </a>
 
                     @else
-                    <a type="button" class="btn btn-warning text-white" id="actionButton" onclick="validateForm('Reschedule')" style="display:none !important;">Reschedule</a>
-
+                    <a type="button"
+                        class="btn btn-warning text-white action-btn"
+                        id="actionButton"
+                        onclick="validateForm('Reschedule')"
+                        style="display:none !important;">
+                        Reschedule
+                    </a>
                     @endif
 
-                    <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{route('ovm_allocation.index')}}" style="color:white !important;background-color: blue !important;">
-                        <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back</a>
+                    <a type="button"
+                        class="btn btn-labeled back-btn action-btn"
+                        title="Back"
+                        href="{{ route('ovm_allocation.index') }}"
+                        style="color:white !important;background-color: blue !important;">
+                        <span class="btn-label" style="font-size:13px !important;">
+                            <i class="fa fa-arrow-left"></i>
+                        </span> Back
+                    </a>
+
             </div>
         </div>
+
         </form>
         @endforeach
 
@@ -512,7 +557,7 @@
         mTime1_s = convertTimeFormat(mTime1_s)
         var mTime1_e = document.getElementById('meeting_endtime').value;
         mTime1_e = convertTimeFormat(mTime1_e)
-        var text1 = mDate1 + ' from ' + mTime1_s + ' to ' + mTime1_e +'(IST)';
+        var text1 = mDate1 + ' from ' + mTime1_s + ' to ' + mTime1_e + '(IST)';
 
         const status = document.querySelector('#status').value;
         var reschedule_count = parseInt(document.getElementById('reschedule_count').value, 10); // Parse as an integer
@@ -560,7 +605,7 @@
         mTime2_s = convertTimeFormat(mTime2_s)
         var mTime2_e = document.getElementById('meeting_endtime2').value;
         mTime2_e = convertTimeFormat(mTime2_e)
-        var text2 = mDate2 + ' from ' + mTime2_s + ' to ' + mTime2_e +'(IST)';
+        var text2 = mDate2 + ' from ' + mTime2_s + ' to ' + mTime2_e + '(IST)';
         content = content.replace(/ovm2MeetingDetails/g, text2);
         content = content.replace(/re-scheduled/g, 'reschedule(d) - ' + (reschedule_count + 1));
 
@@ -745,7 +790,7 @@
         var mTime1_e = document.getElementById('meeting_endtime').value;
         mTime1_e = convertTimeFormat(mTime1_e)
         if (mDate1 != '' && mTime1_s != '' && mTime1_e != '') {
-            var text1 = mDate1 + ' from ' + mTime1_s + ' to ' + mTime1_e +'(IST) (OVM1 date and time)' ;
+            var text1 = mDate1 + ' from ' + mTime1_s + ' to ' + mTime1_e + '(IST) (OVM1 date and time)';
             console.log(text1);
 
             var content = tinymce.get('meeting_description').getContent();
@@ -760,7 +805,7 @@
             }
             tinymce.get('meeting_description').setContent(content);
             repeate1 = text1;
-           
+
         }
 
     }
@@ -773,7 +818,7 @@
         mTime2_e = convertTimeFormat(mTime2_e)
         // 
         if (mDate2 != '' && mTime2_s != '' && mTime2_e != '') {
-            var text2 = mDate2 + ' from ' + mTime2_s + ' to ' + mTime2_e +'(IST) (OVM2 date and time)';
+            var text2 = mDate2 + ' from ' + mTime2_s + ' to ' + mTime2_e + '(IST) (OVM2 date and time)';
             var content = tinymce.get('meeting_description').getContent();
             if (repeate2 == undefined) {
                 // content = content.replace(/ovm2MeetingDetails/g, text2);
@@ -1079,7 +1124,7 @@
             //     swal.fire("OVM 2 Meeting Meeting Can be Scheduled from 9AM to 6PM only", "", "error");
             //     return false;
             // }
-           
+
 
             if (createDateFromDateString(meeting_startdate) > createDateFromDateString(meeting_startdate2)) {
 
@@ -1088,7 +1133,7 @@
             }
 
             if (createDateFromDateString(meeting_startdate) === createDateFromDateString(meeting_startdate2)) {
-          
+
                 if (meeting_endtime >= meeting_starttime2) {
                     swal.fire("OVM 1 Meeting should end before OVM 2 Meeting starts", "", "error");
                     return false;
@@ -1097,7 +1142,7 @@
 
             // Check if OVM 1 Meeting starts before OVM 2 Meeting ends
             // if (createDateFromDateString(meeting_startdate) === createDateFromDateString(meeting_startdate2)) {
-                
+
             //     if (meeting_endtime > meeting_starttime2) {
             //         swal.fire("OVM 1 Meeting should end before OVM 2 Meeting starts", "", "error");
             //         return false;

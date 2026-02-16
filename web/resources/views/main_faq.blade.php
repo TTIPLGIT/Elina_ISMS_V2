@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -116,25 +115,36 @@
       text-align: left;
       outline: none !important;
       font-size: 15px;
-
+      border-bottom: 1px solid #ddd;
+      position: relative;
+      transition: background-color 0.3s ease;
     }
 
     .active,
     .collapsible:hover {
-      background-color: white;
+      background-color: #f8f9fa;
 
     }
 
     .active {
-      background-color: #ffff !important;
+      background-color: #f8f9fa !important;
     }
 
     .content {
-      padding: 0 18px;
+      padding: 20px;
       display: none;
       overflow: hidden;
       color: black;
       background-color: white;
+      border-left: 1px solid #ddd;
+      border-right: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     th {
@@ -149,18 +159,29 @@
 
     }
 
-    /* .sorting_asc{
-   display:none !important;
-} */
-
     .faqsearch {
       color: black !important;
     }
 
     #name {
       font-size: 18px !important;
+      margin: 0;
+      display: flex;
+      align-items: center;
     }
 
+    #name:before {
+      content: '\002B';
+      color: #602e9e;
+      font-weight: bold;
+      margin-right: 10px;
+      font-size: 18px;
+      transition: transform 0.3s ease;
+    }
+
+    .active #name:before {
+      content: "\2212";
+    }
 
     #q_faq {
       padding: 0px 30px !important;
@@ -225,6 +246,32 @@
 
     .col-lg-3 {
       margin-bottom: 0px !important;
+    }
+    
+    /* Accordion arrow indicator */
+    .collapsible:after {
+      content: '\002B';
+      color: #602e9e;
+      font-weight: bold;
+      float: right;
+      margin-left: 5px;
+      font-size: 18px;
+      transition: transform 0.3s ease;
+    }
+    
+    .active:after {
+      content: "\2212";
+      transform: rotate(180deg);
+    }
+    
+    .question-item {
+      margin-bottom: 15px;
+      padding-left: 20px;
+    }
+    
+    .answer-item {
+      margin-bottom: 20px;
+      padding-left: 40px;
     }
   </style>
     <script  disable-devtool-auto="" >
@@ -365,22 +412,6 @@
     });
   }
 </script>
-<!-- <script>
-var coll = document.getElementsByClassName("collapsible");
-var i;
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
-}
-</script> -->
 
 <script>
   var coll = document.getElementsByClassName("collapsible");

@@ -262,7 +262,7 @@
                                     <table class="table table-bordered" id="align">
                                         <thead>
                                             <tr>
-                                                <th width="50px">#</th>
+                                                <th width="50px" class="col-2">SI No</th>
                                                 <th>Services</th>
                                                 <th>Amount</th>
                                                 <th>Action</th>

@@ -165,41 +165,74 @@
 </div>
 @if($rows != [])
 <div class="modal fade" id="addModal">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
+
             <div class="main-contents">
                 <section class="section">
-                    <div class="modal-header bg-primary" style=" background-color: rgb(0 103 172) !important;">
-                        <!-- <h4 class="modal-title">Sail Activity</h4> -->
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                    <!-- Header -->
+                    <div class="modal-header bg-primary" style="background-color: rgb(0 103 172) !important;">
+                        <button type="button"
+                            class="close text-white"
+                            data-dismiss="modal"
+                            aria-hidden="true">&times;</button>
                     </div>
+
+                    <!-- Body -->
                     <div class="modal-body" style="background-color: #edfcff !important;">
                         <div class="section-body mt-2">
-                            <form action="{{route('videocreation.policyaggrement')}}" id="useraccept" method="POST">
+
+                            <form action="{{ route('videocreation.policyaggrement') }}"
+                                id="useraccept"
+                                method="POST">
                                 @csrf
+
                                 <div class="row">
-                                    <div class="card-body" id="card_header">
-                                        {!!$policy[0]['policy_content']!!}
+                                    <div class="col-md-12">
+                                        <div class="card-body" id="card_header">
+                                            {!! $policy[0]['policy_content'] !!}
+                                        </div>
                                     </div>
                                 </div>
-                                <input type="hidden" value="{{$rows[0]['enrollment_id']}}" name="enrollment_id">
-                                <input type="hidden" value="{{$rows[0]['activity_initiation_id']}}" name="activity_initiation_id">
 
+                                <input type="hidden"
+                                    name="enrollment_id"
+                                    value="{{ $rows[0]['enrollment_id'] }}">
+
+                                <input type="hidden"
+                                    name="activity_initiation_id"
+                                    value="{{ $rows[0]['activity_initiation_id'] }}">
                             </form>
-                            <div class="col-md-12  text-center" style="padding-top: 1rem;">
-                                <a type="button" onclick="accept()" id="submitbutton" class="btn btn-labeled btn-succes" title="Accept" style="background: green !important; border-color:green !important; color:white !important">
-                                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span>Accept</a>
 
-                                <!-- <a type="button" data-dismiss="modal" class="btn btn-labeled responsive-button button-style cancel-button" title="Cancel">
-                                    <i class="fas fa-times"></i><span> Cancel </span> -->
-                                </a>
+                            <!-- Accept Button -->
+                            <div class="row">
+                                <div class="col-md-12 text-center pt-3">
+                                    <a type="button"
+                                        onclick="accept()"
+                                        id="submitbutton"
+                                        class="btn btn-labeled btn-success"
+                                        title="Accept"
+                                        style="background: green !important; border-color: green !important; color: white !important;">
+
+                                        <span class="btn-label" style="font-size:13px !important;">
+                                            <i class="fa fa-check"></i>
+                                        </span>
+                                        Accept
+                                    </a>
+                                </div>
                             </div>
+
                         </div>
+                    </div>
+
                 </section>
             </div>
+
         </div>
     </div>
 </div>
+
 @endif
 <script>
     $(document).ready(function() {

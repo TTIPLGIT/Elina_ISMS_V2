@@ -60,7 +60,7 @@
             </div>
             <!--  -->
           </div>
-          <div class="row text-center">
+          <div class="row text-center mb-3">
             <div class="col-md-12">
               <input type="hidden" id="type" name="type">
               <input type="hidden" id="enrollment_id" name="enrollment_id" value="{{$enrollId}}">

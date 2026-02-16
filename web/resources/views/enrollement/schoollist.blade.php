@@ -18,8 +18,8 @@
                                         <th>S.No</th>
                                         <th>School Name</th>
                                         <th>Enrollment number</th>
-                                        <th>District</th>
-                                        <th>Administration Number</th>
+                                        <th class='col-2'>District</th>
+                                        <th class='col-2'>Administration Number</th>
                                         <th>status</th>
                                         <th>Action</th>
                                     </tr>

@@ -647,7 +647,7 @@ Breadcrumbs::for('payment_master.create', function (BreadcrumbTrail $trail) {
     $trail->push('Create', route('payment_master.create'));
 });
 Breadcrumbs::for('paymentmaster.customized', function (BreadcrumbTrail $trail) {
-    $trail->push('Customized SAIL Payments', route('paymentmaster.customized'));
+    $trail->push('Customize Payments', route('paymentmaster.customized'));
 });
 
 Breadcrumbs::for('paymentmaster.customized.create', function (BreadcrumbTrail $trail) {

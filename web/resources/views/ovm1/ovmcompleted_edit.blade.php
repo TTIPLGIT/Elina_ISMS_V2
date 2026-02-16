@@ -238,7 +238,7 @@
 
 
                                                 <tr>
-                                                <input type="hidden" name="que[{{ $rows[0]['ovm_isc_report_id'] }}][user_id]" value="que{{ $coordinatorNames->coordinator_id }}">
+                                                    <input type="hidden" name="que[{{ $rows[0]['ovm_isc_report_id'] }}][user_id]" value="que{{ $coordinatorNames->coordinator_id }}">
 
                                                     <td style="text-align:left !important;" rowspan="2">{!! $question['question'] !!}<span class="tooltiptext1">{!! $question['question_description'] !!}</span></td>
                                                     <td width="15%">IS-C1:{{ $coordinatorNames->coordinator_name1 }}</td>
@@ -249,7 +249,7 @@
 
                                                 </tr>
                                                 <tr>
-                                                <input type="hidden" name="que[{{ $rows1[0]['ovm_isc_report_id'] }}][user_id]" value="{{ $coordinatorNames->coordinator_id1 }}">
+                                                    <input type="hidden" name="que[{{ $rows1[0]['ovm_isc_report_id'] }}][user_id]" value="{{ $coordinatorNames->coordinator_id1 }}">
 
                                                     <td width="15%">IS-C2:{{ $coordinatorNames->coordinator_name2 }}</td> <!-- Add another textarea or content for the second row of "Conversation summary" -->
 
@@ -276,7 +276,7 @@
                                                 @foreach($questions as $question)
                                                 @if($question['group_id'] == $value['id'])
                                                 <tr>
-                                                <input type="hidden" name="que[{{ $rows[0]['ovm_isc_report_id'] }}][user_id]" value="{{ $coordinatorNames->coordinator_id }}">
+                                                    <input type="hidden" name="que[{{ $rows[0]['ovm_isc_report_id'] }}][user_id]" value="{{ $coordinatorNames->coordinator_id }}">
 
                                                     <td width="35%" style="text-align:left !important;height: 200px;" rowspan="2">{!! $question['question'] !!}<span class="tooltiptext1">{!! $question['question_description'] !!}</span></td>
                                                     <td id="{{ $coordinatorNames->coordinator_id1 }}" width="15%">IS-C1:{{ $coordinatorNames->coordinator_name1 }}</td>
@@ -285,7 +285,7 @@
 
                                                 </tr>
                                                 <tr>
-                                                <input type="hidden" name="que[{{ $rows1[0]['ovm_isc_report_id'] }}][user_id]" value="{{ $coordinatorNames->coordinator_id1 }}">
+                                                    <input type="hidden" name="que[{{ $rows1[0]['ovm_isc_report_id'] }}][user_id]" value="{{ $coordinatorNames->coordinator_id1 }}">
 
                                                     <td id="{{ $coordinatorNames->coordinator_id1 }}" width="15%">IS-C2:{{ $coordinatorNames->coordinator_name2 }}</td>
                                                     <td style="text-align:left !important;">{!! $question['prefilled_data'] !!}<input type="hidden" value="{{ $question['prefilled_data'] }}" name="que[{{ $rows1[0]['ovm_isc_report_id'] }}][{{ $question['question_column_name'] }}]"></td>
@@ -299,7 +299,7 @@
                                                 @foreach($questions as $question)
                                                 @if($question['group_id'] == $value['id'])
                                                 <tr>
-                                                <input type="hidden" name="que[{{ $rows[0]['ovm_isc_report_id'] }}][user_id]" value="{{ $coordinatorNames->coordinator_id }}">
+                                                    <input type="hidden" name="que[{{ $rows[0]['ovm_isc_report_id'] }}][user_id]" value="{{ $coordinatorNames->coordinator_id }}">
 
                                                     <td width="15%" style="text-align:left !important;height: 200px;" rowspan="2">{!! $question['question'] !!}<span class="tooltiptext1">{!! $question['question_description'] !!}</span></td>
                                                     <td width="15%">IS-C1:{{ $coordinatorNames->coordinator_name1 }}</td>
@@ -312,7 +312,7 @@
 
                                                 </tr>
                                                 <tr>
-                                                <input type="hidden" name="que[{{ $rows1[0]['ovm_isc_report_id'] }}][user_id]" value="{{ $coordinatorNames->coordinator_id1 }}">
+                                                    <input type="hidden" name="que[{{ $rows1[0]['ovm_isc_report_id'] }}][user_id]" value="{{ $coordinatorNames->coordinator_id1 }}">
 
                                                     <td width="15%">IS-C2:{{ $coordinatorNames->coordinator_name2 }}</td>
                                                     @if(isset($question['readonly']) && $question['readonly'] == 1)
@@ -532,22 +532,40 @@
 
         var fetchdatas = <?php echo json_encode($fetchdata); ?>;
         fetchdatas = fetchdatas[0] ? fetchdatas[0] : [];
-        // console.log("fetchdatas",fetchdatas);
+
         $.each(fetchdatas, function(key, value) {
-            // if(value != null) {
-            $('#' + key).val(value);
-            // console.log(key);
-            // }
+
+            if (value !== null && typeof value === "string") {
+
+                // Remove all null junk patterns
+                value = value
+                    .replace(/\/?null/gi, '') // removes null and /null
+                    .replace(/<p><br\s*\/?>/gi, '<p>')
+                    .replace(/<p>\s*<\/p>/gi, '')
+                    .trim();
+            }
+
+            $('#' + key).val(value || "");
         });
+
 
         var fetchdatas1 = <?php echo json_encode($fetchdata1); ?>;
         fetchdatas1 = fetchdatas1[0] ? fetchdatas1[0] : [];
+
         $.each(fetchdatas1, function(key, value) {
-            // if(value != null) {
-            $('#2_' + key).val(value);
-            // console.log(key);
-            // }
+
+            if (value !== null && typeof value === "string") {
+
+                value = value
+                    .replace(/\/?null/gi, '')
+                    .replace(/<p><br\s*\/?>/gi, '<p>')
+                    .replace(/<p>\s*<\/p>/gi, '')
+                    .trim();
+            }
+
+            $('#2_' + key).val(value || "");
         });
+
 
         var rolename = document.getElementById('rowrolename').value;
         var status = document.getElementById('rowstatus').value;

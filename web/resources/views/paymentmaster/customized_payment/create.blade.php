@@ -73,7 +73,7 @@
                                     <table class="table" id="serviceTable">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
+                                                <th class="col-1">SI no</th>
                                                 <th>Service Briefing</th>
                                                 <th>QTY</th>
                                                 <th>Rate (in ₹)</th>
@@ -108,7 +108,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label" for="gstRate">GST Rate (in %):</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" type="number" id="gstRate" name="gstRate" required min="0" step="any" value="{{$rows['gst_rate']}}">
+                                        <input class="form-control" type="number" id="gstRate" name="gstRate" required min="0" step="any" value="{{$rows['gst_rate']}}" disabled>
                                     </div>
                                 </div>
 
@@ -181,6 +181,11 @@
     // Validate the form before submitting
     function validateForm(action) {
         var Category = $('#Category').val();
+        var ChildName = $('#child_enrollment').val();
+        if (ChildName == "") {
+            showAlert("Please Select Child Name");
+            return false;
+        }
         if (Category == "") {
             showAlert("Please Select Category");
             return false;

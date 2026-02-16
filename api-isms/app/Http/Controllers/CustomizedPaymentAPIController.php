@@ -73,7 +73,9 @@ class CustomizedPaymentAPIController extends BaseController
             $schoolists = DB::select("select * from schools_registration");
             $serviceList = DB::select("SELECT * FROM payment_process_services WHERE payment_process_master_id = $payment_id");
             $taxList = DB::select("SELECT * FROM payment_process_taxes WHERE payment_process_master_id = $payment_id");
-            $serviceData = DB::table('payment_services_master')->get();
+            $serviceData = DB::table('payment_services_master')
+                ->where('active_flag', 0)
+                ->get();
 
             $response = [
                 'rows' => $rows,
@@ -81,7 +83,7 @@ class CustomizedPaymentAPIController extends BaseController
                 'serviceList' => $serviceList,
                 'taxList' => $taxList,
                 'childDetails' => $childDetails,
-                'serviceData' =>  $serviceData 
+                'serviceData' =>  $serviceData
             ];
 
             $serviceResponse = array();

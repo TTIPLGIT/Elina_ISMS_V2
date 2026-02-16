@@ -101,12 +101,12 @@
                                                 <td style="border: 1px solid black !important;" colspan="2">
                                                     @php $ovmreport= array(); $id = Crypt::Encrypt($rows[0]['ovm_isc_report_id']); $role = 'ishead'; $meet = Crypt::Encrypt($rows[1]['ovm_isc_report_id']);@endphp
 
-                                                    
+
                                                     <a class="btn btn-labeled btn-warning" style="background: warning !important; border-color:warning !important; color:warning !important" title="Edit" href="{{ route('ovmcompleted_isedit',['id' => $id ,'meet'=> $meet, 'role' => $role]) }}">
                                                         <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-file-o"></i></span>Edit </a>
-                                                    
+
                                                 </td>
-                                               
+
                                             </tr>
                                         </tfoot>
                                         @endif
@@ -128,39 +128,56 @@
         </div>
     </section>
 </div>
-
 <script>
     $(document).ready(function() {
-        var fetch = <?php echo json_encode($fetch); ?>;
 
+        var fetch = <?php echo json_encode($fetch); ?>;
         var feedbacks = fetch.feedback;
 
         var u1 = $('#u1').val();
         var u2 = $('#u2').val();
 
-        // $('.u1_conversation_016').val('Text Message');
-        // var valueToInsert = "YourValueHere";
-        // $('.u1_conversation_016').text(valueToInsert);
+        function formatValue(value) {
+
+            if (value === null || value === undefined) {
+                return '<span class="text-danger"></span>';
+            }
+
+            if (typeof value === 'string') {
+
+                let text = value
+                    .replace(/<[^>]*>/g, '')
+                    .replace(/&nbsp;/g, '')
+                    .trim()
+                    .toLowerCase();
+
+                if (text === '' || /^null+$/.test(text)) {
+                    return '<span class="text-danger">Not Entered</span>';
+                }
+            }
+
+            return value;
+        }
 
         for (var i = 0; i < feedbacks.length; i++) {
             var feedback = feedbacks[i];
-            // console.log(feedbacks)
             var feedbackID = feedback.ovm_isc_report_id;
+
             if (feedbackID == u1) {
                 $.each(feedback, function(key, value) {
-                    // console.log('.u1_' + key);
-                    $('.u1_' + key).html(value);
-                    // console.log(key , value);
+                    $('.u1_' + key).html(formatValue(value));
                 });
             } else if (feedbackID == u2) {
                 $.each(feedback, function(key, value) {
-                    $('.u2_' + key).html(value);
+                    $('.u2_' + key).html(formatValue(value));
                 });
             }
         }
+
     });
+
     $(document).ready(function() {
-        $('#recap').DataTable({
+        var table = $('#recap').DataTable({
             "lengthMenu": [
                 [10, 50, 100, 250, -1],
                 [10, 50, 100, 250, "All"]
@@ -168,7 +185,14 @@
             dom: 'lfrtip',
             "ordering": false,
         });
+
+        replaceNullText();
+
+        table.on('draw', function() {
+            replaceNullText();
+        });
     });
+
     $(document).on('click', '.paginate_button:not(.disabled)', function() {
         window.scroll({
             top: 0,
@@ -176,6 +200,17 @@
             behavior: 'smooth'
         });
     });
+
+    function replaceNullText() {
+        $('#recap td').each(function() {
+
+            let text = $(this).text().trim().toLowerCase();
+
+            if (text === '' || /^null(\s*null)*$/.test(text)) {
+                $(this).html('<span class="text-danger"></span>');
+            }
+        });
+    }
 </script>
 
 @endsection

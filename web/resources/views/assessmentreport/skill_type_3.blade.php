@@ -20,7 +20,7 @@
                     <th width="30%">{{ $perskills['skill_name'] ?? $page['tab_name'] }}</th>
                     <th width="30%">Observation</th>
                     <th width="30%">Evidence</th>
-                    <th class="required" width="40%">
+                    <th width="40%">
                         Recommendation
                         <input type="checkbox" style="float:right" onclick="handleCheckboxTable(this)" name="switch[]" value="{{ $perskills['skill_id'] }}" class="check">
                     </th>

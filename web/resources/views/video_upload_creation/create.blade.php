@@ -101,7 +101,7 @@
 
                             <select class="form-control default age" id="age" name="age" onchange="categorizedquestion()">
                                 <option value="">Select-Group</option>
-                                <option value="Below 12">Age of 6-12 yrs</option>
+                                <option value="Age of 6-12 yrs">Age of 6-12 yrs</option>
                                 <option value="13+">Age of 13+ yrs</option>
 
                             </select>
@@ -137,7 +137,8 @@
 
                     <div class="col-md-12">
                         <div class="form-group questionnaire">
-                            <label class="control-label" style="">Activity Description & Instruction</label>
+                            <label class="control-label required" style="margin-left:-300px">Activity Description </label>
+                            <label class="control-label" style="margin-left:300px">Activity Instruction</label>
                             <div class="multi-field-wrapper">
                                 <div class="multi-fields">
                                     <div class="multi-field" style="display: flex;margin-bottom: 5px;">
@@ -185,7 +186,7 @@
         var groupselection = document.querySelector('.age').value;
         var categoryDropdown = document.getElementById('Category');
 
-        if (groupselection == "Below 12") {
+        if (groupselection == "Age of 6-12 yrs") {
             document.querySelector('.Categorytype').style.display = "block";
             categoryDropdown.value = "3";
             categoryDropdown.style.pointerEvents = "none";

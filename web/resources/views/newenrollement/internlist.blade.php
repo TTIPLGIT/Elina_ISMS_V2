@@ -82,13 +82,13 @@
                             <table class="table table-bordered" id="align">
                                 <thead>
                                     <tr>
-                                        <th>S.No</th>
-                                        <th>Intern Name</th>
-                                        <th>Email Address</th>
+                                        <th class='col-1'>S.No</th>
+                                        <th class='col-2'>Intern Name</th>
+                                        <th >Email Address</th>
                                         <th>Contact number</th>
                                         <th>Start Date</th>
                                         <th>Status</th>
-                                        <th>Action</th>
+                                        <th class='col-1'>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>

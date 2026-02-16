@@ -100,7 +100,7 @@ class QuestionCreationController extends BaseController
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -109,34 +109,67 @@ class QuestionCreationController extends BaseController
     {
         try {
             $method = 'Method => QuestionCreationController => add_questions';
-            $id = $this->decryptData($id); //dd($id);
+
+            $id = $this->decryptData($id);
+
             $gatewayURL = config('setting.api_gateway_url') . '/question_creation/data_edit/' . $this->encryptData($id);
+
             $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
             $response1 = json_decode($response);
+
             if ($response1->Status == 200) {
+
                 $objData = json_decode($this->decryptData($response1->Data));
                 $responseData = json_decode(json_encode($objData->Data), true);
-                $questionnaire_list = $responseData['data']; //dd($questionnaire_list);
+
+                $questionnaire_list = $responseData['data'];
                 $field_types = $responseData['field_types'];
                 $question_details = $responseData['question_details'];
                 $option_question_fields = $responseData['option_question_fields'];
                 $sub_questions = $responseData['sub_questions'];
                 $fields = $responseData['fields'];
                 $options = $responseData['options'];
+
                 $menus = $this->FillMenu();
                 $screens = $menus['screens'];
                 $modules = $menus['modules'];
-                return view('QuestionCreation.add_question', compact('modules', 'screens', 'questionnaire_list', 'field_types', 'question_details', 'sub_questions', 'option_question_fields', 'fields', 'options'));
+
+                // 👇 Detect route name
+                $routeName = request()->route()->getName();
+
+                // 👇 Decide blade
+                $view = ($routeName == 'question_creation.view_questions')
+                    ? 'QuestionCreation.view_question'
+                    : 'QuestionCreation.add_question';
+
+                return view($view, compact(
+                    'modules',
+                    'screens',
+                    'questionnaire_list',
+                    'field_types',
+                    'question_details',
+                    'sub_questions',
+                    'option_question_fields',
+                    'fields',
+                    'options'
+                ));
             } else {
                 $objData = json_decode($this->decryptData($response1->Data));
                 echo json_encode($objData->Code);
                 exit;
             }
         } catch (\Exception $exc) {
-            
-            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
+
+            return $this->sendLog(
+                $method,
+                $exc->getCode(),
+                $exc->getMessage(),
+                $exc->getLine(),
+                $exc->getTrace()[0]['args'][2]
+            );
         }
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -232,7 +265,7 @@ class QuestionCreationController extends BaseController
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -260,7 +293,7 @@ class QuestionCreationController extends BaseController
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -305,9 +338,7 @@ class QuestionCreationController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-    }
+    public function edit($id) {}
 
     /**
      * Update the specified resource in storage.
@@ -357,7 +388,7 @@ class QuestionCreationController extends BaseController
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -389,7 +420,7 @@ class QuestionCreationController extends BaseController
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -420,7 +451,7 @@ class QuestionCreationController extends BaseController
                 }
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -437,7 +468,9 @@ class QuestionCreationController extends BaseController
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
-                    return redirect()->route('question_creation.add_questions', $this->encryptData($objData->Data));
+                    return redirect()
+                        ->route('question_creation.add_questions', $this->encryptData($objData->Data))
+                        ->with('success', 'Question deleted successfully');
                     return redirect(route('question_creation.index'));
                 }
                 if ($objData->Code == 400) {
@@ -445,7 +478,7 @@ class QuestionCreationController extends BaseController
                 }
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -474,7 +507,7 @@ class QuestionCreationController extends BaseController
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -504,7 +537,7 @@ class QuestionCreationController extends BaseController
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }

@@ -287,6 +287,8 @@ Route::group(['middleware' => 'usersession'], function () {
     Route::post('/question_creation/update_data', [\App\Http\Controllers\QuestionCreationController::class, 'update_data'])->name('question_creation.update_data');
     Route::get('/question_creation/delete/{id}', [\App\Http\Controllers\QuestionCreationController::class, 'delete'])->name('question_creation.delete');
     Route::get('/question_creation/add_questions/{id}', [\App\Http\Controllers\QuestionCreationController::class, 'add_questions'])->name('question_creation.add_questions');
+    Route::get('/question_creation/add_questions/show/{id}', [\App\Http\Controllers\QuestionCreationController::class, 'add_questions'])->name('question_creation.view_questions');
+
     Route::post('/question_creation/get_options', [\App\Http\Controllers\QuestionCreationController::class, 'get_options'])->name('question_creation.get_options');
     Route::post('/question_creation/question_update', [\App\Http\Controllers\QuestionCreationController::class, 'question_update'])->name('question_creation.question_update');
     Route::get('/question_creation/data_delete/{id}', [\App\Http\Controllers\QuestionCreationController::class, 'data_delete'])->name('question_creation.data_delete');
@@ -744,5 +746,5 @@ Route::group(['middleware' => 'usersession'], function () {
     Route::get('/service/briefing/delete/{id}', [\App\Http\Controllers\ServiceBriefingController::class, 'delete'])->name('service_briefing.delete');
     Route::get('/service_briefing/show/{id}', [\App\Http\Controllers\ServiceBriefingController::class, 'show'])->name('service_briefing.show');
     Route::get('/service-briefing/edit/{id}', [App\Http\Controllers\ServiceBriefingController::class, 'edit'])->name('service_briefing.edit');
-    Route::post('/service-briefing/update/{id}',[App\Http\Controllers\ServiceBriefingController::class, 'update'])->name('service_briefing.update');
+    Route::post('/service-briefing/update/{id}', [App\Http\Controllers\ServiceBriefingController::class, 'update'])->name('service_briefing.update');
 });

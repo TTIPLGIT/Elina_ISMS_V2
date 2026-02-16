@@ -32,8 +32,16 @@
                                             <!-- <a class="btn btn-link" title="show" href=""><i class="fas fa-eye" style="color:green"></i></a> -->
                                             <a class="btn btn-link" title="Edit" href="{{ route('questionnaire_master.edit', \Crypt::encrypt($data['questionnaire_id'])) }}"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
                                             @csrf
-                                            <input type="hidden" name="delete_id" id="<?php echo $data['questionnaire_id']; ?>" value="{{ route('questionnaire_master.delete', \Crypt::encrypt($data['questionnaire_id'])) }}">
+                                            <a href="javascript:void(0)"
+                                                class="btn btn-link"
+                                                title="Delete"
+                                                onclick="confirmDelete('{{ route('questionnaire_master.delete', Crypt::encrypt($data['questionnaire_id'])) }}')">
+                                                <i class="fas fa-trash-alt" style="color:red !important"></i>
+                                            </a>
+
+                                            <!-- <input type="hidden" name="delete_id" id="<?php echo $data['questionnaire_id']; ?>" value="{{ route('questionnaire_master.delete', \Crypt::encrypt($data['questionnaire_id'])) }}">
                                             <a class="btn btn-link" title="Delete" onclick="return myFunction(<?php echo $data['questionnaire_id']; ?>);" class="btn btn-link"><i class="far fa-trash-alt"></i></a>
+                                       -->
                                         </td>
                                     </tr>
                                     @endforeach
@@ -74,5 +82,49 @@
             });
     }
 </script>
+
+<script>
+    function confirmDelete(url) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you really want to delete this questionnaire?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, Delete',
+            cancelButtonText: 'No, Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url; // CALL DELETE ROUTE
+            }
+        });
+    }
+</script>
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: "{{ session('success') }}",
+        timer: 2000,
+        confirmButtonText: 'OK',
+        allowOutsideClick: false
+    });
+</script>
+@endif
+
+@if(session('fail'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: "{{ session('fail') }}",
+        confirmButtonText: 'OK',
+        allowOutsideClick: false
+    });
+</script>
+@endif
+
 
 @endsection
