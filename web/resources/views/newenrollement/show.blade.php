@@ -225,14 +225,14 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="control-label" style="font-size: medium;">Contact Phone Number: </label><span class="error-star" style="color:red;">*</span>
-                                                <input class="form-control " type="text" id="child_contact_phone" minlength="10" maxlength="10" name="child_contact_phone" autocomplete="off" inputmode="numeric" oninput="contactphonenumber(event)" value="{{ $row['child_contact_phone']}}" disabled="">
+                                                <input class="form-control " type="text" id="child_contact_phone"  name="child_contact_phone" autocomplete="off" inputmode="numeric" oninput="contactphonenumber(event)" value="{{ $row['child_contact_phone']}}" disabled="">
                                             </div>
 
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="control-label" style="font-size: medium;">Alternative Phone Number: </label>
-                                                <input class="form-control default" type="text" id="child_alter_phone" minlength="10" maxlength="10" name="child_alter_phone" autocomplete="off" inputmode="numeric" oninput="contactphonenumber(event)" value="{{ $row['child_alter_phone']}}" disabled="">
+                                                <input class="form-control default" type="text" id="child_alter_phone"  name="child_alter_phone" autocomplete="off" inputmode="numeric" oninput="contactphonenumber(event)" value="{{ $row['child_alter_phone']}}" disabled="">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
