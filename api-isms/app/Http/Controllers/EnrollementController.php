@@ -95,7 +95,7 @@ class EnrollementController extends BaseController
                 'Through my therapists' => "Recommended by Child's therapist",
                 'others' => 'others'
             );
-          
+
 
             foreach ($input['how_knowabt_elina'] as $key => $value) {
                 if (array_key_exists($value, $mapping)) {
@@ -226,9 +226,20 @@ class EnrollementController extends BaseController
                         $input['child_school_name_address'] = $schoolAddress ?? null;
                     }
 
-                    // $this->WriteFileLog($input['child_contact_address']);
+                  
+                    $contactPhone = trim($input['child_contact_phone']);
+                    $alterPhone   = trim($input['child_alter_phone']);
+
+                    $contactPhone = str_starts_with($contactPhone, '+')
+                        ? $contactPhone
+                        : '+' . $contactPhone;
+
+                    $alterPhone = str_starts_with($alterPhone, '+')
+                        ? $alterPhone
+                        : '+' . $alterPhone;
+
                     $screen_permission_id1 = DB::table('enrollment_details')->insertGetId([
-                        'enrollment_child_num' =>  $enrollmentnum,
+                        'enrollment_child_num' => $enrollmentnum,
                         'child_name' => $input['child_name'],
                         'child_dob' => $input['child_dob'],
                         'child_school_name_address' => $input['child_school_name_address'],
@@ -236,11 +247,11 @@ class EnrollementController extends BaseController
                         'child_father_guardian_name' => $input['child_father_guardian_name'],
                         'child_mother_caretaker_name' => $input['child_mother_caretaker_name'],
                         'child_contact_email' => $input['child_contact_email'],
-                        'child_contact_phone' => '+'.$input['child_contact_phone'],
+                        'child_contact_phone' => $contactPhone,
                         'child_contact_address' => $input['child_contact_address'],
                         'services_from_elina' => $services_from_elina,
                         'how_knowabt_elina' => $how_knowabt_elina,
-                        'child_alter_phone' =>'+'.$input['child_alter_phone'],
+                        'child_alter_phone' => $alterPhone,
                         'active_flag' => 0,
                         'flag' => 1,
                         'child_id' => $claimnoticenoNew,
@@ -249,7 +260,7 @@ class EnrollementController extends BaseController
                         'consent_aggrement' => 'Agreed',
                         'category_id' => $paymentCategory,
                         'school_id' => $school_id,
-                        'created_date' => NOW()
+                        'created_date' => now()
                     ]);
                     $this->updateGoogleEvent();
                     $payment = DB::select("select * from payment_structure where fees_type='enroll'and status='Active' ");
@@ -572,42 +583,43 @@ class EnrollementController extends BaseController
                 'specification_limitation_constraint' => $inputArray['specification_limitation_constraint'],
                 'agree_of_acknowledgement' => $inputArray['agree_of_acknowledgement'],
             ];
-            $emailToCheck = $input['email_address']; $this->WriteFileLog($emailToCheck);
+            $emailToCheck = $input['email_address'];
+            $this->WriteFileLog($emailToCheck);
             if (DB::table('enrollment_details')
                 ->where('child_contact_email', $emailToCheck)
                 ->exists()
             ) {
-               return response()->json([
-                        'message' => "You have already registered as a parent. Please use another email to register as a professional.",
-                        'code' => 400
-                    ], 400);
+                return response()->json([
+                    'message' => "You have already registered as a parent. Please use another email to register as a professional.",
+                    'code' => 400
+                ], 400);
             }
             if (DB::table('school_enrollment_details')
                 ->where('school_email', $emailToCheck)
                 ->exists()
             ) {
                 return response()->json([
-                        'message' => "You have already registered as a school. Please use another email to register as a professional.",
-                        'code' => 400
-                    ], 400);
+                    'message' => "You have already registered as a school. Please use another email to register as a professional.",
+                    'code' => 400
+                ], 400);
             }
             if (DB::table('internship_application_form')
                 ->where('email_address', $emailToCheck)
                 ->exists()
             ) {
-               return response()->json([
-                        'message' => "You have already registered as an intern. Please use another email to register as a professional.",
-                        'code' => 400
-                    ], 400);
+                return response()->json([
+                    'message' => "You have already registered as an intern. Please use another email to register as a professional.",
+                    'code' => 400
+                ], 400);
             }
             if (DB::table('service_provider')
                 ->where('email_address', $emailToCheck)
                 ->exists()
             ) {
                 return response()->json([
-                        'message' => "You have already registered as a professional. Please use another email to register again.",
-                        'code' => 400
-                    ], 400);
+                    'message' => "You have already registered as a professional. Please use another email to register again.",
+                    'code' => 400
+                ], 400);
             }
             if ($inputArraycount <= 0) {
                 $mode_of_service = json_encode($input['mode_of_service'], JSON_FORCE_OBJECT);

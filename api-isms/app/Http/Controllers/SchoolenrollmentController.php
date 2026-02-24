@@ -114,37 +114,37 @@ class SchoolenrollmentController extends BaseController
                 ->where('child_contact_email', $emailToCheck)
                 ->exists()
             ) {
-                  return response()->json([
-                        'message' => "You have already registered as a parent. Please use another email to register as a school.",
-                        'code' => 400
-                    ], 400);
+                return response()->json([
+                    'message' => "You have already registered as a parent. Please use another email to register as a school.",
+                    'code' => 400
+                ], 400);
             }
             if (DB::table('school_enrollment_details')
                 ->where('school_email', $emailToCheck)
                 ->exists()
             ) {
-                  return response()->json([
-                        'message' => "You have already registered as a school. Please use another email to register again.",
-                        'code' => 400
-                    ], 400);
+                return response()->json([
+                    'message' => "You have already registered as a school. Please use another email to register again.",
+                    'code' => 400
+                ], 400);
             }
             if (DB::table('internship_application_form')
                 ->where('email_address', $emailToCheck)
                 ->exists()
             ) {
-                 return response()->json([
-                        'message' => "You have already registered as an intern. Please use another email to register as a school.",
-                        'code' => 400
-                    ], 400);
+                return response()->json([
+                    'message' => "You have already registered as an intern. Please use another email to register as a school.",
+                    'code' => 400
+                ], 400);
             }
             if (DB::table('service_provider')
                 ->where('email_address', $emailToCheck)
                 ->exists()
             ) {
-                   return response()->json([
-                        'message' => "You have already registered as a professional. Please use another email to register as a school.",
-                        'code' => 400
-                    ], 400);
+                return response()->json([
+                    'message' => "You have already registered as a professional. Please use another email to register as a school.",
+                    'code' => 400
+                ], 400);
             }
             // return $inputArray;
             if ($inputArraycount <= 0) {
@@ -215,6 +215,17 @@ class SchoolenrollmentController extends BaseController
                     $enrollmentnum = "SCL/EN/$year/$month/$nextNumber";
                     $inputArraycount = count($input);
 
+                    $contactPhone = trim($input['phone_number']);
+                    $alterPhone   = trim($input['telephone_number']);
+
+                    $contactPhone = str_starts_with($contactPhone, '+')
+                        ? $contactPhone
+                        : '+' . $contactPhone;
+
+                    $alterPhone = str_starts_with($alterPhone, '+')
+                        ? $alterPhone
+                        : '+' . $alterPhone;
+
                     $school_enroll = DB::table('school_enrollment_details')->insertGetId([
 
                         'school_enrollment_num' =>  $enrollmentnum,
@@ -225,8 +236,8 @@ class SchoolenrollmentController extends BaseController
                         'school_district' => $input['school_district'],
                         'building_contract' => $input['building_contract'],
                         'admin_contract' => $input['admin_contract'],
-                        'phone_number' => '+'.$input['phone_number'],
-                        'telephone_number' =>'+'. $input['telephone_number'],
+                        'phone_number' =>$contactPhone,
+                        'telephone_number' => $alterPhone,
                         'school_email' => $input['school_email'],
                         'year_of_establishment' => $input['year_of_establishment'],
                         'totalstudent_population' => $input['totalstudent_population'],

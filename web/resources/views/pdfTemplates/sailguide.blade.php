@@ -63,7 +63,7 @@
                 {!! $data !!}
             </div>
             <div class="flyleaf">
-                <img src="C:\Apache24\htdocs\Elina ISMS\v1\web\public\images/sail_guide_011.jpg" alt="" style="width: 100% !important;margin: 0 important;margin-top: 0 !important;
+                <img src="C:\Apache24\htdocs\Elina ISMS\v1\web\public\images/Elina.jpg" alt="" style="width: 100% !important;margin: 0 important;margin-top: 0 !important;
             margin-left: 0 !important;
             margin-right: 0 !important;
             margin-bottom: 0 !important;" id="img_logo">
