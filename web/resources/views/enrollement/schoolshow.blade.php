@@ -208,14 +208,14 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label childname">Phone Number:</label><span class="error-star" style="color:red;">*</span>
-                                            <input class="form-control default" type="tel" id="phone_number" name="phone_number" oninput="PhoneNumber(event)" maxlength="10" value="{{ $row['phone_number']}}" autocomplete="off" disabled>
+                                            <input class="form-control default" type="tel" id="phone_number" name="phone_number" oninput="PhoneNumber(event)"  value="{{ $row['phone_number']}}" autocomplete="off" disabled>
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label childname">Telephone Number:</label><span class="error-star" style="color:red;">*</span>
-                                            <input class="form-control default" type="text" id="telephone_number" name="telephone_number" oninput="TelephoneNumber(event)" maxlength="10" value="{{ $row['telephone_number']}}" autocomplete="off" disabled>
+                                            <input class="form-control default" type="text" id="telephone_number" name="telephone_number" oninput="TelephoneNumber(event)"  value="{{ $row['telephone_number']}}" autocomplete="off" disabled>
                                         </div>
                                     </div>
 
