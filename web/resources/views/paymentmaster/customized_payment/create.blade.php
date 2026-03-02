@@ -508,5 +508,5 @@
         cursor: not-allowed;
     }
 </style>
- 
+       
 @endsection
