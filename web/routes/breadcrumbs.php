@@ -553,7 +553,7 @@ Breadcrumbs::for('inperson_meeting.create', function (BreadcrumbTrail $trail) {
     $trail->push('New Invite', route('inperson_meeting.create'));
 });
 Breadcrumbs::for('quadrant_questionnaire.index', function (BreadcrumbTrail $trail) {
-    $trail->push('Questionnaire Report', route('quadrant_questionnaire.index'));
+    $trail->push('Quadrant Report', route('quadrant_questionnaire.index'));
 });
 Breadcrumbs::for('quadrant_questionnaire.executive', function ($trail, $id) {
     $trail->parent('quadrant_questionnaire.index');
