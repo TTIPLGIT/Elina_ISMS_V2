@@ -77,7 +77,7 @@ class CustomizedPaymentController extends BaseController
                     $serviceData = $parant_data['serviceData'];
                   
                     $menus = $this->FillMenu();
-                    $screens = $menus['screens'];
+                    $screens = $menus['screens'];   
                     $modules = $menus['modules'];
                     return view('paymentmaster.customized_payment.create', compact('rows', 'screens', 'modules', 'schoolists', 'serviceList', 'taxList', 'childDetails','serviceData'));
                 }
