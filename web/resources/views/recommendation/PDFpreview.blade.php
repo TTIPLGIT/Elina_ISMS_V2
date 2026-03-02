@@ -281,7 +281,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12 text-center">
+    <div  style="margin-top: 10px" class="col-md-12 text-center">
         <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{ route('recommendation.index') }}" style="color:white !important">
             <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back</a>
         <input type="hidden" value="{{ route('recommendation.edit', \Crypt::encrypt($data['report_id'])) }}" id="routeUrl">
@@ -330,33 +330,59 @@
 </script>
 <script>
     function pdfgenrate(reportID) {
-        $(".loader").show();
 
-        // var entirePage = document.getElementById('entirePage').innerHTML;
-        // entirePage = entirePage.replace(/<\/?span[^>]*>/g, "");
-        var child_contact_email = document.getElementById('child_contact_email').value;
-        var enrollment_id = document.getElementById('enrollment_id').value;
-        var email_content = tinyMCE.get('email_content').getContent();
-        $("#submitbutton").addClass("disable-click");
-        $.ajax({
-            url: "{{ url('/report/assessment/generatePDF') }}",
-            type: 'POST',
-            data: {
-                'reportID': reportID,
-                // 'entirePage': entirePage,
-                'child_contact_email': child_contact_email,
-                'enrollment_id': enrollment_id,
-                'email_content': email_content,
-                _token: '{{csrf_token()}}'
+        Swal.fire({
+            title: "Publish Recommendation Report",
+            text: "Are you sure you want to publish this recommendation report?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Publish",
+            cancelButtonText: "No",
+            reverseButtons: true
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                // 🔹 Existing Flow Starts Here
+                $(".loader").show();
+
+                var child_contact_email = document.getElementById('child_contact_email').value;
+                var enrollment_id = document.getElementById('enrollment_id').value;
+                var email_content = tinyMCE.get('email_content').getContent();
+
+                $("#submitbutton").addClass("disable-click");
+
+                $.ajax({
+                    url: "{{ url('/report/assessment/generatePDF') }}",
+                    type: 'POST',
+                    data: {
+                        'reportID': reportID,
+                        'child_contact_email': child_contact_email,
+                        'enrollment_id': enrollment_id,
+                        'email_content': email_content,
+                        _token: '{{csrf_token()}}'
+                    }
+                }).done(function(data) {
+
+                    $(".loader").hide();
+
+                    Swal.fire(
+                        "Success",
+                        "The Recommendation Report has been published successfully.",
+                        "success"
+                    ).then(function() {
+                        window.location = "/report/recommendationreport";
+                    });
+
+                });
+
+                // 🔹 Existing Flow Ends Here
+            } else {
+                return false; // Stay on same page
             }
-        }).done(function(data) {
 
-            $(".loader").hide();
-            // swal.fire("Success", "Report Sent Successfully", "success");
-            swal.fire("Success", "The Recommendation  Report has been published successfully.", "success").then(function() {
-                window.location = "/report/recommendationreport";
-            });
-        })
+        });
+
     }
 </script>
 <script>
@@ -386,9 +412,9 @@
                     content = content.replace(/childName/g, childName);
                     // content = content.replace(/leveraging their strengths/g, 'leveraging ' + genderAdjectives + ' strengths');
                     // content = content.replace(/childGenderAdjectives/g, genderAdjectives);
-                    
+
                     if (content.includes("leveraging their strengths")) {
-                        content = content.replace(/leveraging their strengths/g,'leveraging ' + genderAdjectives + ' strengths');
+                        content = content.replace(/leveraging their strengths/g, 'leveraging ' + genderAdjectives + ' strengths');
                     } else {
                         content = content.replace(/childGenderAdjectives/g, genderAdjectives);
                     }

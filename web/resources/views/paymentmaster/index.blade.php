@@ -222,7 +222,7 @@
 
   <section class="section">
     {{ Breadcrumbs::render('payment_master.index') }}
-    
+
     @if (session('success'))
     <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
     <script type="text/javascript">
@@ -263,22 +263,31 @@
                   <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th>#</th>
+                        <th>SI.No</th>
                         <th>Fees Type</th>
                         <th>Payment Amount</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach($rows as $key=>$row)
+                      @php $serial = 1; @endphp
+
+                      @foreach($rows as $row)
                       @if($row['category'] == 'General')
                       <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $serial++ }}</td>
                         <td>{{ $row['fee_type'] }}</td>
                         <td>{{ $row['final_amount'] }}</td>
                         <td>
-                          <a class="btn btn-link" title="Edit" href="{{ route('payment_master_edit_data', Crypt::encrypt($row['id'])) }}"><i class="fas fa-pencil-alt" style="color:green"></i></a>
-                          <a class="btn btn-link" title="Timeline" data-id="{{$row['id']}}" id="openModalBtn"><i class="fa fa-history" style="color:green"></i></a>
+                          <a class="btn btn-link" title="Edit"
+                            href="{{ route('payment_master_edit_data', Crypt::encrypt($row['id'])) }}">
+                            <i class="fas fa-pencil-alt" style="color:green"></i>
+                          </a>
+
+                          <a class="btn btn-link" title="Timeline"
+                            data-id="{{$row['id']}}" id="openModalBtn">
+                            <i class="fa fa-history" style="color:green"></i>
+                          </a>
                         </td>
                       </tr>
                       @endif
@@ -297,7 +306,7 @@
                     <table class="table table-bordered">
                       <thead>
                         <tr>
-                          <th>#</th>
+                          <th>SI.No</th>
                           <th>School Name</th>
                           <th>Enrollment</th>
                           <th>Type</th>
@@ -306,25 +315,40 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($rows as $key=>$row)
+
+                        @php $serial = 1; @endphp
+
+                        @foreach($rows as $row)
                         @if($row['category'] == 'School')
-                        @foreach($schools as $key => $school)
+
+                        @foreach($schools as $school)
                         @if($row['school_id'] == $school['id'])
+
                         <tr>
-                          <td>{{ $loop->iteration }}</td>
-                          <td>{{$school['school_name']}}</td>
-                          <td>{{$school['school_unique']}}</td>
+                          <td>{{ $serial++ }}</td>
+                          <td>{{ $school['school_name'] }}</td>
+                          <td>{{ $school['school_unique'] }}</td>
                           <td>{{ $row['fee_type'] }}</td>
                           <td>{{ $row['final_amount'] }}</td>
                           <td>
-                            <a class="btn btn-link" title="Edit" href="{{ route('payment_master_edit_data', Crypt::encrypt($row['id'])) }}"><i class="fas fa-pencil-alt" style="color:green"></i></a>
-                            <a class="btn btn-link" title="Timeline" data-id="{{$row['id']}}" id="openModalBtn"><i class="fa fa-history" style="color:green"></i></a>
+                            <a class="btn btn-link" title="Edit"
+                              href="{{ route('payment_master_edit_data', Crypt::encrypt($row['id'])) }}">
+                              <i class="fas fa-pencil-alt" style="color:green"></i>
+                            </a>
+
+                            <a class="btn btn-link" title="Timeline"
+                              data-id="{{$row['id']}}" id="openModalBtn">
+                              <i class="fa fa-history" style="color:green"></i>
+                            </a>
                           </td>
                         </tr>
+
                         @endif
                         @endforeach
+
                         @endif
                         @endforeach
+
                       </tbody>
                     </table>
                   </div>

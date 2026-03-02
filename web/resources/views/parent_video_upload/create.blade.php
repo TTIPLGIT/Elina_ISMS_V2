@@ -940,57 +940,43 @@
   });
 
   function save1(id) {
+    var currentActivityId = id; // This is the current activity's parent_video_upload_id
 
-    var hasClonedInput = false;
-    var clonedFoundId = null;
+    // Get current activity's inputs and checkboxes
+    var inputs = document.querySelectorAll('.video_linka' + currentActivityId);
+    var checkbox = document.getElementById('unable' + currentActivityId);
+    var sameVideoLink = document.getElementById('sameVideoLink' + currentActivityId);
 
-    for (var i = 0; i < rejectedId.length; i++) {
-      var inputs = document.querySelectorAll('.video_linka' + rejectedId[i]);
-      var checkbox = document.querySelector(`input[type="checkbox"][data-rej="${rejectedId[i]}"]`);
-      var clonedFound = false;
-      var sameVideoLink = $('#sameVideoLink' + rejectedId[i]);
-
-      if (!checkbox.checked && !sameVideoLink.prop('checked')) {
-        for (var j = 0; j < inputs.length; j++) {
-          var input = inputs[j];
-          if (input.getAttribute('isClone') === 'true') {
-            hasClonedInput = true;
-            clonedFound = true;
-            break;
-          } else {
-            hasClonedInput = false;
-          }
-        }
-
-        if (!clonedFound) {
-          clonedFoundId = rejectedId[i];
-          break;
-        }
+    // Check if there are any new videos in the current activity
+    var hasNewVideo = false;
+    for (var j = 0; j < inputs.length; j++) {
+      var input = inputs[j];
+      if (input.getAttribute('isClone') === 'true' && input.value.trim() !== '') {
+        hasNewVideo = true;
+        break;
       }
     }
 
-    if (!hasClonedInput) {
-      var emptyActivityVideo = '';
-
-      for (var k = 0; k < rejected.length; k++) {
-        var item = rejected[k];
-        if (item.parent_video_upload_id == clonedFoundId) {
-          if (item.description) {
-            emptyActivityVideo = ' "' + item.description + '" in ' + item.activity_name;
-          } else {
-            emptyActivityVideo = ' in ' + item.activity_name;
-          }
-          break;
-        } else {
-          emptyActivityVideo = item.description;
-        }
+    // Find the current activity details from the rejected array
+    var currentActivity = null;
+    for (var k = 0; k < rejected.length; k++) {
+      if (rejected[k].parent_video_upload_id == currentActivityId) {
+        currentActivity = rejected[k];
+        break;
       }
+    }
 
-      // alert('Please add new videos to the activity : ' + emptyActivityVideo);
+    var activityDescription = currentActivity ? currentActivity.description : 'this activity';
+    var activityName = currentActivity ? currentActivity.activity_name : 'Activity Set 3';
+
+    // Check if current activity has no new video and no checkboxes checked
+    if ((!checkbox || !checkbox.checked) && (!sameVideoLink || !sameVideoLink.checked) && !hasNewVideo) {
+
+      var emptyActivityVideo = ' "' + activityDescription + '" in ' + activityName;
+
       Swal.fire({
         title: 'Missing Videos',
         html: 'We noticed that you have not added any new video(s) for the activity <br>' + emptyActivityVideo,
-        // text : "We noticed that you have not added any new video for the activity ",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: "#3085d6",

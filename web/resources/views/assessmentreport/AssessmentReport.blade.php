@@ -212,9 +212,9 @@
           <table class="table table-bordered card-body" style="width: 100%;border-spacing: 0px;border-collapse: collapse;">
             <tbody>
               <tr>
-                <td style="font-size:16pt;font-family: 'Barlow Semi Condensed;padding:5px; background: white;vertical-align: initial;text-align:left">{!! $data['signature'][1] !!}
+                <td style="font-family: 'Barlow Semi Condensed;padding:5px; background: white;vertical-align: initial;text-align:left">{!! $data['signature'][1] !!}
                 </td>
-                <td style="font-size:16pt;font-family: 'Barlow Semi Condensed;padding:5px; background: white;vertical-align: initial;text-align:left">{!! $data['signature'][2] !!}
+                <td style="font-family: 'Barlow Semi Condensed;padding:5px; background: white;vertical-align: initial;text-align:left">{!! $data['signature'][2] !!}
                 </td>
               </tr>
             </tbody>

@@ -65,7 +65,24 @@ class QuestinnaireMasterCreation extends BaseController
             $newTable = $input['tableName'];
             $newTable = preg_replace('/[^A-Za-z0-9\-]/', '', $newTable);
             $newTable = $input['questionnaire_type'] . '_' . $newTable;
-
+            $newTable = strtolower($newTable);
+            // $this->WriteFileLog($input);
+            $this->WriteFileLog($newTable);
+            if (DB::getSchemaBuilder()->hasTable($newTable)) {
+                $this->WriteFileLog("It is Already");
+                $serviceResponse = [
+                    'Code' => 409,
+                    'Message' => 'Table already exists. Please use a different name.',
+                ];
+                 
+                $serviceResponse = array();
+                $serviceResponse['Code'] = config('setting.status_code.success');
+                $serviceResponse['Message'] = config('setting.status_message.success');
+                $serviceResponse['Data'] = 409;
+                $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
+                return $sendServiceResponse;
+            }
             $document_sub_types_id = DB::transaction(function () use ($input, $newTable) {
 
                 $questionnaire_id = DB::table('questionnaire')

@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="col-lg-12 text-center">
-                        <h4 style="color:darkblue;">Enrolled Service Providers List</h4>
+                        <h4 style="color:darkblue;">Enrolled Professionals List</h4>
                     </div>
                     <div class="table-wrapper">
                         <div class="table-responsive">
@@ -16,7 +16,7 @@
                                 <thead>
                                     <tr>
                                         <th class='col-1'>S.No</th>
-                                        <th class='col-2'>Service Provider Name</th>
+                                        <th class='col-2'>Professionals Name</th>
                                         <th>Email Address</th>
                                         <th>Contact number</th>
                                         <th>Type of Service</th>

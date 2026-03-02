@@ -44,7 +44,7 @@ class QuestionnaireMasterCreation extends BaseController
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -66,7 +66,7 @@ class QuestionnaireMasterCreation extends BaseController
 
             return view('questionnaire_master.create', compact('modules', 'screens'));
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -83,7 +83,7 @@ class QuestionnaireMasterCreation extends BaseController
     {
         try {
             $method = 'Method => QuestionnaireMasterCreation => store';
-// dd($request);
+            // dd($request);
             $rules = [
                 'questionnaire_name' => 'required',
             ];
@@ -102,7 +102,7 @@ class QuestionnaireMasterCreation extends BaseController
                 $findString = array(' ', '&');
                 $replaceString = array('_', '_');
                 $tableName = str_replace($findString, $replaceString, $table_name);
-// dd($tableName);
+                // dd($tableName);
                 $data['questionnaire_name'] = $request->questionnaire_name;
                 $data['questionnaire_description'] = $request->questionnaire_description;
                 $data['tableName'] = $tableName;
@@ -120,19 +120,27 @@ class QuestionnaireMasterCreation extends BaseController
                 $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
                 $response1 = json_decode($response);
 
-                if ($response1->Status == 200 && $response1->Success) {
-                    $objData = json_decode($this->decryptData($response1->Data));
-                    if ($objData->Code == 200) {
-                        return redirect(route('questionnaire_master.index'))->with('success', 'Questionnaire Created Successfully');
-                    }
-                } else {
-                    $objData = json_decode($this->decryptData($response1->Data));
-                    echo json_encode($objData->Code);
-                    exit;
+                $objData = json_decode($this->decryptData($response1->Data));
+                // dd($objData);
+                $objData = json_decode($this->decryptData($response1->Data));
+
+                if ($objData->Data == 409) {
+
+                    return redirect()->back()
+                        ->with('error', 'Questionnaire already exists.');
                 }
+
+                if ($response1->Status == 200 && $response1->Success && $objData->Code == 200) {
+
+                    return redirect(route('questionnaire_master.index'))
+                        ->with('success', 'Questionnaire Created Successfully');
+                }
+
+                return redirect(route('questionnaire_master.index'))
+                    ->with('error', 'Something went wrong.');
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -172,7 +180,7 @@ class QuestionnaireMasterCreation extends BaseController
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -195,7 +203,7 @@ class QuestionnaireMasterCreation extends BaseController
                 $objData = json_decode($this->decryptData($response->Data));
                 if ($objData->Code == 200) {
                     $parant_data = json_decode(json_encode($objData->Data), true);
-                    $one_row =  $parant_data['one_rows'];//dd($one_row);
+                    $one_row =  $parant_data['one_rows']; //dd($one_row);
                     $fields = $parant_data['fields'];
                     $options = $parant_data['options'];
                     $menus = $this->FillMenu();
@@ -203,7 +211,7 @@ class QuestionnaireMasterCreation extends BaseController
                     $modules = $menus['modules'];
                     $permissions = config('permission.screen_permission');
 
-                    return view('questionnaire_master.edit', compact('permissions', 'one_row', 'modules', 'screens', 'fields' , 'options'));
+                    return view('questionnaire_master.edit', compact('permissions', 'one_row', 'modules', 'screens', 'fields', 'options'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));
@@ -211,7 +219,7 @@ class QuestionnaireMasterCreation extends BaseController
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -226,7 +234,7 @@ class QuestionnaireMasterCreation extends BaseController
     {
         try {
             $method = 'Method => QuestionnaireMasterCreation => update_data';
-// dd(($request));
+            // dd(($request));
             $rules = [
                 'questionnaire_name' => 'required',
             ];
@@ -271,7 +279,7 @@ class QuestionnaireMasterCreation extends BaseController
                 }
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -282,7 +290,7 @@ class QuestionnaireMasterCreation extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-   
+
     public function delete($id)
     {
         // dd($id);
@@ -303,9 +311,8 @@ class QuestionnaireMasterCreation extends BaseController
                 }
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
-
 }

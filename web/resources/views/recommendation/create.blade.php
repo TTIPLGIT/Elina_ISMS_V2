@@ -576,12 +576,12 @@
                                         @endif
                                         <td>{{ $focus['name'] }}</td>
                                         <td>
-                                            <textarea class="form-control"
+                                            <textarea class="form-control" style="background-color:#fff !important;"
                                                 name="tiers[{{ $tier['id'] }}][focus_areas][{{ $focus['id'] }}][key_strategies]"
                                                 id="key_strategies_{{ $tier['id'] }}_{{ $focus['id'] }}">{{ $focus['detail']['key_strategies'] ?? '' }}</textarea>
                                         </td>
                                         <td>
-                                            <textarea class="form-control"
+                                            <textarea class="form-control" style="background-color:#fff !important;"
                                                 name="tiers[{{ $tier['id'] }}][focus_areas][{{ $focus['id'] }}][intended_outcomes]"
                                                 id="intended_outcomes_{{ $tier['id'] }}_{{ $focus['id'] }}">{{ $focus['detail']['intended_outcomes'] ?? '' }}</textarea>
                                         </td>
@@ -749,16 +749,48 @@
 </script>
 <script>
     function save(a) {
+
         if (document.getElementById('enrollment_child_num').value == "") {
-            swal.fire("Please Select Enrolment Number", "", "error");
+            Swal.fire("Please Select Enrolment Number", "", "error");
             return false;
         }
+
         var tabIDs = $('.tablinks.swiper-slide-active').attr('id');
         var ret1 = tabIDs.replace('Tab', '');
         document.getElementById('currentPage').value = ret1;
         document.getElementById('state').value = a;
-        $('.loader').show();
-        document.getElementById('form_report').submit();
+
+        // 🔹 Dynamic Message
+        var confirmTitle = "";
+        var confirmMessage = "";
+
+        if (a === "Saved") {
+            confirmTitle = "Save Recommendation Report";
+            confirmMessage = "Are you sure you want to save this recommendation report?";
+        } else if (a === "Submitted") {
+            confirmTitle = "Submit Recommendation Report";
+            confirmMessage = "Are you sure you want to submit this recommendation report?";
+        }
+
+        // 🔹 Confirmation Popup
+        Swal.fire({
+            title: confirmTitle,
+            text: confirmMessage,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            reverseButtons: true
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                $('.loader').show();
+                document.getElementById('form_report').submit();
+            } else {
+                return false; // stay on page
+            }
+
+        });
 
     }
 </script>

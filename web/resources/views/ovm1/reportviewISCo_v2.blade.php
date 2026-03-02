@@ -140,33 +140,84 @@
 <script>
     $(document).ready(function() {
         var fetch = <?php echo json_encode($fetch); ?>;
-
         var feedbacks = fetch.feedback;
 
         var u1 = $('#u1').val();
         var u2 = $('#u2').val();
 
-        // $('.u1_conversation_016').val('Text Message');
-        // var valueToInsert = "YourValueHere";
-        // $('.u1_conversation_016').text(valueToInsert);
+        // Comprehensive function to check if a value is null or contains null HTML
+        function isNullValue(value) {
+            if (value === null || value === undefined) return true;
+            if (typeof value === 'string') {
+                var trimmed = value.trim();
+                // Check for various null representations including HTML
+                return trimmed === '' || 
+                       trimmed === 'null' || 
+                       trimmed === '<p>null</p>' || 
+                       trimmed === '<p><br />null</p>' ||
+                       trimmed === '<p><br>null</p>' ||
+                       trimmed === '<br />null' ||
+                       trimmed === '<br>null' ||
+                       trimmed === '<p></p>' ||
+                       trimmed === '<p><br></p>' ||
+                       trimmed === '<p><br/></p>' ||
+                       trimmed.includes('>null<') ||
+                       // Check if it's just HTML tags with no content
+                       (trimmed.startsWith('<p>') && trimmed.endsWith('</p>') && 
+                        (trimmed === '<p></p>' || trimmed === '<p><br></p>' || trimmed === '<p><br/></p>'));
+            }
+            return false;
+        }
 
+        // Function to clean a value - returns empty string if null, otherwise the original value
+        function cleanValue(value) {
+            return isNullValue(value) ? '' : value;
+        }
+
+        // Process feedbacks
         for (var i = 0; i < feedbacks.length; i++) {
             var feedback = feedbacks[i];
-            // console.log(feedbacks)
             var feedbackID = feedback.ovm_isc_report_id;
+            
             if (feedbackID == u1) {
                 $.each(feedback, function(key, value) {
-                    // console.log('.u1_' + key);
-                    $('.u1_' + key).html(value);
-                    // console.log(key , value);
+                    // Clean the value before inserting
+                    var cleanedValue = cleanValue(value);
+                    var element = $('.u1_' + key);
+                    if (element.length) {
+                        element.html(cleanedValue);
+                    }
                 });
             } else if (feedbackID == u2) {
                 $.each(feedback, function(key, value) {
-                    $('.u2_' + key).html(value);
+                    // Clean the value before inserting
+                    var cleanedValue = cleanValue(value);
+                    var element = $('.u2_' + key);
+                    if (element.length) {
+                        element.html(cleanedValue);
+                    }
                 });
             }
         }
+
+        // Additional cleanup for any empty paragraphs that might remain
+        $('td[class^="u1_"], td[class^="u2_"]').each(function() {
+            var html = $(this).html();
+            if (html) {
+                // Check if the content is just empty HTML tags
+                var trimmed = html.trim();
+                if (trimmed === '<p></p>' || 
+                    trimmed === '<p><br></p>' || 
+                    trimmed === '<p><br/></p>' ||
+                    trimmed === '<br>' ||
+                    trimmed === '<br/>' ||
+                    trimmed === '') {
+                    $(this).html('');
+                }
+            }
+        });
     });
+
     $(document).ready(function() {
         $('#recap').DataTable({
             "lengthMenu": [
@@ -177,6 +228,7 @@
             "ordering": false,
         });
     });
+
     $(document).on('click', '.paginate_button:not(.disabled)', function() {
         window.scroll({
             top: 0,

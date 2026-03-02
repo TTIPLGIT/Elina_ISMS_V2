@@ -105,14 +105,20 @@
         border-bottom-right-radius: 8px;
     }
 
-    /* .tox.tox-tinymce {
-        margin: 0 0 0 85px;
-    } */
-
-    /* .a4-editor {
-        width: calc(210mm / 25.4 * 96px);
-        height: calc(297mm / 25.4 * 96px);
-    } */
+    /* Loading indicator for iframe */
+    .iframe-loader {
+        text-align: center;
+        padding: 50px;
+        background: #f5f5f5;
+        border-radius: 5px;
+        margin: 10px 0;
+    }
+    
+    .iframe-loader i {
+        font-size: 40px;
+        color: #007bff;
+        margin-bottom: 15px;
+    }
 </style>
 <div class="main-content">
     {{ Breadcrumbs::render('assessment_report.show',$data['report_id']) }}
@@ -141,18 +147,33 @@
     <div class="col-12 form-group" style="float:left;">
         <h4 style="color:darkblue;text-align: center;">Assessment Report Preview</h4>
         <select class="col-3 form-control default" style="margin: -45px 0 0 -15px;" id="Tableview" onchange="view_change()">
-            <option value="1">Assessment Executive Report</option>
+            <option value="1" selected>Assessment Executive Report</option>
             <option value="2">Assessment Detail Report</option>
         </select>
     </div>
 
     <div id="executive_report">
-        <iframe src="{{$reportURLs['executive_report']}}" width="100%" height="600" frameborder="0"></iframe>
+        @if(isset($reportURLs['executive_report']) && !empty($reportURLs['executive_report']))
+        <iframe src="{{$reportURLs['executive_report']}}" width="100%" height="600" frameborder="0" id="executive_iframe"></iframe>
+        @else
+        <div class="alert alert-warning">Executive report is not available</div>
+        @endif
     </div>
 
     <div id="summary_report" style="display: none;">
-        <iframe src="{{$reportURLs['summary_report']}}" width="100%" height="600" frameborder="0"></iframe>
+        @if(isset($reportURLs['summary_report']) && !empty($reportURLs['summary_report']))
+        <iframe src="{{$reportURLs['summary_report']}}" width="100%" height="600" frameborder="0" id="summary_iframe"></iframe>
+        @else
+        <div class="alert alert-warning">Detail report is not available</div>
+        @endif
     </div>
+    
+    <!-- Add a loading indicator that appears when switching views -->
+    <div id="iframe_loader" class="iframe-loader" style="display: none;">
+        <i class="fa fa-spinner fa-spin"></i>
+        <h5>Loading report...</h5>
+    </div>
+    
     <div style="display: contents;">
         <div class="faq-drawer">
             <input class="faq-drawer__trigger" id="faq-drawer" type="checkbox" /><label class="faq-drawer__title" style="background: #96a3d5c7;" for="faq-drawer">Email Preview</label>
@@ -164,8 +185,6 @@
         </div>
     </div>
     <div class="col-md-12 text-center" style="padding: 10px;">
-        <!-- <a type="button" class="btn btn-labeled btn-info back" id="Previous" title="Previous" style="display:none;height: 35px;background: blue !important; border-color:blue !important; color:white !important">
-            <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Previous</a> -->
         <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{ URL::previous() }}" style="color:white !important">
             <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back</a>
         <input type="hidden" value="{{ route('assessmentreport.edit', \Crypt::encrypt($data['report_id'])) }}" id="routeUrl">
@@ -173,68 +192,129 @@
             <span class="btn-label" style="font-size:13px !important;"><i class="fas fa-pencil-alt"></i></span> Edit </a>
         <a type="button" onclick="pdfgenrate('{{$data['report_id']}}')" id="submitbutton" class="btn btn-labeled btn-succes" title="Publish" style="background: green !important; border-color:green !important; color:white !important">
             <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Publish </a>
-        <!-- <a type="button" class="btn btn-labeled btn-info next" id="Next" title="Next" style="background: blue !important; border-color:#4d94ff !important; color:white !important;height: 35px;">
-                <span class="btn-label" style="font-size:13px !important;">Next</span> <i class="fa fa-arrow-right"></i></a> -->
     </div>
 </div>
 
 <script>
-    function view_change() {
-        $('#executive_report').toggle();
-        $('#summary_report').toggle();
-    }
-
     function pdfgenrate(reportID) {
-        $(".loader").show();
 
-        $('.view1').show();
-        $('.view2').show();
+        Swal.fire({
+            title: "Publish Assessment",
+            text: "Are you sure you want to publish this assessment?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Publish",
+            cancelButtonText: "No",
+            reverseButtons: true
+        }).then((result) => {
 
-        var view1 = $('.view1').html(); //console.log(view1);
-        var view2 = $('.view2').html(); //console.log(view2);
-        // var view = [view1 , view2];
-        var child_dob = document.getElementById('child_dob').value;
-        var child_name = document.getElementById('child_name').value;
-        var child_contact_email = document.getElementById('child_contact_email').value;
-        var enrollment_id = document.getElementById('enrollment_id').value;
-        var email_content = tinyMCE.get('email_content').getContent();
-        $("#submitbutton").addClass("disable-click");
-        $.ajax({
-            url: "{{ url('/report/assessment/generatePDFAssessment') }}",
-            type: 'POST',
-            data: {
-                'reportID': reportID,
-                'view1': view1,
-                'view2': view2,
-                'child_name': child_name,
-                'child_dob': child_dob,
-                'child_contact_email': child_contact_email,
-                'enrollment_id': enrollment_id,
-                'email_content': email_content,
-                _token: '{{csrf_token()}}'
+            if (result.isConfirmed) {
+
+                // 🔹 Existing Flow Starts Here
+                $(".loader").show();
+
+                $('.view1').show();
+                $('.view2').show();
+
+                var view1 = $('.view1').html();
+                var view2 = $('.view2').html();
+
+                var child_dob = document.getElementById('child_dob').value;
+                var child_name = document.getElementById('child_name').value;
+                var child_contact_email = document.getElementById('child_contact_email').value;
+                var enrollment_id = document.getElementById('enrollment_id').value;
+                var email_content = tinyMCE.get('email_content').getContent();
+
+                $("#submitbutton").addClass("disable-click");
+
+                $.ajax({
+                    url: "{{ url('/report/assessment/generatePDFAssessment') }}",
+                    type: 'POST',
+                    data: {
+                        'reportID': reportID,
+                        'view1': view1,
+                        'view2': view2,
+                        'child_name': child_name,
+                        'child_dob': child_dob,
+                        'child_contact_email': child_contact_email,
+                        'enrollment_id': enrollment_id,
+                        'email_content': email_content,
+                        _token: '{{csrf_token()}}'
+                    }
+                }).done(function(data) {
+
+                    $('.view2').hide();
+                    $(".loader").hide();
+
+                    Swal.fire(
+                        "Success",
+                        "The Assessment Report has been published successfully",
+                        "success"
+                    ).then(function() {
+                        window.location = "/report/assessmentreport";
+                    });
+
+                });
+
+                // 🔹 Existing Flow Ends Here
+
+            } else {
+                // If user clicks No → stay on same page
+                return false;
             }
-        }).done(function(data) {
-            $('.view2').hide();
-            $(".loader").hide();
 
-            // console.log(data);
-            // var newWindow = window.open('Report', '_blank', 'newwindow', 'width=1000,height=720');
-            // newWindow.document.title = 'Custom Window Title';
-            // var newContent = '<iframe src="' + data.summary_report + '" width="100%" height="600" frameborder="0"></iframe>';
-            // newWindow.document.write(newContent);
+        });
 
-            // var newWindow = window.open('', '_blank', 'width=1000,height=720');
-            // var newContent = '<iframe src="'+data.executive_report+'" width="100%" height="600" frameborder="0"></iframe>';
-            // newWindow.document.write(newContent);
-
-            swal.fire("Success", "The Assessment Report has been published successfully", "success").then(function() {
-                window.location = "/report/assessmentreport";
-            });
-        })
     }
 </script>
+
+<script>
+    function view_change() {
+        var view = document.getElementById('Tableview').value;
+        
+        // Show loader
+        document.getElementById('iframe_loader').style.display = 'block';
+        
+        if (view == 1) {
+            // Show executive report
+            document.getElementById('executive_report').style.display = 'block';
+            document.getElementById('summary_report').style.display = 'none';
+            
+            // Reload iframe to ensure proper rendering
+            var executiveIframe = document.getElementById('executive_iframe');
+            if (executiveIframe) {
+                executiveIframe.src = executiveIframe.src; // Reload the iframe
+            }
+            
+            // Hide loader after a short delay to ensure iframe loads
+            setTimeout(function() {
+                document.getElementById('iframe_loader').style.display = 'none';
+            }, 1000);
+            
+        } else if (view == 2) {
+            // Show detail report
+            document.getElementById('executive_report').style.display = 'none';
+            document.getElementById('summary_report').style.display = 'block';
+            
+            // Reload iframe to ensure proper rendering
+            var summaryIframe = document.getElementById('summary_iframe');
+            if (summaryIframe) {
+                // Add a timestamp to avoid cache issues
+                var currentSrc = summaryIframe.src.split('?')[0];
+                summaryIframe.src = currentSrc + '?t=' + new Date().getTime();
+            }
+            
+            // Hide loader after a short delay to ensure iframe loads
+            setTimeout(function() {
+                document.getElementById('iframe_loader').style.display = 'none';
+            }, 1000);
+        }
+    }
+</script>
+
 <script>
     $(document).ready(function() {
+        // Initialize TinyMCE
         tinymce.init({
             selector: 'textarea#email_content',
             menubar: false,
@@ -255,7 +335,18 @@
             },
 
         });
+        
+        // Handle iframe load events to hide loader
+        $('#executive_iframe, #summary_iframe').on('load', function() {
+            $('#iframe_loader').hide();
+        });
+        
+        // If iframes are already loaded, hide loader after a delay
+        setTimeout(function() {
+            $('#iframe_loader').hide();
+        }, 2000);
     });
+    
     document.addEventListener('DOMContentLoaded', function() {
         var tables = document.getElementsByClassName('table');
 

@@ -619,20 +619,29 @@
 
     // }
 
-    const selects = document.querySelectorAll('.selectView');
-    selects.forEach(select => {
-      select.addEventListener('change', e => {
-        const selectedValue = e.target.value;
+    $(document).ready(function() {
+      // Handle view selector change
+      $('.selectView').on('change', function() {
+        const selectedValue = $(this).val();
 
-        // Hide all views first
-        $('.Tableview').hide();
-        $('.View').hide();
+        // Get the currently visible tab pane
+        const visiblePane = $('.tabs__pane.is-visible');
 
-        // Show the view corresponding to the selected value
-        $('.View' + selectedValue).show();
+        // Hide all tables in the current tab
+        visiblePane.find('.Tableview').hide();
+
+        // Show only the selected view in the current tab
+        visiblePane.find('.View' + selectedValue).show();
       });
-    });
 
+      // Initial view setup - wait a bit for tabs to initialize
+      setTimeout(function() {
+        const initialView = $('#Tableview').val() || '1';
+        const visiblePane = $('.tabs__pane.is-visible');
+        visiblePane.find('.Tableview').hide();
+        visiblePane.find('.View' + initialView).show();
+      }, 200);
+    });
 
     function selectall(sId) {
       var selectall = <?php echo json_encode($lastactivity); ?>;
@@ -1650,7 +1659,7 @@
 
     function saveall(parentId) {
 
-  
+
       if (!parentId) {
         console.error('ERROR: No parent ID received!');
         Swal.fire({
@@ -1663,11 +1672,11 @@
         return;
       }
 
-    
+
       const checkbox = document.getElementById('enablef2f' + parentId);
       const f2fTable = document.getElementById('f2ftable' + parentId);
 
-  
+
       if (checkbox && checkbox.checked && f2fTable && f2fTable.style.display !== 'none') {
 
         const material = document.getElementById('material' + parentId);
@@ -1702,7 +1711,7 @@
         }
 
         if (!toObserve || toObserve.value.trim() === '') {
-       
+
           Swal.fire({
             title: 'Validation Error',
             text: `Please fill "To observe"`,
@@ -1797,7 +1806,7 @@
       document.getElementById('video_update').action = "{{ route('activity.update.video.all') }}";
 
       Swal.fire({
-        title: 'Are you sure you want to update this Activity ?',
+        title: 'Are you sure you want to update the status of the activity?',
         text: 'Please review before updating.',
         icon: 'question',
         showCancelButton: true,
@@ -1871,54 +1880,7 @@
       document.getElementById('activeStatus').submit();
     }
   </script>
-  <script>
-    // Tabs
-    const tabBtns = document.querySelectorAll(".tabs__btn");
-    const tabPanes = document.getElementsByClassName("tabs__pane");
 
-    let fadeTime = 200;
-
-    function fadeOut(target) {
-      target.style.opacity = 1;
-      target.style.transition = `opacity ${fadeTime}ms`;
-      target.style.opacity = 0;
-      setTimeout(() => {
-        target.style.display = "none";
-      }, fadeTime);
-    }
-
-    function fadeIn(target) {
-      target.style.opacity = 0;
-      target.style.transition = `opacity ${fadeTime}ms`;
-      target.style.opacity = 1;
-      setTimeout(() => {
-        target.style.display = "block";
-      }, fadeTime);
-    }
-
-    function triggerTab(elt) {
-      elt.preventDefault();
-
-      tabBtns.forEach((btn) => {
-        btn.classList.remove("is-active");
-        btn.setAttribute("aria-selected", false);
-      });
-
-      [].forEach.call(tabPanes, (pane) => {
-        fadeOut(pane);
-      });
-
-      elt.target.classList.add("is-active");
-      elt.target.setAttribute("aria-selected", true);
-      let clickedTab = elt.target.dataset.tabTarget;
-      fadeIn(document.querySelector(`#${clickedTab}`));
-      togglePreviousNextButtons();
-    }
-
-    tabBtns.forEach((tab) => {
-      tab.addEventListener("click", triggerTab);
-    });
-  </script>
   <script>
     // $(document).ready(function() {
     //   var table = <?php echo json_encode($activity); ?>;
@@ -1978,40 +1940,73 @@
       const scrollViewInput = document.getElementById('scroll_view');
       let currentTab = 0;
 
-      // Add event listeners to each tab button
-      tabButtons.forEach((button, index) => {
-        button.addEventListener('click', () => {
-          changeTab(index);
-          scrollToTab(index);
-        });
+      // Find the initially active tab
+      tabButtons.forEach((btn, index) => {
+        if (btn.classList.contains('is-active')) {
+          currentTab = index;
+        }
       });
 
-      // Change to a specific tab
+      function showCurrentTabContent() {
+        // Get the current activity ID from the active tab button
+        const activeActivityId = tabButtons[currentTab].value;
+
+        // Get the current view selection
+        const currentView = $('.selectView').val() || '1';
+
+        // First hide ALL tables everywhere
+        $('.Tableview').hide();
+
+        // Then show only the tables in the current pane
+        $(tabPanes[currentTab]).find('.Tableview').hide(); // Hide all in current pane first
+        $(tabPanes[currentTab]).find('.View' + currentView).show(); // Show only selected view
+
+        // Update the hidden input
+        document.getElementById('is_active_tab').value = activeActivityId;
+
+        // Log for debugging
+        console.log('Showing tab:', currentTab, 'activity ID:', activeActivityId, 'view:', currentView);
+      }
+
       function changeTab(index) {
+        if (index < 0 || index >= tabButtons.length) return;
+
+        // Remove active class from current tab
         tabButtons[currentTab].classList.remove('is-active');
         tabButtons[currentTab].setAttribute('aria-selected', 'false');
         tabPanes[currentTab].classList.remove('is-visible');
 
+        // Add active class to new tab
         tabButtons[index].classList.add('is-active');
         tabButtons[index].setAttribute('aria-selected', 'true');
         tabPanes[index].classList.add('is-visible');
 
+        // Update the hidden input with the new activity ID
+        document.getElementById('is_active_tab').value = tabButtons[index].value;
+
+        // Update current tab index
         currentTab = index;
+
+        // Show the content for the new tab
+        showCurrentTabContent();
+
+        // Update button visibility
         checkButtonsVisibility();
+
+        // Log for debugging
+        console.log('Changed to tab index:', index, 'activity ID:', tabButtons[index].value);
       }
 
       // Check button visibility based on the current tab
       function checkButtonsVisibility() {
         if (currentTab === 0) {
           prevButton.style.display = 'none';
-          scrollToTab(currentTab);
         } else {
           prevButton.style.display = 'block';
         }
 
         if (currentTab === tabButtons.length - 1) {
           nextButton.style.display = 'none';
-          scrollToTab(currentTab);
         } else {
           nextButton.style.display = 'block';
         }
@@ -2019,25 +2014,52 @@
 
       // Scroll to the specified tab
       function scrollToTab(index) {
-
-        // if (index < 0 || index > tabButtons.length) {
-        //   return; // Exit early if index is out of bounds
-        // }
+        if (index < 0 || index >= tabButtons.length) return;
 
         const tabButton = tabButtons[index];
-        console.log(tabButton);
-
         tabButton.scrollIntoView({
           behavior: 'smooth',
           block: 'center',
           inline: 'center'
         });
+      }
 
+      // Add event listeners to each tab button
+      tabButtons.forEach((button, index) => {
+        button.addEventListener('click', (e) => {
+          e.preventDefault();
+          changeTab(index);
+          scrollToTab(index);
+        });
+      });
+
+      // Add event listeners for Next and Previous buttons
+      // Add event listeners for Next and Previous buttons
+      if (nextButton) {
+        nextButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (currentTab < tabButtons.length - 1) {
+            changeTab(currentTab + 1);
+            scrollToTab(currentTab);
+          }
+        });
+      }
+
+      if (prevButton) {
+        prevButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (currentTab > 0) {
+            changeTab(currentTab - 1);
+            scrollToTab(currentTab);
+          }
+        });
       }
 
       // Scroll to the tab specified in the hidden input on page load
       function scrollToViewTab() {
-        const scrollViewValue = scrollViewInput.value;
+        const scrollViewValue = scrollViewInput ? scrollViewInput.value : '';
         if (scrollViewValue) {
           const targetIndex = Array.from(tabButtons).findIndex(button => button.value === scrollViewValue);
           if (targetIndex !== -1) {
@@ -2047,25 +2069,20 @@
         }
       }
 
-      // Add event listeners for Next and Previous buttons
-      nextButton.addEventListener('click', () => {
-        if (currentTab < tabButtons.length - 1) {
-          changeTab(currentTab + 1);
-          scrollToTab(currentTab + 1);
-        }
-      });
-
-      prevButton.addEventListener('click', () => {
-        if (currentTab > 0) {
-          changeTab(currentTab - 1);
-          scrollToTab(currentTab - 1);
-        }
-      });
-
-      // Initialize tab and button visibility
-      changeTab(currentTab);
+      // Initialize
+      showCurrentTabContent();
       checkButtonsVisibility();
       scrollToViewTab();
+
+      // Handle session key
+      const sessionKey = document.getElementById('session_key') ? document.getElementById('session_key').value : '';
+      if (sessionKey) {
+        const sessionTabIndex = Array.from(tabButtons).findIndex(button => button.value === sessionKey);
+        if (sessionTabIndex !== -1 && sessionTabIndex !== currentTab) {
+          changeTab(sessionTabIndex);
+          scrollToTab(sessionTabIndex);
+        }
+      }
     });
   </script>
 

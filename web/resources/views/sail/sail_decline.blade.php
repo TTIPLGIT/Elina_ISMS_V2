@@ -189,48 +189,106 @@
         margin-top: 20px;
     }
 
+    /* Radio button and text container */
+    .radio-wrapper {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+        position: relative;
+    }
+
+    /* Increased radio button size */
+    input[type="radio"] {
+        display: inline-block;
+        margin-right: 12px;
+        vertical-align: middle;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+
+    /* Label styling */
     label {
         display: inline-block;
-        margin-bottom: 10px;
-        font-weight: bold;
-        font-size: 25px;
+        margin-bottom: 0;
+        font-weight: 500;
+        font-size: 18px;
+        cursor: pointer;
+        line-height: 1.4;
+        color: #333;
+    }
+
+    /* Tooltip styling */
+    .radio-wrapper[data-tooltip] {
+        position: relative;
+    }
+
+    .radio-wrapper[data-tooltip]:hover::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        left: 35px;
+        top: -30px;
+        background: #333;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 13px;
+        white-space: nowrap;
+        z-index: 1000;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        pointer-events: none;
+    }
+
+    .radio-wrapper[data-tooltip]:hover::before {
+        content: '';
+        position: absolute;
+        left: 45px;
+        top: -8px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #333 transparent transparent transparent;
+        z-index: 1000;
+        pointer-events: none;
     }
 
     select {
         margin-left: 10px;
     }
 
-    input[type="radio"] {
-        display: inline-block;
-        margin-right: 10px;
-        vertical-align: middle;
+    /* Week selection styling - Proper alignment */
+    #weekSelection {
+        margin-left: 32px; /* Aligns with the radio button text */
+        margin-top: 8px;
+        margin-bottom: 16px;
+        display: none; /* Hidden by default */
+        align-items: center;
+        gap: 10px;
     }
 
-    #weekSelection {
-        margin-left: 30px;
+    #weekSelection label {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 0;
+        white-space: nowrap;
+        color: #555;
     }
 
     #weekSelect {
-        margin-left: 10px;
-    }
-
-    button {
-        display: block;
-        margin-top: 20px;
-        padding: 10px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
+        margin-left: 0;
+        width: auto;
+        min-width: 130px;
+        padding: 8px 12px;
+        border: 1px solid #ccc;
         border-radius: 4px;
+        font-size: 15px;
         cursor: pointer;
+        background-color: white;
     }
 
-    button:hover {
-        background-color: #3e8e41;
-    }
-
-    button:active {
-        background-color: #2c6220;
+    #weekSelect:focus {
+        outline: none;
+        border-color: #f18700;
     }
 
     .modal-backdrop {
@@ -255,11 +313,20 @@
                             <h4 class="title_feedback">How probable is it that you would want to go on?</h4>
                             <div class="question">
                                 <div class="">
-                                    <input type="radio" id="option1" name="confirmation" value="Will not continue with SAIL process">
-                                    <label for="option1">1. Will not continue with SAIL process</label><br>
-                                    <input type="radio" id="option2" name="confirmation" value="Will confirm after">
-                                    <label for="option2">2. Will confirm later</label><br>
-                                    <div id="weekSelection" style="display:none;">
+                                    <!-- Option: Will confirm after one month (Default selected) -->
+                                    <div class="radio-wrapper" data-tooltip="Confirm your participation after one month">
+                                        <input type="radio" id="option3" name="confirmation" value="Will confirm after one month" checked>
+                                        <label for="option3">Will confirm after one month</label>
+                                    </div>
+
+                                    <!-- Option: Will confirm later -->
+                                    <div class="radio-wrapper" data-tooltip="Decide on participation at a later date">
+                                        <input type="radio" id="option2" name="confirmation" value="Will confirm after">
+                                        <label for="option2">Will confirm later</label>
+                                    </div>
+                                    
+                                    <!-- Week selection - Properly aligned with the option text -->
+                                    <div id="weekSelection" style="display: none;">
                                         <label for="weekSelect">After:</label>
                                         <select class="col-4 form-control default" id="weekSelect" name="weekSelect">
                                             <option value="">Select Week</option>
@@ -268,15 +335,19 @@
                                             <option value="Week 3">Week 3</option>
                                         </select>
                                     </div>
-                                    <input type="radio" id="option3" name="confirmation" value="Will confirm after one month">
-                                    <label for="option3">3. Will confirm after one month</label><br>
+                                    
+                                    <!-- Option: Will not continue with SAIL process -->
+                                    <div class="radio-wrapper" data-tooltip="Opt out of the SAIL process completely">
+                                        <input type="radio" id="option1" name="confirmation" value="Will not continue with SAIL process">
+                                        <label for="option1">Will not continue with SAIL process</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-12 text-center">
-                            <a type="button" class="btn btn-labeled btn-info" href="{{ route('newenrollment.index') }}" title="Cancel" style="background: blue !important; border-color:blue !important; color:white !important">
-                                <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Cancel</a>
+                            <a type="button" class="btn btn-labeled btn-info" href="{{ route('newenrollment.index') }}" title="Back" style="background: red !important; border-color:red !important; color:white !important">
+                                <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back</a>
                             <a type="button" onclick="formSubmit()" id="accept-button" class="btn btn-labeled btn-succes" title="submit" style="background: green !important; border-color:green !important; color:white !important">
                                 <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Submit</a>
                         </div>
@@ -303,6 +374,11 @@
             }
         });
     }
+
+    // Ensure option 3 (one month) is selected by default
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('option3').checked = true;
+    });
 </script>
 
 <script type="text/javascript">

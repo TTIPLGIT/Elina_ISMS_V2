@@ -1354,6 +1354,7 @@
 </script>
 <script>
     function save(a) {
+
         var checkboxPullInChecked = true;
         document.getElementById('state').value = a;
 
@@ -1363,7 +1364,6 @@
         document.getElementById('Page').value = ret1;
 
         var switch_radio_values = {};
-
         var pages = <?php echo json_encode($pages); ?>;
 
         for (var i = 0; i < pages.length; i++) {
@@ -1376,6 +1376,7 @@
                 if (switch_radio) {
                     var isChecked = switch_radio.checked;
                     switch_radio_values[page.page] = isChecked ? 1 : 0;
+
                     if (!isChecked) {
                         checkboxPullInChecked = false;
                     }
@@ -1388,7 +1389,39 @@
         }
 
         document.getElementById('switch_radio_values').value = JSON.stringify(switch_radio_values);
-        document.getElementById('form_report').submit();
+
+        // 🔹 Dynamic Confirmation Message
+        var confirmTitle = "";
+        var confirmMessage = "";
+
+        if (a === "Saved") {
+            confirmTitle = "Save Assessment";
+            confirmMessage = "Are you sure you want to save this assessment?";
+        } else if (a === "Submitted") {
+            confirmTitle = "Submit Assessment";
+            confirmMessage = "Are you sure you want to submit this assessment report?";
+        }
+
+        // 🔹 SweetAlert Confirmation
+        Swal.fire({
+            title: confirmTitle,
+            text: confirmMessage,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            reverseButtons: true
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                $('.loader').show();
+                document.getElementById('form_report').submit();
+            } else {
+                return false; // stay on same page
+            }
+
+        });
+
     }
 </script>
 <script>

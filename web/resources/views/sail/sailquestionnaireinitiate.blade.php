@@ -206,7 +206,7 @@
     closeOnSelect : false,
     placeholder : " Please Select",
     allowHtml: true,
-        tags: true 
+        tags: false
      });
 </script>
 
