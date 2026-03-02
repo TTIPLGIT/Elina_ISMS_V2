@@ -60,7 +60,7 @@
         <div class="col-12">
             <div class="card" style="height:100%; padding: 15px; background-color:white">
                 <div class="col-lg-12 text-center" style="padding: 10px;">
-                    <h4 style="color:darkblue;">Service Partner Details</h4>
+                    <h4 style="color:darkblue;">Professionals Details</h4>
                 </div>
                 @foreach($rows as $key=>$row)
                 <div class="tile" id="tile-1" style="margin-top:10px !important; margin-bottom:10px !important;">
@@ -124,7 +124,17 @@
                                         <td style="border: 1px solid black !important;">{{$row['providing_home_service']}}</td>
                                     </tr>
                                     <tr>
-                                        <td class="table-td-head">charges per session</td>
+                                        <td class="table-td-head">Mode of service</td>
+                                        @php
+                                        $modeService = json_decode($row['mode_of_service'], true);
+                                        @endphp
+
+                                        <td style="border: 1px solid black !important;">
+                                            {{ is_array($modeService) ? implode(', ', $modeService) : $row['mode_of_service'] }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-td-head">Professional charges per session</td>
                                         <td style="border: 1px solid black !important;">{{$row['profession_charges_per_session']}}</td>
                                     </tr>
                                 </table>

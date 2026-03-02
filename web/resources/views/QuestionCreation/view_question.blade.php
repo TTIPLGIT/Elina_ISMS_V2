@@ -111,7 +111,7 @@
     }
 </style>
 <div class="main-content">
-
+    {{ Breadcrumbs::render('question_creation.view_questions', request()->route('id')) }}
     <div class="section-body mt-0">
 
         <div class="col-md-12">
@@ -365,7 +365,7 @@
                                 <tr>
                                     <th>Sl.No</th>
                                     <th>Question</th>
-                                  
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -373,7 +373,7 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$data['question']}}</td>
-                                   
+
                                 </tr>
                                 @endforeach
                             </tbody>

@@ -638,7 +638,7 @@
                     </div>
                 </div>
             </form>
-            
+
             <div class="col-md-12 text-center" style="padding-top: 15px;">
                 <a type="button" class="btn btn-labeled btn-info" onclick="PrevTab();" id="Previous" title="Previous" style="display:none;height: 35px;background: blue !important; border-color:blue !important; color:white !important">
                     <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Previous</a>
@@ -737,9 +737,35 @@
         var ret1 = tabIDs.replace('Tab', '');
         document.getElementById('state').value = a;
         document.getElementById('currentPage').value = ret1;
+        var confirmMessage = "";
+        var confirmTitle = "";
 
-        $('.loader').show();
-        document.getElementById('form_report').submit();
+        if (a === "Saved") {
+            confirmTitle = "Save Assessment";
+            confirmMessage = "Are you sure you want to save this assessment?";
+        } else if (a === "Submitted") {
+            confirmTitle = "Submit Assessment";
+            confirmMessage = "Are you sure you want to submit this assessment report?";
+        }
+
+        Swal.fire({
+            title: confirmTitle,
+            text: confirmMessage,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            reverseButtons: true
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                $('.loader').show();
+                document.getElementById('form_report').submit();
+            } else {
+                return false; 
+            }
+
+        });
 
     }
 </script>
@@ -885,10 +911,10 @@
                             }
                             // document.getElementById('evidence' + skill_activity_id).value = evidenceObservation;
                         }
-                        
+
                         for (var si = 0; si < sign.length; si++) {
                             var sii = si + 1;
-                            var sign_content = sign[si].additional_details || ''; 
+                            var sign_content = sign[si].additional_details || '';
                             var editor = tinymce.get('signature_' + sii);
                             if (editor) {
                                 editor.setContent(sign_content);
@@ -898,7 +924,7 @@
                         }
 
                         var body_content = "";
-                        
+
                         for (ei = 0; ei < evidence.length; ei++) {
                             var description = evidence[ei].description;
                             var activity = evidence[ei].activity_name;
@@ -1316,7 +1342,7 @@
         if (e.target && e.target.matches('textarea[name^="recommendation["]')) {
             activeRecommendationTextarea = e.target;
             let currentText = activeRecommendationTextarea.value;
-            
+
             // Initialize modal editor if not already done
             if (!isModalEditorInitialized) {
                 initModalEditor(currentText);
@@ -1329,7 +1355,7 @@
                     document.getElementById('modalRecommendationEditor').value = currentText;
                 }
             }
-            
+
             $('#recommendationModal').modal('show');
         }
     });
@@ -1392,27 +1418,27 @@
 
     function saveRecommendation() {
         if (!activeRecommendationTextarea) return;
-        
+
         let modalText = '';
-        
+
         // Get content from modal editor
         if (tinymce && tinymce.get('modalRecommendationEditor')) {
             modalText = tinymce.get('modalRecommendationEditor').getContent();
         } else {
             modalText = document.getElementById('modalRecommendationEditor').value;
         }
-        
+
         // Update the original textarea
         activeRecommendationTextarea.value = modalText;
-        
+
         // If the original textarea has TinyMCE, update it too
         if (tinymce && tinymce.get(activeRecommendationTextarea.id)) {
             tinymce.get(activeRecommendationTextarea.id).setContent(modalText);
         }
-        
+
         // Trigger change event to ensure form submission captures the change
         $(activeRecommendationTextarea).trigger('change');
-        
+
         // Show success message
         Swal.fire({
             toast: true,
@@ -1422,7 +1448,7 @@
             showConfirmButton: false,
             timer: 1500
         });
-        
+
         closeRecommendationModal();
     }
 

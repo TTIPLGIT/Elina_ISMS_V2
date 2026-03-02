@@ -35,7 +35,7 @@
         background-color: #f37020;
     }
 
-    
+
     .tabcontent {
         display: none;
         padding: 6px 12px;
@@ -891,45 +891,45 @@
                             </div>
                         </div>
                         <!-- End Page 8 -->
-                         <!-- Page 4 -->
-                    <div class="col-12 scrollable fixTableHead title-padding" style="display: none;" id="page4">
-                        <div class="table-responsive">
-                            <table class="table table-bordered card-body" id="main">
-                                <thead>
-                                    <tr>
-                                        <th>Tier</th>
-                                        <th>Focus Area</th>
-                                        <th>Key Strategies</th>
-                                        <th>Intended Outcomes</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($tiers as $tierIndex => $tier)
-                                    @php $focusCount = count($tier['focus_areas'] ?? []); @endphp
-                                    @foreach ($tier['focus_areas'] ?? [] as $focusIndex => $focus)
-                                    <tr>
-                                        @if ($focusIndex == 0)
-                                        <td rowspan="{{ $focusCount }}">{{ $tier['name'] }}</td>
-                                        @endif
-                                        <td>{{ $focus['name'] }}</td>
-                                        <td>
-                                            <textarea class="form-control"
-                                                name="tiers[{{ $tier['id'] }}][focus_areas][{{ $focus['id'] }}][key_strategies]"
-                                                id="key_strategies_{{ $tier['id'] }}_{{ $focus['id'] }}">{{ $focus['detail']['key_strategies'] ?? '' }}</textarea>
-                                        </td>
-                                        <td>
-                                            <textarea class="form-control"
-                                                name="tiers[{{ $tier['id'] }}][focus_areas][{{ $focus['id'] }}][intended_outcomes]"
-                                                id="intended_outcomes_{{ $tier['id'] }}_{{ $focus['id'] }}">{{ $focus['detail']['intended_outcomes'] ?? '' }}</textarea>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                    @endforeach
-                                </tbody>
-                            </table>
+                        <!-- Page 4 -->
+                        <div class="col-12 scrollable fixTableHead title-padding" style="display: none;" id="page4">
+                            <div class="table-responsive">
+                                <table class="table table-bordered card-body" id="main">
+                                    <thead>
+                                        <tr>
+                                            <th>Tier</th>
+                                            <th>Focus Area</th>
+                                            <th>Key Strategies</th>
+                                            <th>Intended Outcomes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($tiers as $tierIndex => $tier)
+                                        @php $focusCount = count($tier['focus_areas'] ?? []); @endphp
+                                        @foreach ($tier['focus_areas'] ?? [] as $focusIndex => $focus)
+                                        <tr>
+                                            @if ($focusIndex == 0)
+                                            <td rowspan="{{ $focusCount }}">{{ $tier['name'] }}</td>
+                                            @endif
+                                            <td>{{ $focus['name'] }}</td>
+                                            <td>
+                                                <textarea class="form-control"
+                                                    name="tiers[{{ $tier['id'] }}][focus_areas][{{ $focus['id'] }}][key_strategies]"
+                                                    id="key_strategies_{{ $tier['id'] }}_{{ $focus['id'] }}">{{ $focus['detail']['key_strategies'] ?? '' }}</textarea>
+                                            </td>
+                                            <td>
+                                                <textarea class="form-control"
+                                                    name="tiers[{{ $tier['id'] }}][focus_areas][{{ $focus['id'] }}][intended_outcomes]"
+                                                    id="intended_outcomes_{{ $tier['id'] }}_{{ $focus['id'] }}">{{ $focus['detail']['intended_outcomes'] ?? '' }}</textarea>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <!-- End Page 4 -->
+                        <!-- End Page 4 -->
                         <!-- Sign -->
                         <div class="col-12 scrollable fixTableHead title-padding" style="display: none;" id="signTable">
                             <div class="table-responsive">
@@ -1059,12 +1059,43 @@
 
 <script>
     function save(a) {
+
         document.getElementById('state').value = a;
+
         var tabIDs = $('.tablinks.swiper-slide-active').attr('id');
         var ret1 = tabIDs.replace('Tab', '');
         document.getElementById('currentPage').value = ret1;
-        $('.loader').show();
-        document.getElementById('form_report').submit();
+
+        // Dynamic Message
+        var confirmTitle = "";
+        var confirmMessage = "";
+
+        if (a === "Saved") {
+            confirmTitle = "Save Report";
+            confirmMessage = "Are you sure you want to save this report?";
+        } else if (a === "Submitted") {
+            confirmTitle = "Submit Report";
+            confirmMessage = "Are you sure you want to submit this report?";
+        }
+
+        Swal.fire({
+            title: confirmTitle,
+            text: confirmMessage,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            reverseButtons: true
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                $('.loader').show();
+                document.getElementById('form_report').submit();
+            } else {
+                return false; // stay on same page
+            }
+
+        });
     }
 </script>
 <script>
@@ -1544,7 +1575,7 @@
 
 <script>
     function chip() {
-        
+
         // hidePictureInPicture();
         $('#pdfModal').modal('hide');
         document.querySelector('#pdfModal').classList.add('not-close');
@@ -1754,7 +1785,7 @@
     }
 
     function resize(e) {
-       
+
         if (isResizing) {
             const popup = document.getElementById('popup');
             const headerHeight = document.getElementById('header').offsetHeight;
@@ -1790,4 +1821,5 @@
 
     });
 </script>
+
 @endsection

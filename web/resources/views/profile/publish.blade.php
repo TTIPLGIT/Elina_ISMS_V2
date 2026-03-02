@@ -28,9 +28,11 @@
 
                         <div class="row text-center">
                             <div class="col-md-12">
-                                <button class="btn btn-success" type="submit"><i class="fa fa-check"></i> Publish</button>&nbsp;
-                                <a class="btn btn-danger" href="{{ route('home') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>&nbsp;
-
+                                <a class="btn btn-success" href="{{ route('video_creation.index') }}">
+                                    <i class="fa fa-check"></i> Publish
+                                </a>&nbsp; <a class="btn btn-danger" href="{{ route('video_creation.index') }}">
+                                    <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                </a>
 
 
 

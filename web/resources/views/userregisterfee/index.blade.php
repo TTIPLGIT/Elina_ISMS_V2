@@ -42,9 +42,9 @@
                         <table class="table table-bordered" id="align">
                             <thead>
                                 <tr>
-                                    <th>S.No</th>
+                                    <th class='col-1'>SI.No</th>
                                     <!-- <th>Enrollment ID</th> -->
-                                    <th>Child Name</th>
+                                    <th class='col-2'>Child Name</th>
                                     <th>Reference id</th>
                                     <th>Payment For</th>
                                     <!-- <th>Transaction ID</th> -->

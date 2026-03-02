@@ -599,11 +599,13 @@
     function submit() {
 
         var fieldtype = $('#field_type_id').val();
+
         // alert(fieldtype);
         if (fieldtype == null || fieldtype == "") {
             swal.fire("Please Select Question Type", "", "error");
             return false;
         }
+
         if (fieldtype == 9) {
             var header_title = $('#header_title').val();
             var header_description = $('#header_description').val();
@@ -618,6 +620,14 @@
             if (field_question == null || field_question == "") {
                 swal.fire("Please Enter Question", "", "error");
                 return false;
+            }
+            if ($('#add_description').is(':checked')) {
+                var description = $('#question_description').val().trim();
+
+                if (description == "" || description == null) {
+                    swal.fire("Please Enter Question Description", "", "error");
+                    return false;
+                }
             }
         }
 
@@ -831,7 +841,6 @@
             }
         });
     }
-    
 </script>
 @if(session('success'))
 <script>

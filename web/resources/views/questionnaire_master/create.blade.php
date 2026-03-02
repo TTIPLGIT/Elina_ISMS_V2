@@ -2,6 +2,32 @@
 
 @section('content')
 
+@if(session('error'))
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: "{{ session('error') }}",
+      confirmButtonColor: '#d33'
+    });
+  });
+</script>
+@endif
+
+
+@if(session('success'))
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    Swal.fire({
+      icon: 'success',
+      title: 'Success',
+      text: "{{ session('success') }}",
+      confirmButtonColor: '#3085d6'
+    });
+  });
+</script>
+@endif
 <style>
   h4 {
     text-align: center;
@@ -36,13 +62,13 @@
           <div class="col-md-6" style="margin: 15px 0px 0px 0px;">
             <div class="form-group">
               <label class="control-label">Questionnaire Name<span style="color: red;font-size: 16px;">*</span></label>
-              <input class="form-control" type="text" id="questionnaire_name" style="background-color: #ffffff !important; color: #000000;"name="questionnaire_name" placeholder="Enter Questionnaire Name">
+              <input class="form-control" type="text" id="questionnaire_name" style="background-color: #ffffff !important; color: #000000;" name="questionnaire_name" placeholder="Enter Questionnaire Name">
             </div>
           </div>
           <div class="col-md-6" style="margin: 15px 0px 0px 0px;">
             <div class="form-group questionnaire">
               <label class="control-label required">Questionnaire Type</label>
-              <select  style="background-color: #ffffff !important; color: #000000;" class="form-control" name="questionnaire_type" id="questionnaire_type">
+              <select style="background-color: #ffffff !important; color: #000000;" class="form-control" name="questionnaire_type" id="questionnaire_type">
                 <option value="">Select Questionnaire Type</option>
                 <option value="OVM">OVM</option>
                 <option value="Sail">Sail</option>
@@ -70,13 +96,13 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group questionnaire">
-                <label class="control-label">Options & Values</label>
+                <label class="control-label required">Options & Values</label>
                 <div class="multi-field-wrapper">
                   <div class="multi-fields">
                     <div class="multi-field" style="display: flex;margin-bottom: 5px;">
 
-                      <input class="form-control" type="text" id="option" name="option[]" autocomplete="off" placeholder="Almost Always">
-                      <input class="form-control" type="text" id="value" name="value[]" style="margin-left:20px;" autocomplete="off" placeholder="5">
+                      <input class="form-control" style="background-color:white!important" type="text" id="option" name="option[]" autocomplete="off" placeholder="Almost Always">
+                      <input class="form-control" style="background-color:white!important" type="text" id="value" name="value[]" style="margin-left:20px;" autocomplete="off" placeholder="5">
                       <button class="remove-field btn btn-danger pull-right" id="remove-f" type='button'>X </button>
                       &nbsp;
                     </div>
@@ -93,7 +119,7 @@
                 <div class="multi-field-wrapper">
                   <div class="multi-fields">
                     <div class="multi-field" style="display: flex;margin-bottom: 5px;">
-                      <input type="text" class="form-control" name="quadrant[]" id="quadrant[]" style="margin-right: 10px;">
+                      <input type="text" style="background-color:white!important" class="form-control" name="quadrant[]" id="quadrant[]" style="margin-right: 10px;">
                       <button class="remove-field btn btn-danger pull-right" id="remove-f" type='button'>X </button>
                       &nbsp;
                     </div>
@@ -109,7 +135,7 @@
                 <div class="multi-field-wrapper">
                   <div class="multi-fields">
                     <div class="multi-field" style="display: flex;margin-bottom: 5px;">
-                      <input type="text" class="form-control" name="category[]" id="category[]" style="margin-right: 10px;">
+                      <input style="background-color:white!important" type="text" class="form-control" name="category[]" id="category[]" style="margin-right: 10px;">
                       <button class="remove-field btn btn-danger pull-right" id="remove-f" type='button'>X </button>
                       &nbsp;
                     </div>
@@ -132,6 +158,7 @@
   </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/tinymce.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/jquery.tinymce.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
@@ -151,24 +178,83 @@
 
   function validateForm() {
 
-    let questionnaire_id = document.getElementById("questionnaire_name").value;
-    if (questionnaire_id == '' || questionnaire_id == null) {
-      swal.fire("Please Enter Questionnaire Name", "", "error");
+    let questionnaire_name = $("#questionnaire_name").val().trim();
+    if (questionnaire_name == '') {
+      Swal.fire("Questionnaire Name is required", "", "error");
       return false;
     }
 
-    var fieldtype = $('#questionnaire_type').val();
-    if (fieldtype == null || fieldtype == "") {
-      swal.fire("Please Select Questionnaire Type", "", "error");
+    let questionnaire_type = $('#questionnaire_type').val();
+    if (!questionnaire_type) {
+      Swal.fire("Questionnaire Type is required", "", "error");
       return false;
     }
 
-    var questionnaire_description = tinymce.get('questionnaire_description').getContent();
-    if (questionnaire_description == '' || questionnaire_description == null) {
-      swal.fire("Please Enter Questionnaire Description", "", "error");
+    let questionnaire_description = tinymce.get('questionnaire_description').getContent({
+      format: 'text'
+    }).trim();
+    if (questionnaire_description == '') {
+      Swal.fire("Questionnaire Description is required", "", "error");
       return false;
     }
 
+    // ✅ If Enable Toggle Checked
+    if ($('#is_active').prop('checked')) {
+
+      // ===== OPTIONS =====
+      let optionIndex = 1;
+      let optionValid = true;
+      $('input[name="option[]"]').each(function() {
+        if ($(this).val().trim() == '') {
+          Swal.fire("Option " + optionIndex + " is required", "", "error");
+          optionValid = false;
+          return false;
+        }
+        optionIndex++;
+      });
+      if (!optionValid) return false;
+
+      // ===== VALUES =====
+      let valueIndex = 1;
+      let valueValid = true;
+      $('input[name="value[]"]').each(function() {
+        if ($(this).val().trim() == '') {
+          Swal.fire("Value " + valueIndex + " is required", "", "error");
+          valueValid = false;
+          return false;
+        }
+        valueIndex++;
+      });
+      if (!valueValid) return false;
+
+      // ===== QUADRANT =====
+      let quadrantIndex = 1;
+      let quadrantValid = true;
+      $('input[name="quadrant[]"]').each(function() {
+        if ($(this).val().trim() == '') {
+          Swal.fire("Quadrant " + quadrantIndex + " is required", "", "error");
+          quadrantValid = false;
+          return false;
+        }
+        quadrantIndex++;
+      });
+      if (!quadrantValid) return false;
+
+      // ===== CATEGORY =====
+      let categoryIndex = 1;
+      let categoryValid = true;
+      $('input[name="category[]"]').each(function() {
+        if ($(this).val().trim() == '') {
+          Swal.fire("Category " + categoryIndex + " is required", "", "error");
+          categoryValid = false;
+          return false;
+        }
+        categoryIndex++;
+      });
+      if (!categoryValid) return false;
+    }
+
+    return true;
   }
 </script>
 <script type="text/javascript">

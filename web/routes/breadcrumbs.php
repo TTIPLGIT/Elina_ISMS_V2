@@ -148,7 +148,7 @@ Breadcrumbs::for('internview', function ($trail, $id) {
     $trail->push("Show", route('internview', $id));
 });
 Breadcrumbs::for('servicelist', function (BreadcrumbTrail $trail) {
-    $trail->push('Service Enrollment', route('servicelist'));
+    $trail->push('Professionals', route('servicelist'));
 });
 Breadcrumbs::for('serviceproviderview', function ($trail, $id) {
     $trail->parent('servicelist');
@@ -377,9 +377,9 @@ Breadcrumbs::for('question_creation.create', function (BreadcrumbTrail $trail) {
     $trail->parent('question_creation.index');
     $trail->push('Create', route('question_creation.create'));
 });
-Breadcrumbs::for('question_creation.show', function ($trail, $id) {
+Breadcrumbs::for('question_creation.view_questions', function ($trail, $id) {
     $trail->parent('question_creation.index');
-    $trail->push("Show", route('question_creation.show', $id));
+    $trail->push("View", route('question_creation.view_questions', $id));
 });
 Breadcrumbs::for('question_creation.add_questions', function ($trail, $id) {
     $trail->parent('question_creation.index');
@@ -651,7 +651,7 @@ Breadcrumbs::for('paymentmaster.customized', function (BreadcrumbTrail $trail) {
 });
 
 Breadcrumbs::for('paymentmaster.customized.create', function (BreadcrumbTrail $trail) {
-    $trail->parent('paymentmaster.customized'); 
+    $trail->parent('paymentmaster.customized');
     $trail->push('Create Payment', route('paymentmaster.customized.create'));
 });
 Breadcrumbs::for('service_briefing.index', function (BreadcrumbTrail $trail) {

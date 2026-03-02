@@ -101,14 +101,19 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label" for="adjustedBaseAmount">Base Amount (in ₹):</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" type="number" id="adjustedBaseAmount" name="adjustedBaseAmount" readonly value="{{$rows['base_amount']}}">
+                                        <input class="form-control"
+                                            type="number"
+                                            id="adjustedBaseAmount"
+                                            name="adjustedBaseAmount"
+                                            readonly
+                                            value="0">
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label" for="gstRate">GST Rate (in %):</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" type="number" id="gstRate" name="gstRate" required min="0" step="any" value="{{$rows['gst_rate']}}" disabled>
+                                        <input class="form-control" style="background-color:white!important" type="number" id="gstRate" name="gstRate" required min="0" step="any" value="{{$rows['gst_rate']}}">
                                     </div>
                                 </div>
 
@@ -122,7 +127,7 @@
 
                                 <div class="form-group">
                                     <label class="col-form-label required" for="finalAmount">Final Amount (in ₹):</label>
-                                    <input class="form-control" type="number" id="finalAmount" name="finalAmount" min="0" step="any" readonly value="{{$rows['final_amount']}}">
+                                    <input class="form-control" type="number" id="finalAmount" name="finalAmount" value="0" min="0" step="any" readonly value="{{$rows['final_amount']}}">
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12 text-center">

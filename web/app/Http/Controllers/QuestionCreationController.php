@@ -178,7 +178,7 @@ class QuestionCreationController extends BaseController
      */
     public function store(Request $request)
     {
-        // dd($request);
+
         try {
             $method = 'Method => QuestionCreationController => store';
 
@@ -241,14 +241,19 @@ class QuestionCreationController extends BaseController
             } else if ($field_type_id == 9) {
                 $data['header_title'] = $request->header_title;
                 $data['header_description'] = $request->header_description;
+            } else if ($field_type_id == 12) {
+                $data['field_question'] = $request->field_question;
+                $data['question_field_name'] = $request->question_field_name;
+                $data['question_description'] = $request->question_description;
             }
-            // dd($data);
+            
             $encryptArray = $this->encryptData($data);
             $request = array();
             $request['requestData'] = $encryptArray;
             $gatewayURL = config('setting.api_gateway_url') . '/question_creation/store_question';
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
             $response1 = json_decode($response);
+       
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
 
