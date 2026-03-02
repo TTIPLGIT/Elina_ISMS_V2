@@ -11,7 +11,7 @@
                 <div class="col-12">
                     <form action="{{ route('paymentmaster.customized.store') }}" method="POST" id="payment_store">
                         <input type="hidden" id="payment_status" name="payment_status">
-                        <input type="hidden" id="id" name="id" value="{{$rows['id']}}">
+                        <input type="hidden" id="id" name="id" value="">
                         @csrf
                         <div class="card mb-1 mt-1">
                             <div class="card-body">
@@ -27,44 +27,14 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div style="display: none;">
-                                        <div class="col-md-6" style="display: none;">
-                                            <div class="form-group">
-                                                <label class="required">Category:</label>
-                                                <select class="form-control" id="Category" name="Category" onchange="toggleSchoolDropdown()" required>
-                                                    <option value="">Select-Category</option>
-                                                    <option value="1" {{ isset($rows['category_id']) && $rows['category_id'] == '1' ? 'selected' : '' }}>General</option>
-                                                    <option value="2" {{ isset($rows['category_id']) && $rows['category_id'] == '2' ? 'selected' : '' }}>School</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="required">Fees Type</label>
-                                                <select class="form-control" id="fees_type" name="fees_type" required>
-                                                    <option value="">Select- Fees Type</option>
-                                                    <option value="1" {{ isset($rows['fees_type_id']) && $rows['fees_type_id'] == '1' ? 'selected' : '' }}>Registration</option>
-                                                    <option value="2" {{ isset($rows['fees_type_id']) && $rows['fees_type_id'] == '2' ? 'selected' : '' }}>SAIL</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6" id="school_dropdown" style="display:none;">
-                                            <div class="form-group">
-                                                <label class="required">School</label>
-                                                <select class="form-control" id="school" name="school" required>
-                                                    <option value="">Select-School</option>
-                                                    @foreach($schoolists as $key => $schoolist)
-                                                    <option value="{{$schoolist['id']}}" {{ isset($rows['school_enrollment_id']) && $rows['school_enrollment_id'] == $schoolist['id'] ? 'selected' : '' }}>{{ $schoolist['school_name'] }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <!-- Hidden fields with default empty values -->
+                                    <input type="hidden" id="Category" name="Category" value="1">
+                                    <input type="hidden" id="fees_type" name="fees_type" value="1">
+                                    <input type="hidden" id="school" name="school" value="">
                                 </div>
                             </div>
                         </div>
+                        
                         <!-- Service Details Table -->
                         <div class="card mb-1 mt-1">
                             <div class="card-body">
@@ -89,12 +59,13 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="card mb-1 mt-1">
                             <div class="card-body">
                                 <div class="form-group row" style="display: none;">
                                     <label class="col-sm-4 col-form-label" for="baseAmount">Base Amount (in ₹):</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" type="number" id="baseAmount" name="baseAmount" min="0" step="any" required>
+                                        <input class="form-control" type="number" id="baseAmount" name="baseAmount" min="0" step="any" value="0">
                                     </div>
                                 </div>
 
@@ -113,7 +84,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label" for="gstRate">GST Rate (in %):</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" style="background-color:white!important" type="number" id="gstRate" name="gstRate" required min="0" step="any" value="{{$rows['gst_rate']}}">
+                                        <input class="form-control" style="background-color:white!important" type="number" id="gstRate" name="gstRate" required min="0" step="any" value="0">
                                     </div>
                                 </div>
 
@@ -127,11 +98,11 @@
 
                                 <div class="form-group">
                                     <label class="col-form-label required" for="finalAmount">Final Amount (in ₹):</label>
-                                    <input class="form-control" type="number" id="finalAmount" name="finalAmount" value="0" min="0" step="any" readonly value="{{$rows['final_amount']}}">
+                                    <input class="form-control" type="number" id="finalAmount" name="finalAmount" value="0" min="0" step="any" readonly>
                                 </div>
+                                
                                 <div class="row">
                                     <div class="col-lg-12 text-center">
-                                        <!-- <button type="button" class="btn btn-warning text-white" onclick="validateForm('Saved')">Save</button> -->
                                         <button type="button" class="btn btn-success text-white" onclick="validateForm('Submitted')">Submit</button>
                                         <a class="btn btn-labeled back-btn" title="Back" href="{{ route('paymentmaster.customized') }}" style="color:white !important">
                                             <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back
@@ -140,8 +111,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </form>
                 </div>
             </div>
@@ -150,29 +119,10 @@
 </div>
 
 <script>
+    // Initialize variables
     var serviceData = @json($serviceData); // This contains all service names and amounts
-    // Track used services to prevent duplicates
     var usedServices = new Set();
-
-    // For editing existing services, mark them as used
-    @if(isset($serviceList) && !empty($serviceList))
-    var serviceList = @json($serviceList);
-    serviceList.forEach(function(service) {
-        usedServices.add(service.service_briefing);
-    });
-    @else
-    var serviceList = [];
-    @endif
-</script>
-<script>
     let totalServiceAmount = 0;
-
-    // Function to toggle the school dropdown based on selected category
-    function toggleSchoolDropdown() {
-        var category = document.getElementById('Category').value;
-        var schoolDropdown = document.getElementById('school_dropdown');
-        schoolDropdown.style.display = (category == '2') ? 'block' : 'none';
-    }
 
     // Helper function to show alerts
     function showAlert(message, type = 'error') {
@@ -185,34 +135,12 @@
 
     // Validate the form before submitting
     function validateForm(action) {
-        var Category = $('#Category').val();
         var ChildName = $('#child_enrollment').val();
+        
         if (ChildName == "") {
             showAlert("Please Select Child Name");
             return false;
         }
-        if (Category == "") {
-            showAlert("Please Select Category");
-            return false;
-        }
-
-        var school = $('#school').val();
-        if (Category == "2" && school == '') {
-            showAlert("Please Select School");
-            return false;
-        }
-
-        var fees_type = $('#fees_type').val();
-        if (fees_type == "") {
-            showAlert("Please Select Fees Type");
-            return false;
-        }
-
-        // var baseAmount = $('#baseAmount').val();
-        // if (baseAmount == "" || parseFloat(baseAmount) <= 0) {
-        //     showAlert("Please Enter a valid Base Amount greater than 0");
-        //     return false;
-        // }
 
         var gstRate = $('#gstRate').val();
         if (gstRate == "" || parseFloat(gstRate) < 0) {
@@ -263,10 +191,8 @@
 
         document.getElementById('payment_status').value = action;
 
-        var swalText = (action == 'Saved') ? 'Save' : 'Submit';
-
         Swal.fire({
-            title: "Would you like to " + swalText + " the new Payment details?",
+            title: "Would you like to Submit the new Payment details?",
             text: "Please click 'Yes' to confirm the submission",
             icon: "warning",
             customClass: 'swalalerttext',
@@ -316,47 +242,8 @@
         document.getElementById('finalAmount').value = finalAmount.toFixed(2);
     }
 
-    // Event listener for changes in Base Amount field
-    document.getElementById('baseAmount').addEventListener('input', function() {
-        calculateFinalAmount(); // Recalculate final amount when base amount is changed
-    });
-
     // Event listener for changes in GST Rate field
     document.getElementById('gstRate').addEventListener('input', calculateFinalAmount);
-
-    // Dynamically add additional tax input fields
-    var taxList = <?php echo json_encode($taxList); ?>;
-    document.getElementById('addTaxButton').addEventListener('click', function() {
-        const taxGroup = document.createElement('div');
-        const taxId = `taxGroup_${Date.now()}`;
-        taxGroup.classList.add('tax-group');
-        taxGroup.setAttribute('data-id', taxId);
-
-        taxGroup.innerHTML = `
-            <div class="form-group row tax-row">
-                <div class="col-5">
-                    <input class="form-control" type="text" id="taxName_${taxId}" name="taxNames[]" placeholder="Tax Name" required>
-                </div>
-                <div class="col-5">
-                    <input class="form-control" type="number" id="taxPercentage_${taxId}" name="additionalTaxes[]" placeholder="Percentage" required min="0" step="any">
-                </div>
-                <div class="col-2">
-                    <button type="button" class="removeTaxButton btn btn-danger" data-id="${taxId}">Remove</button>
-                </div>
-            </div>
-        `;
-
-        document.getElementById('additionalTaxes').appendChild(taxGroup);
-
-        taxGroup.querySelector('[name="additionalTaxes[]"]').addEventListener('input', calculateFinalAmount);
-
-        taxGroup.querySelector('.removeTaxButton').addEventListener('click', function() {
-            taxGroup.remove();
-            calculateFinalAmount();
-        });
-
-        calculateFinalAmount();
-    });
 
     // Function to populate dropdown with available services
     function populateServiceDropdown(selectElement, selectedValue = '') {
@@ -367,11 +254,8 @@
 
         // Add available services
         if (serviceData && serviceData.length > 0) {
-            // Create a copy of serviceData to avoid modifying the original
-            let availableServices = [...serviceData];
-
             // Filter out already used services
-            availableServices = availableServices.filter(function(service) {
+            let availableServices = serviceData.filter(function(service) {
                 return !usedServices.has(service.service_briefing) || service.service_briefing === selectedValue;
             });
 
@@ -408,8 +292,8 @@
         const amountInput = row.querySelector('.amount');
 
         // Get the selected service
-        const selectedService = selectElement.options[selectElement.selectedIndex];
-        const rate = parseFloat(selectedService.getAttribute('data-rate')) || 0;
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const rate = parseFloat(selectedOption.getAttribute('data-rate')) || 0;
 
         // Auto-fill the rate
         rateInput.value = rate;
@@ -420,12 +304,13 @@
         if (qtyInput.value) {
             const qty = parseFloat(qtyInput.value) || 0;
             amountInput.value = (qty * rate).toFixed(2);
-            calculateServiceAmountForRow(row);
         } else {
             // If no quantity, set amount to 0
             amountInput.value = '0.00';
-            calculateServiceAmountForRow(row);
         }
+
+        // Calculate service amount for this row
+        calculateServiceAmountForRow(row);
 
         // Update used services
         updateUsedServices();
@@ -455,8 +340,8 @@
         });
     }
 
-    // Handle adding service rows dynamically
-    document.getElementById('addServiceButton').addEventListener('click', function() {
+    // Function to add a new service row
+    function addNewServiceRow() {
         const table = document.getElementById('serviceTable').getElementsByTagName('tbody')[0];
         const row = table.insertRow(table.rows.length);
 
@@ -490,12 +375,8 @@
             calculateServiceAmountForRow(row);
         });
 
-        row.querySelector('.rate').addEventListener('input', function() {
-            calculateServiceAmountForRow(row);
-        });
-
         updateServiceSerialNumbers();
-    });
+    }
 
     // Function to calculate service amount for a specific row
     function calculateServiceAmountForRow(row) {
@@ -513,12 +394,6 @@
         });
 
         calculateFinalAmount();
-    }
-
-    // Calculate service amount (legacy function)
-    function calculateServiceAmount(event) {
-        const row = event.target.closest('tr');
-        calculateServiceAmountForRow(row);
     }
 
     // Remove service row
@@ -546,63 +421,33 @@
         calculateFinalAmount();
     }
 
-    // Initialize existing service rows if editing
+    // Initialize the form
     document.addEventListener('DOMContentLoaded', function() {
-        // If there are existing services (editing mode), populate them
-        if (serviceList && serviceList.length > 0) {
-            const table = document.getElementById('serviceTable').getElementsByTagName('tbody')[0];
-
-            serviceList.forEach((service, index) => {
-                const row = table.insertRow(table.rows.length);
-
-                const cell1 = row.insertCell(0);
-                const cell2 = row.insertCell(1);
-                const cell3 = row.insertCell(2);
-                const cell4 = row.insertCell(3);
-                const cell5 = row.insertCell(4);
-                const cell6 = row.insertCell(5);
-
-                // Create dropdown for service briefing with existing value
-                cell2.innerHTML = `<select class="form-control service-select" name="serviceBriefing[]" required>
-                    <option value="">Select Service</option>
-                </select>`;
-
-                cell3.innerHTML = `<input class="form-control qty" type="number" name="qty[]" value="${service.quantity}" min="0" step="any" required>`;
-                cell4.innerHTML = `<input class="form-control rate gray-bg" type="number" name="rate[]" value="${service.rate}" min="0" step="any" readonly>`;
-                cell5.innerHTML = `<input class="form-control amount gray-bg" type="number" name="amount[]" value="${service.amount}" readonly>`;
-                cell6.innerHTML = `<button type="button" class="btn btn-danger removeServiceButton" onclick="removeRow(this)">Remove</button>`;
-
-                // Populate the dropdown and select the existing value
-                const selectElement = row.querySelector('.service-select');
-                populateServiceDropdown(selectElement, service.service_briefing);
-
-                // Add to used services
-                if (service.service_briefing) {
-                    usedServices.add(service.service_briefing);
-                }
-
-                // Add event listeners
-                selectElement.addEventListener('change', function() {
-                    handleServiceChange(this);
-                });
-
-                row.querySelector('.qty').addEventListener('input', function() {
-                    calculateServiceAmountForRow(row);
-                });
-
-                row.querySelector('.rate').addEventListener('input', function() {
-                    calculateServiceAmountForRow(row);
-                });
-            });
-        } else {
-            // If no existing services, add one empty row
-            document.getElementById('addServiceButton').click();
-        }
-
-        updateServiceSerialNumbers();
-
+        // Clear the service table
+        const table = document.getElementById('serviceTable').getElementsByTagName('tbody')[0];
+        table.innerHTML = ''; // Remove any existing rows
+        
+        // Add one empty service row
+        addNewServiceRow();
+        
         // Initialize all dropdowns
         updateAllServiceDropdowns();
+        
+        // Reset all values
+        totalServiceAmount = 0;
+        document.getElementById('baseAmount').value = '0';
+        document.getElementById('gstRate').value = '0';
+        document.getElementById('finalAmount').value = '0';
+        document.getElementById('adjustedBaseAmount').value = '0';
+        document.getElementById('child_enrollment').value = '';
+        
+        // Clear any used services
+        usedServices.clear();
+    });
+
+    // Add service button click handler
+    document.getElementById('addServiceButton').addEventListener('click', function() {
+        addNewServiceRow();
     });
 
     function updateServiceSerialNumbers() {
@@ -649,7 +494,6 @@
         cursor: not-allowed;
     }
 
-
     #child_enrollment {
         background-color: #ffffff !important;
     }
@@ -664,5 +508,5 @@
         cursor: not-allowed;
     }
 </style>
- 
+
 @endsection
