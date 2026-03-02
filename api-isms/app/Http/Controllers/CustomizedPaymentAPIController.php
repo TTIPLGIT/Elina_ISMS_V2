@@ -80,7 +80,7 @@ class CustomizedPaymentAPIController extends BaseController
             $response = [
                 'rows' => $rows,
                 'schoolists' => $schoolists,
-                'serviceList' => $serviceList,
+                'serviceList' => $serviceList, 
                 'taxList' => $taxList,
                 'childDetails' => $childDetails,
                 'serviceData' =>  $serviceData
