@@ -32,7 +32,7 @@
                                                 name="service_briefing"
                                                 value="{{ $data['service_briefing'] ?? '' }}"
                                                 autocomplete="off"
-                                                style="background-color:#e9ecef !important;">
+                                                style="background-color:white !important;">
                                         </div>
                                     </div>
 
@@ -45,7 +45,7 @@
                                                 name="amount"
                                                 value="{{ $data['amount'] ?? '' }}"
                                                 autocomplete="off"
-                                                style="background-color:#e9ecef !important;">
+                                                style="background-color:white !important;">
                                         </div>
                                     </div>
 

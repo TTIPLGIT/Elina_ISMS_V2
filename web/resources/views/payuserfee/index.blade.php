@@ -38,6 +38,13 @@
         }
     </script>
     @endif
+    <style>
+        #tableList th,
+        #tableList td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
 
     {{ Breadcrumbs::render('payuserfee.index') }}
     <h5 class="text-center" style="color:darkblue">Payment Detail for {{ $rows[0]['child_name']}} ({{ $rows[0]['enrollment_child_num']}})</h5>

@@ -70,6 +70,13 @@
         padding: 0;
     }
 </style>
+<style>
+    #tableList th,
+    #tableList td {
+        text-align: center;
+        vertical-align: middle;
+    }
+</style>
 <div class="main-content">
     @if (session('success'))
     <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">

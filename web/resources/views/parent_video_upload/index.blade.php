@@ -50,6 +50,13 @@
         margin-left: 10px;
     }
 </style>
+<style>
+    #tableList th,
+    #tableList td {
+        text-align: center;
+        vertical-align: middle;
+    }
+</style>
 <div class="main-content">
     {{ Breadcrumbs::render('parent_video_upload.parentindex') }}
     <style>

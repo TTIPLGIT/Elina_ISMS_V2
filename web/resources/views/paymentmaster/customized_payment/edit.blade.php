@@ -3,7 +3,7 @@
 @section('content')
 <div class="main-content">
     <section class="section">
-        {{ Breadcrumbs::render('paymentmaster.customized.create') }}
+        {{ Breadcrumbs::render('paymentmaster.customized.getdata', $rows['id']) }}
         <div class="section-body mt-1">
             <h5 class="text-center" style="color:darkblue">Payment Master Edit</h5>
             <div class="row">
@@ -111,7 +111,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label" for="gstRate">GST Rate (in %):</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control"  style="background-color: white !important" type="number" id="gstRate" name="gstRate" required min="0" step="any" value="{{$rows['gst_rate']}}">
+                                        <input class="form-control" type="number" id="gstRate" name="gstRate" required min="0" step="any" value="{{$rows['gst_rate']}}" readonly>
                                     </div>
                                 </div>
 
@@ -642,7 +642,7 @@
 
     #child_enrollment:disabled {
         background-color: #e9ecef !important;
-        color:black !important;
+        color: black !important;
         opacity: 1 !important;
     }
 </style>

@@ -553,7 +553,7 @@ Breadcrumbs::for('inperson_meeting.create', function (BreadcrumbTrail $trail) {
     $trail->push('New Invite', route('inperson_meeting.create'));
 });
 Breadcrumbs::for('quadrant_questionnaire.index', function (BreadcrumbTrail $trail) {
-    $trail->push('Quadrant Report', route('quadrant_questionnaire.index'));
+    $trail->push('Questionnaire Report', route('quadrant_questionnaire.index'));
 });
 Breadcrumbs::for('quadrant_questionnaire.executive', function ($trail, $id) {
     $trail->parent('quadrant_questionnaire.index');
@@ -653,6 +653,10 @@ Breadcrumbs::for('paymentmaster.customized', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('paymentmaster.customized.create', function (BreadcrumbTrail $trail) {
     $trail->parent('paymentmaster.customized');
     $trail->push('Create Payment', route('paymentmaster.customized.create'));
+});
+Breadcrumbs::for('paymentmaster.customized.getdata', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('paymentmaster.customized');
+    $trail->push('Edit', route('paymentmaster.customized.getdata', $id));
 });
 Breadcrumbs::for('service_briefing.index', function (BreadcrumbTrail $trail) {
     $trail->push('Service Briefing', route('service_briefing.index'));

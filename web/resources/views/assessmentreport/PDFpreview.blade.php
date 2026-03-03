@@ -113,11 +113,33 @@
         border-radius: 5px;
         margin: 10px 0;
     }
-    
+
     .iframe-loader i {
         font-size: 40px;
         color: #007bff;
         margin-bottom: 15px;
+    }
+</style>
+<style>
+    .report-option {
+        margin: 0 30px;
+        /* Space between options */
+        font-size: 18px;
+        /* Increase text size */
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .report-option input[type="radio"] {
+        margin-right: 10px;
+        /* Space between radio & text */
+        transform: scale(1.3);
+        /* Increase radio size */
+        cursor: pointer;
+    }
+
+    .report-option span {
+        vertical-align: middle;
     }
 </style>
 <div class="main-content">
@@ -146,12 +168,21 @@
     <input type="hidden" value="{{$data['enrollment_id']}}" id="enrollment_id" name="enrollment_id">
     <div class="col-12 form-group" style="float:left;">
         <h4 style="color:darkblue;text-align: center;">Assessment Report Preview</h4>
-        <select class="col-3 form-control default" style="margin: -45px 0 0 -15px;" id="Tableview" onchange="view_change()">
-            <option value="1" selected>Assessment Executive Report</option>
-            <option value="2">Assessment Detail Report</option>
-        </select>
-    </div>
 
+    </div>
+    <div class="text-center mb-4" style="margin-top:45px;">
+
+        <label class="report-option">
+            <input type="radio" name="report_type" value="1" checked onchange="view_change()">
+            <span>Assessment Executive Report</span>
+        </label>
+
+        <label class="report-option">
+            <input type="radio" name="report_type" value="2" onchange="view_change()">
+            <span>Assessment Detail Report</span>
+        </label>
+
+    </div>
     <div id="executive_report">
         @if(isset($reportURLs['executive_report']) && !empty($reportURLs['executive_report']))
         <iframe src="{{$reportURLs['executive_report']}}" width="100%" height="600" frameborder="0" id="executive_iframe"></iframe>
@@ -167,13 +198,13 @@
         <div class="alert alert-warning">Detail report is not available</div>
         @endif
     </div>
-    
+
     <!-- Add a loading indicator that appears when switching views -->
     <div id="iframe_loader" class="iframe-loader" style="display: none;">
         <i class="fa fa-spinner fa-spin"></i>
         <h5>Loading report...</h5>
     </div>
-    
+
     <div style="display: contents;">
         <div class="faq-drawer">
             <input class="faq-drawer__trigger" id="faq-drawer" type="checkbox" /><label class="faq-drawer__title" style="background: #96a3d5c7;" for="faq-drawer">Email Preview</label>
@@ -270,45 +301,37 @@
 
 <script>
     function view_change() {
-        var view = document.getElementById('Tableview').value;
-        
+
+        var view = document.querySelector('input[name="report_type"]:checked').value;
+
         // Show loader
         document.getElementById('iframe_loader').style.display = 'block';
-        
+
         if (view == 1) {
-            // Show executive report
+
             document.getElementById('executive_report').style.display = 'block';
             document.getElementById('summary_report').style.display = 'none';
-            
-            // Reload iframe to ensure proper rendering
+
             var executiveIframe = document.getElementById('executive_iframe');
             if (executiveIframe) {
-                executiveIframe.src = executiveIframe.src; // Reload the iframe
+                executiveIframe.src = executiveIframe.src;
             }
-            
-            // Hide loader after a short delay to ensure iframe loads
-            setTimeout(function() {
-                document.getElementById('iframe_loader').style.display = 'none';
-            }, 1000);
-            
-        } else if (view == 2) {
-            // Show detail report
+
+        } else {
+
             document.getElementById('executive_report').style.display = 'none';
             document.getElementById('summary_report').style.display = 'block';
-            
-            // Reload iframe to ensure proper rendering
+
             var summaryIframe = document.getElementById('summary_iframe');
             if (summaryIframe) {
-                // Add a timestamp to avoid cache issues
                 var currentSrc = summaryIframe.src.split('?')[0];
                 summaryIframe.src = currentSrc + '?t=' + new Date().getTime();
             }
-            
-            // Hide loader after a short delay to ensure iframe loads
-            setTimeout(function() {
-                document.getElementById('iframe_loader').style.display = 'none';
-            }, 1000);
         }
+
+        setTimeout(function() {
+            document.getElementById('iframe_loader').style.display = 'none';
+        }, 800);
     }
 </script>
 
@@ -335,18 +358,18 @@
             },
 
         });
-        
+
         // Handle iframe load events to hide loader
         $('#executive_iframe, #summary_iframe').on('load', function() {
             $('#iframe_loader').hide();
         });
-        
+
         // If iframes are already loaded, hide loader after a delay
         setTimeout(function() {
             $('#iframe_loader').hide();
         }, 2000);
     });
-    
+
     document.addEventListener('DOMContentLoaded', function() {
         var tables = document.getElementsByClassName('table');
 
