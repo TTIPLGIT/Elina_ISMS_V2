@@ -310,29 +310,29 @@
                     <input type="hidden" value="{{$data[0]['user_id']}}" name="user_id" id="user_id">
                     <div class="feedback_container">
                         <div class="qa_div">
-                            <h4 class="title_feedback">How probable is it that you would want to go on?</h4>
+                            <h4 class="title_feedback" style="font-family: sans-serif;">How probable is it that you would want to go on?</h4>
                             <div class="question">
                                 <div class="">
                                     <!-- Option: Will confirm after one month (Default selected) -->
                                     <div class="radio-wrapper" data-tooltip="Confirm your participation after one month">
                                         <input type="radio" id="option3" name="confirmation" value="Will confirm after one month" checked>
-                                        <label for="option3">Will confirm after one month</label>
+                                        <label for="option3" style="font-family: sans-serif;" >Will confirm after one month</label>
                                     </div>
 
                                     <!-- Option: Will confirm later -->
                                     <div class="radio-wrapper" data-tooltip="Decide on participation at a later date">
                                         <input type="radio" id="option2" name="confirmation" value="Will confirm after">
-                                        <label for="option2">Will confirm later</label>
+                                        <label for="option2" style="font-family: sans-serif;">Will confirm later</label>
                                     </div>
                                     
                                     <!-- Week selection - Properly aligned with the option text -->
                                     <div id="weekSelection" style="display: none;">
-                                        <label for="weekSelect">After:</label>
+                                        <label  style="font-family: sans-serif;" for="weekSelect">After:</label>
                                         <select class="col-4 form-control default" id="weekSelect" name="weekSelect">
-                                            <option value="">Select Week</option>
-                                            <option value="Week 1">Week 1</option>
-                                            <option value="Week 2">Week 2</option>
-                                            <option value="Week 3">Week 3</option>
+                                            <option value="" style="font-family: sans-serif;">Select Week</option>
+                                            <option value="Week 1" style="font-family: sans-serif;">Week 1</option>
+                                            <option value="Week 2" style="font-family: sans-serif;">Week 2</option>
+                                            <option value="Week 3" style="font-family: sans-serif;">Week 3</option>
                                         </select>
                                     </div>
                                     

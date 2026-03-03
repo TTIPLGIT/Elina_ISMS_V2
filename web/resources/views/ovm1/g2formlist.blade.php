@@ -18,6 +18,13 @@
 }
 
 </style>
+<style>
+    #tableList th,
+    #tableList td {
+        text-align: center;
+        vertical-align: middle;
+    }
+</style>
 
 <div class="main-content">
   {{ Breadcrumbs::render('g2form.list') }}
