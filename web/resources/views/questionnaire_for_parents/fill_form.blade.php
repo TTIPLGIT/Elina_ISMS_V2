@@ -284,26 +284,55 @@
             </div>
         </div>
 
-        <div class="col-lg-12 text-center" style="margin-top: 20px; margin-bottom: 20px;">
-            <a type="button" id="navPrev" onclick="navigate('prev')" class="btn btn-labeled responsive-button button-style back-button" title="Back">
-                <i class="fas fa-arrow-left"></i><span> Back </span>
-            </a>
+        <!-- Navigation buttons at the bottom -->
+        <div class="col-lg-12 text-center" style="margin-top: 20px; margin-bottom: 20px;" id="navigationButtons">
+            <!-- First Page Buttons (Page 1) -->
+            <div id="firstPageButtons" style="display: inline-block;">
+                <a type="button" id="navPrevFirst" onclick="navigate('prev')" class="btn btn-labeled responsive-button button-style back-button" title="Back" style="display: none;">
+                    <i class="fas fa-arrow-left"></i><span> Back </span>
+                </a>
+                <button class="btn btn-primary saveButton_form" onclick="save()" type="button" id="saveButtonFirst">
+                    <i class="fa fa-fw fa-lg fa fa-bookmark"></i> Save
+                </button>
+                <a type="button" href="{{ $role == 'Parent' ? route('questionnaire_for_user.index') : URL::previous() }}" class="btn btn-danger responsive-button button-style cancel-button" title="Cancel" id="cancelButtonFirst">
+                    <i class="fas fa-times"></i><span> Cancel </span>
+                </a>
+                <a type="button" id="navNextFirst" onclick="navigate('next')" class="btn btn-labeled responsive-button next-button button-style" title="Next">
+                    <i class="fas fa-arrow-right"></i><span> Next </span>
+                </a>
+            </div>
 
-            <button class="btn btn-primary saveButton_form" onclick="save()" type="button" id="saveButton">
-                <i class="fa fa-fw fa-lg fa fa-bookmark"></i> Save
-            </button>
+            <!-- Middle Pages Buttons (Pages 2,3) -->
+            <div id="middlePagesButtons" style="display: none;">
+                <a type="button" id="navPrevMiddle" onclick="navigate('prev')" class="btn btn-labeled responsive-button button-style back-button" title="Back">
+                    <i class="fas fa-arrow-left"></i><span> Back </span>
+                </a>
+                <button class="btn btn-primary saveButton_form" onclick="save()" type="button" id="saveButtonMiddle">
+                    <i class="fa fa-fw fa-lg fa fa-bookmark"></i> Save
+                </button>
+                <a type="button" href="{{ $role == 'Parent' ? route('questionnaire_for_user.index') : URL::previous() }}" class="btn btn-danger responsive-button button-style cancel-button" title="Cancel" id="cancelButtonMiddle">
+                    <i class="fas fa-times"></i><span> Cancel </span>
+                </a>
+                <a type="button" id="navNextMiddle" onclick="navigate('next')" class="btn btn-labeled responsive-button next-button button-style" title="Next">
+                    <i class="fas fa-arrow-right"></i><span> Next </span>
+                </a>
+            </div>
 
-            <button class="btn btn-success saveButton_form" onclick="sub()" type="button" id="submitButton">
-                <i class="fa fa-fw fa-lg fa-check-circle"></i> Submit
-            </button>
-
-            <a type="button" id="navNext" onclick="navigate('next')" class="btn btn-labeled responsive-button next-button button-style" title="Next">
-                <i class="fas fa-arrow-right"></i><span> Next </span>
-            </a>
-
-            <a type="button" href="{{ $role == 'Parent' ? route('questionnaire_for_user.index') : URL::previous() }}" class="btn btn-danger responsive-button button-style cancel-button" title="Cancel">
-                <i class="fas fa-times"></i><span> Cancel </span>
-            </a>
+            <!-- Last Page Buttons (Page 4) -->
+            <div id="lastPageButtons" style="display: none;">
+                <a type="button" id="navPrevLast" onclick="navigate('prev')" class="btn btn-labeled responsive-button button-style back-button" title="Back">
+                    <i class="fas fa-arrow-left"></i><span> Back </span>
+                </a>
+                <a type="button" href="{{ $role == 'Parent' ? route('questionnaire_for_user.index') : URL::previous() }}" class="btn btn-danger responsive-button button-style cancel-button" title="Cancel" id="cancelButtonLast">
+                    <i class="fas fa-times"></i><span> Cancel </span>
+                </a>
+                <button class="btn btn-primary saveButton_form" onclick="save()" type="button" id="saveButtonLast">
+                    <i class="fa fa-fw fa-lg fa fa-bookmark"></i> Save
+                </button>
+                <button class="btn btn-success saveButton_form" onclick="sub()" type="button" id="submitButtonLast">
+                    <i class="fa fa-fw fa-lg fa-check-circle"></i> Submit
+                </button>
+            </div>
         </div>
 
     </div>
@@ -554,18 +583,28 @@
         }
         document.getElementById('Stepper' + step + 'ID').classList.add('editing');
 
-        var prevButton = document.querySelector('#navPrev');
-        var nextButton = document.querySelector('#navNext');
-        prevButton.style.display = 'inline-block';
-        nextButton.style.display = 'inline-block';
+        // Get all button containers
+        var firstPageButtons = document.getElementById('firstPageButtons');
+        var middlePagesButtons = document.getElementById('middlePagesButtons');
+        var lastPageButtons = document.getElementById('lastPageButtons');
+
+        // Hide all button containers first
+        firstPageButtons.style.display = 'none';
+        middlePagesButtons.style.display = 'none';
+        lastPageButtons.style.display = 'none';
+
+        // Show appropriate buttons based on current page
         if (step === 1) {
-            prevButton.style.display = 'none';
+            // First page: Show Save, Cancel, Next (no Back, no Submit)
+            firstPageButtons.style.display = 'inline-block';
         } else if (step === divCount) {
-            nextButton.style.display = 'none';
+            // Last page: Show Back, Cancel, Save, Submit (no Next)
+            lastPageButtons.style.display = 'inline-block';
         } else {
-            prevButton.style.display = 'inline-block';
-            nextButton.style.display = 'inline-block';
+            // Middle pages: Show Back, Save, Cancel, Next (no Submit)
+            middlePagesButtons.style.display = 'inline-block';
         }
+
         validateForm();
     }
 

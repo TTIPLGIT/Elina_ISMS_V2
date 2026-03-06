@@ -376,13 +376,13 @@ class ParentvideouploadController extends BaseController
             $descriptionID = $this->DecryptData($id);
             $id = auth()->user()->id;
             $email = DB::select("SELECT * from enrollment_details where user_id=$id");
-
+            $this->WriteFileLog($descriptionID);  $this->WriteFileLog($id);
             $enroll = $email[0]->enrollment_id;
             $rows = DB::select("SELECT a.instruction , a.activity_id , a.activity_description_id ,act.activity_name , a.enrollment_id from parent_video_upload AS a 
             INNER JOIN enrollment_details AS b ON  b.enrollment_id=a.enrollment_id 
             INNER JOIN activity AS act ON act.activity_id=a.activity_id 
             INNER JOIN activity_description AS us ON us.activity_description_id=a.activity_description_id WHERE activity_initiation_id=$descriptionID");
-            $activityID = $rows[0]->activity_id;
+            $activityID = $rows[0]->activity_id;  $this->WriteFileLog($activityID);
             $activitylist = DB::select("SELECT save_flag , required , parent_video_upload_id , a.status , a.activity_description_id, a.status AS current_status , us.instruction , us.description , a.f2f_flag,a.instruction as instructionset from parent_video_upload AS a 
             INNER JOIN enrollment_details AS b ON  b.enrollment_id=a.enrollment_id 
             INNER JOIN activity AS act ON act.activity_id=a.activity_id 
@@ -400,8 +400,35 @@ class ParentvideouploadController extends BaseController
             INNER JOIN activity_description AS us ON us.activity_description_id=a.activity_description_id
             WHERE a.enableflag = 0 and a.status='Rejected'and b.user_id=$id AND(a.action_flag=0 OR a.action_flag IS NULL) ORDER BY a.activity_id,a.activity_description_id");
 
-            $comments = DB::select("SELECT * FROM latest_video_comments WHERE created_by='$id' ORDER BY id DESC ");
-            $video_link = DB::select("SELECT * FROM activity_parent_video_upload WHERE parent_video_upload_id IN(SELECT distinct a.parent_video_upload_id  FROM parent_video_upload AS a
+$comments = DB::select("
+    SELECT 
+        lvc.*,
+        pva.activity_initiation_id,
+        pva.activity_description_id,
+        pva.parent_video_upload_id,
+        pva.status as video_status,
+        pva.comments as parent_video_comments,
+        pva.coordinator_observation,
+        pva.head_observation,
+        pva.physical_observation_name,
+        pva.physical_observation_result,
+        pva.instruction,
+        ai.activity_id,
+        a.activity_name,
+        ad.description as activity_description,
+        (SELECT observation FROM sail_activity_vlog_comments 
+         WHERE activity_id = ai.activity_id 
+         AND activity_description_id = pva.activity_description_id 
+         AND enrollment_id = pva.enrollment_id 
+         ORDER BY created_at DESC LIMIT 1) as vlog_observation
+    FROM latest_video_comments lvc
+    INNER JOIN parent_video_upload pva ON pva.parent_video_upload_id = lvc.parent_video_upload_id
+    INNER JOIN activity_initiation ai ON ai.activity_initiation_id = pva.activity_initiation_id
+    INNER JOIN activity a ON a.activity_id = ai.activity_id
+    INNER JOIN activity_description ad ON ad.activity_description_id = pva.activity_description_id
+    WHERE lvc.created_by = ?
+    ORDER BY lvc.id DESC
+", [$id]);            $video_link = DB::select("SELECT * FROM activity_parent_video_upload WHERE parent_video_upload_id IN(SELECT distinct a.parent_video_upload_id  FROM parent_video_upload AS a
             INNER JOIN activity_parent_video_upload AS b ON a.parent_video_upload_id=b.parent_video_upload_id
             INNER JOIN enrollment_details AS c ON  a.Enrollment_id=c.enrollment_id
             WHERE c.user_id='$id')");

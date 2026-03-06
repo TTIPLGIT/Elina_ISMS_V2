@@ -219,7 +219,8 @@ class activityInitiationController extends BaseController
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
-
+                    // dd($lastactivity1);
+                    // dd($datalist);
                     return view('activity_initiate.activityedit', compact('activity_materials_mapping', 'activity_materials', 'currentactivity', 'comments', 'lastactivity', 'rows', 'video_link', 'screens', 'modules', 'activity', 'lastactivity1', 'datalist'));
                 }
             } else {
@@ -298,12 +299,14 @@ class activityInitiationController extends BaseController
                     $lastactivity = $parant_data['lastactivity'];
                     $comments = $parant_data['comments'];
                     $activity_set = $parant_data['activity_set'];
+                    $activity_materials = $parant_data['activity_materials'];
+
                     // $work_flow_row =  $parant_data['work_flow_row'];
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
-
-                    return view('activity_initiate.activity_observation', compact('comments', 'lastactivity', 'rows', 'screens', 'modules', 'activity', 'activity_set'));
+                    // dd($activity_materials);
+                    return view('activity_initiate.activity_observation', compact('comments', 'lastactivity', 'rows', 'screens', 'modules', 'activity', 'activity_set', 'activity_materials'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));

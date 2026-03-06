@@ -18,6 +18,7 @@
                                     <tr>
                                         <th>Sl.No</th>
                                         <th>Questionnaire Name</th>
+                                        <th>Questionnaire Type</th>
                                         <!-- <th>Description</th> -->
                                         <th>Action</th>
                                     </tr>
@@ -27,6 +28,7 @@
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$data['questionnaire_name']}}</td>
+                                        <td>{{$data['questionnaire_type']}}</td>
                                         {{--<td>{{$data['questionnaire_description']}}</td>--}}
                                         <td>
                                             <!-- <a class="btn btn-link" title="show" href=""><i class="fas fa-eye" style="color:green"></i></a> -->

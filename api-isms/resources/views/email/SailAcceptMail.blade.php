@@ -35,17 +35,31 @@
 										</h1>
 
 										<p style="font-size:15px; color:#455056;
-											margin:15px 0 0; line-height:24px;">
-											It was a pleasure meeting you on OVM-2 Meeting Date {{$data['meeting_date']}}.
-											We hope you got a better idea of our services. As discussed in the meeting,
-											we request you to confirm if you would like to avail our SAIL assessment services.
-											Upon your confirmation, we will be sending you the details.
+											margin:15px 0 0; line-height:24px; text-align:left;">
+											It was a pleasure meeting you on {{$data['meeting_date']}}. 
+											Thank you for the trust and openness with which you shared your child’s journey — their strengths, areas of difficulty, and your concerns, as we explored possible next steps together.
 											<br><br>
-											If you have found other alternatives or are taking time to make the decision,
-											please let us know.
+
+											As discussed, the <strong>SAIL assessment</strong> is one pathway to help us build a clearer, structured understanding of your child’s learning and regulation needs.
+											<br><br>
+
+											Whenever you feel ready, please let us know if you would like to proceed with the SAIL process. Upon your confirmation, we will share:
+										</p>
+
+										<ul style="font-size:15px; color:#455056; line-height:24px; margin:10px 0 20px 40px; text-align:left;">
+											<li>The detailed assessment roadmap</li>
+											<li>Scheduling options</li>
+											<li>Documentation requirements</li>
+											<li>Timelines and next steps</li>
+										</ul>
+
+										<p style="font-size:15px; color:#455056; line-height:24px; text-align:left;">
+											If you are exploring other options or would like more time to reflect, that is completely understandable. 
+											Please feel free to inform us — we are here to support you in whatever decision feels right for your family.
 										</p>
 
 										<br><br>
+
 										<a href="{{$data['url']}}"
 											style="background:#22c55e;
 											text-decoration:none;
@@ -75,33 +89,35 @@
 
 										<!-- Information about Accept and Decline -->
 										<div style="text-align: left; background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #22c55e;">
+
 											<p style="font-size:15px; color:#455056; line-height:24px; margin:0 0 15px 0;">
-												<strong style="color:#22c55e;">✓ If you select ACCEPT:</strong><br>
-												We will initiate the SAIL process and share the next steps, including schedules, documentation requirements, and any additional information needed to begin the assessment.
+												<strong style="color:#22c55e;">✓ If you choose to proceed (Accept):</strong><br>
+												We will initiate the SAIL process and guide you step-by-step through the next phase.
 											</p>
 
 											<p style="font-size:15px; color:#455056; line-height:24px; margin:0;">
-												<strong style="color:#ef4444;">✗ If you select DECLINE:</strong><br>
-												Please choose one of the options below:
+												<strong style="color:#ef4444;">✗ If you choose not to proceed (Decline) at this time:</strong><br>
+												You may indicate one of the following so we can update our records accordingly:
 											</p>
 
 											<ul style="font-size:15px; color:#455056; line-height:24px; margin:10px 0 0 20px; padding-left:20px;">
-												<li><strong></strong> Will confirm after one month</li>
-												<li><strong></strong> Will confirm later</li>
-												<li><strong></strong> Will not continue with SAIL process</li>
+												<li>I would like to revisit this after one month</li>
+												<li>I would like to revisit this at a later time</li>
+												<li>I have decided not to proceed with the SAIL process</li>
 											</ul>
 
 											<p style="font-size:15px; color:#666; line-height:24px; margin:15px 0 0 0;">
-												Your selected option will help us update our records and assist you accordingly.
+												Your response helps us ensure continuity and clarity in communication.
 											</p>
+
+											<p style="font-size:15px; color:#455056; line-height:24px; margin-top:20px;">
+												Warm regards,<br>
+												<strong>Team Elina</strong>
+											</p>
+
 										</div>
 
-										<!-- Buttons (unchanged) -->
-
-
 										<br><br><br>
-
-										<!-- Removed the duplicate options section since it's now in the info box above -->
 
 									</td>
 								</tr>

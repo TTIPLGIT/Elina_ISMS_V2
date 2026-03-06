@@ -360,7 +360,8 @@ class ParentvideouploadController extends BaseController
                     $activities_list = $parant_data['activities_list'];
                     $activitylist_nav = $parant_data['activitylist_nav'];
                     $activitylist_rejection = $parant_data['activitylist_rejection'];
-                    $collection = new Collection($activities_list);
+                    $collection = new Collection($activities_list); 
+                    // dd($comments);
 
                     $currentIndex = $collection->search(function ($item) use ($currentID) {
                         return $item['activity_initiation_id'] === $currentID;

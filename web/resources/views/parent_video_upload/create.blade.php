@@ -405,15 +405,28 @@
                     </a>
 
                   </div>
-                  <div class="col-md-12  text-center" style="padding-top: 1rem;">
+                  <div class="col-md-12 text-center" style="padding-top: 1rem;">
                     @if ($loop->iteration > 1)
-                    <a type="button" class="btn btn-labeled btn-info" onclick="showModalPrev('{{isset($activitylist_nav[$key-1]) ? $activitylist_nav[$key-1]['activity_description_id'] : 'helo'}}')" ontouchstart="showModalPrev('{{isset($activitylist_nav[$key-1]) ? $activitylist_nav[$key-1]['activity_description_id'] : 'helo'}}')" id="Previous" title="Previous" style="height: 35px; background: blue !important; border-color: blue !important; color: white !important">
-                      <span class="btn-label" style="font-size: 13px !important;"><i class="fa fa-arrow-left"></i></span> Previous
+                    <a type="button"
+                      class="btn btn-labeled btn-info"
+                      onclick="showModalPrev('{{isset($activitylist_nav[$key-1]) ? $activitylist_nav[$key-1]['activity_description_id'] : 'helo'}}')"
+                      ontouchstart="showModalPrev('{{isset($activitylist_nav[$key-1]) ? $activitylist_nav[$key-1]['activity_description_id'] : 'helo'}}')"
+                      id="Previous"
+                      title="Previous"
+                      style="height: 38px; background: blue !important; border-color: blue !important; color: white !important; padding: 8px 20px; margin: 0 5px; display: inline-flex; align-items: center; border-radius: 4px; font-size: 14px;">
+                      <span class="btn-label" style="margin-right: 5px;"><i class="fa fa-arrow-left"></i></span> Previous
                     </a>
                     @endif
+
                     @if ($loop->iteration != count($activitylist_nav))
-                    <a type="button" class="btn btn-labeled btn-info" onclick="showModalNext('{{isset($activitylist_nav[$key+1]) ? $activitylist_nav[$key+1]['activity_description_id'] : null}}')" ontouchstart="showModalNext('{{isset($activitylist_nav[$key+1]) ? $activitylist_nav[$key+1]['activity_description_id'] : null}}')" id="Next" title="Next" style="background: blue !important; border-color: #4d94ff !important; color: white !important; height: 35px;">
-                      <span class="btn-label" style="font-size: 13px !important;">Next</span> <i class="fa fa-arrow-right"></i>
+                    <a type="button"
+                      class="btn btn-labeled btn-info"
+                      onclick="showModalNext('{{isset($activitylist_nav[$key+1]) ? $activitylist_nav[$key+1]['activity_description_id'] : null}}')"
+                      ontouchstart="showModalNext('{{isset($activitylist_nav[$key+1]) ? $activitylist_nav[$key+1]['activity_description_id'] : null}}')"
+                      id="Next"
+                      title="Next"
+                      style="height: 38px; background: blue !important; border-color: blue !important; color: white !important; padding: 8px 20px; margin: 0 5px; display: inline-flex; align-items: center; border-radius: 4px; font-size: 14px;">
+                      Next <span class="btn-label" style="margin-left: 5px;"><i class="fa fa-arrow-right"></i></span>
                     </a>
                     @endif
                   </div>
@@ -521,78 +534,125 @@
 </script>
 <!-- End Bulk -->
 <!-- Add -->
-@foreach($activitylist as $key=>$row)
-<div class="modal fade" id="addModal{{$row['parent_video_upload_id']}}">
+<!-- View -->
+<!-- View -->
+<!-- View -->
+@foreach($activitylist as $key=>$data1)
+<div class="modal fade" id="ViewModal{{$data1['parent_video_upload_id']}}">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="main-contents">
         <section class="section">
           <div class="modal-header bg-primary" style=" background-color: rgb(0 103 172) !important;">
-            <!-- <h4 class="modal-title">Sail Activity</h4> -->
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <button type="button" class="close_btn" data-dismiss="modal" aria-hidden="true" onclick="closeModalAndRemoveBackdrop1('#ViewModal{{$data1['parent_video_upload_id']}}')">&times;</button>
           </div>
-          <div class="modal-body modal-body1" style="background-color: #edfcff !important;">
+          <div class="modal-body" style="background-color: #edfcff !important;">
             <div class="section-body mt-2">
-              <form action="{{route('videocreation.parentstore')}}" id="userregistration{{$row['parent_video_upload_id']}}" method="POST">
+              <form action="{{route('videocreation.parentstore')}}" id="userregistration{{$data1['parent_video_upload_id']}}" method="POST">
                 @csrf
                 <div class="row">
                   <div class="card-body" id="card_header">
+
+                    <!-- Video Link Section -->
                     <div class="col-12" style="display: flex;">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="control-label">Video Link</label>
-                          <div class="multi-field-wrapper">
-                            <div class="multi-fields">
-                              <div class="multi-field" style="display: flex;margin-bottom: 5px;">
-                                <!-- <input type="text" class="form-control" name="description[]" id="description"> -->
-                                <input class="form-control" type="url" id="video_link{{$row['parent_video_upload_id']}}" name="video_link[]" autocomplete="off" required>
-                                <button class="remove-field btn btn-danger pull-right" id="remove-f" type='button'>X </button>
-                                &nbsp;
-                              </div>
-                            </div>
-                            <button type="button" class="add-field btn btn-success">Add video</button>
+                          @foreach($video_link as $data2)
+                          @if($data1['parent_video_upload_id'] == $data2['parent_video_upload_id'])
+                          <div style="display: flex;">
+                            <input class="form-control" type="text" id="video_link" name="video_link" autocomplete="off" value="{{$data2['video_link']}}" readonly>
+                            <a class="btn btn-link" title="show" target="_blank" href="{{$data2['video_link']}}"><i class="fas fa-eye" style="color:green"></i></a>
                           </div>
-                          <!-- <input class="form-control" type="url" id="video_link{{$row['parent_video_upload_id']}}" name="video_link" autocomplete="off" required> -->
-                          <div style="color: rgb(246, 15, 15); display: block;margin: 5px 0px 0px 0px;">Google Drive Link Only</div>
+                          @endif
+                          @endforeach
                         </div>
-
-                        <!-- <div style="color: rgb(246, 15, 15); display: block;">Add your Google Drive Link Only</div> -->
                       </div>
 
-                      <input type="hidden" id="current_status" name="current_status" value="{{$row['current_status']}}">
-                      <input type="hidden" id="activity_description_id" name="activity_description_id" value="{{$row['activity_description_id']}}">
-                      <input type="hidden" id="parent_video_upload_id" name="parent_video_upload_id" value="{{$row['parent_video_upload_id']}}">
+                      <input type="hidden" id="activity_description_id" name="activity_description_id" value="{{$data1['activity_description_id']}}">
+                      <input type="hidden" id="parent_video_upload_id" name="parent_video_upload_id" value="{{$data1['parent_video_upload_id']}}">
+                      <!-- Previous Notes Section (comments field) -->
                       <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="control-label">Comments</label>
-                          <textarea class="form-control" name="comments" id="comments"></textarea>
-                          <!-- <input class="form-control" type="text" id="description_id" name="description_id" autocomplete="off"> -->
+                        <label class="control-label commentslabel">Previous Notes</label><br>
+                        <div class="form-group scroll_flow_class">
+                          @php $previousNotesFound = false; @endphp
+                          @foreach($comments as $key=>$note_data)
+                          @if($data1['parent_video_upload_id'] == $note_data['parent_video_upload_id'] && isset($note_data['comments']) && !empty($note_data['comments']))
+                          @php $previousNotesFound = true; @endphp
+                          <span>{{ $note_data['role'] ?? 'Parent' }} ({{ $note_data['user_name'] ?? 'Phone number check' }}) - {{ $note_data['active_status'] ?? 'Submitted' }}</span><br>
+                          <?php
+                          if (isset($note_data['created_at']) && !empty($note_data['created_at'])) {
+                            $utcTimestamp = strtotime($note_data['created_at']);
+                            $istTimestamp = $utcTimestamp + (5 * 60 * 60) + (30 * 60);
+                            $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
+                          ?>
+                            <span>{{ $istDateTime }} - {{ $note_data['comments'] }}</span><br><br>
+                          <?php } ?>
+                          @endif
+                          @endforeach
+                          @if(!$previousNotesFound)
+                          <span>No previous notes available</span>
+                          @endif
                         </div>
                       </div>
 
-                      <!-- <div class="col-md-4">
-                    <div class="form-group">
-                      <label class="control-label">Status</label><span class="error-star" style="color:red;">*</span>
-                      <input class="form-control" type="text" id="status" name="status" autocomplete="off" value="0/10" readonly>
                     </div>
-                  </div> -->
-                    </div>
-                  </div>
 
+                    <!-- Second Row: Parent Video Comments -->
+                    <div class="col-12" style="display: flex; margin-top: 15px;">
+                      <div class="col-md-6">
+                        <label class="control-label commentslabel">Comments</label><br>
+                        <div class="form-group scroll_flow_class">
+                          @php $parentCommentFound = false; @endphp
+                          @foreach($comments as $key=>$note_data)
+                          @if($data1['parent_video_upload_id'] == $note_data['parent_video_upload_id'] && isset($note_data['parent_video_comments']) && !empty($note_data['parent_video_comments']))
+                          @php $parentCommentFound = true; @endphp
+                          <?php
+                          if (isset($note_data['created_at']) && !empty($note_data['created_at'])) {
+                            $utcTimestamp = strtotime($note_data['created_at']);
+                            $istTimestamp = $utcTimestamp + (5 * 60 * 60) + (30 * 60);
+                            $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
+                          ?>
+                            <span>{{ $note_data['parent_video_comments'] }}</span><br><br>
+                          <?php } ?>
+                          @endif
+                          @endforeach
+                          @if(!$parentCommentFound)
+                          <span>No parent video comments available</span>
+                          @endif
+                        </div>
+                      </div>
+                      <!-- Vlog Observation Section -->
+                      <div class="col-md-6">
+                        <label class="control-label commentslabel">Observation</label><br>
+                        <div class="form-group scroll_flow_class">
+                          @php $vlogFound = false; @endphp
+                          @foreach($comments as $key=>$note_data)
+                          @if($data1['parent_video_upload_id'] == $note_data['parent_video_upload_id'] && isset($note_data['vlog_observation']) && !empty($note_data['vlog_observation']))
+                          @php $vlogFound = true; @endphp
+                          <?php
+                          if (isset($note_data['created_at']) && !empty($note_data['created_at'])) {
+                            $utcTimestamp = strtotime($note_data['created_at']);
+                            $istTimestamp = $utcTimestamp + (5 * 60 * 60) + (30 * 60);
+                            $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
+                          ?>
+                            <span>{{ $note_data['vlog_observation'] }}</span><br><br>
+                          <?php } ?>
+                          @endif
+                          @endforeach
+                          @if(!$vlogFound)
+                          <span>No vlog observations available</span>
+                          @endif
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
                 </div>
               </form>
-              <div class="col-md-12  text-center" style="padding-top: 1rem;">
-
-                <a type="button" onclick="save('{{$row['parent_video_upload_id']}}')" id="submitbutton{{$row['parent_video_upload_id']}}" class="btn btn-labeled btn-succes" title="Submit" style="background: green !important; border-color:green !important; color:white !important">
-                  <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span>Submit</a>
-
-                <a type="button" class="btn btn-labeled back-btn" data-dismiss="modal" aria-hidden="true" title="Back" style="color:white !important">
-                  <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back</a>
-                <!-- <a class="btn btn-danger" href=""><i class="fa fa-times" aria-hidden="true"></i>Back</a>&nbsp; -->
-                <!-- <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{ route('parent_video_upload.parentindex') }}" style="color:white !important">
-                  <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back</a> -->
-              </div>
             </div>
+          </div>
         </section>
       </div>
     </div>
@@ -676,120 +736,182 @@
   @foreach($activitylist_rejection as $key=> $row)
   @php $cuModaliteration2 = $cuModaliteration2 + 1;@endphp
 
+  <!-- Edit/Resend Modal with Comments from Coordinator (same style as Previous Notes) -->
   <div class="modal fade editModal{{$row['activity_description_id']}}" id="editModal{{$row['parent_video_upload_id']}}">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="main-contents">
           <section class="section">
             <div class="modal-header bg-primary" style=" background-color: rgb(0 103 172) !important;">
-              <!-- <h4 class="modal-title">Sail Activity</h4> -->
               <button type="button" class="close_btn" data-dismiss="modal" aria-hidden="true" onclick="closeModalAndRemoveBackdrop('#editModal{{$row['parent_video_upload_id']}}')">&times;</button>
             </div>
             <div class="modal-body" style="background-color: #edfcff !important;">
               <div class="section-body mt-2">
-
-                <div class="row">
+                <form action="{{route('videocreation.parentstore.reupload.bulk')}}" id="reupload_submit" method="POST">
+                  @csrf
                   <div class="card-body" id="card_header">
-                    <div class="col-12" style="display: flex;flex-wrap: wrap;">
-                      <div class="col-md-4">
+
+                    <!-- ROW 1: Activity Name (6) and Activity Description (6) -->
+                    <div class="row">
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label class="control-label">Activity Name</label>
                           <input class="form-control" type="text" value="{{$row['activity_name']}}" readonly>
                         </div>
                       </div>
-                      <div class="col-md-8">
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label class="control-label">Activity Description</label>
                           <input class="form-control" type="text" value="{{$row['description']}}" readonly>
                         </div>
                       </div>
+                    </div>
+
+                    <!-- ROW 2: Previous Notes (6) and Comments from Coordinator (6) -->
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="control-label commentslabel">Previous Notes</label>
+                          <div class="form-group scroll_flow_class" style="background-color:#E9ECEF; padding: 10px; min-height: 120px;">
+                            @php $previousNotesFound = false; @endphp
+                            @foreach($comments as $key1=>$note_data)
+                            @if($row['parent_video_upload_id'] == $note_data['parent_video_upload_id'] && isset($note_data['comments']) && !empty($note_data['comments']))
+                            @php $previousNotesFound = true; @endphp
+                            <span>{{ $note_data['role'] ?? 'Parent' }} ({{ $note_data['user_name'] ?? 'Phone number check' }}) - {{ $note_data['active_status'] ?? 'Submitted' }}</span><br>
+                            <?php
+                            if (isset($note_data['created_at']) && !empty($note_data['created_at'])) {
+                              $utcTimestamp = strtotime($note_data['created_at']);
+                              $istTimestamp = $utcTimestamp + (5 * 60 * 60) + (30 * 60);
+                              $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
+                            ?>
+                              <span>{{ $istDateTime }} - {{ $note_data['comments'] }}</span><br><br>
+                            <?php } ?>
+                            @endif
+                            @endforeach
+                            @if(!$previousNotesFound)
+                            <span>No previous notes available</span>
+                            @endif
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="control-label commentslabel">Comments from Coordinator</label>
+                          <div class="form-group scroll_flow_class" style="background-color:#E9ECEF; padding: 10px; min-height: 120px;">
+                            @php
+                            $coordinatorCommentFound = false;
+                            $displayedComments = []; // Array to track displayed comments
+                            @endphp
+                            @foreach($comments as $key1=>$note_data)
+                            @if($row['parent_video_upload_id'] == $note_data['parent_video_upload_id'] && isset($note_data['parent_video_comments']) && !empty($note_data['parent_video_comments']))
+                            @php
+                            $currentComment = $note_data['parent_video_comments'];
+                            // Check if this comment has already been displayed
+                            if(!in_array($currentComment, $displayedComments)) {
+                            $coordinatorCommentFound = true;
+                            $displayedComments[] = $currentComment; // Add to displayed array
+                            @endphp
+                            <?php
+                            if (isset($note_data['created_at']) && !empty($note_data['created_at'])) {
+                              $utcTimestamp = strtotime($note_data['created_at']);
+                              $istTimestamp = $utcTimestamp + (5 * 60 * 60) + (30 * 60);
+                              $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
+                            ?>
+                              <span>{{ $note_data['parent_video_comments'] }}</span><br><br>
+                            <?php } ?>
+                            @php
+                            }
+                            @endphp
+                            @endif
+                            @endforeach
+                            @if(!$coordinatorCommentFound)
+                            <span>No coordinator comments available</span>
+                            @endif
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- ROW 3: Video Link (6) and Comments Textarea (6) -->
+                    <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="control-label">Video Link</label>
-                          <!-- <input class="form-control" type="url" id="video_linka{{$row['parent_video_upload_id']}}" name="video_link" autocomplete="off" required> -->
                           <div class="multi-field-wrapper">
                             <div class="multi-fields">
                               @foreach($video_link as $data2)
                               @if($row['parent_video_upload_id'] == $data2['parent_video_upload_id'])
-                              <div class="multi-field" style="display: flex;margin-bottom: 5px;">
-                                <!-- <input type="text" class="form-control" name="description[]" id="description"> -->
+                              <div class="multi-field" style="display: flex; margin-bottom: 5px;">
                                 @if($data2['status'] == '1')
-                                <input class="form-control video_linka{{$row['parent_video_upload_id']}}" type="text" id="video_link" name="video_link[{{$row['parent_video_upload_id']}}][]" autocomplete="off" value="{{$data2['video_link']}}" readonly>
+                                <input class="form-control video_linka{{$row['parent_video_upload_id']}}" type="text" name="video_link[{{$row['parent_video_upload_id']}}][]" autocomplete="off" value="{{$data2['video_link']}}" readonly style="flex: 1;">
                                 @elseif($data2['status'] == '0')
-                                <input class="form-control video_linka{{$row['parent_video_upload_id']}}" style="background-color:white !important" type="text" id="video_link" name="video_link[{{$row['parent_video_upload_id']}}][]" autocomplete="off" value="{{$data2['video_link']}}" readonly oncopy="return false;" oncut="return false;">
+                                <input class="form-control video_linka{{$row['parent_video_upload_id']}}" style="background-color:white !important; flex: 1;" type="text" name="video_link[{{$row['parent_video_upload_id']}}][]" autocomplete="off" value="{{$data2['video_link']}}" readonly oncopy="return false;" oncut="return false;">
                                 @endif
-                                <button class="remove-field btn btn-danger pull-right {{ $data2['status'] == '0' ? 'rejectedVideo' : '' }}" id="remove-f" type='button'>X </button>
-                                &nbsp;
+                                <button class="remove-field btn btn-danger pull-right {{ $data2['status'] == '0' ? 'rejectedVideo' : '' }}" type='button'>X</button>
                               </div>
                               @endif
                               @endforeach
                             </div>
-                            <label style="padding: 5px;" for="sameVideoLink"><input type="checkbox" name="sameVideoLink[{{$row['parent_video_upload_id']}}]" id="sameVideoLink{{$row['parent_video_upload_id']}}" onclick="sameVideoLink11('{{$row['parent_video_upload_id']}}')" value="1">Updated the video on the same Google Drive link</label>
-                            <br>
-                            <button type="button" class="add-field btn btn-success">Add video</button>
-                            <label style="padding: 10px;"> <input type="checkbox" onclick="unable_activity('{{$row['parent_video_upload_id']}}')" name="unable[{{$row['parent_video_upload_id']}}]" id="unable{{$row['parent_video_upload_id']}}" value="1" data-rej="{{$row['parent_video_upload_id']}}" style="margin-right: 0.3rem!important;">My child is unable to do this activity</label>
+
+                            <!-- Checkbox for same Google Drive link -->
+                            <label style="padding: 5px 0; display: block;">
+                              <input type="checkbox" name="sameVideoLink[{{$row['parent_video_upload_id']}}]" id="sameVideoLink{{$row['parent_video_upload_id']}}" onclick="sameVideoLink11('{{$row['parent_video_upload_id']}}')" value="1">
+                              Updated the video on the same Google Drive link
+                            </label>
+
+                            <!-- Add video button -->
+
+                            <!-- Unable checkbox -->
+                            <label style="padding: 5px 0; display: block;">
+                              <input type="checkbox" onclick="unable_activity('{{$row['parent_video_upload_id']}}')" name="unable[{{$row['parent_video_upload_id']}}]" id="unable{{$row['parent_video_upload_id']}}" value="1" data-rej="{{$row['parent_video_upload_id']}}" style="margin-right: 0.3rem!important;">
+                              My child is unable to do this activity
+                            </label>
+                            <button type="button" class="add-field btn btn-success" style="margin-bottom: 5px;">Add video</button>
+
                           </div>
-
-                          <div style="color: rgb(246, 15, 15); display: block;margin: 5px 0px 0px 0px;">Google Drive Link Only</div>
-                        </div>
-                        <!-- <div style="color: rgb(246, 15, 15); display: block;">Add your Google Drive Link Only</div> -->
-                      </div>
-
-                      <div class="col-md-6">
-                        <label class="control-label commentslabel">Previous Notes</label><br>
-                        <div class="form-group scroll_flow_class">
-
-                          @foreach($comments as $key1=>$note_data)
-                          @if($row['parent_video_upload_id'] == $note_data['parent_video_upload_id'])
-                          <span> {{ $note_data['role'] }} ({{ $note_data['user_name'] }}) - {{ $note_data['active_status'] }} </span> <br>
-                          <?php
-                          // Assuming $note_data['created_at'] contains the date and time in UTC
-                          $utcTimestamp = strtotime($note_data['created_at']);
-
-                          // Add 5 hours and 30 minutes for IST
-                          $istTimestamp = $utcTimestamp + (5 * 60 * 60) + (30 * 60);
-
-                          $istDateTime =  gmdate('d/m/Y h:i:s A', $istTimestamp);
-                          ?>
-                          <span>{{ $istDateTime }} - {{ $note_data['comments'] }}</span> <br><br>
-                          @endif
-                          @endforeach
+                          <div style="color: rgb(246, 15, 15); display: block; margin-top: 5px;">Google Drive Link Only</div>
                         </div>
                       </div>
-                      <div class="w-100"></div>
-                      <input type="hidden" id="current_status" name="current_status[{{$row['parent_video_upload_id']}}]" value="{{$row['current_status']}}">
-                      <input type="hidden" id="activity_description_id" name="activity_description_id[{{$row['parent_video_upload_id']}}]" value="{{$row['activity_description_id']}}">
-                      <input type="hidden" id="parent_video_upload_id" name="parent_video_upload_id[{{$row['parent_video_upload_id']}}]" value="{{$row['parent_video_upload_id']}}">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="control-label">Comments</label>
-                          <textarea class="form-control" name="comments[{{$row['parent_video_upload_id']}}]" id="comments_rej{{$row['parent_video_upload_id']}}"></textarea>
+                          <textarea class="form-control" name="comments[{{$row['parent_video_upload_id']}}]" id="comments_rej{{$row['parent_video_upload_id']}}" rows="8" placeholder="Enter your comments here..."></textarea>
                         </div>
                       </div>
                     </div>
+
+                    <!-- Hidden Fields -->
+                    <input type="hidden" name="current_status[{{$row['parent_video_upload_id']}}]" value="{{$row['current_status']}}">
+                    <input type="hidden" name="activity_description_id[{{$row['parent_video_upload_id']}}]" value="{{$row['activity_description_id']}}">
+                    <input type="hidden" name="parent_video_upload_id[{{$row['parent_video_upload_id']}}]" value="{{$row['parent_video_upload_id']}}">
+
                   </div>
 
-                </div>
+                  <!-- Modal Footer with Buttons -->
+                  <div class="col-md-12 text-center" style="padding-top: 1rem;">
+                    @if ($loop->iteration > 1)
+                    <a type="button" class="btn btn-labeled btn-info" onclick="showModalPrev1('{{isset($activitylist_rejection[$key-1]) ? $activitylist_rejection[$key-1]['activity_description_id'] : 'helo'}}')" id="Previous" title="Previous" style="height: 35px; background: blue !important; border-color: blue !important; color: white !important;">
+                      <span class="btn-label" style="font-size: 13px !important;"><i class="fa fa-arrow-left"></i></span> Previous
+                    </a>
+                    @endif
 
+                    <a type="button" onclick="save1('{{$row['parent_video_upload_id']}}')" id="editbutton{{$row['parent_video_upload_id']}}" class="btn btn-labeled btn-succes" title="Submit" style="background: green !important; border-color:green !important; color:white !important">
+                      <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span>Submit
+                    </a>
 
-                <div class="col-md-12  text-center" style="padding-top: 1rem;">
-                  @if ($loop->iteration > 1)
-                  <a type="button" class="btn btn-labeled btn-info" onclick="showModalPrev1('{{isset($activitylist_rejection[$key-1]) ? $activitylist_rejection[$key-1]['activity_description_id'] : 'helo'}}')" id="Previous" title="Previous" style="height: 35px; background: blue !important; border-color: blue !important; color: white !important;">
-                    <span class="btn-label" style="font-size: 13px !important;"><i class="fa fa-arrow-left"></i></span> Previous
-                  </a>
-                  @endif
-                  <a type="button" onclick="save1('{{$row['parent_video_upload_id']}}')" id="editbutton{{$row['parent_video_upload_id']}}" class="btn btn-labeled btn-succes" title="Submit" style="background: green !important; border-color:green !important; color:white !important">
-                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span>Submit</a>
+                    <a type="button" class="btn btn-labeled back-btn" data-dismiss="modal" aria-hidden="true" title="Back" style="color:white !important;background: red !important;">
+                      <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back
+                    </a>
 
-                  <a type="button" class="btn btn-labeled back-btn" data-dismiss="modal" aria-hidden="true" title="Back" style="color:white !important;background: red !important;">
-                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back</a>
-                  @if ($loop->iteration != count($activitylist_rejection))
-                  <a type="button" class="btn btn-labeled btn-info" onclick="showModalNext1('{{isset($activitylist_rejection[$key+1]) ? $activitylist_rejection[$key+1]['activity_description_id'] : null}}')" id="Next" title="Next" style="background: blue !important; border-color: #4d94ff !important; color: white !important; height: 35px;">
-                    <span class="btn-label" style="font-size: 13px !important;">Next</span> <i class="fa fa-arrow-right"></i>
-                  </a>
-                  @endif
-                </div>
+                    @if ($loop->iteration != count($activitylist_rejection))
+                    <a type="button" class="btn btn-labeled btn-info" onclick="showModalNext1('{{isset($activitylist_rejection[$key+1]) ? $activitylist_rejection[$key+1]['activity_description_id'] : null}}')" id="Next" title="Next" style="background: blue !important; border-color: #4d94ff !important; color: white !important; height: 35px;">
+                      <span class="btn-label" style="font-size: 13px !important;">Next</span> <i class="fa fa-arrow-right"></i>
+                    </a>
+                    @endif
+                  </div>
+                </form>
               </div>
+            </div>
           </section>
         </div>
       </div>
