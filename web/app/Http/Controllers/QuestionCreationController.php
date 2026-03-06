@@ -134,25 +134,12 @@ class QuestionCreationController extends BaseController
                 $screens = $menus['screens'];
                 $modules = $menus['modules'];
 
-                // 👇 Detect route name
                 $routeName = request()->route()->getName();
 
-                // 👇 Decide blade
-                $view = ($routeName == 'question_creation.view_questions')
-                    ? 'QuestionCreation.view_question'
-                    : 'QuestionCreation.add_question';
+                // dd($field_types);
+                $view = ($routeName == 'question_creation.view_questions') ? 'QuestionCreation.view_question' : 'QuestionCreation.add_question';
 
-                return view($view, compact(
-                    'modules',
-                    'screens',
-                    'questionnaire_list',
-                    'field_types',
-                    'question_details',
-                    'sub_questions',
-                    'option_question_fields',
-                    'fields',
-                    'options'
-                ));
+                return view($view, compact('modules', 'screens', 'questionnaire_list', 'field_types', 'question_details', 'sub_questions', 'option_question_fields', 'fields', 'options'));
             } else {
                 $objData = json_decode($this->decryptData($response1->Data));
                 echo json_encode($objData->Code);
@@ -246,14 +233,14 @@ class QuestionCreationController extends BaseController
                 $data['question_field_name'] = $request->question_field_name;
                 $data['question_description'] = $request->question_description;
             }
-            
+
             $encryptArray = $this->encryptData($data);
             $request = array();
             $request['requestData'] = $encryptArray;
             $gatewayURL = config('setting.api_gateway_url') . '/question_creation/store_question';
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
             $response1 = json_decode($response);
-       
+
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
 

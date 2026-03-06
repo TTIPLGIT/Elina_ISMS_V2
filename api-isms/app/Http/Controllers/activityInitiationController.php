@@ -524,15 +524,44 @@ class activityInitiationController extends BaseController
 
             $f2f_observation = DB::table('face_to_face_observation')->get();
 
-            $lastactivity1 = DB::select("SELECT DISTINCT  a.activity_id, c.f2f_flag , ff.* , c.enableflag , c.comments, a.activity_initiation_id, ac.activity_name , ad.description , a.last_modified_date ,c.status, c.parent_video_upload_id , ad.activity_description_id ,c.instruction,
-            c.coordinator_observation,c.head_observation,c.physical_observation_name,c.physical_observation_result FROM activity_initiation AS a
-            INNER JOIN activity AS ac ON ac.activity_id=a.activity_id
-            INNER JOIN enrollment_details AS b ON a.enrollment_id=b.enrollment_id
-            INNER JOIN parent_video_upload AS c ON c.activity_initiation_id=a.activity_initiation_id
-            INNER JOIN activity_description AS ad ON ad.activity_description_id=c.activity_description_id
-            LEFT JOIN face_to_face_observation AS ff ON ff.parent_video_id = c.parent_video_upload_id
-            WHERE b.user_id='$userID' and c.status='Complete' ORDER BY c.parent_video_upload_id,c.enableflag ASC , ac.activity_id ASC , ad.activity_description_id");
-            $activity_set = DB::select("SELECT aa.activity_id , aa.activity_name FROM activity AS aa");
+     $lastactivity1 = DB::table('activity_initiation as a')
+    ->select(
+        'a.activity_id',
+        'c.f2f_flag',
+        'ff.*',
+        'c.enableflag',
+        'c.comments',
+        'a.activity_initiation_id',
+        'ac.activity_name',
+        'ad.description',
+        'a.last_modified_date',
+        'c.status',
+        'c.parent_video_upload_id',
+        'ad.activity_description_id',
+        'c.instruction',
+        'c.coordinator_observation',
+        'c.head_observation',
+        'c.physical_observation_name',
+        'c.physical_observation_result',
+        DB::raw('(SELECT observation FROM sail_activity_vlog_comments 
+                  WHERE activity_id = a.activity_id 
+                  AND activity_description_id = ad.activity_description_id 
+                  AND enrollment_id = b.enrollment_id 
+                  ORDER BY created_at DESC LIMIT 1) as observation')
+    )
+    ->join('activity as ac', 'ac.activity_id', '=', 'a.activity_id')
+    ->join('enrollment_details as b', 'a.enrollment_id', '=', 'b.enrollment_id')
+    ->join('parent_video_upload as c', 'c.activity_initiation_id', '=', 'a.activity_initiation_id')
+    ->join('activity_description as ad', 'ad.activity_description_id', '=', 'c.activity_description_id')
+    ->leftJoin('face_to_face_observation as ff', 'ff.parent_video_id', '=', 'c.parent_video_upload_id')
+    ->where('b.user_id', $userID)
+    ->where('c.status', 'Complete')
+    ->orderBy('c.parent_video_upload_id')
+    ->orderBy('c.enableflag', 'asc')
+    ->orderBy('ac.activity_id', 'asc')
+    ->orderBy('ad.activity_description_id')
+    ->distinct()
+    ->get();        $activity_set = DB::select("SELECT aa.activity_id , aa.activity_name FROM activity AS aa WHERE aa.active_flag = 0");
             $datalist = DB::select("SELECT DISTINCT  a.activity_id, c.f2f_flag , ff.* , c.enableflag , c.save_status , c.comments, a.activity_initiation_id, ac.activity_name , ad.description , a.last_modified_date ,c.status, c.parent_video_upload_id , ad.activity_description_id ,
             lv.comments as parent_comment,av.video_link,c.coordinator_observation,c.head_observation,c.physical_observation_name,c.physical_observation_result FROM activity_initiation AS a
             INNER JOIN activity AS ac ON ac.activity_id=a.activity_id
@@ -576,7 +605,7 @@ class activityInitiationController extends BaseController
                 'datalist' => $cleanedJsonString,
                 'activity_set' => $activity_set,
             ];
-
+            $this->WriteFileLog($activity_materials);
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
@@ -613,7 +642,7 @@ class activityInitiationController extends BaseController
                 'check_video' => $inputArray['check_video'],
                 'observation' => $inputArray['observation'],
             ];
-
+            $this->WriteFileLog($input);
             $activityID = DB::transaction(function () use ($input) {
                 $initiateID = $input['activity_initiation_id'];
                 $authID = Auth::id();
@@ -624,7 +653,7 @@ class activityInitiationController extends BaseController
                         // 'status' => $input['approval_status'],
                         'last_modified_by' => $authID,
                         'last_modified_date' => NOW(),
-                        'comments' => $input['observation']
+                        'comments' => $input['comments']
                     ]);
 
                 $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=$authID");
@@ -1663,7 +1692,7 @@ class activityInitiationController extends BaseController
             $method = 'Method =>  activityInitiationController => update_video_one';
 
             $inputArray = $this->decryptData($request->requestData);
-            $this->WriteFileLog("welcome to the one submit");
+            // $this->WriteFileLog("welcome to the one submit");
             // $this->WriteFileLog($inputArray);
 
             $input = [
@@ -1724,12 +1753,16 @@ class activityInitiationController extends BaseController
                 $status = $approval_status[$matched_parent_video_id] ?? null;
                 $status = in_array($status, ['Complete', 'Rejected']) ? $status : null;
 
-                $this->WriteFileLog('Parent_id ' . $matched_parent_video_id);
-                $this->WriteFileLog('Approval_status ' . ($status ?? 'NULL'));
+                // $this->WriteFileLog('Parent_id ' . $matched_parent_video_id);
+                // $this->WriteFileLog('Approval_status ' . ($status ?? 'NULL'));
 
                 if ($status === null) {
                     return;
                 }
+                $this->WriteFileLog("the commends");
+                $this->WriteFileLog($observation);
+                $this->WriteFileLog($matched_parent_video_id);
+                $this->WriteFileLog($observation[$matched_parent_video_id]);
 
                 DB::table('parent_video_upload')
                     ->where('parent_video_upload_id', $matched_parent_video_id)
@@ -1739,7 +1772,7 @@ class activityInitiationController extends BaseController
                         'save_status1' => $status,
                         'last_modified_by' => $authID,
                         'last_modified_date' => now(),
-                        'comments' => $observation[$matched_parent_video_id] ?? null,
+                        'comments' => $comments[$matched_parent_video_id],
                     ]);
 
                 $activity_data = DB::table('parent_video_upload')

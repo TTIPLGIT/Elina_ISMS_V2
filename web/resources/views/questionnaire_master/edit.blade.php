@@ -131,7 +131,7 @@
         <div class="row">
           <div class="col-md-12" style="margin: 15px 0px 0px 0px;">
             <div class="form-group questionnaire">
-              <label class="control-label">Options & Values</label>
+              <label class="control-label required" >Options & Values</label>
               <div class="multi-field-wrapper">
                 <div class="multi-fields">
                   @if(count($options) > 0)
@@ -226,12 +226,159 @@
 </div>
 <script type="text/javascript">
   function validateForm() {
-    let questionnaire_id = document.getElementById("questionnaire_name").value;
-    if (questionnaire_id == '' || questionnaire_id == null) {
-      swal.fire("Please Questionnaire Name", "", "error");
+    // Save TinyMCE content
+    if (tinymce) {
+      tinymce.triggerSave();
+    }
+
+    // Validate Questionnaire Name
+    let questionnaire_name = document.getElementById("questionnaire_name").value;
+    if (questionnaire_name == '' || questionnaire_name == null) {
+      swal.fire("Please Enter Questionnaire Name", "", "error");
       return false;
     }
 
+    // Validate Questionnaire Type
+    let questionnaire_type = document.getElementById("questionnaire_type").value;
+    if (questionnaire_type == '' || questionnaire_type == null) {
+      swal.fire("Please Select Questionnaire Type", "", "error");
+      return false;
+    }
+
+    // Validate Questionnaire Description
+    let questionnaire_description = document.getElementById("questionnaire_description").value;
+    if (questionnaire_description == '' || questionnaire_description == null) {
+      swal.fire("Please Enter Questionnaire Description", "", "error");
+      return false;
+    }
+
+    // If toggle is checked, validate all fields
+    if ($('#is_active').prop('checked')) {
+
+      // Validate Options & Values
+      var optionsValid = true;
+      var valuesValid = true;
+      var emptyOptionRows = [];
+      var emptyValueRows = [];
+
+      $('.multi-fields').first().find('.multi-field').each(function(index) {
+        var optionField = $(this).find('input[name="option[]"]');
+        var valueField = $(this).find('input[name="value[]"]');
+
+        if (optionField.val().trim() == '') {
+          optionsValid = false;
+          emptyOptionRows.push(index + 1);
+        }
+
+        if (valueField.val().trim() == '') {
+          valuesValid = false;
+          emptyValueRows.push(index + 1);
+        }
+      });
+
+      if (!optionsValid) {
+        let rowNumbers = emptyOptionRows.join(', ');
+        swal.fire({
+          title: "Validation Error",
+          text: `Please fill in Option for row(s): ${rowNumbers}`,
+          icon: "error",
+          confirmButtonColor: '#3085d6'
+        });
+        return false;
+      }
+
+      if (!valuesValid) {
+        let rowNumbers = emptyValueRows.join(', ');
+        swal.fire({
+          title: "Validation Error",
+          text: `Please fill in Value for row(s): ${rowNumbers}`,
+          icon: "error",
+          confirmButtonColor: '#3085d6'
+        });
+        return false;
+      }
+
+      // Validate Quadrants
+      var quadrantsValid = true;
+      var emptyQuadrantRows = [];
+
+      $('.col-6:first .multi-fields .multi-field').each(function(index) {
+        var quadrantField = $(this).find('input[name="quadrant[]"]');
+
+        if (quadrantField.val().trim() == '') {
+          quadrantsValid = false;
+          emptyQuadrantRows.push(index + 1);
+        }
+      });
+
+      if (!quadrantsValid) {
+        let rowNumbers = emptyQuadrantRows.join(', ');
+        swal.fire({
+          title: "Validation Error",
+          text: `Please fill in Quadrant for row(s): ${rowNumbers}`,
+          icon: "error",
+          confirmButtonColor: '#3085d6'
+        });
+        return false;
+      }
+
+      // Validate Categories
+      var categoriesValid = true;
+      var emptyCategoryRows = [];
+
+      $('.col-6:last .multi-fields .multi-field').each(function(index) {
+        var categoryField = $(this).find('input[name="category[]"]');
+
+        if (categoryField.val().trim() == '') {
+          categoriesValid = false;
+          emptyCategoryRows.push(index + 1);
+        }
+      });
+
+      if (!categoriesValid) {
+        let rowNumbers = emptyCategoryRows.join(', ');
+        swal.fire({
+          title: "Validation Error",
+          text: `Please fill in Category for row(s): ${rowNumbers}`,
+          icon: "error",
+          confirmButtonColor: '#3085d6'
+        });
+        return false;
+      }
+
+      // Check minimum requirements
+      if ($('.multi-fields').first().find('.multi-field').length < 2) {
+        swal.fire({
+          title: "Validation Error",
+          text: "At least 2 Options & Values are required",
+          icon: "error",
+          confirmButtonColor: '#3085d6'
+        });
+        return false;
+      }
+
+      if ($('.col-6:first .multi-fields .multi-field').length < 1) {
+        swal.fire({
+          title: "Validation Error",
+          text: "At least 1 Quadrant is required",
+          icon: "error",
+          confirmButtonColor: '#3085d6'
+        });
+        return false;
+      }
+
+      if ($('.col-6:last .multi-fields .multi-field').length < 1) {
+        swal.fire({
+          title: "Validation Error",
+          text: "At least 1 Category is required",
+          icon: "error",
+          confirmButtonColor: '#3085d6'
+        });
+        return false;
+      }
+    }
+
+    return true;
   }
 
   function functiontoggle() {
@@ -250,12 +397,11 @@
     $('.multi-field .remove-field', $wrapper).click(function() {
       if ($('.multi-field', $wrapper).length > 2)
         $(this).parent('.multi-field').remove();
-      else swal.fire("Required Two Option", "", "error");
+      else swal.fire("Required at least 2 Options", "", "error");
     });
   });
 
   $(document).ready(function() {
-
     tinymce.init({
       selector: 'textarea#questionnaire_description',
       height: 180,

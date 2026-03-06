@@ -201,11 +201,11 @@
                     <div class="w-100"></div>
                     <div class="col-12" style="display: none;" id="header_field">
                         <div class="form-group questionnaire">
-                            <label class="control-label">Title</label>
+                            <label class="control-label required">Title</label>
                             <input class="form-control" type="text" id="header_title" name="header_title" placeholder="optional" autocomplete="off">
                         </div>
                         <div class="form-group questionnaire">
-                            <label class="control-label">Description</label>
+                            <label class="control-label required">Description</label>
                             <input class="form-control" type="text" id="header_description" name="header_description" placeholder="optional" autocomplete="off">
                         </div>
                     </div>
@@ -841,6 +841,18 @@
             }
         });
     }
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var inputs = document.querySelectorAll("input.form-control");
+        var questionCount = inputs[0].value;
+        var totalQuestions = inputs[1].value;
+
+        if (parseInt(questionCount) === parseInt(totalQuestions)) {
+            // Hide the form container that adds new questions, but keep the count visible
+            document.getElementById('next-section').style.display = "none";
+        }
+    });
 </script>
 @if(session('success'))
 <script>

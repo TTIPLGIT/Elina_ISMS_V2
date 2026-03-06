@@ -45,7 +45,7 @@
                     <div class="col-md-6">
                         <div class="form-group questionnaire">
                             <label class="control-label">Activity Name</label>
-                            <input class="form-control"  style="background-color: white !important;" type="text" id="activity_name" name="activity_name" value="{{ $rows[0]['activity_name']}}" autocomplete="off">
+                            <input class="form-control" style="background-color: white !important;" type="text" id="activity_name" name="activity_name" value="{{ $rows[0]['activity_name']}}" autocomplete="off">
 
 
                             </select>
@@ -63,7 +63,7 @@
                                 <div class="multi-fields">
                                     @foreach($rows as $key=>$row)
                                     <div class="multi-field" style="display: flex;margin-bottom: 5px;">
-                                        <input type="text" style="background-color: white !important;"  class="form-control default col-4" name="description[{{$row['activity_description_id']}}]" style="background-color:#E2E4E6 !important; color: #000000;" id="description" value="{{ $row['description']}}">
+                                        <input type="text" style="background-color: white !important;" class="form-control default col-4" name="description[{{$row['activity_description_id']}}]" style="background-color:#E2E4E6 !important; color: #000000;" id="description" value="{{ $row['description']}}">
                                         <!-- <input class="form-control default col-3" type="file" id="file" name="file[{{$row['activity_description_id']}}]" value="{{ $row['file_attachment']}}" autocomplete="off"> -->
                                         <div style="height: auto;" class="form-control default tinymce-body" style="background-color:#E2E4E6 !important; color: #000000;" id="instruction[{{$row['activity_description_id']}}]" name="instruction[{{$row['activity_description_id']}}]">{!! $row['instruction'] !!}</div>
                                         <button class="remove-field btn btn-danger pull-right" id="remove-f" type='button'>X </button>
@@ -115,25 +115,52 @@
 </script>
 <script>
     function submit() {
-
+        // Save TinyMCE content to textareas before submission
+        if (tinymce) {
+            tinymce.triggerSave();
+        }
 
         var activity_name = $('#activity_name').val();
 
         if (activity_name == '') {
-            swal.fire("Please Enter Activity Name: ", "", "error");
+            swal.fire("Please Enter Activity Name", "", "error");
             return false;
         }
 
+        // Check all description fields
+        var allDescriptionsValid = true;
+        var emptyDescriptionRows = [];
 
-        var description = $('#description').val();
+        $('.multi-field').each(function(index) {
+            var descriptionField = $(this).find('input[name^="description"]');
 
-        if (description == '') {
-            swal.fire("Please Enter Description:", "", "error");
+            if (descriptionField.val().trim() == '') {
+                allDescriptionsValid = false;
+                emptyDescriptionRows.push(index + 1);
+            }
+        });
+
+        if (!allDescriptionsValid) {
+            let rowNumbers = emptyDescriptionRows.join(', ');
+            swal.fire({
+                title: "Validation Error",
+                text: `Please fill in the Description for row(s): ${rowNumbers}`,
+                icon: "error",
+                confirmButtonColor: '#3085d6'
+            });
             return false;
         }
 
-
-
+        // Make sure at least one description exists
+        if ($('.multi-field').length === 0) {
+            swal.fire({
+                title: "Validation Error",
+                text: "Please add at least one description",
+                icon: "error",
+                confirmButtonColor: '#3085d6'
+            });
+            return false;
+        }
 
         document.getElementById('videouploadcreation').submit('saved');
     }

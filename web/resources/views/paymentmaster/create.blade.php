@@ -62,7 +62,7 @@
                                     <table class="table" id="serviceTable">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
+                                                <th class="col-1">SI No</th>
                                                 <th>Service Briefing</th>
                                                 <th>QTY</th>
                                                 <th>Rate (in ₹)</th>

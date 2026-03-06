@@ -89,17 +89,17 @@
     .tox .tox-edit-area {
         text-align: left !important;
     }
-    
+
     .tox .tox-edit-area__iframe {
         text-align: left !important;
     }
-    
+
     .tox-tinymce {
         border: 1px solid #ced4da !important;
         border-radius: 4px !important;
         width: 100% !important;
     }
-    
+
     .multi-field {
         display: flex;
         align-items: flex-start;
@@ -110,11 +110,11 @@
         padding: 10px;
         border-radius: 5px;
     }
-    
+
     .multi-field .col-4 {
         width: 33.33%;
     }
-    
+
     /* Style for the instruction container */
     .instruction-container {
         flex: 1;
@@ -202,7 +202,7 @@
         setTimeout(function() {
             initAllTinyMCE();
         }, 500);
-        
+
         // Setup remove button functionality
         setupRemoveButtons();
     });
@@ -212,7 +212,7 @@
         if (tinymce) {
             tinymce.remove();
         }
-        
+
         // Initialize TinyMCE for each textarea with class tinymce-body
         $('.tinymce-body').each(function(index) {
             var textareaId = $(this).attr('id');
@@ -230,7 +230,7 @@
         if (tinymce.get(selector)) {
             tinymce.get(selector).remove();
         }
-        
+
         tinymce.init({
             selector: '#' + selector,
             height: 180,
@@ -272,19 +272,19 @@
         $(document).off('click', '.remove-field').on('click', '.remove-field', function() {
             var $wrapper = $('.multi-fields');
             var $currentField = $(this).closest('.multi-field');
-            
+
             if ($('.multi-field', $wrapper).length > 1) {
                 // Get the textarea ID before removing
                 var textareaId = $currentField.find('.tinymce-body').attr('id');
-                
+
                 // Remove TinyMCE instance
                 if (textareaId && tinymce.get(textareaId)) {
                     tinymce.get(textareaId).remove();
                 }
-                
+
                 // Remove the field
                 $currentField.remove();
-                
+
                 // Reinitialize all TinyMCE instances with a delay
                 setTimeout(function() {
                     if (tinymce) {
@@ -292,7 +292,7 @@
                     }
                     initAllTinyMCE();
                 }, 300);
-                
+
             } else {
                 Swal.fire({
                     title: "Cannot Remove",
@@ -309,7 +309,7 @@
         e.preventDefault();
         var $wrapper = $('.multi-fields');
         var fieldCount = $('.multi-field', $wrapper).length;
-        
+
         // Create new field HTML
         var newField = `
             <div class="multi-field" style="display: flex;margin-bottom: 5px;">
@@ -321,10 +321,10 @@
                 &nbsp;
             </div>
         `;
-        
+
         // Append the new field
         $wrapper.append(newField);
-        
+
         // Initialize TinyMCE for the new field with delay
         setTimeout(function() {
             initTinyMCE('instruction_' + fieldCount);
@@ -358,16 +358,61 @@
             return false;
         }
 
-        // Check descriptions
-        var hasDescription = false;
-        $('input[name="description[]"]').each(function() {
-            if ($(this).val().trim() != '') {
-                hasDescription = true;
+        // Check all description fields
+        var allDescriptionsValid = true;
+        var allInstructionsValid = true;
+        var emptyDescriptionRows = [];
+        var emptyInstructionRows = [];
+
+        $('.multi-field').each(function(index) {
+            var descriptionField = $(this).find('input[name="description[]"]');
+            var instructionField = $(this).find('textarea[name="instruction[]"]');
+
+            // Check if description is empty
+            if (descriptionField.val().trim() == '') {
+                allDescriptionsValid = false;
+                emptyDescriptionRows.push(index + 1); // +1 for human-readable row number
+            }
+
+            // Check if instruction is empty (TinyMCE content)
+            if (instructionField.val().trim() == '') {
+                allInstructionsValid = false;
+                emptyInstructionRows.push(index + 1);
             }
         });
 
-        if (!hasDescription) {
-            Swal.fire("Please Enter at least one Description", "", "error");
+        // Validate all descriptions
+        if (!allDescriptionsValid) {
+            let rowNumbers = emptyDescriptionRows.join(', ');
+            Swal.fire({
+                title: "Validation Error",
+                text: `Please fill in the Description for row(s): ${rowNumbers}`,
+                icon: "error",
+                confirmButtonColor: '#3085d6'
+            });
+            return false;
+        }
+
+        // Validate all instructions
+        if (!allInstructionsValid) {
+            let rowNumbers = emptyInstructionRows.join(', ');
+            Swal.fire({
+                title: "Validation Error",
+                text: `Please fill in the Instruction for row(s): ${rowNumbers}`,
+                icon: "error",
+                confirmButtonColor: '#3085d6'
+            });
+            return false;
+        }
+
+        // Additional check: Make sure at least one field exists
+        if ($('.multi-field').length === 0) {
+            Swal.fire({
+                title: "Validation Error",
+                text: "Please add at least one description and instruction",
+                icon: "error",
+                confirmButtonColor: '#3085d6'
+            });
             return false;
         }
 

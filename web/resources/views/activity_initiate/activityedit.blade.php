@@ -288,7 +288,10 @@
                 </div>
               </div>--}}
 
-              <a href="#dataModal" data-toggle="modal" data-target="#dataModal" class="btn btn-primary" title="View" data-toggle="modal" data-target="#templates" style="margin-inline:5px"><i class="fa fa-bars" style="color:white!important"></i></a>
+              <!-- Updated button to target new modal -->
+              <a href="#" data-toggle="modal" data-target="#overallActivityModal" class="btn btn-primary" title="View Overall Activity" style="margin-inline:5px">
+                <i class="fa fa-bars" style="color:white!important"></i>
+              </a>
 
               <div class="col-md-12  text-center" style="padding-top: 1rem;">
                 <!-- <a type="button" onclick="activeStatus()" id="submitbutton" class="btn btn-labeled btn-succes" title="save" style="background: green !important; border-color:green !important; color:white !important">
@@ -1147,14 +1150,14 @@
                             <div class="col-md-6">
                               <div class="form-group" id="observationDiv{{$data['parent_video_upload_id']}}">
                                 <label class="control-label">Observation</label>
-                                <textarea class="form-control" name="observation" id="observation{{$data['parent_video_upload_id']}}">{{$data['comments']}}</textarea>
+                                <textarea class="form-control" name="observation" id="observation{{$data['parent_video_upload_id']}}">{{$data['observation']}}</textarea>
                               </div>
                             </div>
 
                             <div class="col-md-6">
                               <div class="form-group">
                                 <label class="control-label">Comments for Parent</label>
-                                <textarea class="form-control" name="comments" id="comments"></textarea>
+                                <textarea class="form-control" name="comments" id="comments">{{$data['comments']}}</textarea>
                               </div>
                             </div>
 
@@ -1409,75 +1412,103 @@
       </div>
     </div>
   </div>
-  @foreach($activity as $row1)
 
-  <div class="modal fade" id="dataModal">
+  <!-- ========== UPDATED OVERALL ACTIVITY MODAL - FIXED COUNT ISSUE ========== -->
+  <div class="modal fade" id="overallActivityModal" tabindex="-1" role="dialog" aria-labelledby="overallActivityModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="main-contents">
           <section class="section">
-            <div class="modal-header bg-primary" style=" background-color: rgb(0 103 172) !important;">
-              <h4 class="modal-title">Overall Activity Observation Preview</h4>
+            <div class="modal-header bg-primary" style="background-color: rgb(0 103 172) !important;">
+              <h4 class="modal-title" id="overallActivityModalLabel">Overall Activity Observation Preview</h4>
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body" style="background-color: #edfcff !important;">
               <div class="section-body mt-2">
                 <div class="row">
                   <div class="col-md-12">
-                    <div class="mt-0 ">
-                      <div class="card-body" id="card_header" style="overflow-y: auto; max-height: 300px;">
-                        <table style="width: 100%; max-width: 100%;" class="table table-bordered Tableview View1" id="activity{{$loop->iteration}}">
-                          @foreach($datalist as $key=>$data)
-                          <thead>
+                    <div class="mt-0">
 
-                            <tr>
-                              <th colspan="6">{{$key}}</th>
-                            </tr>
+                      <div class="card-body" id="card_header" style="overflow-y: auto; max-height: 500px;">
+                        @php
+                        // Convert object to array if needed for checking
+                        $hasData = false;
+                        if(is_object($datalist) && isset($datalist)) {
+                        $datalistArray = (array) $datalist;
+                        $hasData = !empty($datalistArray);
+                        } elseif(is_array($datalist)) {
+                        $hasData = !empty($datalist);
+                        }
+                        @endphp
 
-                            <tr>
-                              <th style="width: 10%;">Sl.No</th>
-                              <th style="width: 30%;">Activity Description</th>
-                              <th style="width: 10%;">Status</th>
-                              <th style="width: 20%;">Comment</th>
-                              <th style="width: 15%;">Video link</th>
-                              <th style="width: 15%;">Observation</th>
+                        @if($hasData)
+                        @foreach($datalist as $activitySet => $activities)
+                        <div class="card mb-4">
+                          <div class="card-header bg-info text-white">
+                            <h5 class="mb-0">{{ $activitySet }}</h5>
+                          </div>
+                          <div class="card-body p-0">
+                            <div class="table-responsive">
+                              <table style="width: 100%;" class="table table-bordered table-striped mb-0">
+                                <thead class="thead-light">
+                                  <tr>
+                                    <th style="width: 5%;">Sl.No</th>
+                                    <th style="width: 25%;">Activity Description</th>
+                                    <th style="width: 20%;">Comment</th>
+                                    <th style="width: 10%;">Status</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  @php
+                                  // Convert activities to array if it's an object
+                                  $activitiesArray = is_object($activities) ? (array) $activities : $activities;
+                                  @endphp
 
-                            </tr>
-                          </thead>
-                          <tbody>
-                            @foreach($data as $innerKey => $item)
-                            <tr>
-                              <td>{{ $innerKey + 1 }}</td>
-                              <td>{{ $item->description }}</td>
-                              @if($item->f2f_flag == '1')
-                              <td>F2F</td>
-                              @elseif($item->status == 'Complete')
-                              <td>Approved</td>
-                              @else
-                              <td>{{ $item->status }}</td>
-                              @endif
-                              <td>{{ $item->parent_comment }}</td>
-                              <td class="video-link-cell" title="Click to view the link" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">{{ $item->video_link }}</td>
-                              <td>{{ $item->comments}}</td>
+                                  @if(!empty($activitiesArray))
+                                  @foreach($activitiesArray as $index => $item)
+                                  <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ is_object($item) ? ($item->description ?? 'N/A') : (is_array($item) ? ($item['description'] ?? 'N/A') : 'N/A') }}</td>
 
-                            </tr>
-                            @endforeach
-                          </tbody>
-                          @endforeach
-                        </table>
+                                    <td>
+                                      @php
+                                      $parent_comment = is_object($item) ? ($item->parent_comment ?? null) : (is_array($item) ? ($item['parent_comment'] ?? null) : null);
+                                      $parent_element = is_object($item) ? ($item->parent_element ?? null) : (is_array($item) ? ($item['parent_element'] ?? null) : null);
+                                      @endphp
+                                      {{ $parent_comment ?? $parent_element ?? 'No comment' }}
+                                    </td>
+                                    <td>
+                                      {{$item->status}}
+                                    </td>
 
+                                  </tr>
+                                  @endforeach
+                                  @else
+
+                                  @endif
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        @endforeach
+                        @else
+
+                        @endif
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
           </section>
         </div>
       </div>
     </div>
   </div>
-  @endforeach
+  <!-- ========== END OF UPDATED OVERALL ACTIVITY MODAL ========== -->
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       var videoLinkCells = document.querySelectorAll('.video-link-cell');
