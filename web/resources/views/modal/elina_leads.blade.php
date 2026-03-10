@@ -112,7 +112,8 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header bg-primary" style=" background-color: rgb(0 103 172) !important;">
-                <h4 class="modal-title">Elina Lead</h4>
+                <!-- <h4 class="modal-title">Elina Lead</h4> -->
+                 <h4> Elina Lead</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body" style="padding:0">

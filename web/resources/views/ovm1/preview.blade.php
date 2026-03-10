@@ -416,6 +416,7 @@
 
     var childAge = years + " years " + months + " months";
     var gender = (Q_Data[0].child_gender == "Male") ? 'He' : 'She';
+    var genderLower = gender.toLowerCase(); // "he" or "she"
     var genderAdjectives = (Q_Data[0].child_gender == "Male") ? 'his' : 'her';
 
     var childDoB = birthdate.toLocaleDateString('en-US', {
@@ -522,17 +523,17 @@
 
             setup: function(editor) {
                 editor.on('init', function() {
-                    content = editor.getContent();
-                    // console.log(Q_Data[0].schools_attended_school_currently_grade);
+                    var content = editor.getContent();
+
+                    // Replace all placeholders first
                     content = content.replace(/childName/g, Q_Data[0].child_name);
-                    content = content.replace(/childInterventions_data/g, $('<div>').html(Q_Data[0].conversation_021).text()); //$('<div>').html(Q_Data[0].conversation_021).text()
-                    content = content.replace(/childAcademic_data/g, $('<div>').html(Q_Data[0].conversation_024).text()); //$('<div>').html(Q_Data[0].conversation_024).text()
-                    content = content.replace(/childAssessment_data/g, $('<div>').html(Q_Data[0].conversation_062).text()); //$('<div>').html(Q_Data[0].conversation_062).text()
+                    content = content.replace(/childInterventions_data/g, $('<div>').html(Q_Data[0].conversation_021).text());
+                    content = content.replace(/childAcademic_data/g, $('<div>').html(Q_Data[0].conversation_024).text());
+                    content = content.replace(/childAssessment_data/g, $('<div>').html(Q_Data[0].conversation_062).text());
                     content = content.replace(/childStrength_data/g, $('<div>').html(Q_Data[0].conversation_063).text());
                     content = content.replace(/childInterest_data/g, $('<div>').html(Q_Data[0].conversation_063).text());
-                    // content = content.replace(/childSupport_data/g, Q_Data[0].developmental_milestones_motor_lang_speech);
-                    content = content.replace(/childSupport_data/g, $('<div>').html(Q_Data[0].conversation_033).text()); //$('<div>').html(Q_Data[0].conversation_033).text()
-                    content = content.replace(/childIntrospection_data/g, Introspection_fetch_data); // 
+                    content = content.replace(/childSupport_data/g, $('<div>').html(Q_Data[0].conversation_033).text());
+                    content = content.replace(/childIntrospection_data/g, Introspection_fetch_data);
                     content = content.replace(/childExpectations_data/g, concatenatedString);
                     content = content.replace(/childAoR_data/g, Q_Data[0].child_contact_address);
                     content = content.replace(/meetingDate/g, Q_Data[0].meeting_startdate);
@@ -540,14 +541,44 @@
                     content = content.replace(/childAge/g, childAge);
                     content = content.replace(/childDoB/g, childDoB);
 
+                    // GENDER REPLACEMENT - Handles capitalization correctly
+
+                    // Step 1: Replace possessive adjectives
                     content = content.replace(/\bher\b/gi, genderAdjectives);
                     content = content.replace(/\bhim\b/gi, genderAdjectives);
                     content = content.replace(/\bhis\b/gi, genderAdjectives);
-                    content = content.replace(/\bhe\b/gi, gender);
-                    content = content.replace(/\bshe\b/gi, gender);
 
-                    editor.setContent(content);
+                    // Step 2: Handle sentence beginnings (after punctuation)
+                    // This finds "she" or "She" after . ! ? and capitalizes it
+                    content = content.replace(/([.!?]\s+)(She|she)/g, function(match, p1) {
+                        return p1 + gender; // gender is "He" or "She" (capitalized)
+                    });
+
+                    // Step 3: Handle the very beginning of the content
+                    content = content.replace(/^(She|she)\b/, gender);
+
+                    // Step 4: Handle any remaining "She" that might be at paragraph starts
+                    content = content.replace(/\n(She|she)\b/g, '\n' + gender);
+
+                    // Step 5: Replace all subject pronouns with lowercase first
+                    content = content.replace(/\b(he|she)\b/gi, genderLower);
+
+                    // Step 6: Capitalize pronoun after sentence ending (. ! ?)
+                    content = content.replace(/([.!?]\s+)(he|she)/gi, function(match, p1) {
+                        return p1 + gender; // gender = He or She
+                    });
+
+                    // Step 7: Capitalize pronoun at start of content
+                    content = content.replace(/^(he|she)/i, gender);
+
+                    // Step 8: Capitalize pronoun after line breaks (new paragraphs)
+                    content = content.replace(/(\n\s*)(he|she)/gi, function(match, p1) {
+                        return p1 + gender;
+                    });
+
+                    // Final cleanup
                     content = content.replace(/null/g, '');
+
                     editor.setContent(content);
                 });
             },

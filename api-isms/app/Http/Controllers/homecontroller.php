@@ -180,7 +180,14 @@ class homecontroller extends BaseController
             $totalsail = DB::table('sail_details')->where('consent_aggrement', 'Agreed')->count();
             $enrollments   = DB::table('enrollment_details')->get();
             $sailDetails   = DB::table('sail_details')->get();
-
+            $rows = DB::select("SELECT a.audit_table_name , a.audit_action , ed.child_name , omd.is_coordinator1 , omd.is_coordinator2 , ed.enrollment_child_num , omd.meeting_startdate , omd.meeting_starttime
+                FROM ovm_status_logs AS a INNER JOIN enrollment_details AS ed ON ed.enrollment_child_num=a.enrollment_id
+                INNER JOIN ovm_meeting_details AS omd ON omd.enrollment_id = a.enrollment_id JOIN (SELECT enrollment_id, MAX(id) AS max_date
+                FROM ovm_status_logs WHERE audit_table_name != 'in_person_meeting' GROUP BY enrollment_id ) AS b ON a.enrollment_id = b.enrollment_id AND a.id = b.max_date ;");
+            $leads = DB::select("SELECT '1' AS type_id , enrollment_id , child_name , enrollment_child_num, child_contact_email , child_contact_phone , created_date FROM enrollment_details WHERE STATUS = 'submitted'
+                UNION 
+                SELECT '2' AS type_id , id , NAME , unique_id , email_id , phone_no , create_at FROM webportal_may_help_you
+                ORDER BY created_date DESC ");
 
             $response = [
                 'users' => $users,
@@ -198,7 +205,9 @@ class homecontroller extends BaseController
                 'totalenrolled' => $totalenrolled,
                 'totalsail' => $totalsail,
                 'enrollments' => $enrollments,
-                'sailDetails'=>$sailDetails
+                'sailDetails' => $sailDetails,
+                'rows' => $rows,
+                'leads' => $leads,
             ];
             $this->WriteFileLog($response);
             $serviceResponse = array();
