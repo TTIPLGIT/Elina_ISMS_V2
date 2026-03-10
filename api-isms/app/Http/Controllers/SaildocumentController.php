@@ -1494,7 +1494,7 @@ class SaildocumentController extends BaseController
             $paymentCategory = $rows[0]->category_id;
             $paymentDetails = DB::select("SELECT * FROM payment_process_customized WHERE enrollment_id = $enrollmentID");
             $schoolID = $rows[0]->school_id;
-
+            // $this->WriteFileLog($paymentCategory);
             if (!empty($paymentDetails && $paymentDetails != '[]')) {
 
                 // if ($schoolID == 0) {
@@ -1508,6 +1508,7 @@ class SaildocumentController extends BaseController
                 // } else
                 if ($paymentCategory == 2) {
                     // $this->WriteFileLog('Else if -paymentCategory == 2 ');
+                    $feeType = ($feeType == 2) ? $feeType - 1 : $feeType;
                     $activePayment = DB::table('payment_process_customized')
                         ->where('fees_type_id', $feeType)
                         // ->where('category_id', $paymentCategory)
@@ -1517,6 +1518,7 @@ class SaildocumentController extends BaseController
                         ->first();
                 } else {
                     // $this->WriteFileLog('Else');
+                    $feeType = ($feeType == 2) ? $feeType - 1 : $feeType;
                     $activePayment = DB::table('payment_process_customized')
                         ->where('fees_type_id', $feeType)
                         // ->where('category_id', $paymentCategory)

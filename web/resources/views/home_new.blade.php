@@ -88,7 +88,7 @@
                                             </div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-white numberfontsize"><span>{{ $rows['elinalead'] ?? '' }}
+                                            <div class="widget-numbers text-white numberfontsize"><span>{{ count($rows['leads'] ?? '') }}
                                                 </span></div>
                                         </div>
                                     </div>
@@ -104,8 +104,9 @@
                                             </div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-white numberfontsize"><span> {{ $rows['chart2'][0]['ovm_count'] ?? '' }}
-                                                </span></div>
+                                            <div class="widget-numbers text-white numberfontsize">
+                                                <span>{{ count($rows['rows'] ?? []) }}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -114,13 +115,11 @@
                                         <div class="widget-content-left">
                                             <div class="widget-heading fontsweight fontsizes">SAIL</div>
                                             <div style="text-align: left;">
-                                                <a class="dbox__title fontsweight" href="#elina_sail" data-toggle="modal" data-target="#elina_sail">View</a>
-                                                <!-- <a class="dbox__title fontsweight" href="{{url('sailstatus')}}">View</a> -->
+                                                <a class="dbox__title fontsweight" href="#elina_sail" data-toggle="modal" data-target="#elina_sail" style="color: white;">View</a>
                                             </div>
                                         </div>
-                                        <div class="widget-content-right">
-                                            <div class="widget-numbers text-white numberfontsize"><span> {{ $rows['chart2'][0]['sail_count'] ?? '' }}
-                                                </span></div>
+                                        <div class="widget-numbers text-white numberfontsize">
+                                            <span>{{ count($rows['sail'] ?? []) }}</span>
                                         </div>
                                     </div>
                                 </div>
