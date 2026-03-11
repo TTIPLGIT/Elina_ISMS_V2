@@ -524,7 +524,7 @@
             setup: function(editor) {
                 editor.on('init', function() {
                     var content = editor.getContent();
-
+                    
                     // Replace all placeholders first
                     content = content.replace(/childName/g, Q_Data[0].child_name);
                     content = content.replace(/childInterventions_data/g, $('<div>').html(Q_Data[0].conversation_021).text());
@@ -541,49 +541,165 @@
                     content = content.replace(/childAge/g, childAge);
                     content = content.replace(/childDoB/g, childDoB);
 
-                    // GENDER REPLACEMENT - Handles capitalization correctly
+                    // ============ ENHANCED GENDER REPLACEMENT WITH PROPER CAPITALIZATION ============
+                    
+                    // Define gender-specific mappings based on your requirements
+                    var genderMap;
+                    
+                    if (Q_Data[0].child_gender == "Male") {
+                        // For male:
+                        // him -> him
+                        // her -> his
+                        // his -> his
+                        genderMap = {
+                            // Object pronouns
+                            'him': 'him',
+                            'Him': 'Him',
+                            'HIM': 'HIM',
+                            'her': 'his',
+                            'Her': 'His',
+                            'HER': 'HIS',
+                            
+                            // Possessive (keep existing)
+                            'his': 'his',
+                            'His': 'His',
+                            'HIS': 'HIS',
+                            
+                            // Subject pronouns
+                            'he': 'he',
+                            'He': 'He',
+                            'HE': 'HE',
+                            'she': 'he',
+                            'She': 'He',
+                            'SHE': 'HE'
+                        };
+                    } else {
+                        // For female:
+                        // him -> her
+                        // his -> her
+                        // her -> her
+                        genderMap = {
+                            // Object pronouns
+                            'him': 'her',
+                            'Him': 'Her',
+                            'HIM': 'HER',
+                            'her': 'her',
+                            'Her': 'Her',
+                            'HER': 'HER',
+                            
+                            // Possessive
+                            'his': 'her',
+                            'His': 'Her',
+                            'HIS': 'HER',
+                            
+                            // Subject pronouns
+                            'he': 'she',
+                            'He': 'She',
+                            'HE': 'SHE',
+                            'she': 'she',
+                            'She': 'She',
+                            'SHE': 'SHE'
+                        };
+                    }
 
-                    // Step 1: Replace possessive adjectives
-                    content = content.replace(/\bher\b/gi, genderAdjectives);
-                    content = content.replace(/\bhim\b/gi, genderAdjectives);
-                    content = content.replace(/\bhis\b/gi, genderAdjectives);
+                    // Function to check if a word is at the start of a sentence
+                    function isStartOfSentence(text, wordIndex) {
+                        // Check if it's at the very beginning of content
+                        if (wordIndex === 0) return true;
+                        
+                        // Get the text before the word
+                        var precedingText = text.substring(0, wordIndex);
+                        
+                        // Check for sentence endings (. ! ?) followed by space
+                        // This handles cases like: "Hello. he is here." -> "he" should become "He"
+                        if (/[.!?]\s+$/.test(precedingText)) return true;
+                        
+                        // Check for new paragraph or line break
+                        if (/\n\s*$/.test(precedingText)) return true;
+                        
+                        // Check for after colon (often starts a new sentence/thought)
+                        if (/:\s+$/.test(precedingText)) return true;
+                        
+                        return false;
+                    }
 
-                    // Step 2: Handle sentence beginnings (after punctuation)
-                    // This finds "she" or "She" after . ! ? and capitalizes it
-                    content = content.replace(/([.!?]\s+)(She|she)/g, function(match, p1) {
-                        return p1 + gender; // gender is "He" or "She" (capitalized)
-                    });
+                    // Function to determine the correct case for replacement
+                    function getCorrectCase(original, replacement, isStart) {
+                        // If original is all caps, return all caps version of replacement
+                        if (original === original.toUpperCase()) {
+                            return replacement.toUpperCase();
+                        }
+                        
+                        // If original is title case (first letter capital, rest lowercase)
+                        if (original[0] === original[0].toUpperCase() && 
+                            original.slice(1) === original.slice(1).toLowerCase()) {
+                            // If at start of sentence, keep title case
+                            if (isStart) {
+                                return replacement.charAt(0).toUpperCase() + replacement.slice(1).toLowerCase();
+                            }
+                            // If in middle of sentence, convert to lowercase
+                            return replacement.toLowerCase();
+                        }
+                        
+                        // Original is lowercase
+                        if (isStart) {
+                            // At start of sentence, capitalize
+                            return replacement.charAt(0).toUpperCase() + replacement.slice(1).toLowerCase();
+                        }
+                        
+                        // In middle of sentence, keep lowercase
+                        return replacement.toLowerCase();
+                    }
 
-                    // Step 3: Handle the very beginning of the content
-                    content = content.replace(/^(She|she)\b/, gender);
+                    // Create regex for all possible pronouns
+                    var pronounRegex = /\b(he|He|HE|she|She|SHE|him|Him|HIM|her|Her|HER|his|His|HIS)\b/g;
+                    
+                    // Find all matches
+                    var matches = [];
+                    var match;
+                    while ((match = pronounRegex.exec(content)) !== null) {
+                        matches.push({
+                            word: match[0],
+                            index: match.index,
+                            length: match[0].length
+                        });
+                    }
 
-                    // Step 4: Handle any remaining "She" that might be at paragraph starts
-                    content = content.replace(/\n(She|she)\b/g, '\n' + gender);
+                    // Process from the end to avoid index shifting
+                    for (var i = matches.length - 1; i >= 0; i--) {
+                        var pronoun = matches[i];
+                        var word = pronoun.word;
+                        var index = pronoun.index;
+                        
+                        // Get the base replacement from gender map
+                        var baseReplacement = genderMap[word];
+                        
+                        if (baseReplacement) {
+                            // Check if this word starts a sentence
+                            var isStart = isStartOfSentence(content, index);
+                            
+                            // Get the correctly cased replacement
+                            var replacement = getCorrectCase(word, baseReplacement, isStart);
+                            
+                            // Replace the word
+                            content = content.substring(0, index) + replacement + content.substring(index + word.length);
+                        }
+                    }
 
-                    // Step 5: Replace all subject pronouns with lowercase first
-                    content = content.replace(/\b(he|she)\b/gi, genderLower);
-
-                    // Step 6: Capitalize pronoun after sentence ending (. ! ?)
-                    content = content.replace(/([.!?]\s+)(he|she)/gi, function(match, p1) {
-                        return p1 + gender; // gender = He or She
-                    });
-
-                    // Step 7: Capitalize pronoun at start of content
-                    content = content.replace(/^(he|she)/i, gender);
-
-                    // Step 8: Capitalize pronoun after line breaks (new paragraphs)
-                    content = content.replace(/(\n\s*)(he|she)/gi, function(match, p1) {
-                        return p1 + gender;
-                    });
-
-                    // Final cleanup
+                    // Final cleanup - ensure proper spacing after punctuation
+                    content = content.replace(/\s+/g, ' '); // Normalize spaces
+                    content = content.replace(/\s+([.!?])/g, '$1 '); // Fix spacing around punctuation
                     content = content.replace(/null/g, '');
+                    content = content.replace(/undefined/g, '');
 
                     editor.setContent(content);
+                    
+                    // Log for debugging
+                    console.log('Gender replacement complete for:', Q_Data[0].child_gender);
                 });
             },
-
         });
+        
         tinymce.init({
             selector: 'textarea',
             toolbar: "undo redo | styleselect | fontselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent",
