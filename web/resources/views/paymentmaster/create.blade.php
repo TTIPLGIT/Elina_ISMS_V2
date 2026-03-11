@@ -136,9 +136,9 @@
     function toggleSchoolDropdown(selectElement) {
         var category = selectElement.value;
         var schoolDropdown = document.getElementById('school_dropdown');
-        
+
         if (category === '1') {
-            showAlert('All General payment categories already exist. Kindly edit the fees in the Payment Master index!' , 'info');
+            showAlert('All General payment categories already exist. Kindly edit the fees in the Payment Master index!', 'info');
             selectElement.value = "";
             return false;
         }
@@ -174,6 +174,7 @@
         const cell6 = row.insertCell(5);
 
         cell1.textContent = rowCount;
+        updateSerialNumbers();
 
         // Create a new dropdown with filtered options
         let optionHtml = '<select class="form-control serviceDropdown" name="serviceBriefing[]" required>';
@@ -288,7 +289,7 @@
 
         // Rebuild dropdowns with the updated selected services
         rebuildDropdowns();
-
+        updateSerialNumbers();
         // Recalculate final amount after removing the row
         calculateServiceAmount();
     }
@@ -297,5 +298,12 @@
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('addServiceButton').click(); // Automatically add the first row
     });
+
+    function updateSerialNumbers() {
+        const rows = document.querySelectorAll('#serviceTable tbody tr');
+        rows.forEach((row, index) => {
+            row.cells[0].textContent = index + 1;
+        });
+    }
 </script>
 @endsection
