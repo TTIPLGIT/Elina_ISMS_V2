@@ -39,8 +39,7 @@
 
   <section class="section">
 
-    {{ Breadcrumbs::render('user.index') }}
-
+    {{ Breadcrumbs::render('paymentmaster.customized') }}
     <div class="section-body mt-2">
 
 
@@ -111,7 +110,7 @@
                         <th width="50px">SI.NO.</th>
                         <th>Name</th>
                         <th>Enrollment ID</th>
-                        <th>Fee Type</th>
+                        <!-- <th>Fee Type</th> -->
                         <th>Total Amount</th>
                         <th>Action</th>
                       </tr>
@@ -122,7 +121,7 @@
                         <td>{{ ++$key }}</td>
                         <td>{{$row['child_name'] }}</td>
                         <td>{{$row['enrollment_child_num']}}</td>
-                        <td>{{ $row['fee_type'] }}</td>
+                        <!-- <td>{{ $row['fee_type'] }}</td> -->
                         <td>{{$row['final_amount']}}</td>
                         <td class="text-center">
                           <a class="btn btn-danger" href="{{ route('paymentmaster.customized.getdata', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fa fa-edit" aria-hidden="true"></i><span></span></a>
