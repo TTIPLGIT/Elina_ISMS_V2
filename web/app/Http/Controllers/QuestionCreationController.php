@@ -232,6 +232,8 @@ class QuestionCreationController extends BaseController
                 $data['field_question'] = $request->field_question;
                 $data['question_field_name'] = $request->question_field_name;
                 $data['question_description'] = $request->question_description;
+                $data['sub_questions'] = $request->sub_question;
+                $data['options'] = $request->sub_options;
             }
 
             $encryptArray = $this->encryptData($data);
@@ -240,7 +242,7 @@ class QuestionCreationController extends BaseController
             $gatewayURL = config('setting.api_gateway_url') . '/question_creation/store_question';
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
             $response1 = json_decode($response);
-
+     
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
 

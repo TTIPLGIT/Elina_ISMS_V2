@@ -207,7 +207,7 @@ class QuestionCreationController extends BaseController
                 'required' => $inputArray['required'] ?? 0,
                 'other_option' => $inputArray['other_option'] ?? 0,
             ];
-            $this->WriteFileLog($input);
+            $this->WriteFileLog($inputArray);
             // Ensure options and sub_questions are arrays
             $input['options'] = $inputArray['options'] ?? [];
             if (is_string($input['options'])) {
@@ -266,8 +266,8 @@ class QuestionCreationController extends BaseController
             $column_type = match ($type_id) {
                 1, 2, 5, 8 => "TEXT",
                 3, 4 => "VARCHAR(250)",
-                6, 7 => "VARCHAR(100)",
-                10, 11,12  => "VARCHAR(25)",
+                6, 7=> "VARCHAR(100)",
+                10, 11,12 => "VARCHAR(25)",
                 default => null,
             };
 

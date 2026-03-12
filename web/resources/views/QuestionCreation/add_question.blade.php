@@ -444,7 +444,7 @@
 
                 if (data == 3 || data == 4 || data == 5 || data == 9 || data == 8) {
                     $('#edit_option' + id).show();
-                } else if (data == 6 || data == 7) {
+                } else if (data == 6 || data == 7 || data == 12) {
                     $('#edit_option' + id).hide();
                     $('#edit_sub_questions' + id).show();
                 } else {
@@ -559,7 +559,7 @@
             $('#header_field').hide();
             $('#footerDiv').show();
             $('.otherBtn').hide();
-        } else if (fieldtype == 6 || fieldtype == 7) {
+        } else if (fieldtype == 6 || fieldtype == 7 || fieldtype == 12) {
             $('#option').hide();
             $('#header_field').hide();
             $('#sub_questions').show();
