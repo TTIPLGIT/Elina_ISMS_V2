@@ -99,7 +99,7 @@
                     <div class="form-group ">
                       <label class="control-label required">IS Co-ordinator-1</label>
                       <div style="display: flex;">
-                        <select class="form-control" id="is_coordinator1" name="is_coordinator1" onchange="iscoordinatorfn(event)" @if($modules['user_role'] != 'IS Head') disabled @endif>
+                        <select class="form-control" id="is_coordinator1" name="is_coordinator1" onchange="iscoordinatorfn(event)" @if($modules['user_role'] !='IS Head' ) disabled @endif>
                           <option>Select-IS-Coordinator-1</option>
                           @foreach($iscoordinators as $key=> $data1)
                           <option value="{{ $data1['id'] }}" {{ $data1['id'] ==  $row['is_coordinator1']['id'] ? 'selected':'' }}>{{$data1['name']}}</option>
@@ -117,7 +117,7 @@
                     <div class="form-group">
                       <label class="control-label required">IS Co-ordinator-2</label>
                       <div style="display: flex;">
-                        <select class="form-control" id="is_coordinator2" name="is_coordinator2" onchange="iscoordinatorfn(event)" @if($modules['user_role'] != 'IS Head') disabled @endif>
+                        <select class="form-control" id="is_coordinator2" name="is_coordinator2" onchange="iscoordinatorfn(event)" @if($modules['user_role'] !='IS Head' ) disabled @endif>
                           <option>Select-IS-Coordinator-2</option>
                           @foreach($iscoordinators as $key=> $data2)
                           @if($row['is_coordinator2'] != [])
@@ -243,6 +243,9 @@
                     <label class="col-sm-2 col-form-label">File Attachment</label>
                     <div class="col-sm-4">
                       <input class="form-control" type="file" id="file" name="file" oninput="" maxlength="20" value="" autocomplete="off">
+                      <small style="margin-left:5px"> <i class="fa fa-info-circle"></i>
+                        Only PNG, JPG are allowed. Max file size 2MB.
+                      </small>
                       <!-- <a href="#" id="viewLink" style="display:none" target="_blank"><i class="fa fa-file"></i> View Uploaded Document</a> -->
                       <!-- <div style="color: rgb(246, 15, 15); display: block;margin: 5px 0px 0px 3px;">File Size must be below 2MB.<br>Only Following extension files could be uploaded .PDF, MS Word, .JPG & .JPEG.</div> -->
                     </div>
@@ -699,8 +702,10 @@
     } else if (a == 'Sent') {
       var swalText = 'Schedule';
     }
-    const select_coordinator1 = document.getElementById("is_coordinator1");const select_coordinator2 = document.getElementById("is_coordinator2");
-    select_coordinator1.disabled = false; select_coordinator2.disabled = false;
+    const select_coordinator1 = document.getElementById("is_coordinator1");
+    const select_coordinator2 = document.getElementById("is_coordinator2");
+    select_coordinator1.disabled = false;
+    select_coordinator2.disabled = false;
     Swal.fire({
 
       title: "Do you want to " + swalText + " the Meeting?",

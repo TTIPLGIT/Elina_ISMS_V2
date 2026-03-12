@@ -262,38 +262,42 @@
         width: 100%;
         text-align: center;
     }
-    
+
     /* Media query for mobile devices */
-@media only screen and (min-width: 768px) {
-    .is-coordinate {
-        display: flex;
-        justify-content: space-around; /* Adjusted for smaller screens */
-        flex-direction: row;
+    @media only screen and (min-width: 768px) {
+        .is-coordinate {
+            display: flex;
+            justify-content: space-around;
+            /* Adjusted for smaller screens */
+            flex-direction: row;
+        }
     }
-}
-@media only screen and (max-width: 768px) {
-.multi-question {
-        text-align: center;
-        width: 100%;
-        overflow-x: scroll;
-        overflow-y: hidden;
+
+    @media only screen and (max-width: 768px) {
+        .multi-question {
+            text-align: center;
+            width: 100%;
+            overflow-x: scroll;
+            overflow-y: hidden;
+        }
+
+        .stickTd {
+            position: sticky;
+            left: 0;
+            background: #f5f5f5;
+        }
     }
-    .stickTd {
-        position: sticky;
-        left: 0;
-        background: #f5f5f5;
-    }
-}
-@media (max-width: 767px) {
+
+    @media (max-width: 767px) {
         .otherOption {
             opacity: 1;
- 
+
             margin: -2px 0px 0px 80px;
         }
     }
 </style>
 <div class="main-content">
-   
+
     @if($role == 'Parent')
     {{ Breadcrumbs::render('questionnaire.submitted.form',$questionDetails[0]['questionnaire_name']) }}
     @else
@@ -303,7 +307,7 @@
     {{ Breadcrumbs::render('questionnaire.submitted.form2',$questionDetails[0]['questionnaire_name']) }}
     @endif
     @endif
-   
+
     <div class="col-md-12 card" style="background-color: white;">
         <div class="is-coordinate">
             <div class="col-sm-3">
@@ -395,15 +399,14 @@
                 <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Previous Stage</a>
 
             @if($role == 'Parent')
-            <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{ route('questionnaire_for_user.index') }}" style="color:white !important;background: red !important;">
+            <a type="button" class="btn btn-labeled back-btn" title="Cancel" "href="{{ route('questionnaire_for_user.index') }}" style="color:white !important;background: red !important;">
                 <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left" style="color:white !important"></i></span> Cancel</a>
             @else
-            <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{ URL::previous() }}" style="color:white !important;background: red !important;">
+            <a type="button" class="btn btn-labeled back-btn" title="Cancel"  data-toggle="tooltip" href="{{ URL::previous() }}" style="color:white !important;background: red !important;">
                 <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Cancel</a>
             @endif
-
-            <a type="button" class="btn btn-labeled btn-info" onclick="NextTab();" id="Next" title="Next" style="background: blue !important; border-color:#4d94ff !important; color:white !important;">
-                <span class="btn-label" style="font-size:13px !important;">Next Stage</span> <i class="fa fa-arrow-right"></i></a>
+            <a type="button" class="btn btn-labeled next-btn" title="Next Stage" onclick="NextTab();" id="Next"  style="color:white !important;background: blue !important;">
+                 <span class="btn-label" style="font-size:13px !important;"> <i class="fa fa-arrow-right"></i></span>Next Stage</a>
         </div>
         <!-- <div class="bs-stepper-content">
             <div id="test-l-1" class="content">
@@ -2131,7 +2134,7 @@
 
         }
     });
-    
+
     function showInput(nameField) {
         var otherInput = document.getElementsByClassName("otherOption" + nameField[0].id);
         for (var i = 0; i < nameField.length; i++) {
@@ -2141,7 +2144,7 @@
                     otherInput[0].style.border = "1px solid black";
                     otherInput[0].disabled = false;
                     otherInput[0].style.pointerEvents = "none";
-                    
+
 
                 } else {
                     otherInput[0].style.display = "none";

@@ -241,6 +241,9 @@
                         <label class="col-sm-2 col-form-label">File Attachment</label>
                         <div class="col-sm-4">
                           <input class="form-control" type="file" id="file" name="file" oninput="" maxlength="20" value="" placeholder="Enter Location" autocomplete="off">
+                          <small style="margin-left:5px" > <i class="fa fa-info-circle"></i> 
+                            Only PNG, JPG are allowed. Max file size 2MB.
+                          </small>
                           <!-- <a href="#" id="viewLink" style="display:none" target="_blank"><i class="fa fa-file"></i> View Uploaded Document</a> -->
                           <!-- <div style="color: rgb(246, 15, 15); display: block;margin: 5px 0px 0px 3px;">File Size must be below 2MB.<br>Only Following extension files could be uploaded .PDF, MS Word, .JPG & .JPEG.</div> -->
                         </div>
@@ -480,7 +483,7 @@
     h += (ampm.match(/pm/i)) ? 12 : 0;
     return h * 60 + m;
   }
-  
+
   function isValidDate(dateString) {
     const currentDate = new Date();
     const parts = dateString.split('/');
@@ -501,7 +504,7 @@
     var co_two = $('#is_coordinator2').val();
     var startdate = $('#meeting_startdate').val();
     var dateValid = isValidDate(startdate);
-    if(!dateValid){
+    if (!dateValid) {
       swal.fire("Please Select Valid Date", "", "error");
       return false;
     }
@@ -713,9 +716,11 @@
     } else if (a == 'Sent') {
       var swalText = 'Schedule';
     }
-    
-    const select_coordinator1 = document.getElementById("is_coordinator1");const select_coordinator2 = document.getElementById("is_coordinator2");
-    select_coordinator1.readonly = true; select_coordinator2.readonly = true;
+
+    const select_coordinator1 = document.getElementById("is_coordinator1");
+    const select_coordinator2 = document.getElementById("is_coordinator2");
+    select_coordinator1.readonly = true;
+    select_coordinator2.readonly = true;
 
     Swal.fire({
 
@@ -801,13 +806,13 @@
 
             const select_coordinator1 = document.getElementById("is_coordinator1");
             select_coordinator1.value = co1;
-            if(userRole != 'IS'){
+            if (userRole != 'IS') {
               select_coordinator1.readonly = true;
             }
             if (co2 != 0) {
               const select_coordinator2 = document.getElementById("is_coordinator2");
               select_coordinator2.value = co2;
-              if(userRole != 'IS'){
+              if (userRole != 'IS') {
                 select_coordinator2.readonly = true;
               }
             }
