@@ -395,10 +395,10 @@
                 <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Previous Stage</a>
 
             @if($role == 'Parent')
-            <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{ route('questionnaire_for_user.index') }}" style="color:white !important;background: red !important;">
+            <a type="button" class="btn btn-labeled back-btn" title="Cancel" href="{{ route('questionnaire_for_user.index') }}" style="color:white !important;background: red !important;">
                 <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left" style="color:white !important"></i></span> Cancel</a>
             @else
-            <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{ URL::previous() }}" style="color:white !important;background: red !important;">
+            <a type="button" class="btn btn-labeled back-btn" title="Cancel" href="{{ URL::previous() }}" style="color:white !important;background: red !important;">
                 <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Cancel</a>
             @endif
 
