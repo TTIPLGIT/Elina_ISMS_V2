@@ -512,6 +512,7 @@
         selectedServices = selectedServices.filter(service => service !== serviceToRemove);
 
         rebuildDropdowns();
+        updateSerialNumbers();
         calculateServiceAmount();
     }
 
@@ -520,6 +521,13 @@
         // Programmatically trigger the click event to add the first service row
         document.getElementById('addServiceButton').click();
     });
+
+    function updateSerialNumbers() {
+        const rows = document.querySelectorAll('#serviceTable tbody tr');
+        rows.forEach((row, index) => {
+            row.cells[0].textContent = index + 1;
+        });
+    }
 </script>
 
 <style>
