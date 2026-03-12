@@ -51,8 +51,17 @@ class CustomizedPaymentAPIController extends BaseController
 
             $payment_id = 10;
 
-            $childDetails = DB::select("SELECT enrollment_id , enrollment_child_num, child_name FROM enrollment_details WHERE STATUS = 'Submitted'  AND 
-            enrollment_child_num NOT IN (SELECT enrollment_id FROM sail_details)");
+            $childDetails = DB::select("
+SELECT ed.enrollment_id, ed.enrollment_child_num, ed.child_name
+FROM enrollment_details ed
+LEFT JOIN sail_details sd 
+    ON ed.enrollment_id = sd.enrollment_id
+LEFT JOIN payment_process_customized pc 
+    ON ed.enrollment_id = pc.enrollment_id
+WHERE ed.status = 'Submitted'
+AND sd.enrollment_id IS NULL
+AND pc.enrollment_id IS NULL
+");
             // $childDetails = DB::table('enrollment_details')
             //     ->select('enrollment_id', 'enrollment_child_num', 'child_name')
             //     ->where('status', 'Submitted')
@@ -80,7 +89,7 @@ class CustomizedPaymentAPIController extends BaseController
             $response = [
                 'rows' => $rows,
                 'schoolists' => $schoolists,
-                'serviceList' => $serviceList,  
+                'serviceList' => $serviceList,
                 'taxList' => $taxList,
                 'childDetails' => $childDetails,
                 'serviceData' =>  $serviceData
