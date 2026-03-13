@@ -442,7 +442,7 @@
 
             success: function(data) {
 
-                if (data == 3 || data == 4 || data == 5 || data == 9 || data == 8) {
+                if (data == 3 || data == 4 || data == 5|| data == 8) {
                     $('#edit_option' + id).show();
                 } else if (data == 6 || data == 7 || data == 12) {
                     $('#edit_option' + id).hide();

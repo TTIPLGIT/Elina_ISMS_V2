@@ -360,7 +360,7 @@ class ParentvideouploadController extends BaseController
                     $activities_list = $parant_data['activities_list'];
                     $activitylist_nav = $parant_data['activitylist_nav'];
                     $activitylist_rejection = $parant_data['activitylist_rejection'];
-                    $collection = new Collection($activities_list); 
+                    $collection = new Collection($activities_list);
                     // dd($comments);
 
                     $currentIndex = $collection->search(function ($item) use ($currentID) {
@@ -785,7 +785,7 @@ class ParentvideouploadController extends BaseController
             $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
             $response1 = json_decode($response);
 
-
+            // dd($response1);
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
