@@ -23,18 +23,18 @@
     {{ Breadcrumbs::render('video_creation.index') }}
 
     <!-- Page Heading -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 style="color:darkblue;text-align: center !important;">Activity Creation List</h4>
-        <div>
-            <a href="{{ route('video_creation.create') }}" class="btn btn-primary me-2">
-                <i class="fa fa-plus me-1"></i> Add Activity
-            </a>
-            <a href="{{ route('privacy.update', \Crypt::encrypt('4')) }}" class="btn btn-secondary">
-                <i class="fa fa-info-circle me-1"></i> General Instructions
-            </a>
-        </div>
+    <div class="d-flex justify-content-center align-items-center mb-4">
+        <h4 style="color:darkblue;">Activity Creation List</h4>
     </div>
 
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{{ route('video_creation.create') }}" class="btn btn-primary me-2 mr-3">
+            <i class="fa fa-plus me-1"></i> Add Activity
+        </a>
+        <a href="{{ route('privacy.update', \Crypt::encrypt('4')) }}" class="btn btn-secondary">
+            <i class="fa fa-info-circle me-1"></i> General Instructions
+        </a>
+    </div>
     <!-- Toggle Button Group -->
     <div class="mb-4 text-center">
         <div class="btn-group" role="group" aria-label="Toggle Tables">
@@ -56,7 +56,7 @@
                 <table class="table table-bordered table-hover align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th>#</th>
+                            <th>SI NO</th>
                             <th>Age Group</th>
                             <th>Type</th>
                             <th>Activity</th>
@@ -98,7 +98,7 @@
                 <table class="table table-bordered table-hover align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th>#</th>
+                            <th>SI No</th>
                             <th>Activity</th>
                             <!-- <th>Requested By</th> -->
                             <th>Actions</th>

@@ -741,11 +741,11 @@
         var confirmTitle = "";
 
         if (a === "Saved") {
-            confirmTitle = "Save Assessment";
-            confirmMessage = "Are you sure you want to save this assessment?";
+            confirmTitle = "Save ";
+            confirmMessage = "Are you sure you want to save this details?";
         } else if (a === "Submitted") {
-            confirmTitle = "Submit Assessment";
-            confirmMessage = "Are you sure you want to submit this assessment report?";
+            confirmTitle = "Submit";
+            confirmMessage = "Are you sure you want to submit this details?";
         }
 
         Swal.fire({

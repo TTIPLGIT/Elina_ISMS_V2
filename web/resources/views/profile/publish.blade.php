@@ -7,7 +7,11 @@
     <div class="row justify-content-center">
         <div class="col-lg-12 col-md-12">
             <div class="tile my-4">
+                @if($rows[0]['id']==2)
                 <h3 class="tile-title" style="text-align: center;">Privacy Policy Edit</h3>
+                @else
+                <h3 class="tile-title" style="text-align: center;">General Instruction</h3>
+                @endif
                 <div class="tile-body">
                     <form class="form-horizontal" name="publish" method="POST" action="{{ route('privacy.publish') }}">
                         @csrf
@@ -30,10 +34,19 @@
                             <div class="col-md-12">
                                 <a class="btn btn-success" href="{{ route('video_creation.index') }}">
                                     <i class="fa fa-check"></i> Publish
-                                </a>&nbsp; <a class="btn btn-danger" href="{{ route('video_creation.index') }}">
+
+
+
+                                </a>&nbsp;
+                                @if($rows[0]['id']==2)
+                                <a class="btn btn-danger" href="{{ route('activity_initiate.index') }}">
                                     <i class="fa fa-times" aria-hidden="true"></i> Cancel
                                 </a>
-
+                                @else
+                                <a class="btn btn-danger" href="{{ route('video_creation.index') }}">
+                                    <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                </a>
+                                @endif
 
 
                             </div>

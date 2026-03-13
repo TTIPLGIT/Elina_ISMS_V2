@@ -376,13 +376,15 @@ class ParentvideouploadController extends BaseController
             $descriptionID = $this->DecryptData($id);
             $id = auth()->user()->id;
             $email = DB::select("SELECT * from enrollment_details where user_id=$id");
-            $this->WriteFileLog($descriptionID);  $this->WriteFileLog($id);
+            $this->WriteFileLog($descriptionID);
+            $this->WriteFileLog($id);
             $enroll = $email[0]->enrollment_id;
             $rows = DB::select("SELECT a.instruction , a.activity_id , a.activity_description_id ,act.activity_name , a.enrollment_id from parent_video_upload AS a 
             INNER JOIN enrollment_details AS b ON  b.enrollment_id=a.enrollment_id 
             INNER JOIN activity AS act ON act.activity_id=a.activity_id 
             INNER JOIN activity_description AS us ON us.activity_description_id=a.activity_description_id WHERE activity_initiation_id=$descriptionID");
-            $activityID = $rows[0]->activity_id;  $this->WriteFileLog($activityID);
+            $activityID = $rows[0]->activity_id;
+            $this->WriteFileLog($activityID);
             $activitylist = DB::select("SELECT save_flag , required , parent_video_upload_id , a.status , a.activity_description_id, a.status AS current_status , us.instruction , us.description , a.f2f_flag,a.instruction as instructionset from parent_video_upload AS a 
             INNER JOIN enrollment_details AS b ON  b.enrollment_id=a.enrollment_id 
             INNER JOIN activity AS act ON act.activity_id=a.activity_id 
@@ -400,7 +402,7 @@ class ParentvideouploadController extends BaseController
             INNER JOIN activity_description AS us ON us.activity_description_id=a.activity_description_id
             WHERE a.enableflag = 0 and a.status='Rejected'and b.user_id=$id AND(a.action_flag=0 OR a.action_flag IS NULL) ORDER BY a.activity_id,a.activity_description_id");
 
-$comments = DB::select("
+            $comments = DB::select("
     SELECT 
         lvc.*,
         pva.activity_initiation_id,
@@ -428,7 +430,8 @@ $comments = DB::select("
     INNER JOIN activity_description ad ON ad.activity_description_id = pva.activity_description_id
     WHERE lvc.created_by = ?
     ORDER BY lvc.id DESC
-", [$id]);            $video_link = DB::select("SELECT * FROM activity_parent_video_upload WHERE parent_video_upload_id IN(SELECT distinct a.parent_video_upload_id  FROM parent_video_upload AS a
+", [$id]);
+            $video_link = DB::select("SELECT * FROM activity_parent_video_upload WHERE parent_video_upload_id IN(SELECT distinct a.parent_video_upload_id  FROM parent_video_upload AS a
             INNER JOIN activity_parent_video_upload AS b ON a.parent_video_upload_id=b.parent_video_upload_id
             INNER JOIN enrollment_details AS c ON  a.Enrollment_id=c.enrollment_id
             WHERE c.user_id='$id')");
@@ -1112,6 +1115,10 @@ $comments = DB::select("
 
             DB::transaction(function () use ($input) {
                 $material = $input['material'];
+
+                // Get all activity IDs from description
+                $allActivityIds = array_keys($input['description']);
+
                 if ($material != '') {
 
                     foreach ($material as $key => $value) {
@@ -1132,6 +1139,14 @@ $comments = DB::select("
                             'activity_description_id' => $key,
                             'activity_materials_id' => implode(',', $value),
                         ]);
+                    }
+
+                    // NEW CODE: Delete mappings for activities that are in description but not in material array
+                    $activitiesWithMaterials = array_keys($material);
+                    $activitiesWithoutMaterials = array_diff($allActivityIds, $activitiesWithMaterials);
+
+                    foreach ($activitiesWithoutMaterials as $activityId) {
+                        DB::table('activity_materials_mapping')->where('activity_description_id', $activityId)->delete();
                     }
                 }
             });
