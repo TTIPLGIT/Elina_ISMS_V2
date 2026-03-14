@@ -524,44 +524,58 @@ class activityInitiationController extends BaseController
 
             $f2f_observation = DB::table('face_to_face_observation')->get();
 
-     $lastactivity1 = DB::table('activity_initiation as a')
-    ->select(
-        'a.activity_id',
-        'c.f2f_flag',
-        'ff.*',
-        'c.enableflag',
-        'c.comments',
-        'a.activity_initiation_id',
-        'ac.activity_name',
-        'ad.description',
-        'a.last_modified_date',
-        'c.status',
-        'c.parent_video_upload_id',
-        'ad.activity_description_id',
-        'c.instruction',
-        'c.coordinator_observation',
-        'c.head_observation',
-        'c.physical_observation_name',
-        'c.physical_observation_result',
-        DB::raw('(SELECT observation FROM sail_activity_vlog_comments 
+            $lastactivity1 = DB::table('activity_initiation as a')
+                ->select(
+                    'a.activity_id',
+                    'c.f2f_flag',
+                    'ff.*',
+                    'c.enableflag',
+                    'c.comments',
+                    'a.activity_initiation_id',
+                    'ac.activity_name',
+                    'ad.description',
+                    'a.last_modified_date',
+                    'c.status',
+                    'c.parent_video_upload_id',
+                    'ad.activity_description_id',
+                    'c.instruction',
+                    'c.coordinator_observation',
+                    'c.head_observation',
+                    'c.physical_observation_name',
+                    'c.physical_observation_result',
+                    DB::raw('(SELECT observation FROM sail_activity_vlog_comments 
                   WHERE activity_id = a.activity_id 
                   AND activity_description_id = ad.activity_description_id 
                   AND enrollment_id = b.enrollment_id 
                   ORDER BY created_at DESC LIMIT 1) as observation')
-    )
-    ->join('activity as ac', 'ac.activity_id', '=', 'a.activity_id')
-    ->join('enrollment_details as b', 'a.enrollment_id', '=', 'b.enrollment_id')
-    ->join('parent_video_upload as c', 'c.activity_initiation_id', '=', 'a.activity_initiation_id')
-    ->join('activity_description as ad', 'ad.activity_description_id', '=', 'c.activity_description_id')
-    ->leftJoin('face_to_face_observation as ff', 'ff.parent_video_id', '=', 'c.parent_video_upload_id')
-    ->where('b.user_id', $userID)
-    ->where('c.status', 'Complete')
-    ->orderBy('c.parent_video_upload_id')
-    ->orderBy('c.enableflag', 'asc')
-    ->orderBy('ac.activity_id', 'asc')
-    ->orderBy('ad.activity_description_id')
-    ->distinct()
-    ->get();        $activity_set = DB::select("SELECT aa.activity_id , aa.activity_name FROM activity AS aa WHERE aa.active_flag = 0");
+                )
+                ->join('activity as ac', 'ac.activity_id', '=', 'a.activity_id')
+                ->join('enrollment_details as b', 'a.enrollment_id', '=', 'b.enrollment_id')
+                ->join('parent_video_upload as c', 'c.activity_initiation_id', '=', 'a.activity_initiation_id')
+                ->join('activity_description as ad', 'ad.activity_description_id', '=', 'c.activity_description_id')
+                ->leftJoin('face_to_face_observation as ff', 'ff.parent_video_id', '=', 'c.parent_video_upload_id')
+                ->where('b.user_id', $userID)
+                ->where('c.status', 'Complete')
+                ->orderBy('c.parent_video_upload_id')
+                ->orderBy('c.enableflag', 'asc')
+                ->orderBy('ac.activity_id', 'asc')
+                ->orderBy('ad.activity_description_id')
+                ->distinct()
+                ->get();
+            $activity_set = DB::table('activity as aa')
+                ->join('activity_initiation as a', 'aa.activity_id', '=', 'a.activity_id')
+                ->where('aa.active_flag', 0)
+                ->where('a.enrollment_id', $enNum)
+                ->where(function ($query) {
+                    $query->where('a.action_flag', '!=', 1)
+                        ->orWhereNull('a.action_flag');
+                })
+                ->select(
+                    'aa.activity_id',
+                    'aa.activity_name',
+                    'a.activity_initiation_id'
+                )
+                ->get();
             $datalist = DB::select("SELECT DISTINCT  a.activity_id, c.f2f_flag , ff.* , c.enableflag , c.save_status , c.comments, a.activity_initiation_id, ac.activity_name , ad.description , a.last_modified_date ,c.status, c.parent_video_upload_id , ad.activity_description_id ,
             lv.comments as parent_comment,av.video_link,c.coordinator_observation,c.head_observation,c.physical_observation_name,c.physical_observation_result FROM activity_initiation AS a
             INNER JOIN activity AS ac ON ac.activity_id=a.activity_id
