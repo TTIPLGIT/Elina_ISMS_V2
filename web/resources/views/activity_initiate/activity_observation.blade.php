@@ -231,6 +231,10 @@
                       <option value="{{ $act['activity_id'] }}">{{ $act['activity_name'] }}</option>
                       @endforeach
                     </select>
+
+                    <small class="ml-2 mt-2 text-muted">
+                      Note: Only initiated activities will be listed here.
+                    </small>
                   </div>
                 </div>
                 <input type="hidden" id="description_name" name="description_name">
@@ -876,7 +880,7 @@
                   var materialsArray = materialsRequired.split(',');
 
                   $('.materialsRequiredSaved').each(function() {
-                    $(this).val(materialsArray).trigger('change'); 
+                    $(this).val(materialsArray).trigger('change');
                   });
 
                 }

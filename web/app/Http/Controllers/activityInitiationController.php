@@ -304,7 +304,7 @@ class activityInitiationController extends BaseController
                     // $work_flow_row =  $parant_data['work_flow_row'];
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
-                    $modules = $menus['modules'];
+                    $modules = $menus['modules'];  
                     // dd($activity_materials);
                     return view('activity_initiate.activity_observation', compact('comments', 'lastactivity', 'rows', 'screens', 'modules', 'activity', 'activity_set', 'activity_materials'));
                 }
