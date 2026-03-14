@@ -1071,11 +1071,11 @@
         var confirmMessage = "";
 
         if (a === "Saved") {
-            confirmTitle = "Save Report";
-            confirmMessage = "Are you sure you want to save this report?";
+            confirmTitle = "Save ";
+            confirmMessage = "Are you sure you want to save this details?";
         } else if (a === "Submitted") {
-            confirmTitle = "Submit Report";
-            confirmMessage = "Are you sure you want to submit this report?";
+            confirmTitle = "Submit ";
+            confirmMessage = "Are you sure you want to submit this details?";
         }
 
         Swal.fire({

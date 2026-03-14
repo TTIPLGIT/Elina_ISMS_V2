@@ -54,7 +54,6 @@ class QuestinnaireMasterCreation extends BaseController
                 'questionnaire_description' => $inputArray['questionnaire_description'],
                 'tableName' => $inputArray['tableName'],
                 'questionnaire_type' => $inputArray['questionnaire_type'],
-
                 'is_active' => $inputArray['is_active'],
                 'option' => $inputArray['option'],
                 'value' => $inputArray['value'],
@@ -63,26 +62,29 @@ class QuestinnaireMasterCreation extends BaseController
             ];
 
             $newTable = $input['tableName'];
-            $newTable = preg_replace('/[^A-Za-z0-9\-]/', '', $newTable);
-            $newTable = $input['questionnaire_type'] . '_' . $newTable;
-            $newTable = strtolower($newTable);
-            // $this->WriteFileLog($input);
+
+            // Clean table name but allow hyphen
+            $cleanTable = preg_replace('/[^A-Za-z0-9\-]/', '', $newTable);
+            $cleanTable = trim($cleanTable, '-');
+
+            $newTable = strtolower($input['questionnaire_type'] . '_' . $cleanTable);
+
             $this->WriteFileLog($newTable);
+
             if (DB::getSchemaBuilder()->hasTable($newTable)) {
-                $this->WriteFileLog("It is Already");
-                $serviceResponse = [
-                    'Code' => 409,
-                    'Message' => 'Table already exists. Please use a different name.',
-                ];
-                 
-                $serviceResponse = array();
-                $serviceResponse['Code'] = config('setting.status_code.success');
-                $serviceResponse['Message'] = config('setting.status_message.success');
+
+                $this->WriteFileLog("Table already exists");
+
+                $serviceResponse = [];
+                $serviceResponse['Code'] = 409;
+                $serviceResponse['Message'] = 'Table already exists. Please use a different name.';
                 $serviceResponse['Data'] = 409;
+
                 $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-                $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
-                return $sendServiceResponse;
+
+                return $this->SendServiceResponse($serviceResponse, 409, true);
             }
+
             $document_sub_types_id = DB::transaction(function () use ($input, $newTable) {
 
                 $questionnaire_id = DB::table('questionnaire')
@@ -98,16 +100,17 @@ class QuestinnaireMasterCreation extends BaseController
                     ]);
 
                 if ($input['is_active'] == 1) {
+
                     $options = $input['option'];
                     $values = $input['value'];
+
                     for ($i = 0; $i < count($options); $i++) {
-                        $option = $options[$i];
-                        $value = $values[$i];
+
                         DB::table('quadrant_questionnaire')
                             ->insertGetId([
                                 'questionnaire_id' => $questionnaire_id,
-                                'option' => $option,
-                                'value' => $value,
+                                'option' => $options[$i],
+                                'value' => $values[$i],
                                 'created_by' => auth()->user()->id,
                                 'created_at' => now(),
                                 'active_flag' => 0
@@ -115,9 +118,13 @@ class QuestinnaireMasterCreation extends BaseController
                     }
 
                     $quadrant = $input['quadrant'];
+
                     if (count($quadrant) != 0) {
+
                         for ($j = 0; $j < count($quadrant); $j++) {
+
                             if ($quadrant[$j] != null) {
+
                                 DB::table('questionnaire_quadrant_category')
                                     ->insertGetId([
                                         'questionnaire_id' => $questionnaire_id,
@@ -133,9 +140,13 @@ class QuestinnaireMasterCreation extends BaseController
                     }
 
                     $category = $input['category'];
+
                     if (count($category) != 0) {
+
                         for ($j = 0; $j < count($category); $j++) {
+
                             if ($category[$j] != null) {
+
                                 DB::table('questionnaire_quadrant_category')
                                     ->insertGetId([
                                         'questionnaire_id' => $questionnaire_id,
@@ -154,41 +165,48 @@ class QuestinnaireMasterCreation extends BaseController
                 return $questionnaire_id;
             });
 
-            $sql = "CREATE TABLE $newTable (
-                    question_process_id BIGINT(20) NOT NULL AUTO_INCREMENT, 
-                    active_flag INT(11) NULL DEFAULT '1',
-                    created_at TIMESTAMP NULL DEFAULT NULL,
-                    created_by INT(11) NULL DEFAULT NULL,
-                    last_modified_by INT(11) NULL DEFAULT NULL,
-                    last_modified_at TIMESTAMP NULL DEFAULT NULL,
-                    questionnaire_initiation_id INT(11) NULL DEFAULT NULL,
-                    progress_status TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',
-                    PRIMARY KEY (`question_process_id`) USING BTREE )";
+            // FIX: Backticks added to support hyphen table names
+            $sql = "CREATE TABLE `$newTable` (
+                question_process_id BIGINT(20) NOT NULL AUTO_INCREMENT, 
+                active_flag INT(11) NULL DEFAULT '1',
+                created_at TIMESTAMP NULL DEFAULT NULL,
+                created_by INT(11) NULL DEFAULT NULL,
+                last_modified_by INT(11) NULL DEFAULT NULL,
+                last_modified_at TIMESTAMP NULL DEFAULT NULL,
+                questionnaire_initiation_id INT(11) NULL DEFAULT NULL,
+                progress_status TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+                PRIMARY KEY (`question_process_id`) USING BTREE
+            )";
 
             DB::unprepared($sql);
 
-            $serviceResponse = array();
+            $serviceResponse = [];
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
             $serviceResponse['Data'] = $document_sub_types_id;
+
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
-            return $sendServiceResponse;
+
+            return $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
         } catch (\Exception $exc) {
-            $exceptionResponse = array();
+
+            $exceptionResponse = [];
             $exceptionResponse['ServiceMethod'] = $method;
             $exceptionResponse['Exception'] = $exc->getMessage();
+
             $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+
             $this->WriteFileLog($exceptionResponse);
-            $serviceResponse = array();
+
+            $serviceResponse = [];
             $serviceResponse['Code'] = config('setting.status_code.exception');
             $serviceResponse['Message'] = $exc->getMessage();
+
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
-            return $sendServiceResponse;
+
+            return $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
         }
     }
-
     public function data_edit($id)
     {
         try {

@@ -571,85 +571,71 @@
 
                       <input type="hidden" id="activity_description_id" name="activity_description_id" value="{{$data1['activity_description_id']}}">
                       <input type="hidden" id="parent_video_upload_id" name="parent_video_upload_id" value="{{$data1['parent_video_upload_id']}}">
-                      <!-- Previous Notes Section (comments field) -->
+                      <!-- Previous Notes Section -->
                       <div class="col-md-6">
                         <label class="control-label commentslabel">Previous Notes</label><br>
+
                         <div class="form-group scroll_flow_class">
-                          @php $previousNotesFound = false; @endphp
+
+                          @php
+                          $previousNotesFound = false;
+                          $shownNotes = [];
+                          @endphp
+
                           @foreach($comments as $key=>$note_data)
-                          @if($data1['parent_video_upload_id'] == $note_data['parent_video_upload_id'] && isset($note_data['comments']) && !empty($note_data['comments']))
-                          @php $previousNotesFound = true; @endphp
-                          <span>{{ $note_data['role'] ?? 'Parent' }} ({{ $note_data['user_name'] ?? 'Phone number check' }}) - {{ $note_data['active_status'] ?? 'Submitted' }}</span><br>
-                          <?php
-                          if (isset($note_data['created_at']) && !empty($note_data['created_at'])) {
-                            $utcTimestamp = strtotime($note_data['created_at']);
-                            $istTimestamp = $utcTimestamp + (5 * 60 * 60) + (30 * 60);
-                            $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
-                          ?>
-                            <span>{{ $istDateTime }} - {{ $note_data['comments'] }}</span><br><br>
-                          <?php } ?>
+
+                          @if($data1['parent_video_upload_id'] == $note_data['parent_video_upload_id'])
+
+                          @php
+                          $noteKey = $note_data['comments'] . $note_data['parent_video_comments'];
+
+                          if(!in_array($noteKey,$shownNotes)){
+
+                          $shownNotes[] = $noteKey;
+                          $previousNotesFound = true;
+                          @endphp
+
+                          <span>
+                            {{ $note_data['role'] ?? 'Parent' }}
+                            ({{ $note_data['user_name'] ?? 'Phone number check' }}) -
+                            {{ $note_data['active_status'] ?? 'Submitted' }}
+                          </span><br>
+
+                          @php
+                          if (!empty($note_data['created_at'])) {
+                          $utcTimestamp = strtotime($note_data['created_at']);
+                          $istTimestamp = $utcTimestamp + (5 * 60 * 60) + (30 * 60);
+                          $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
+                          }
+                          @endphp
+
+                          <span>{{ $istDateTime }}</span><br>
+
+                          @if(!empty($note_data['comments']))
+                          <span>{{ $note_data['comments'] }}</span><br>
                           @endif
+
+                          @if(!empty($note_data['parent_video_comments']))
+                          <span><b>IS Coordinator</b> - {{ $note_data['parent_video_comments'] }}</span><br>
+                          @endif
+
+                          <br>
+
+                          @php } @endphp
+
+                          @endif
+
                           @endforeach
+
                           @if(!$previousNotesFound)
                           <span>No previous notes available</span>
                           @endif
+
                         </div>
                       </div>
 
                     </div>
-
-                    <!-- Second Row: Parent Video Comments -->
-                    <div class="col-12" style="display: flex; margin-top: 15px;">
-                      <div class="col-md-6">
-                        <label class="control-label commentslabel">Comments</label><br>
-                        <div class="form-group scroll_flow_class">
-                          @php $parentCommentFound = false; @endphp
-                          @foreach($comments as $key=>$note_data)
-                          @if($data1['parent_video_upload_id'] == $note_data['parent_video_upload_id'] && isset($note_data['parent_video_comments']) && !empty($note_data['parent_video_comments']))
-                          @php $parentCommentFound = true; @endphp
-                          <?php
-                          if (isset($note_data['created_at']) && !empty($note_data['created_at'])) {
-                            $utcTimestamp = strtotime($note_data['created_at']);
-                            $istTimestamp = $utcTimestamp + (5 * 60 * 60) + (30 * 60);
-                            $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
-                          ?>
-                            <span>{{ $note_data['parent_video_comments'] }}</span><br><br>
-                          <?php } ?>
-                          @endif
-                          @endforeach
-                          @if(!$parentCommentFound)
-                          <span>No parent video comments available</span>
-                          @endif
-                        </div>
-                      </div>
-                      <!-- Vlog Observation Section -->
-                      <div class="col-md-6">
-                        <label class="control-label commentslabel">Observation</label><br>
-                        <div class="form-group scroll_flow_class">
-                          @php $vlogFound = false; @endphp
-                          @foreach($comments as $key=>$note_data)
-                          @if($data1['parent_video_upload_id'] == $note_data['parent_video_upload_id'] && isset($note_data['vlog_observation']) && !empty($note_data['vlog_observation']))
-                          @php $vlogFound = true; @endphp
-                          <?php
-                          if (isset($note_data['created_at']) && !empty($note_data['created_at'])) {
-                            $utcTimestamp = strtotime($note_data['created_at']);
-                            $istTimestamp = $utcTimestamp + (5 * 60 * 60) + (30 * 60);
-                            $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
-                          ?>
-                            <span>{{ $note_data['vlog_observation'] }}</span><br><br>
-                          <?php } ?>
-                          @endif
-                          @endforeach
-                          @if(!$vlogFound)
-                          <span>No vlog observations available</span>
-                          @endif
-                        </div>
-                      </div>
-
-                    </div>
-
                   </div>
-                </div>
               </form>
             </div>
           </div>
@@ -767,71 +753,55 @@
                       </div>
                     </div>
 
-                    <!-- ROW 2: Previous Notes (6) and Comments from Coordinator (6) -->
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="control-label commentslabel">Previous Notes</label>
-                          <div class="form-group scroll_flow_class" style="background-color:#E9ECEF; padding: 10px; min-height: 120px;">
-                            @php $previousNotesFound = false; @endphp
-                            @foreach($comments as $key1=>$note_data)
-                            @if($row['parent_video_upload_id'] == $note_data['parent_video_upload_id'] && isset($note_data['comments']) && !empty($note_data['comments']))
-                            @php $previousNotesFound = true; @endphp
-                            <span>{{ $note_data['role'] ?? 'Parent' }} ({{ $note_data['user_name'] ?? 'Phone number check' }}) - {{ $note_data['active_status'] ?? 'Submitted' }}</span><br>
-                            <?php
-                            if (isset($note_data['created_at']) && !empty($note_data['created_at'])) {
-                              $utcTimestamp = strtotime($note_data['created_at']);
-                              $istTimestamp = $utcTimestamp + (5 * 60 * 60) + (30 * 60);
-                              $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
-                            ?>
-                              <span>{{ $istDateTime }} - {{ $note_data['comments'] }}</span><br><br>
-                            <?php } ?>
-                            @endif
-                            @endforeach
-                            @if(!$previousNotesFound)
-                            <span>No previous notes available</span>
-                            @endif
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="control-label commentslabel">Comments from Coordinator</label>
-                          <div class="form-group scroll_flow_class" style="background-color:#E9ECEF; padding: 10px; min-height: 120px;">
-                            @php
-                            $coordinatorCommentFound = false;
-                            $displayedComments = []; // Array to track displayed comments
-                            @endphp
-                            @foreach($comments as $key1=>$note_data)
-                            @if($row['parent_video_upload_id'] == $note_data['parent_video_upload_id'] && isset($note_data['parent_video_comments']) && !empty($note_data['parent_video_comments']))
-                            @php
-                            $currentComment = $note_data['parent_video_comments'];
-                            // Check if this comment has already been displayed
-                            if(!in_array($currentComment, $displayedComments)) {
-                            $coordinatorCommentFound = true;
-                            $displayedComments[] = $currentComment; // Add to displayed array
-                            @endphp
-                            <?php
-                            if (isset($note_data['created_at']) && !empty($note_data['created_at'])) {
-                              $utcTimestamp = strtotime($note_data['created_at']);
-                              $istTimestamp = $utcTimestamp + (5 * 60 * 60) + (30 * 60);
-                              $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
-                            ?>
-                              <span>{{ $note_data['parent_video_comments'] }}</span><br><br>
-                            <?php } ?>
-                            @php
-                            }
-                            @endphp
-                            @endif
-                            @endforeach
-                            @if(!$coordinatorCommentFound)
-                            <span>No coordinator comments available</span>
-                            @endif
-                          </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="control-label commentslabel">Previous Notes</label>
+
+                        <div class="form-group scroll_flow_class" style="background-color:#E9ECEF; padding: 10px; min-height: 120px;">
+
+                          @php $previousNotesFound = false; @endphp
+
+                          @foreach($comments as $key1=>$note_data)
+
+                          @if($row['parent_video_upload_id'] == $note_data['parent_video_upload_id'])
+
+                          @php $previousNotesFound = true; @endphp
+
+                          <span>
+                            {{ $note_data['role'] ?? 'Parent' }}
+                            ({{ $note_data['user_name'] ?? 'Phone number check' }}) -
+                            {{ $note_data['active_status'] ?? 'Submitted' }}
+                          </span><br>
+
+                          @php
+                          if (!empty($note_data['created_at'])) {
+                          $utcTimestamp = strtotime($note_data['created_at']);
+                          $istTimestamp = $utcTimestamp + (5 * 60 * 60) + (30 * 60);
+                          $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
+                          }
+                          @endphp
+
+                          @if(!empty($note_data['comments']))
+                          <span>{{ $istDateTime }} - {{ $note_data['comments'] }}</span><br>
+                          @endif
+
+                          @if(!empty($note_data['parent_video_comments']))
+                          <span>{{ " IS Coordinator" }} - {{ $note_data['parent_video_comments'] }}</span><br>
+                          @endif
+
+                          <br>
+
+                          @endif
+
+                          @endforeach
+
+                          @if(!$previousNotesFound)
+                          <span>No previous notes available</span>
+                          @endif
+
                         </div>
                       </div>
                     </div>
-
                     <!-- ROW 3: Video Link (6) and Comments Textarea (6) -->
                     <div class="row">
                       <div class="col-md-6">

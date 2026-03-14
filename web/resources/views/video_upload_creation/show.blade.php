@@ -152,7 +152,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Sl.No</th>
-                                                        <th>Activity Description</th>
+                                                        <th class="col-3">Activity Description</th>
                                                         <!-- <th>status</th> -->
                                                         <th> Instruction </th>
 

@@ -765,11 +765,11 @@
         var confirmMessage = "";
 
         if (a === "Saved") {
-            confirmTitle = "Save Recommendation Report";
-            confirmMessage = "Are you sure you want to save this recommendation report?";
+            confirmTitle = "Save";
+            confirmMessage = "Are you sure you want to save this details?";
         } else if (a === "Submitted") {
-            confirmTitle = "Submit Recommendation Report";
-            confirmMessage = "Are you sure you want to submit this recommendation report?";
+            confirmTitle = "Submit";
+            confirmMessage = "Are you sure you want to submit this details?";
         }
 
         // 🔹 Confirmation Popup
