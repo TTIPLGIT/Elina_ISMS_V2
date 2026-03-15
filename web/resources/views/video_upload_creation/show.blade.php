@@ -164,9 +164,9 @@
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $row['description']}}</td>
-                                                        <td>{{ strip_tags($row['instruction']) }}</td>
-
-
+                                                        <td style="text-align: justify !important;">
+                                                            {{ strip_tags($row['instruction']) }}
+                                                        </td>
 
 
                                                     </tr>
