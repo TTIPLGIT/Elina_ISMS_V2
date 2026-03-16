@@ -789,7 +789,7 @@ class ParentvideouploadController extends BaseController
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
-                    return redirect(route('video_creation.index'))->with('success', 'Activity Description Updated Successfully');
+                    return redirect(route('video_creation.index'))->with('success', 'Activity Updated Successfully');
                 }
                 if ($objData->Code == 400) {
                     return Redirect::back()->with('fail', 'Activity Description Name Already Exists');
