@@ -569,9 +569,9 @@
                             'he': 'he',
                             'He': 'He',
                             'HE': 'HE',
-                            'she': 'he',
-                            'She': 'He',
-                            'SHE': 'HE'
+                            'she': 'she',
+                            'She': 'She',
+                            'SHE': 'SHE'
                         };
                     } else {
                         // For female:
@@ -593,9 +593,9 @@
                             'HIS': 'HER',
                             
                             // Subject pronouns
-                            'he': 'she',
-                            'He': 'She',
-                            'HE': 'SHE',
+                            'he': 'he',
+                            'He': 'He',
+                            'HE': 'HE',
                             'she': 'she',
                             'She': 'She',
                             'SHE': 'SHE'
@@ -610,15 +610,17 @@
                         // Get the text before the word
                         var precedingText = text.substring(0, wordIndex);
                         
-                        // Check for sentence endings (. ! ?) followed by space
-                        // This handles cases like: "Hello. he is here." -> "he" should become "He"
-                        if (/[.!?]\s+$/.test(precedingText)) return true;
+                        // Check for sentence endings (. ! ?) followed by zero or more spaces
+                        if (/[.!?]\s*$/.test(precedingText)) return true;
                         
                         // Check for new paragraph or line break
                         if (/\n\s*$/.test(precedingText)) return true;
                         
                         // Check for after colon (often starts a new sentence/thought)
-                        if (/:\s+$/.test(precedingText)) return true;
+                        if (/:\s*$/.test(precedingText)) return true;
+                        
+                        // NEW: Check for after a closing HTML tag (e.g., <p>, <div>, <br>)
+                        if (/>\s*$/.test(precedingText)) return true;
                         
                         return false;
                     }

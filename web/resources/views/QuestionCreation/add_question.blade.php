@@ -648,7 +648,7 @@
                 }
             }
 
-        } else if (fieldtype == 6 || fieldtype == 7) {
+        } else if (fieldtype == 6 || fieldtype == 7 || fieldtype ==12) {
 
 
             var Subque = document.getElementsByName('sub_question[]'); //console.log(Subque);
