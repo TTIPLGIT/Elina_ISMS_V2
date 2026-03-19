@@ -670,5 +670,6 @@
         allowHtml: true,
         tags: true
     });
+    
 </script>
 @endsection
