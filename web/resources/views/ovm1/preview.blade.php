@@ -245,8 +245,8 @@
         @endif
 
         <div class="col-md-12 text-center" style="padding: 10px;">
-            <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{ URL::previous() }}" style="color:white !important">
-                <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back</a>
+            <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{ route('ovmreportview', ['id' => encrypt($rows[0]['ovm_meeting_id'])]) }}" style="color:white !important">
+                <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span>Back</a>
             @if($rows[0]['finalstatus'] != 1)
             <a type="button" onclick="Preview()" id="submitbutton" class="btn btn-labeled btn-info" title="Preview" style="background: orange !important; border-color:green !important; color:white !important">
                 <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-eye"></i></span> Preview </a>
@@ -524,7 +524,7 @@
             setup: function(editor) {
                 editor.on('init', function() {
                     var content = editor.getContent();
-                    
+
                     // Replace all placeholders first
                     content = content.replace(/childName/g, Q_Data[0].child_name);
                     content = content.replace(/childInterventions_data/g, $('<div>').html(Q_Data[0].conversation_021).text());
@@ -542,10 +542,10 @@
                     content = content.replace(/childDoB/g, childDoB);
 
                     // ============ ENHANCED GENDER REPLACEMENT WITH PROPER CAPITALIZATION ============
-                    
+
                     // Define gender-specific mappings based on your requirements
                     var genderMap;
-                    
+
                     if (Q_Data[0].child_gender == "Male") {
                         // For male:
                         // him -> him
@@ -559,12 +559,12 @@
                             'her': 'his',
                             'Her': 'His',
                             'HER': 'HIS',
-                            
+
                             // Possessive (keep existing)
                             'his': 'his',
                             'His': 'His',
                             'HIS': 'HIS',
-                            
+
                             // Subject pronouns
                             'he': 'he',
                             'He': 'He',
@@ -586,12 +586,12 @@
                             'her': 'her',
                             'Her': 'Her',
                             'HER': 'HER',
-                            
+
                             // Possessive
                             'his': 'her',
                             'His': 'Her',
                             'HIS': 'HER',
-                            
+
                             // Subject pronouns
                             'he': 'he',
                             'He': 'He',
@@ -606,22 +606,22 @@
                     function isStartOfSentence(text, wordIndex) {
                         // Check if it's at the very beginning of content
                         if (wordIndex === 0) return true;
-                        
+
                         // Get the text before the word
                         var precedingText = text.substring(0, wordIndex);
-                        
+
                         // Check for sentence endings (. ! ?) followed by zero or more spaces
                         if (/[.!?]\s*$/.test(precedingText)) return true;
-                        
+
                         // Check for new paragraph or line break
                         if (/\n\s*$/.test(precedingText)) return true;
-                        
+
                         // Check for after colon (often starts a new sentence/thought)
                         if (/:\s*$/.test(precedingText)) return true;
-                        
+
                         // NEW: Check for after a closing HTML tag (e.g., <p>, <div>, <br>)
                         if (/>\s*$/.test(precedingText)) return true;
-                        
+
                         return false;
                     }
 
@@ -631,9 +631,9 @@
                         if (original === original.toUpperCase()) {
                             return replacement.toUpperCase();
                         }
-                        
+
                         // If original is title case (first letter capital, rest lowercase)
-                        if (original[0] === original[0].toUpperCase() && 
+                        if (original[0] === original[0].toUpperCase() &&
                             original.slice(1) === original.slice(1).toLowerCase()) {
                             // If at start of sentence, keep title case
                             if (isStart) {
@@ -642,20 +642,20 @@
                             // If in middle of sentence, convert to lowercase
                             return replacement.toLowerCase();
                         }
-                        
+
                         // Original is lowercase
                         if (isStart) {
                             // At start of sentence, capitalize
                             return replacement.charAt(0).toUpperCase() + replacement.slice(1).toLowerCase();
                         }
-                        
+
                         // In middle of sentence, keep lowercase
                         return replacement.toLowerCase();
                     }
 
                     // Create regex for all possible pronouns
                     var pronounRegex = /\b(he|He|HE|she|She|SHE|him|Him|HIM|her|Her|HER|his|His|HIS)\b/g;
-                    
+
                     // Find all matches
                     var matches = [];
                     var match;
@@ -672,17 +672,17 @@
                         var pronoun = matches[i];
                         var word = pronoun.word;
                         var index = pronoun.index;
-                        
+
                         // Get the base replacement from gender map
                         var baseReplacement = genderMap[word];
-                        
+
                         if (baseReplacement) {
                             // Check if this word starts a sentence
                             var isStart = isStartOfSentence(content, index);
-                            
+
                             // Get the correctly cased replacement
                             var replacement = getCorrectCase(word, baseReplacement, isStart);
-                            
+
                             // Replace the word
                             content = content.substring(0, index) + replacement + content.substring(index + word.length);
                         }
@@ -695,13 +695,13 @@
                     content = content.replace(/undefined/g, '');
 
                     editor.setContent(content);
-                    
+
                     // Log for debugging
                     console.log('Gender replacement complete for:', Q_Data[0].child_gender);
                 });
             },
         });
-        
+
         tinymce.init({
             selector: 'textarea',
             toolbar: "undo redo | styleselect | fontselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent",
