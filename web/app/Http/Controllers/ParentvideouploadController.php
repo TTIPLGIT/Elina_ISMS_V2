@@ -592,6 +592,7 @@ class ParentvideouploadController extends BaseController
             $data = array();
             $file_array = array();
             $pathName = $request->activity_name;
+
             if ($request->hasFile('file')) {
                 foreach ($request->file('file') as $key => $imageFile) {
                     $storagePath = public_path() . '/activity_document/' . $pathName;
@@ -609,7 +610,6 @@ class ParentvideouploadController extends BaseController
             } else {
                 $newdescription = '';
             }
-
 
             $instruction = $request->instruction;
             if (isset($instruction['new'])) {
@@ -629,15 +629,13 @@ class ParentvideouploadController extends BaseController
             $data['newdescription'] = $newdescription;
             $data['newinstruction'] = $newinstruction;
             // dd($data);
-
             $encryptArray = $this->encryptData($data);
-            $request = array();
-            $request['requestData'] = $encryptArray;
+            $requestData = array();
+            $requestData['requestData'] = $encryptArray;
 
             $gatewayURL = config('setting.api_gateway_url') . '/videocreation/updatedata';
-            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
             $response1 = json_decode($response);
-
 
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
@@ -656,7 +654,6 @@ class ParentvideouploadController extends BaseController
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
-
     public function delete($id)
     {
 
@@ -789,7 +786,7 @@ class ParentvideouploadController extends BaseController
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
-                    return redirect(route('video_creation.index'))->with('success', 'Activity Updated Successfully');
+                    return redirect(route('video_creation.index'))->with('success', 'Activity details updated successfully');
                 }
                 if ($objData->Code == 400) {
                     return Redirect::back()->with('fail', 'Activity Description Name Already Exists');

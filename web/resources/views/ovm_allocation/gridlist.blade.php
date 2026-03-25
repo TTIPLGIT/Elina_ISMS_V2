@@ -258,9 +258,9 @@
                                                 </div>
                                                 <div class="row text-center">
                                                     <div class="col-md-12">
-                                                        <button class="btn btn-success" type="button" onclick="validateAndAllocate('saved')" id="savebutton"><i class="fa fa-check"></i>Submit</button>&nbsp;
+                                                        <button class="btn btn-success"  title="Submit" type="button" onclick="validateAndAllocate('saved')" id="savebutton"><i class="fa fa-check"></i>Submit</button>&nbsp;
                                                         <!-- <button class="btn btn-primary" type="reset" onclick="mycheckfunction()"><i class="fa fa-undo"></i> Undo</button>&nbsp; -->
-                                                        <a class="btn btn-danger" href=""><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>&nbsp;
+                                                        <a class="btn btn-danger"  title="Cancel" href=""><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>&nbsp;
                                                     </div>
                                                 </div>
                                             </div>

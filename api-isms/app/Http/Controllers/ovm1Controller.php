@@ -589,13 +589,13 @@ class ovm1Controller extends BaseController
 
             $fetchdata = DB::select("SELECT * FROM ovm_conversation_feedback WHERE ovm_isc_report_id = $ovm_isc_report_id");
             $fetchdata1 = DB::select("SELECT * FROM ovm_conversation_note WHERE ovm_isc_report_id = $ovm_isc_report_id");
-
-            $enrollment_details = DB::select("SELECT child_school_name_address , enrollment_id , child_name , child_mother_caretaker_name , child_father_guardian_name , child_dob , child_contact_address FROM enrollment_details WHERE enrollment_child_num = '$enrollment_id'");
+            $enrollment_details = DB::select("SELECT child_school_name_address , enrollment_id , child_name ,child_gender, child_mother_caretaker_name , child_father_guardian_name , child_dob , child_contact_address FROM enrollment_details WHERE enrollment_child_num = '$enrollment_id'");
             $roleGet = DB::select("SELECT b.role_name FROM users AS a INNER JOIN uam_roles AS b ON b.role_id=a.array_roles where a.id = $authID");
-
+            $this->WriteFileLog($authID);
             $group = DB::select("SELECT * FROM conversation_summery_groups WHERE active_flag = 1");
             $questions = DB::select("SELECT * FROM conversation_questions WHERE type_id = 2 ORDER BY order_id ASC ");
             $enID = $enrollment_details[0]->enrollment_id;
+            $this->WriteFileLog($enID);
             $fetchdata2 = DB::select("SELECT * FROM ovm_g2form_feedback WHERE enrollment_id = $enID");
             $response = [
                 'rows' => $rows,
@@ -926,13 +926,14 @@ class ovm1Controller extends BaseController
             ];
             $type = $input['type'];
             $meeting_status = $input['meeting_status'];
-            if ($type == "Sent") {
+            if ($type == "Sent" || $type == "Saved") {
 
                 DB::table('ovm_meeting_details')
                     ->where('ovm_meeting_id', $input['id'])
                     ->update([
                         'created_by' => auth()->user()->id,
                         'remainder_flag' => 0,
+                        'video_link' => $input['video_link']
 
                     ]);
                 $admin_details = DB::SELECT("SELECT * from users where array_roles = '4'");
@@ -3064,10 +3065,40 @@ class ovm1Controller extends BaseController
             $role = $roleGet[0]->role_name;
             if ($role == 'Parent') {
                 $rows = DB::select("SELECT b.user_id , b.enrollment_child_num , a.id , a.enrollment_id , a.`status` , b.child_name,a.viewed_users from ovm_g2form_feedback AS a
-            INNER JOIN enrollment_details AS b ON a.enrollment_id = b.enrollment_id WHERE b.user_id = $authID");
+            INNER JOIN enrollment_details AS b ON a.enrollment_id = b.enrollment_id WHERE b.user_id = $authID LIMIT 1");
             } else {
-                $rows = DB::select("SELECT b.user_id , b.enrollment_child_num , a.id , a.enrollment_id , a.`status` , b.child_name,a.viewed_users from ovm_g2form_feedback AS a
-            INNER JOIN enrollment_details AS b ON a.enrollment_id = b.enrollment_id WHERE a.`status` = 'Submitted' ORDER BY a.enrollment_id DESC ");
+                $userId   = auth()->id();
+                $userRole = auth()->user()->array_roles;
+
+                $sql = "SELECT 
+            b.user_id,
+            b.enrollment_child_num,
+            a.id,
+            a.enrollment_id,
+            a.`status`,
+            b.child_name,
+            a.viewed_users
+        FROM ovm_g2form_feedback AS a
+
+        INNER JOIN enrollment_details AS b 
+            ON a.enrollment_id = b.enrollment_id
+
+        LEFT JOIN ovm_meeting_details AS omd
+            ON omd.enrollment_id = b.enrollment_child_num
+
+        WHERE a.`status` = 'Submitted' ";
+
+                if ($userRole == 5) {
+                    $sql .= " AND (
+        JSON_UNQUOTE(JSON_EXTRACT(omd.is_coordinator1, '$.id')) = '$userId'
+        OR
+        JSON_UNQUOTE(JSON_EXTRACT(omd.is_coordinator2, '$.id')) = '$userId'
+    ) ";
+                }
+
+                $sql .= " ORDER BY a.id DESC";
+
+                $rows = DB::select($sql);
             }
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');

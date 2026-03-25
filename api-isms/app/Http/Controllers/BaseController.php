@@ -375,9 +375,10 @@ class BaseController extends Controller
 
         $paymentCategory = $data[0]->category_id;
         $schoolID = $data[0]->school_id;
-        // $this->WriteFileLog("Payment Category is" . $paymentCategory);
-        // $this->WriteFileLog("School is " . $schoolID);
-        // $this->WriteFileLog("Fees Type is " . $feeType);
+        $this->WriteFileLog("Payment Category is" . $paymentCategory);
+        $this->WriteFileLog("School is " . $schoolID);
+        $this->WriteFileLog("Fees Type is " . $feeType);
+        $this->WriteFileLog($enrollmentID);
 
         $paymentDetails = DB::table('payment_process_customized')
             ->where('enrollment_id', $enrollmentID)
@@ -385,7 +386,7 @@ class BaseController extends Controller
         // $this->WriteFileLog('$feeType ' . $feeType);
         // $this->WriteFileLog('$paymentCategory ' . $paymentCategory);
         // $this->WriteFileLog('$enrollmentID ' . $enrollmentID);
-
+        $this->WriteFileLog($paymentDetails);
         if (!empty($paymentDetails && $paymentDetails != '[]')) {
 
             // if ($schoolID == 0) {
@@ -408,6 +409,7 @@ class BaseController extends Controller
                     ->where('enrollment_id', $enrollmentID)
                     ->select('final_amount', 'id', 'base_amount', 'gst_rate')
                     ->first();
+                // $this->WriteFileLog($activePayment);
             } else {
                 // $this->WriteFileLog('Else');
                 $feeType = ($feeType == 2) ? $feeType - 1 : $feeType;
@@ -422,24 +424,26 @@ class BaseController extends Controller
         } else {
 
             if ($schoolID == 0) {
-                $feeType = ($feeType == 2) ? $feeType - 1 : $feeType;
+                // $feeType = ($feeType == 2) ? $feeType - 1 : $feeType;
                 $paymentCategory = ($paymentCategory == 2) ? $paymentCategory - 1 : $paymentCategory;
 
-                // $this->WriteFileLog('else if - School - 0');
+                $this->WriteFileLog('else if - School - 0');
                 $activePayment = DB::table('payment_process_masters')
                     ->where('fees_type_id', $feeType)
                     ->where('category_id', $paymentCategory)
                     ->select('final_amount', 'id', 'base_amount', 'gst_rate')
                     ->first();
+                $this->WriteFileLog($feeType);    
+                $this->WriteFileLog($paymentCategory);
             } elseif ($paymentCategory == 2) {
-                $feeType = ($feeType == 2) ? $feeType - 1 : $feeType;
-                $paymentCategory = ($paymentCategory == 2) ? $paymentCategory - 1 : $paymentCategory;
+                // $feeType = ($feeType == 2) ? $feeType - 1 : $feeType;
+                // $paymentCategory = ($paymentCategory == 2) ? $paymentCategory - 1 : $paymentCategory;
 
-                // $this->WriteFileLog('Else else if -paymentCategory == 2 ');
+                $this->WriteFileLog('Else else if -paymentCategory == 2 ');
                 $activePayment = DB::table('payment_process_masters')
                     ->where('fees_type_id', $feeType)
                     ->where('category_id', $paymentCategory)
-                    ->where('school_enrollment_id', $schoolID)
+                    // ->where('school_enrollment_id', $schoolID)
                     ->select('final_amount', 'id', 'base_amount', 'gst_rate')
                     ->first();
             } else {

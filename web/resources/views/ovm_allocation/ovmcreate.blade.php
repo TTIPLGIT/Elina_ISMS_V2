@@ -242,8 +242,8 @@
         </div>
         <div class="row text-center" style="    margin: 5px;">
             <div class="col-md-12">
-                <a type="button" class="btn btn-warning text-white" onclick="validateForm('Saved')" name="type" value="Saved">Save</a>
-                <a type="button" class="btn btn-success text-white" onclick="validateForm('Sent')" name="type" value="Sent">Send</a>
+                <a type="button" class="btn btn-warning text-white" title="Save" onclick="validateForm('Saved')" name="type" value="Saved">Save</a>
+                <a type="button" class="btn btn-success text-white"  title="Send"onclick="validateForm('Sent')" name="type" value="Sent">Send</a>
                 <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{ route('ovm_allocation.index') }}" style="color:white !important">
                     <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back</a>
             </div>
