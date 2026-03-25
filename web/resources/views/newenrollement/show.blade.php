@@ -225,14 +225,14 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="control-label" style="font-size: medium;">Contact Phone Number: </label><span class="error-star" style="color:red;">*</span>
-                                                <input class="form-control " type="text" id="child_contact_phone"  name="child_contact_phone" autocomplete="off" inputmode="numeric" oninput="contactphonenumber(event)" value="{{ $row['child_contact_phone']}}" disabled="">
+                                                <input class="form-control " type="text" id="child_contact_phone" name="child_contact_phone" autocomplete="off" inputmode="numeric" oninput="contactphonenumber(event)" value="{{ $row['child_contact_phone']}}" disabled="">
                                             </div>
 
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="control-label" style="font-size: medium;">Alternative Phone Number: </label>
-                                                <input class="form-control default" type="text" id="child_alter_phone"  name="child_alter_phone" autocomplete="off" inputmode="numeric" oninput="contactphonenumber(event)" value="{{ $row['child_alter_phone']}}" disabled="">
+                                                <input class="form-control default" type="text" id="child_alter_phone" name="child_alter_phone" autocomplete="off" inputmode="numeric" oninput="contactphonenumber(event)" value="{{ $row['child_alter_phone']}}" disabled="">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -272,7 +272,7 @@
 
                             <section class="section">
                                 <div class="section-body mt-1">
-                               
+
 
 
                                     <div class="row">
@@ -413,37 +413,38 @@
 
 
                                         @php
-    // Handle both array (JSON decoded) and single string formats
-    if(!empty($knmabtelina_data)) {
-        $knmabtelina_data_array = is_array($knmabtelina_data) 
-            ? $knmabtelina_data 
-            : (is_string($knmabtelina_data) && strpos($knmabtelina_data, '{') === 0 
-                ? json_decode($knmabtelina_data, true) 
-                : [$knmabtelina_data]);
-    } else {
-        $knmabtelina_data_array = [];
-    }
-@endphp
+                                        // Handle both array (JSON decoded) and single string formats
+                                        if(!empty($knmabtelina_data)) {
+                                        $knmabtelina_data_array = is_array($knmabtelina_data)
+                                        ? $knmabtelina_data
+                                        : (is_string($knmabtelina_data) && strpos($knmabtelina_data, '{') === 0
+                                        ? json_decode($knmabtelina_data, true)
+                                        : [$knmabtelina_data]);
+                                        } else {
+                                        $knmabtelina_data_array = [];
+                                        }
+                                        @endphp
 
-<div class="col-md-6">
-    <div class="form-group">
-        <label class="control-label" style="font-weight: bold;">
-            Q2. How did you come to know about Elina? 
-        </label>
-        <span class="error-star" style="color:red;">*</span>
-
-        <select id="how_knowabt_elina" name="how_knowabt_elina" class="form-control" disabled style="color: black;">
-            <option value="">-- Select --</option>
-            <option value="From a Friend" {{ in_array('From a Friend', $knmabtelina_data_array) ? 'selected' : '' }}>From a Friend</option>
-            <option value="Recommended by Child's therapist" {{ in_array("Recommended by Child's therapist", $knmabtelina_data_array) ? 'selected' : '' }}>Recommended by Child's therapist</option>
-            <option value="Through Elina's Website" {{ in_array("Through Elina's Website", $knmabtelina_data_array) ? 'selected' : '' }}>Through Elina's Website</option>
-            <option value="Through HLC Admission" {{ in_array('Through HLC Admission', $knmabtelina_data_array) ? 'selected' : '' }}>Through HLC Admission</option>
-            <option value="Through Facebook and Social Media" {{ in_array('Through Facebook and Social Media', $knmabtelina_data_array) ? 'selected' : '' }}>Through Facebook and Social Media</option>
-            <option value="Through Beyond 8" {{ in_array('Through Beyond 8', $knmabtelina_data_array) ? 'selected' : '' }}>Through Beyond 8</option>
-            <option value="others" {{ in_array('others', $knmabtelina_data_array) ? 'selected' : '' }}>Others</option>
-        </select>
-    </div>
-</div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label" style="">
+                                                    Q2. How did you come to know about Elina?
+                                                </label>
+                                                <span class="error-star" style="color:red;">*</span>
+                                                <select id="how_knowabt_elina" name="how_knowabt_elina" class="form-control" required style="color: black;" disabled>
+                                                    <option value="">-- Select --</option>
+                                                    <option value="From a Friend" {{ in_array('From a Friend', $knmabtelina_data_array) ? 'selected' : '' }}>From a Friend</option>
+                                                    <option value="Recommended by Child's therapist" {{ in_array("Recommended by Child's therapist", $knmabtelina_data_array) ? 'selected' : '' }}>Recommended by Child's therapist</option>
+                                                    <option value="Through Elina's Website" {{ in_array("Through Elina's Website", $knmabtelina_data_array) ? 'selected' : '' }}>Through Elina's Website</option>
+                                                    <option value="Through HLC Admission" {{ in_array('Through HLC Admission', $knmabtelina_data_array) ? 'selected' : '' }}>Through HLC Admission</option>
+                                                    <option value="Through Facebook and Social Media" {{ in_array('Through Facebook and Social Media', $knmabtelina_data_array) ? 'selected' : '' }}>Through Facebook and Social Media</option>
+                                                    <option value="Through Beyond 8" {{ in_array('Through Beyond 8', $knmabtelina_data_array) ? 'selected' : '' }}>Through Beyond 8</option>
+                                                    <option value="Through Other School" {{ in_array('Through Other School', $knmabtelina_data_array) ? 'selected' : '' }}>Through Other School</option>
+                                                    <option value="Through Other Parent" {{ in_array('Through Other Parent', $knmabtelina_data_array) ? 'selected' : '' }}>Through Other Parent</option>
+                                                    <option value="Others" {{ in_array('Others', $knmabtelina_data_array) ? 'selected' : '' }}>Others</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
 
 

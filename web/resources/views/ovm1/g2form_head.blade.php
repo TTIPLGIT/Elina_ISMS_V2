@@ -70,7 +70,7 @@
               <button type="submit" id="saved" class="btn btn-warning" name="type" value="Saved">Save</button>
               <a type="button" id="submit" class="btn btn-success" name="type" value="Submitted" onclick="validateanswer()">Submit</a>
               @endif
-              <a type="button" href="{{ route('g2form.list') }}" class="btn btn-danger">Cancel</a>
+              <a type="button" href="{{ route('g2form.list') }}" title="Cancel" class="btn btn-danger">Cancel</a>
             </div>
           </div>
             <!--  -->

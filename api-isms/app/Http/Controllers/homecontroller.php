@@ -113,16 +113,30 @@ class homecontroller extends BaseController
                     ->limit(10)
                     ->get();
             }
-
             $sail = DB::table('sail_status_logs as a')
                 ->join('sail_details as sd', 'a.enrollment_id', '=', 'sd.enrollment_id')
                 ->join('enrollment_details as ed', 'ed.enrollment_child_num', '=', 'a.enrollment_id')
-                ->join(DB::raw('(SELECT enrollment_id, MAX(id) AS max_date FROM sail_status_logs GROUP BY enrollment_id) as b'), function ($join) {
+                ->join(DB::raw('(SELECT enrollment_id, MAX(id) AS max_id FROM sail_status_logs GROUP BY enrollment_id) as b'), function ($join) {
                     $join->on('a.enrollment_id', '=', 'b.enrollment_id')
-                        ->on('a.id', '=', 'b.max_date');
+                        ->on('a.id', '=', 'b.max_id');
                 })
-                ->select('a.audit_action', 'ed.child_name', 'ed.enrollment_child_num', 'sd.is_coordinator1')
-                ->get();
+                ->select(
+                    'a.audit_action',
+                    'ed.child_name',
+                    'ed.enrollment_child_num',
+                    'sd.is_coordinator1',
+                    'sd.is_coordinator2'
+                );
+
+            // ✅ Apply condition ONLY if role = 5
+            if ($roles == 5) {
+                $sail->where(function ($q) use ($user_id) {
+                    $q->whereRaw("JSON_EXTRACT(sd.is_coordinator1, '$.id') = ?", [$user_id])
+                        ->orWhereRaw("JSON_EXTRACT(sd.is_coordinator2, '$.id') = ?", [$user_id]);
+                });
+            }
+
+            $sail = $sail->get();
 
             $dropped = []; // DB::select("SELECT * FROM enrollment_details AS a RIGHT JOIN elina_assessment AS b ON b.enrollment_id = a.enrollment_id WHERE b.dropped = 1");
 
@@ -239,35 +253,63 @@ class homecontroller extends BaseController
 
             $inputArray = $request->requestData;
             $this->WriteFileLog($inputArray);
-            // $input = [
-            // 	'enrollment_child_num' => $inputArray['enrollment_child_num'],
 
+            $userId   = auth()->id(); // logged-in user id
+            $userRole = auth()->user()->array_roles; // role
 
-            // $this->WriteFileLog($input);
-            $id = DB::select("SELECT b.payment_status,b.payment_for,a.* FROM enrollment_details AS a 
-            left  JOIN payment_status_details AS b ON b.initiated_to=a.child_contact_email 
-            WHERE b.payment_for='User Register Fee' $inputArray");
+            // 🔹 Base Query
+            $sql = "SELECT 
+                    b.payment_status,
+                    b.payment_for,
+                    a.*
+                FROM enrollment_details AS a 
+                LEFT JOIN payment_status_details AS b 
+                    ON b.initiated_to = a.child_contact_email
+                LEFT JOIN sail_details AS sd
+                    ON sd.enrollment_id = a.enrollment_child_num
+                WHERE b.payment_for = 'User Register Fee' ";
+
+            // 🔹 Dynamic filters (your existing)
+            if (!empty($inputArray)) {
+                $sql .= " $inputArray ";
+            }
+
+            // 🔹 Apply coordinator filter ONLY if role = 5
+            if ($userRole == 5) {
+                $sql .= " AND (
+                JSON_UNQUOTE(JSON_EXTRACT(sd.is_coordinator1, '$.id')) = '$userId'
+                OR
+                JSON_UNQUOTE(JSON_EXTRACT(sd.is_coordinator2, '$.id')) = '$userId'
+            ) ";
+            }
+
+            $id = DB::select($sql);
+
             $this->WriteFileLog($id);
 
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
-            $serviceResponse['Data'] =  $id;
+            $serviceResponse['Data'] = $id;
+
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
-            return $sendServiceResponse;
+            return $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
         } catch (\Exception $exc) {
+
             $exceptionResponse = array();
             $exceptionResponse['ServiceMethod'] = $logMethod;
             $exceptionResponse['Exception'] = $exc->getMessage();
-            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
-            $this->WriteFileLog($exceptionResponse);
+            $this->WriteFileLog(json_encode($exceptionResponse, JSON_FORCE_OBJECT));
+
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.exception');
             $serviceResponse['Message'] = $exc->getMessage();
-            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
-            return $sendServiceResponse;
+
+            return $this->SendServiceResponse(
+                json_encode($serviceResponse, JSON_FORCE_OBJECT),
+                config('setting.status_code.exception'),
+                false
+            );
         }
     }
 

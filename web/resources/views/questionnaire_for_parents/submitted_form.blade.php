@@ -395,7 +395,7 @@
             </div>
         </div>
         <div class="tile-footer title-footer-button-alignment" style="padding: 10px;display: flex;justify-content: center;">
-            <a type="button" class="btn btn-labeled btn-info" onclick="PrevTab();" id="Previous" title="Previous" style="display:none;background: blue !important; border-color:blue !important; color:white !important">
+            <a type="button" class="btn btn-labeled btn-info" onclick="PrevTab();" id="Previous" title="Previous Stage" style="display:none;background: blue !important; border-color:blue !important; color:white !important">
                 <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Previous Stage</a>
 
             @if($role == 'Parent')

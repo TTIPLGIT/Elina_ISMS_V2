@@ -124,7 +124,7 @@
 
                             <div style="margin: 0 0 0 0;text-align: center;">
                                 <div class="col-md-12">
-                                    <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{route('ovmreport')}}" style="color:white !important">
+                                    <a type="button" class="btn btn-labeled back-btn" title="Close" href="{{route('ovmreport')}}" style="color:white !important">
                                         <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-times-circle"></i></span> Close</a>
                                 </div>
                             </div>

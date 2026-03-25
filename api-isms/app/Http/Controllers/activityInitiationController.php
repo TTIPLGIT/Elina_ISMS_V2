@@ -562,19 +562,22 @@ class activityInitiationController extends BaseController
                 ->orderBy('ad.activity_description_id')
                 ->distinct()
                 ->get();
-            $activity_set = DB::table('activity as aa')
-                ->join('activity_initiation as a', 'aa.activity_id', '=', 'a.activity_id')
-                ->where('aa.active_flag', 0)
-                ->where('a.enrollment_id', $enNum)
-                ->where(function ($query) {
-                    $query->where('a.action_flag', '!=', 1)
-                        ->orWhereNull('a.action_flag');
-                })
-                ->select(
-                    'aa.activity_id',
-                    'aa.activity_name',
-                    'a.activity_initiation_id'
-                )
+            // $activity_set = DB::table('activity as aa')
+            //     ->join('activity_initiation as a', 'aa.activity_id', '=', 'a.activity_id')
+            //     ->where('aa.active_flag', 0)
+            //     ->where('a.enrollment_id', $enNum)
+            //     ->where(function ($query) {
+            //         $query->where('a.action_flag', '!=', 1)
+            //             ->orWhereNull('a.action_flag');
+            //     })
+            //     ->select(
+            //         'aa.activity_id',
+            //         'aa.activity_name',
+            //         'a.activity_initiation_id'
+            //     )
+            //     ->get();
+            $activity_set = DB::table('activity')
+                ->where('active_flag', 0)
                 ->get();
             $datalist = DB::select("SELECT DISTINCT  a.activity_id, c.f2f_flag , ff.* , c.enableflag , c.save_status , c.comments, a.activity_initiation_id, ac.activity_name , ad.description , a.last_modified_date ,c.status, c.parent_video_upload_id , ad.activity_description_id ,
             lv.comments as parent_comment,av.video_link,c.coordinator_observation,c.head_observation,c.physical_observation_name,c.physical_observation_result FROM activity_initiation AS a
@@ -1051,7 +1054,7 @@ class activityInitiationController extends BaseController
                                 'save_status1' => $approval_status[$video],
                                 'last_modified_by' => $authID,
                                 'last_modified_date' => NOW(),
-                                'comments' => $observation[$video],
+                                'comments' => $comments[$video],
                             ]);
                         // Retrieve activity_description_id and activity_id
                         $activity_data = DB::table('parent_video_upload')
@@ -1256,7 +1259,7 @@ class activityInitiationController extends BaseController
                     $updateData = [
                         'last_modified_by'  => $authID,
                         'last_modified_date' => NOW(),
-                        'comments'          => $observation[$video],
+                        'comments'          => $comments[$video],
                         'save_status1'      => $approval_status[$video],
                     ];
 
@@ -1395,11 +1398,11 @@ class activityInitiationController extends BaseController
     }
     public function activity_f2fstore(Request $request)
     {
-        // $this->WriteFileLog("activity_f2fstore");
         try {
-            $method = 'Method =>  activityInitiationController => activity_f2fstore';
+            $method = 'Method => activityInitiationController => activity_f2fstore';
 
             $inputArray = $this->decryptData($request->requestData);
+
             $input = [
                 'enrollment_id' => $inputArray['enrollment_id'],
                 'activity_id' => $inputArray['activity_id'],
@@ -1413,24 +1416,51 @@ class activityInitiationController extends BaseController
 
             DB::transaction(function () use ($input) {
 
-                // New
                 $authID = Auth::id();
                 $enrollment_id = $input['enrollment_id'];
                 $observation = $input['Observation'];
                 $description = $input['descriptionID'];
                 $activity_id = $input['activity_id'];
 
-                // F2F
                 $materials_required = $input['materials'];
                 $to_observe = $input['to_observe'];
                 $to_ask_parents = $input['ask_parent'];
 
+                // ✅ Get enrollment ID
                 $enrollment = DB::table('enrollment_details')
                     ->where('enrollment_child_num', $enrollment_id)
                     ->first();
 
-                $enrollmentID = $enrollment->enrollment_id ?? null; // 310
+                $enrollmentID = $enrollment->enrollment_id ?? null;
 
+                // ✅ STEP 1: Check / Insert into activity_initiation
+                $exists = DB::table('activity_initiation')
+                    ->where('user_id', $authID)
+                    ->where('enrollment_id', $enrollmentID)
+                    ->where('activity_id', $activity_id)
+                    ->exists();
+
+                if (!$exists) {
+                    DB::table('activity_initiation')->insert([
+                        'user_id' => $authID,
+                        'enrollment_id' => $enrollmentID,
+                        'activity_id' => $activity_id,
+                        'status' => 'initiated',
+                        'created_by' => $authID,
+                        'created_date' => now(),
+                        'last_modified_by' => $authID,
+                        'last_modified_date' => now()
+                    ]);
+                }
+
+                // ✅ STEP 2: Get activity_initiation_id
+                $activityInitiationId = DB::table('activity_initiation')
+                    ->where('user_id', $authID)
+                    ->where('enrollment_id', $enrollmentID)
+                    ->where('activity_id', $activity_id)
+                    ->value('activity_initiation_id');
+
+                // ✅ STEP 3: Handle parent_video_upload
                 $currentF2fFlag = DB::table('parent_video_upload')
                     ->where('activity_description_id', $description)
                     ->where('Enrollment_id', $enrollmentID)
@@ -1438,10 +1468,11 @@ class activityInitiationController extends BaseController
                     ->value('f2f_flag');
 
                 $updateValues = [
-                    'comments' => isset($observation) ? $observation : '',
+                    'comments' => $observation ?? '',
                     'activity_description_id' => $description,
                     'Enrollment_id' => $enrollmentID,
                     'activity_id' => $activity_id,
+                    'activity_initiation_id' => $activityInitiationId, // ✅ FIXED
                 ];
 
                 if ($currentF2fFlag !== 1) {
@@ -1457,42 +1488,52 @@ class activityInitiationController extends BaseController
                     $updateValues
                 );
 
-                $id = DB::table('parent_video_upload')
+                // ✅ STEP 4: Get parent_video_upload_id
+                $parentVideoId = DB::table('parent_video_upload')
                     ->where('Enrollment_id', $enrollmentID)
                     ->where('activity_id', $activity_id)
                     ->where('activity_description_id', $description)
                     ->value('parent_video_upload_id');
 
+                // ✅ STEP 5: Insert into face_to_face_observation
                 DB::table('face_to_face_observation')->updateOrInsert(
-                    ['parent_video_id' => $id],
+                    ['parent_video_id' => $parentVideoId],
                     [
-                        'materials_required' => (isset($materials_required) ? implode(',', $materials_required) : ''),
-                        'to_observe' => (isset($to_observe) ? $to_observe : ''),
-                        'to_ask_parents' => (isset($to_ask_parents) ? $to_ask_parents : ''),
-                        'parent_video_id' => $id
+                        'materials_required' => isset($materials_required) ? implode(',', $materials_required) : '',
+                        'to_observe' => $to_observe ?? '',
+                        'to_ask_parents' => $to_ask_parents ?? '',
+                        'parent_video_id' => $parentVideoId
                     ]
                 );
             });
 
-            $serviceResponse = array();
-            $serviceResponse['Code'] = config('setting.status_code.success');
-            $serviceResponse['Message'] = config('setting.status_message.success');
-            $serviceResponse['Data'] = 1;
-            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
-            return $sendServiceResponse;
+            // ✅ SUCCESS RESPONSE
+            $serviceResponse = [
+                'Code' => config('setting.status_code.success'),
+                'Message' => config('setting.status_message.success'),
+                'Data' => 1
+            ];
+
+            return $this->SendServiceResponse(
+                json_encode($serviceResponse, JSON_FORCE_OBJECT),
+                config('setting.status_code.success'),
+                true
+            );
         } catch (\Exception $exc) {
-            $exceptionResponse = array();
-            $exceptionResponse['ServiceMethod'] = $method;
-            $exceptionResponse['Exception'] = $exc->getMessage();
-            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
-            $this->WriteFileLog($exceptionResponse);
-            $serviceResponse = array();
-            $serviceResponse['Code'] = config('setting.status_code.exception');
-            $serviceResponse['Message'] = $exc->getMessage();
-            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
-            return $sendServiceResponse;
+
+            $this->WriteFileLog(json_encode([
+                'ServiceMethod' => $method,
+                'Exception' => $exc->getMessage()
+            ], JSON_FORCE_OBJECT));
+
+            return $this->SendServiceResponse(
+                json_encode([
+                    'Code' => config('setting.status_code.exception'),
+                    'Message' => $exc->getMessage()
+                ], JSON_FORCE_OBJECT),
+                config('setting.status_code.exception'),
+                false
+            );
         }
     }
 
