@@ -31,6 +31,33 @@
         padding: 0 10px;
     }
 </style>
+<!-- <style>
+    /* Force all questionnaire content to be left-aligned */
+    .divClass,
+    .divClass .control-label,
+    .divClass .form-group,
+    .divClass .radio,
+    .divClass .checkbox,
+    .divClass table,
+    .divClass th,
+    .divClass td {
+        text-align: left !important;
+    }
+
+    /* For tables used in multi‑question types, keep content left-aligned */
+    .multi-question .table_content,
+    .multi-question th,
+    .multi-question td {
+        text-align: center !important;
+    }
+
+    /* If any parent container is causing centering, override it */
+    #content,
+    .tabcontent,
+    .pagination-element {
+        text-align: left !important;
+    }
+</style> -->
 <style>
     .stepper-horizontal {
         display: table;
@@ -291,7 +318,7 @@
                 <a type="button" id="navPrevFirst" onclick="navigate('prev')" class="btn btn-labeled responsive-button button-style back-button" title="Back" style="display: none;">
                     <i class="fas fa-arrow-left"></i><span> Back </span>
                 </a>
-                <button class="btn btn-primary saveButton_form" onclick="save()" type="button" id="saveButtonFirst">
+                <button class="btn btn-primary saveButton_form" onclick="save()" title="Save" type="button" id="saveButtonFirst">
                     <i class="fa fa-fw fa-lg fa fa-bookmark"></i> Save
                 </button>
                 <a type="button" href="{{ $role == 'Parent' ? route('questionnaire_for_user.index') : URL::previous() }}" class="btn btn-danger responsive-button button-style cancel-button" title="Cancel" id="cancelButtonFirst">
@@ -307,7 +334,7 @@
                 <a type="button" id="navPrevMiddle" onclick="navigate('prev')" class="btn btn-labeled responsive-button button-style back-button" title="Back">
                     <i class="fas fa-arrow-left"></i><span> Back </span>
                 </a>
-                <button class="btn btn-primary saveButton_form" onclick="save()" type="button" id="saveButtonMiddle">
+                <button class="btn btn-primary saveButton_form" onclick="save()" title="Save" type="button" id="saveButtonMiddle">
                     <i class="fa fa-fw fa-lg fa fa-bookmark"></i> Save
                 </button>
                 <a type="button" href="{{ $role == 'Parent' ? route('questionnaire_for_user.index') : URL::previous() }}" class="btn btn-danger responsive-button button-style cancel-button" title="Cancel" id="cancelButtonMiddle">
@@ -326,10 +353,10 @@
                 <a type="button" href="{{ $role == 'Parent' ? route('questionnaire_for_user.index') : URL::previous() }}" class="btn btn-danger responsive-button button-style cancel-button" title="Cancel" id="cancelButtonLast">
                     <i class="fas fa-times"></i><span> Cancel </span>
                 </a>
-                <button class="btn btn-primary saveButton_form" onclick="save()" type="button" id="saveButtonLast">
+                <button class="btn btn-primary saveButton_form" onclick="save()" title="Save" type="button" id="saveButtonLast">
                     <i class="fa fa-fw fa-lg fa fa-bookmark"></i> Save
                 </button>
-                <button class="btn btn-success saveButton_form" onclick="sub()" type="button" id="submitButtonLast">
+                <button class="btn btn-success saveButton_form" onclick="sub()" title="Submit" type="button" id="submitButtonLast">
                     <i class="fa fa-fw fa-lg fa-check-circle"></i> Submit
                 </button>
             </div>

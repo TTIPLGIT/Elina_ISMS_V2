@@ -999,9 +999,7 @@ class ParentvideouploadController extends BaseController
     }
     public function updatedata(Request $request)
     {
-
         try {
-
             $method = 'Method =>  ParentvideouploadController => updatedata';
 
             $inputArray = $this->decryptData($request->requestData);
@@ -1018,15 +1016,11 @@ class ParentvideouploadController extends BaseController
                 'newinstruction' => $inputArray['newinstruction'],
             ];
 
-
             $id = $input['id'];
             $activity = DB::select("SELECT activity_id FROM activity_description WHERE activity_description_id ='$id'");
             $activity_id = $activity[0]->activity_id;
 
-            // DB::table('activity_description')->where('activity_id', $activity_id)->delete();
-
             DB::transaction(function () use ($input, $activity_id) {
-
                 DB::table('activity')
                     ->where('activity_id', $activity_id)
                     ->update([
@@ -1057,17 +1051,14 @@ class ParentvideouploadController extends BaseController
 
                 // New Start
                 $option = $input['newdescription'];
-                // $file_attachement = $input['imagename'];
                 if ($option != '') {
                     $instruction_array = $input['newinstruction'];
                     foreach ($option as $i => $description) {
-                        // $file = $file_attachement[$i] ?? '';
                         $instruction = $instruction_array[$i] ?? '';
 
                         DB::table('activity_description')->insertGetId([
                             'activity_id' => $activity_id,
                             'description' => $description,
-                            // 'file_attachment' => $file,
                             'instruction' => $instruction,
                             'created_by' => auth()->user()->id,
                             'created_date' => NOW()

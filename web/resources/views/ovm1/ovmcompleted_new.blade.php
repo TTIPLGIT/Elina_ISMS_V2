@@ -272,7 +272,7 @@
                                                 @if($question['group_id'] == $value['id'])
                                                 <tr>
                                                     <td width="35%" style="text-align:left !important;height: 200px;">{!! $question['question'] !!}<span class="tooltiptext1">{!! $question['question_description'] !!}</span></td>
-                                                     @if(isset($question['readonly']) && $question['readonly'] == 1)
+                                                    @if(isset($question['readonly']) && $question['readonly'] == 1)
                                                     {{-- <td style="text-align:left !important;" class="td_{{ $question['assigned_value']}}">{!! $question['prefilled_data'] !!} <input type="hidden" class="{{ $question['assigned_value']}}" name="que[{{$question['question_column_name']}}]"></td> --}}
                                                     <td><textarea class="form-control default instructions_textarea_readonly {{ $question['assigned_value']}}" id="{{$question['question_column_name']}}" name="que[{{$question['question_column_name']}}]" disabled> {!! $question['prefilled_data'] !!}</textarea></td>
                                                     @else
@@ -296,20 +296,20 @@
             </div>
             <div class="row text-center" style="margin: 5px 0px 0px 0px;">
                 <div class="col-md-12">
-                    <a class="btn btn-info" type="button" id="prevButton">Previous</a>
+                    <a class="btn btn-info" type="button" title="Previous" id="prevButton">Previous</a>
                     @if($role!='ishead')
                     @if( $rows[0]['status'] !="Submitted" && $rows[0]['status'] !="Completed")
-                    <button type="submit" id="saved" class="btn btn-warning" name="type" value="Saved">Save</button>
-                    <button type="submit" id="click-saved" name="type" value="Saved" style="display: none;">Save</button>
-                    <button type="submit" id="submit" class="btn btn-success" name="type" value="Submitted">Submit</button>
-                    <button type="submit" id="click-submit" name="type" value="Submitted" style="display: none;">Submit</button>
+                    <button type="submit" id="saved" class="btn btn-warning" title="Save" name="type" value="Saved">Save</button>
+                    <button type="submit" id="click-saved" name="type" value="Saved" title="Save" style="display: none;">Save</button>
+                    <button type="submit" id="submit" class="btn btn-success" name="type" title="Submit" value="Submitted">Submit</button>
+                    <button type="submit" id="click-submit" name="type" value="Submitted" title="Submit" style="display: none;">Submit</button>
                     @endif
                     @elseif($role=='ishead')
-                    <button type="submit" id="submit" class="btn btn-success" name="type" value="Completed">Submit</button>
-                    <button type="submit" id="click-submit" name="type" value="Submitted" style="display: none;">Submit</button>
+                    <button type="submit" id="submit" class="btn btn-success" name="type" title="Submit" value="Completed">Submit</button>
+                    <button type="submit" id="click-submit" name="type" value="Submitted" title="Submit" style="display: none;">Submit</button>
                     @endif
-                    <a type="button" href="{{ route('ovmmeetingcompleted') }}" class="btn btn-danger">Cancel</a>
-                    <a class="btn btn-info" type="button" id="nextButton">Next</a>
+                    <a type="button" href="{{ route('ovmmeetingcompleted') }}" title="Cancel" class="btn btn-danger">Cancel</a>
+                    <a class="btn btn-info" type="button" title="Next" id="nextButton">Next</a>
                 </div>
             </div>
         </form>
@@ -466,8 +466,8 @@
                     tabledestroy();
                     // Method - 1: Submitting the form directly
                     // form.submit();
-                   // $('.loader').show();
-                        document.getElementById("click-saved").click();
+                    // $('.loader').show();
+                    document.getElementById("click-saved").click();
 
                 } else {
                     console.log('Form not found.');
@@ -488,6 +488,7 @@
 <script>
     $(document).ready(function() {
 
+        // ================== ENROLLMENT ==================
         var $enrollment_details = <?php echo json_encode($enrollment_details); ?>;
         $enrollment_details = $enrollment_details[0];
 
@@ -495,226 +496,162 @@
         var dobParts = dob.split('/');
         var birthdate = new Date(dobParts[2], dobParts[1] - 1, dobParts[0]);
         var now = new Date();
+
         var years = now.getFullYear() - birthdate.getFullYear();
         var months = now.getMonth() - birthdate.getMonth();
+
         if (months < 0 || (months === 0 && now.getDate() < birthdate.getDate())) {
             years--;
             months += 12;
         }
 
         var childAge = years + " years " + months + " months";
+        var childGender = $enrollment_details.child_gender;
 
         $('.f_name').val($enrollment_details.child_name);
         $('.f_age').val(childAge);
         $('.f_dob').val($enrollment_details.child_dob);
         $('.f_aor').val($enrollment_details.child_contact_address);
         $('.f_school').val($enrollment_details.child_school_name_address);
-        
-        // Helper function to check for HTML-encoded null values
+
+        // ================== HELPERS ==================
         function isNullValue(value) {
             if (value === null || value === undefined) return true;
             if (typeof value === 'string') {
-                // Check for common null representations
                 var trimmed = value.trim();
-                return trimmed === '' || 
-                       trimmed === 'null' || 
-                       trimmed === '<p>null</p>' || 
-                       trimmed === '<p><br />null</p>' ||
-                       trimmed === '<p><br>null</p>' ||
-                       trimmed === '<br />null' ||
-                       trimmed === '<br>null' ||
-                       trimmed.includes('>null<');
+                return trimmed === '' ||
+                    trimmed === 'null' ||
+                    trimmed.includes('>null<');
             }
             return false;
         }
-        
-        // Helper function to clean null values
+
         function cleanValue(value) {
             return isNullValue(value) ? '' : value;
         }
-        
-        // Helper function to safely concatenate with null check
-        function safeConcat(existingValue, newValue) {
-            if (isNullValue(newValue)) {
-                return existingValue;
-            }
-            if (existingValue && !isNullValue(existingValue)) {
-                return existingValue + '<br>' + newValue;
-            }
-            return newValue;
+
+        function correctPronounCase(text, gender) {
+            if (!text || typeof text !== 'string') return text;
+
+            var lower = (gender === 'Male') ? 'he' : 'she';
+            var upper = (gender === 'Male') ? 'He' : 'She';
+
+            return text.replace(/\b(he|she)\b/gi, function(match, offset) {
+                var isStart = offset === 0 ||
+                    /[.!?]\s*$/.test(text.substring(0, offset));
+                return isStart ? upper : lower;
+            });
         }
 
+        function appendField(selector, value) {
+            if (isNullValue(value)) return;
+
+            value = correctPronounCase(value, childGender);
+
+            var current = $(selector).val();
+            $(selector).val(current ? current + '<br>' + value : value);
+        }
+
+        // ================== FETCHDATA ==================
         var fetchdatas = <?php echo json_encode($fetchdata); ?>;
-        fetchdatas = fetchdatas[0];
-        $.each(fetchdatas, function(key, value) {
-            $('#' + key).val(cleanValue(value));
-        });
-
-        var fetchdatas1 = <?php echo json_encode($fetchdata1); ?>;
-        fetchdatas1 = fetchdatas1[0];
-        $.each(fetchdatas1, function(key, value) {
-            $('#note_' + key).val(cleanValue(value));
-        });
-        
-        var fetchdata2 = <?php echo json_encode($fetchdata2); ?>;
-        fetchdata2 = fetchdata2[0];
-        if (fetchdata2 != undefined) {
-            // Helper function to get value or empty string with HTML null check
-            function getValue(value) {
-                return cleanValue(value);
-            }
-            
-            if (fetchdata2.g2form_filled != 1 && fetchdata2.flag != 1) {
-                // Clear any existing null values from fields
-                $('.f_deve').val(cleanValue($('.f_deve').val()));
-                $('.f_assessment').val(cleanValue($('.f_assessment').val()));
-                $('.f_prev').val(cleanValue($('.f_prev').val()));
-                $('.f_other').val(cleanValue($('.f_other').val()));
-                $('.f_adl').val(cleanValue($('.f_adl').val()));
-                $('.f_support').val(cleanValue($('.f_support').val()));
-                $('.f_social').val(cleanValue($('.f_social').val()));
-                $('.f_strength').val(cleanValue($('.f_strength').val()));
-                $('.f_parentinput').val(cleanValue($('.f_parentinput').val()));
-                
-                // Build values only if they're not null
-                if (!isNullValue(fetchdata2.conversation_064)) {
-                    var f_deve = $('.f_deve').val();
-                    if (f_deve) {
-                        $('.f_deve').val(f_deve + '<br>' + fetchdata2.conversation_064 + '<br>');
-                    } else {
-                        $('.f_deve').val(fetchdata2.conversation_064 + '<br>');
-                    }
-                }
-
-                if (!isNullValue(fetchdata2.conversation_065)) {
-                    var assessmentVal = $('.f_assessment').val();
-                    $('.f_assessment').val(assessmentVal ? assessmentVal + '<br>' + fetchdata2.conversation_065 : fetchdata2.conversation_065);
-                }
-                
-                if (!isNullValue(fetchdata2.conversation_066)) {
-                    var prevVal = $('.f_prev').val();
-                    $('.f_prev').val(prevVal ? prevVal + '<br>' + fetchdata2.conversation_066 : fetchdata2.conversation_066);
-                }
-                
-                // Build f_other value
-                var otherParts = [];
-                if (!isNullValue(fetchdata2.conversation_067)) otherParts.push(fetchdata2.conversation_067);
-                if (!isNullValue(fetchdata2.conversation_068)) otherParts.push(fetchdata2.conversation_068);
-                if (!isNullValue(fetchdata2.conversation_074)) otherParts.push(fetchdata2.conversation_074);
-                
-                if (otherParts.length > 0) {
-                    var otherVal = $('.f_other').val();
-                    var otherNewVal = otherParts.join('<br>');
-                    $('.f_other').val(otherVal ? otherVal + '<br>' + otherNewVal : otherNewVal);
-                }
-                
-                // f_adl
-                if (!isNullValue(fetchdata2.conversation_080)) {
-                    var adlVal = $('.f_adl').val();
-                    $('.f_adl').val(adlVal ? adlVal + '<br>' + fetchdata2.conversation_080 : fetchdata2.conversation_080);
-                }
-                
-                // Build f_support value
-                var supportParts = [];
-                if (!isNullValue(fetchdata2.conversation_075)) supportParts.push(fetchdata2.conversation_075);
-                if (!isNullValue(fetchdata2.conversation_076)) supportParts.push(fetchdata2.conversation_076);
-                if (!isNullValue(fetchdata2.conversation_077)) supportParts.push(fetchdata2.conversation_077);
-                
-                if (supportParts.length > 0) {
-                    var supportVal = $('.f_support').val();
-                    var supportNewVal = supportParts.join('<br>');
-                    $('.f_support').val(supportVal ? supportVal + '<br>' + supportNewVal : supportNewVal);
-                }
-                
-                // f_social
-                if (!isNullValue(fetchdata2.conversation_079)) {
-                    var socialVal = $('.f_social').val();
-                    $('.f_social').val(socialVal ? socialVal + '<br>' + fetchdata2.conversation_079 : fetchdata2.conversation_079);
-                }
-
-                // Build f_strength value
-                var strengthParts = [];
-                if (!isNullValue(fetchdata2.conversation_071)) strengthParts.push(fetchdata2.conversation_071);
-                if (!isNullValue(fetchdata2.conversation_078)) strengthParts.push(fetchdata2.conversation_078);
-                
-                if (strengthParts.length > 0) {
-                    var strengthVal = $('.f_strength').val();
-                    var strengthNewVal = strengthParts.join('<br>');
-                    $('.f_strength').val(strengthVal ? strengthVal + '<br>' + strengthNewVal : strengthNewVal);
-                }
-
-                // Build f_parentinput value
-                var parentParts = [];
-                if (!isNullValue(fetchdata2.conversation_069)) parentParts.push(fetchdata2.conversation_069);
-                if (!isNullValue(fetchdata2.conversation_070)) parentParts.push(fetchdata2.conversation_070);
-                if (!isNullValue(fetchdata2.conversation_072)) parentParts.push(fetchdata2.conversation_072);
-                if (!isNullValue(fetchdata2.conversation_073)) parentParts.push(fetchdata2.conversation_073);
-                
-                if (parentParts.length > 0) {
-                    var parentVal = $('.f_parentinput').val();
-                    var parentNewVal = parentParts.join('<br>');
-                    $('.f_parentinput').val(parentVal ? parentVal + '<br>' + parentNewVal : parentNewVal);
-                }
-                
-            } else if ($('.f_deve').val() == '' && (fetchdata2.flag == 1 || fetchdata2.flag != 1)) {
-                // Similar logic for the else condition
-                // (Repeat the same pattern as above for the else condition)
-                // ... (I'll keep this condensed for brevity, but you should apply the same pattern)
-            }
-            document.getElementById('g2form_filled').value = 1;
-        } else {
-            document.getElementById('g2form_filled').value = 0;
+        if (fetchdatas && fetchdatas.length > 0) {
+            $.each(fetchdatas[0], function(key, value) {
+                var cleaned = correctPronounCase(cleanValue(value), childGender);
+                $('#' + key).val(cleaned);
+            });
         }
-        
-        // Clean all fields one more time to ensure no null values remain
+
+        // ================== FETCHDATA1 ==================
+        var fetchdatas1 = <?php echo json_encode($fetchdata1); ?>;
+        if (fetchdatas1 && fetchdatas1.length > 0) {
+            $.each(fetchdatas1[0], function(key, value) {
+                var cleaned = correctPronounCase(cleanValue(value), childGender);
+                $('#note_' + key).val(cleaned);
+            });
+        }
+
+        // ================== MAIN FIX (MULTIPLE COORDINATORS) ==================
+        var fetchdata2 = <?php echo json_encode($fetchdata2); ?>;
+
+        if (fetchdata2 && fetchdata2.length > 0) {
+
+            // Clear fields once
+            $('.f_deve, .f_assessment, .f_prev, .f_other, .f_adl, .f_support, .f_social, .f_strength, .f_parentinput')
+                .val('');
+
+            $.each(fetchdata2, function(index, data) {
+
+                // ❌ REMOVE OLD CONDITION
+                // if (data.g2form_filled != 1 && data.flag != 1) {
+
+                // ✅ NEW CONDITION
+                if (data) {
+
+                    appendField('.f_deve', data.conversation_064);
+                    appendField('.f_assessment', data.conversation_065);
+                    appendField('.f_prev', data.conversation_066);
+
+                    appendField('.f_other', data.conversation_067);
+                    appendField('.f_other', data.conversation_068);
+                    appendField('.f_other', data.conversation_074);
+
+                    appendField('.f_adl', data.conversation_080);
+
+                    appendField('.f_support', data.conversation_075);
+                    appendField('.f_support', data.conversation_076);
+                    appendField('.f_support', data.conversation_077);
+
+                    appendField('.f_social', data.conversation_079);
+
+                    appendField('.f_strength', data.conversation_071);
+                    appendField('.f_strength', data.conversation_078);
+
+                    appendField('.f_parentinput', data.conversation_069);
+                    appendField('.f_parentinput', data.conversation_070);
+                    appendField('.f_parentinput', data.conversation_072);
+                    appendField('.f_parentinput', data.conversation_073);
+                }
+            });
+
+            $('#g2form_filled').val(1);
+
+        } else {
+            $('#g2form_filled').val(0);
+        }
+
+        // ================== CLEAN FINAL ==================
         $('.instructions_textarea').each(function() {
-            var currentVal = $(this).val();
-            if (isNullValue(currentVal)) {
+            if (isNullValue($(this).val())) {
                 $(this).val('');
             }
         });
-        
-        var rolename = document.getElementById('rowrolename').value;
-        var status = document.getElementById('rowstatus').value;
-        
-        if (status == "Submitted" || status == "Completed") {
-            if (rolename !== 'IS Head') {
-                var readonly = 1;
-            } else {
-                var readonly = 0;
-            }
-        } else {
-            var readonly = 0;
+
+        // ================== READONLY ==================
+        var rolename = $('#rowrolename').val();
+        var status = $('#rowstatus').val();
+
+        var readonly = 0;
+        if ((status === "Submitted" || status === "Completed") && rolename !== 'IS Head') {
+            readonly = 1;
         }
 
+        // ================== TINYMCE ==================
         tinymce.init({
             selector: '.instructions_textarea',
-            autosave_ask_before_unload: false,
-            autosave_interval: "30s",
-            autosave_prefix: "{path}{query}-{id}-",
-            autosave_restore_when_empty: false,
             height: '100%',
             menubar: false,
             branding: false,
             readonly: readonly,
-            setup: function(editor) {
-                editor.on('init', function() {
-                    // Clean any null values in TinyMCE editors
-                    var content = editor.getContent();
-                    if (isNullValue(content)) {
-                        editor.setContent('');
-                    }
-                });
-            },
-            plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap emoticons',
-            toolbar: 'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor link ',
+            plugins: 'lists link table code',
+            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist'
         });
 
+        // ================== PAGE NAV ==================
         var pageNo = $('#session_page').val();
-        if (pageNo != '' && pageNo != null && pageNo != undefined) {
-            const itemToSetActive = document.querySelector('.nav-item[data-id="' + pageNo + '"]');
-            itemToSetActive.click();
+        if (pageNo) {
+            document.querySelector('.nav-item[data-id="' + pageNo + '"]')?.click();
         }
+
     });
 </script>
 <script>

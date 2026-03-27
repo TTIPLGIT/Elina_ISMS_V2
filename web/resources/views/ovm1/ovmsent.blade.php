@@ -133,38 +133,38 @@
 
                       @if($authID != $row['created_by'])
 
-                        @if(in_array( $authID , $attendeeID))
-                          @foreach($attendee as $aa)
-                            @if($authID == $aa['attendee'])
-                            <option id="meeting_status1" value="{{ $aa['overall_status']}}">{{ $aa['overall_status']}}</option>
-                              @if($aa['overall_status']!="Accepted")
-                              <option value="Accepted">Accepted</option>
-                              @endif
-                              @if($aa['overall_status']!="Declined")
-                              <option value="Declined">Declined</option>
-                              @endif
-                              @if($aa['overall_status']!="Hold")
-                              <option value="Hold">Hold</option>
-                              @endif
-                              @if($aa['overall_status']!="Rescheduled")
+                      @if(in_array( $authID , $attendeeID))
+                      @foreach($attendee as $aa)
+                      @if($authID == $aa['attendee'])
+                      <option id="meeting_status1" value="{{ $aa['overall_status']}}">{{ $aa['overall_status']}}</option>
+                      @if($aa['overall_status']!="Accepted")
+                      <option value="Accepted">Accepted</option>
+                      @endif
+                      @if($aa['overall_status']!="Declined")
+                      <option value="Declined">Declined</option>
+                      @endif
+                      @if($aa['overall_status']!="Hold")
+                      <option value="Hold">Hold</option>
+                      @endif
+                      @if($aa['overall_status']!="Rescheduled")
 
-                                @if($authID == $row['created_by'])
-                                <option value="Rescheduled">Reschedule</option>
-                                @else
-                                <option value="Reschedule Request">Reschedule</option>
-                                @endif
-                
-                              @endif
-                            @endif
-                          @endforeach
-                        @else
-                          <!-- <option value="">Need Action</option> -->
-                          <option id="meeting_status1" value="{{ $row['meeting_status']}}">{{ $row['meeting_status']}}</option>
-                          <!-- <option value="Accepted">Accepted</option> -->
-                          <option value="Declined">Declined</option>
-                          <option value="Hold">Hold</option>
-                          <option value="Reschedule Request">Reschedule</option>
-                        @endif
+                      @if($authID == $row['created_by'])
+                      <option value="Rescheduled">Reschedule</option>
+                      @else
+                      <option value="Reschedule Request">Reschedule</option>
+                      @endif
+
+                      @endif
+                      @endif
+                      @endforeach
+                      @else
+                      <!-- <option value="">Need Action</option> -->
+                      <option id="meeting_status1" value="{{ $row['meeting_status']}}">{{ $row['meeting_status']}}</option>
+                      <!-- <option value="Accepted">Accepted</option> -->
+                      <option value="Declined">Declined</option>
+                      <option value="Hold">Hold</option>
+                      <option value="Reschedule Request">Reschedule</option>
+                      @endif
 
                       @else
                       <option id="meeting_status1" value="{{ $row['meeting_status']}}">{{ $row['meeting_status']}}</option>
@@ -271,66 +271,76 @@
                     <br>
                   </div>
                   <input type="hidden" id="type" name="type">
-                  @if($row['meeting_status'] == 'Accepted')
-                  <div class="form-group row" id="video_link1">
+                  <div class="form-group row" id="video_link1"
+                    style="{{ ($row['meeting_status'] == 'Accepted') ? 'display:block;' : 'display:none;' }}">
+
                     <label class="col-sm-2 col-form-label">Video Link</label>
+
                     <div class="col-sm-4">
-                      <input class="form-control" type="url" id="video_link" name="video_link" autocomplete="off">
-                      <div style="color: rgb(246, 15, 15); display: block;margin: 5px 0px 0px 0px;">Google Drive Link Only</div>
+                      <input class="form-control {{ !empty($row['video_link']) ? 'readonly' : '' }}"
+                        type="url"
+                        id="video_link"
+                        name="video_link"
+                        value="{{ !empty($row['video_link']) ? $row['video_link'] : '' }}"
+                        {{ !empty($row['video_link']) ? 'readonly' : '' }}
+                        autocomplete="off">
+                      <div style="color: rgb(246, 15, 15); margin: 5px 0px 0px 0px;">
+                        Google Drive Link Only
+                      </div>
                     </div>
                   </div>
+                </div>
+
+                <div class="col-lg-12" style="margin: 20px 0px 0px 0px;">
+                  <div class="form-group">
+                    <label class="form-label">Meeting Description</label>
+                    <textarea class="form-control" id="description" name="meeting_description" value="{{ $row['meeting_description']}}">{{ $row['meeting_description']}}</textarea>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row text-center">
+                <div class="col-md-12">
+                  <a type="button" class="btn btn-warning text-white" id="savebutton" onclick="validateForm1('Completed')" name="type" value="Saved">Close</a>
+
+                  @if($authID == $row['created_by'])
+                  @if($row['meeting_status'] == 'Accepted')
+                  <!-- <a type="button" class="btn btn-warning text-white" id="savebutton" onclick="validateForm1('Completed')" name="type" value="Saved">Close</a> -->
+                  @elseif($row['meeting_status'] == 'Declined')
+                  <button type="submit" id="savebutton" class="btn btn-warning" name="type" value="Saved"> Declined </button>
+                  @elseif($row['meeting_status'] == 'Reschedule Request')
+                  <a type="button" id="savebutton" class="btn btn-warning text-white" onclick="validateForm2('Reschedule')" name="type" value="Reschedule">Reschedule</a>
+                  @elseif($row['meeting_status'] == 'Completed')
+                  @else
+                  <button type="submit" id="savebutton" class="btn btn-warning" name="type" value="Saved">Save</button>
+                  @endif
+                  @else
+                  @if($row['meeting_status'] == 'Accepted')
+                  <!-- <a type="button" class="btn btn-warning text-white" id="savebutton" onclick="validateForm1('Completed')" name="type" value="Saved">Close</a> -->
+                  @endif
+                  <button type="submit" id="savebutton" class="btn btn-warning" name="type" value="Saved">Save</button>
                   @endif
 
-                  <div class="col-lg-12" style="margin: 20px 0px 0px 0px;">
-                    <div class="form-group">
-                      <label class="form-label">Meeting Description</label>
-                      <textarea class="form-control" id="description" name="meeting_description" value="{{ $row['meeting_description']}}">{{ $row['meeting_description']}}</textarea>
-                    </div>
-                  </div>
-
-                </div>
-                <div class="row text-center">
-                  <div class="col-md-12">
-                    <a type="button" class="btn btn-warning text-white" id="savebutton" onclick="validateForm1('Completed')" name="type" value="Saved">Close</a>
-                    
-                    @if($authID == $row['created_by'])
-                    @if($row['meeting_status'] == 'Accepted')
-                    <!-- <a type="button" class="btn btn-warning text-white" id="savebutton" onclick="validateForm1('Completed')" name="type" value="Saved">Close</a> -->
-                    @elseif($row['meeting_status'] == 'Declined')
-                    <button type="submit" id="savebutton" class="btn btn-warning" name="type" value="Saved"> Declined </button>
-                    @elseif($row['meeting_status'] == 'Reschedule Request')
-                    <a type="button" id="savebutton" class="btn btn-warning text-white" onclick="validateForm2('Reschedule')" name="type" value="Reschedule">Reschedule</a>
-                    @elseif($row['meeting_status'] == 'Completed')
-                    @else
-                    <button type="submit" id="savebutton" class="btn btn-warning" name="type" value="Saved">Save</button>
-                    @endif
-                    @else
-                    @if($row['meeting_status'] == 'Accepted')
-                    <!-- <a type="button" class="btn btn-warning text-white" id="savebutton" onclick="validateForm1('Completed')" name="type" value="Saved">Close</a> -->
-                    @endif
-                    <button type="submit" id="savebutton" class="btn btn-warning" name="type" value="Saved">Save</button>
-                    @endif
-
-                    @if($authID == $row['created_by'])
-                    <!-- <button type="submit" id="resch" class="btn btn-success" name="type" value="Sent" style="display:none">Send</button> -->
-                    <a type="button" id="resch" class="btn btn-success text-white" onclick="validateForm('Sent')" style="display:none" name="type" value="Sent">Send</a>
-                    @else
-                    <!-- <button type="submit" id="resch" class="btn btn-success" name="type" value="Reschedule" style="display:none">Send</button> -->
-                    <a type="button" id="resch" class="btn btn-success text-white" onclick="validateForm('Reschedule')" style="display:none" name="type" value="Reschedule">Reschedule</a>
-                    @endif
-                    <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{route('ovm1.index')}}" style="color:white !important">
-                      <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back</a>
-                  </div>
+                  @if($authID == $row['created_by'])
+                  <!-- <button type="submit" id="resch" class="btn btn-success" name="type" value="Sent" style="display:none">Send</button> -->
+                  <a type="button" id="resch" class="btn btn-success text-white" onclick="validateForm('Sent')" style="display:none" name="type" value="Sent">Send</a>
+                  @else
+                  <!-- <button type="submit" id="resch" class="btn btn-success" name="type" value="Reschedule" style="display:none">Send</button> -->
+                  <a type="button" id="resch" class="btn btn-success text-white" onclick="validateForm('Reschedule')" style="display:none" name="type" value="Reschedule">Reschedule</a>
+                  @endif
+                  <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{route('ovm1.index')}}" style="color:white !important">
+                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        </form>
-        @endforeach
       </div>
+      </form>
+      @endforeach
     </div>
-    <br>
+</div>
+<br>
 </div>
 </section>
 <div class="modal fade" id="addModal">
@@ -414,6 +424,13 @@
         e.preventDefault(); // prevent datepicker from showing
       }
     });
+    let status = $('#meeting_status').val();
+
+    if (status == "Accepted" || status == "Completed") {
+      $('#video_link1').show();
+    } else {
+      $('#video_link1').hide();
+    }
   });
 </script>
 <script>
@@ -834,12 +851,12 @@
       $('#notes').prop('required', false);
     }
 
-    if (status == "Completed") {
+    if (status == "Accepted" || status == "Completed") {
       $('#video_link1').show();
-      $('#video_link').prop(true);
+      $('#video_link').prop('required', true);
     } else {
       $('#video_link1').hide();
-      $('#video_link').prop(false);
+      $('#video_link').prop('required', false);
     }
     //...video_link
   }
@@ -888,27 +905,28 @@
       repeate1 = text1;
     }
   }
+
   function convertTimeFormat(input) {
-        var inputValue = input;
-        var timeParts = inputValue.split(':');
-        let hours = parseInt(timeParts[0]);
-        var minutes = timeParts[1];
-        let meridian = '';
+    var inputValue = input;
+    var timeParts = inputValue.split(':');
+    let hours = parseInt(timeParts[0]);
+    var minutes = timeParts[1];
+    let meridian = '';
 
-        if (hours >= 12) {
-            meridian = ' PM';
-            if (hours > 12) {
-                hours -= 12;
-            }
-        } else {
-            meridian = ' AM';
-            if (hours === 0) {
-                hours = 12;
-            }
-        }
-
-        var formattedTime = `${hours}:${minutes}${meridian}`;
-        return formattedTime;
+    if (hours >= 12) {
+      meridian = ' PM';
+      if (hours > 12) {
+        hours -= 12;
+      }
+    } else {
+      meridian = ' AM';
+      if (hours === 0) {
+        hours = 12;
+      }
     }
+
+    var formattedTime = `${hours}:${minutes}${meridian}`;
+    return formattedTime;
+  }
 </script>
 @endsection

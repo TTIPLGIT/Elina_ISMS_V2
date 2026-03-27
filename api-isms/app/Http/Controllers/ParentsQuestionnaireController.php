@@ -528,7 +528,8 @@ class ParentsQuestionnaireController extends BaseController
 		}
 	}
 
-	private function getColumnType($value) {
+	private function getColumnType($value)
+	{
 		if (is_int($value)) {
 			return 'INT';
 		} elseif (is_float($value)) {
@@ -554,6 +555,7 @@ class ParentsQuestionnaireController extends BaseController
 			INNER JOIN questionnaire AS b ON b.questionnaire_id=a.questionnaire_id
 			WHERE questionnaire_initiation_id = $id");
 			$table_name = $table[0]->table_name;
+			$this->WriteFileLog($table_name);
 			if ($table_name == '') {
 				$table_name = 'question_process';
 			}

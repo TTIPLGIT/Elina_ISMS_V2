@@ -187,7 +187,7 @@
                             <div class="multi-field-wrapper">
                                 <div class="multi-fields" id="add_other">
                                     <div class="multi-field" style="display: flex;margin-bottom: 5px;">
-                                        <input type="text" class="form-control" name="options_questions[]" id="options_question[]" style="margin-right: 10px;">
+                                        <input type="text" class="form-control" name="options_questions[]" style="background-color: white !important;" id="options_question[]" style="margin-right: 10px;">
                                         <button class="remove-field btn btn-danger pull-right" id="remove-f" type='button'>X </button>
                                         &nbsp;
                                     </div>
@@ -202,11 +202,11 @@
                     <div class="col-12" style="display: none;" id="header_field">
                         <div class="form-group questionnaire">
                             <label class="control-label required">Title</label>
-                            <input class="form-control" type="text" id="header_title" name="header_title" placeholder="optional" autocomplete="off">
+                            <input class="form-control" type="text" id="header_title" name="header_title" style="background-color: white !important;" autocomplete="off">
                         </div>
                         <div class="form-group questionnaire">
                             <label class="control-label required">Description</label>
-                            <input class="form-control" type="text" id="header_description" name="header_description" placeholder="optional" autocomplete="off">
+                            <input class="form-control" type="text" id="header_description" name="header_description" style="background-color: white !important;" autocomplete="off">
                         </div>
                     </div>
                     <div class="w-100"></div>
@@ -218,7 +218,7 @@
                                     <div class="multi-fields">
                                         <div class="multi-field" style="display: flex;margin-bottom: 5px;">
 
-                                            <input type="text" class="form-control" name="sub_question[]" id="sub_question[]" style="margin-right: 10px;">
+                                            <input type="text" class="form-control" style="background-color: white !important;" name="sub_question[]" id="sub_question[]" style="margin-right: 10px;">
                                             <button class="remove-field btn btn-danger pull-right" id="remove-f" type='button'>X </button>
                                             <!-- <button class="add-field btn btn-danger pull-right" id="" type='button'>+ </button> -->
                                             &nbsp;
@@ -236,7 +236,7 @@
                                     <div class="multi-fields">
                                         <div class="multi-field" style="display: flex;margin-bottom: 5px;">
 
-                                            <input type="text" class="form-control" name="sub_options[]" id="sub_options[]" style="margin-right: 10px;">
+                                            <input type="text" class="form-control" style="background-color: white !important;" name="sub_options[]" id="sub_options[]" style="margin-right: 10px;">
                                             <button class="remove-field btn btn-danger pull-right" id="remove-f" type='button'>X </button>
                                             <!-- <button class="add-field btn btn-danger pull-right" id="" type='button'>+ </button> -->
                                             &nbsp;
@@ -252,7 +252,7 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label class="required">Quadrant</label>
-                                <select class="form-control" name="quadrant" id="quadrant">
+                                <select class="form-control" name="quadrant" id="quadrant" style="background-color: white !important;">
                                     <option value="">Select Quadrant</option>
                                     @foreach($fields as $quadrant)
                                     @if($quadrant['type_id'] == '1')
@@ -266,7 +266,7 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label class="required">Category</label>
-                                <select class="form-control" name="quadrant_type_id" id="quadrant_type_id">
+                                <select class="form-control" style="background-color: white !important;" name="quadrant_type_id" id="quadrant_type_id">
                                     <option value="">Select Quadrant Category</option>
                                     @foreach($fields as $category)
                                     @if($category['type_id'] == '2')
@@ -279,7 +279,7 @@
                         <div class="w-100"></div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="required">Options</label>
+                                <!-- <label class="required">Options</label> -->
                                 <div class="multi-field-wrapper">
                                     <div class="multi-fields">
                                         @foreach($options as $option)
@@ -442,11 +442,13 @@
 
             success: function(data) {
 
-                if (data == 3 || data == 4 || data == 5|| data == 8) {
+                if (data == 3 || data == 4 || data == 5) {
                     $('#edit_option' + id).show();
                 } else if (data == 6 || data == 7 || data == 12) {
                     $('#edit_option' + id).hide();
                     $('#edit_sub_questions' + id).show();
+                } else if (data == 8) {
+                    $('#edit_option' + id).hide();
                 } else {
                     $('#edit_option' + id).hide();
                 }
@@ -648,7 +650,7 @@
                 }
             }
 
-        } else if (fieldtype == 6 || fieldtype == 7 || fieldtype ==12) {
+        } else if (fieldtype == 6 || fieldtype == 7 || fieldtype == 12) {
 
 
             var Subque = document.getElementsByName('sub_question[]'); //console.log(Subque);

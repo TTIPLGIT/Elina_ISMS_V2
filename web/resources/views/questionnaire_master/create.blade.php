@@ -177,10 +177,16 @@
   });
 
   function validateForm() {
-
     let questionnaire_name = $("#questionnaire_name").val().trim();
     if (questionnaire_name == '') {
       Swal.fire("Questionnaire Name is required", "", "error");
+      return false;
+    }
+
+    // ✅ Prevent special characters
+    let namePattern = /^[a-zA-Z0-9\s]+$/;
+    if (!namePattern.test(questionnaire_name)) {
+      Swal.fire("Questionnaire Name should not contain special characters. Only letters and spaces are allowed.", "", "error");
       return false;
     }
 

@@ -66,14 +66,14 @@
               <input type="hidden" id="enrollment_id" name="enrollment_id" value="{{$enrollId}}">
               @if(isset($answers[0]))
               @if($answers[0]['status'] != 'Submitted')
-              <button type="submit" id="saved" class="btn btn-warning" name="type" value="Saved">Save</button>
-              <a type="button" id="submit" class="btn btn-success" name="type" value="Submitted" onclick="validateanswer()">Submit</a>
+              <button type="submit" id="saved" class="btn btn-warning" name="type" title="Save"   value="Saved">Save</button>
+              <a type="button" id="submit" class="btn btn-success" name="type"  title="Submit"  value="Submitted" onclick="validateanswer()">Submit</a>
               @endif
               @else
-              <button type="submit" id="saved" class="btn btn-warning" name="type" value="Saved">Save</button>
-              <a type="button" id="submit" class="btn btn-success" name="type" value="Submitted" onclick="validateanswer()">Submit</a>
+              <button type="submit" id="saved" class="btn btn-warning" name="type" title="Save"  value="Saved">Save</button>
+              <a type="button" id="submit" class="btn btn-success" name="type" title="Submit"  value="Submitted" onclick="validateanswer()">Submit</a>
               @endif
-              <a type="button" href="{{ route('g2form.list') }}" class="btn btn-danger">Cancel</a>
+              <a type="button" href="{{ route('g2form.list') }}" title="Cancel"  class="btn btn-danger">Cancel</a>
             </div>
           </div>
         </form>

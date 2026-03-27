@@ -232,9 +232,9 @@
                       @endforeach
                     </select>
 
-                    <small class="ml-2 mt-2 text-muted">
+                    <!-- <small class="ml-2 mt-2 text-muted">
                       Note: Only initiated activities will be listed here.
-                    </small>
+                    </small> -->
                   </div>
                 </div>
                 <input type="hidden" id="description_name" name="description_name">
