@@ -865,12 +865,12 @@
                             <div id="card content">
                                 <div id="Step{{$page['page']}}" class="card-body tabcontent paginationTab{{$page['page']}}">
                                     @if($page['page'] != '14')
-                                    <textarea class="meeting_description" id="meeting_description{{$loop->iteration}}" name="meeting_description[{{$page['page']}}]">
+                                    <textarea class="meeting_description" id="meeting_description{{$loop->iteration}}" name="meeting_description[{{$page['page']}}]" placeholder="Enter Description">
                                     {{$page['page_description']}}
                                     </textarea>
                                     <p class="appending_input"></p>
                                     @else
-                                    <textarea style="display: none;" class="meeting_description" id="meeting_description{{$loop->iteration}}" name="meeting_description[{{$page['page']}}]"></textarea>
+                                    <textarea style="display: none;" class="meeting_description" id="meeting_description{{$loop->iteration}}" name="meeting_description[{{$page['page']}}]" placeholder="Enter Description"></textarea>
                                     @endif
                                     @if($page['assessment_skill'] != null)
                                     @foreach($perskill as $perskills)
@@ -910,10 +910,10 @@
                                                 Seeks out and is attracted to a stimulating sensory environment
                                             </td>
                                             <td style="background: white;border: 1px solid #0e0e0e !important;vertical-align: initial !important;">
-                                                <textarea style="width: 100%;height:150px;" class="tinymce-textarea" id="" name="rows2[1]">{{ isset($page8['sensory_profiling1']) ? $page8['sensory_profiling1'] : '' }}</textarea>
+                                                <textarea style="width: 100%;height:150px;" class="tinymce-textarea" id="" name="rows2[1]" placeholder="Enter Evidence">{{ isset($page8['sensory_profiling1']) ? $page8['sensory_profiling1'] : '' }}</textarea>
                                             </td>
                                             <td style="background: white;border: 1px solid #0e0e0e !important;vertical-align: initial !important;">
-                                                <textarea style="width: 100%;height:150px;" class="tinymce-textarea" id="" name="rec_rows2[1]">{{ isset($sensory_recommendation[1]) ? $sensory_recommendation[1] : '' }}</textarea>
+                                                <textarea style="width: 100%;height:150px;" class="tinymce-textarea" id="" name="rec_rows2[1]" placeholder="Enter Recommendation">{{ isset($sensory_recommendation[1]) ? $sensory_recommendation[1] : '' }}</textarea>
                                             </td>
                                         </tr>
 
@@ -922,10 +922,10 @@
                                                 Distressed by a stimulating sensory environment and attempts to leave the environment
                                             </th>
                                             <td style="background: white;border: 1px solid #0e0e0e !important;vertical-align: initial !important;">
-                                                <textarea style="width: 100%;height:150px;" class="tinymce-textarea" id="" name="rows2[2]">{{ $page8['sensory_profiling2'] ?? '' }}</textarea>
+                                                <textarea style="width: 100%;height:150px;" class="tinymce-textarea" id="" name="rows2[2]" placeholder="Enter Evidence">{{ $page8['sensory_profiling2'] ?? '' }}</textarea>
                                             </td>
                                             <td style="background: white;border: 1px solid #0e0e0e !important;vertical-align: initial !important;">
-                                                <textarea style="width: 100%;height:150px;" class="tinymce-textarea" id="" name="rec_rows2[2]">{{ $sensory_recommendation[2] ?? '' }}</textarea>
+                                                <textarea style="width: 100%;height:150px;" class="tinymce-textarea" id="" name="rec_rows2[2]" placeholder="Enter Recommendation">{{ $sensory_recommendation[2] ?? '' }}</textarea>
                                             </td>
                                         </tr>
 
@@ -934,10 +934,10 @@
                                                 Sensitivity to stimuli, distractibility, discomfort with sensory stimuli
                                             </th>
                                             <td style="background: white;border: 1px solid #0e0e0e !important;vertical-align: initial !important;">
-                                                <textarea style="width: 100%;height:150px;" class="tinymce-textarea" id="" name="rows2[3]">{{ $page8['sensory_profiling3'] ?? '' }}</textarea>
+                                                <textarea style="width: 100%;height:150px;" class="tinymce-textarea" id="" name="rows2[3]" placeholder="Enter Evidence">{{ $page8['sensory_profiling3'] ?? '' }}</textarea>
                                             </td>
                                             <td style="background: white;border: 1px solid #0e0e0e !important;vertical-align: initial !important;">
-                                                <textarea style="width: 100%;height:150px;" class="tinymce-textarea" id="" name="rec_rows2[3]">{{ $sensory_recommendation[3] ?? '' }}</textarea>
+                                                <textarea style="width: 100%;height:150px;" class="tinymce-textarea" id="" name="rec_rows2[3]" placeholder="Enter Recommendation">{{ $sensory_recommendation[3] ?? '' }}</textarea>
                                             </td>
                                         </tr>
 
@@ -946,10 +946,10 @@
                                                 Missing stimuli, responding slowly
                                             </th>
                                             <td style="background: white;border: 1px solid #0e0e0e !important;vertical-align: initial !important;">
-                                                <textarea style="width: 100%;height:150px;" class="tinymce-textarea" id="" name="rows2[4]">{{ $page8['sensory_profiling4'] ?? '' }}</textarea>
+                                                <textarea style="width: 100%;height:150px;" class="tinymce-textarea" id="" name="rows2[4]" placeholder="Enter Evidence">{{ $page8['sensory_profiling4'] ?? '' }}</textarea>
                                             </td>
                                             <td style="background: white;border: 1px solid #0e0e0e !important;vertical-align: initial !important;">
-                                                <textarea style="width: 100%;height:150px;" class="tinymce-textarea" id="" name="rec_rows2[4]">{{ $sensory_recommendation[4] ?? '' }}</textarea>
+                                                <textarea style="width: 100%;height:150px;" class="tinymce-textarea" id="" name="rec_rows2[4]" placeholder="Enter Recommendation">{{ $sensory_recommendation[4] ?? '' }}</textarea>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -962,10 +962,10 @@
                                     <tbody>
                                         <tr>
                                             <td style="background: white;border: 1px solid #0e0e0e !important;vertical-align: initial !important;">
-                                                <textarea class="tinymce-textarea" style="width: 100%;height:150px;" id="signature_1" name="signature[1]">{{$signature[1]}}</textarea>
+                                                <textarea class="tinymce-textarea" style="width: 100%;height:150px;" id="signature_1" name="signature[1]" placeholder="Enter Signature Details">{{$signature[1]}}</textarea>
                                             </td>
                                             <td style="background: white;border: 1px solid #0e0e0e !important;vertical-align: initial !important;">
-                                                <textarea class="tinymce-textarea" style="width: 100%;height:150px;" id="signature_2" name="signature[2]">{{$signature[2]}}</textarea>
+                                                <textarea class="tinymce-textarea" style="width: 100%;height:150px;" id="signature_2" name="signature[2]" placeholder="Enter Signature Details">{{$signature[2]}}</textarea>
                                             </td>
                                         </tr>
                                     </tbody>

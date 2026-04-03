@@ -309,11 +309,24 @@ class ParentvideouploadController extends BaseController
             // INNER JOIN parent_video_upload AS pvu ON pvu.activity_initiation_id=a.activity_initiation_id
             // where us.id='$id' GROUP BY a.activity_id");
 
-            $rows = DB::select("SELECT a.enrollment_id,(SELECT ad.description FROM activity_description ad WHERE ad.activity_id = a.activity_id LIMIT 1) AS description,a.activity_id,a.status AS currentStatus,
-            b.activity_name,a.activity_initiation_id,(SELECT COUNT(*) FROM parent_video_upload AS pv WHERE pv.activity_id = a.activity_id AND pv.Enrollment_id = c.enrollment_id AND pv.`status` = 'Rejected') AS isReject
-        FROM activity_initiation AS a INNER JOIN activity AS b ON b.activity_id = a.activity_id INNER JOIN enrollment_details AS c ON a.enrollment_id = c.enrollment_id INNER JOIN users AS d ON d.id = c.user_id WHERE
-            d.id = '$id' AND a.action_flag = 0 ORDER BY a.activity_initiation_id ASC;");
-
+            $rows = DB::select("SELECT a.enrollment_id,
+    (SELECT ad.description FROM activity_description ad 
+     WHERE ad.activity_id = a.activity_id LIMIT 1) AS description,
+    a.activity_id,
+    a.status AS currentStatus,
+    b.activity_name,
+    a.activity_initiation_id,
+    (SELECT COUNT(*) FROM parent_video_upload AS pv 
+     WHERE pv.activity_id = a.activity_id 
+     AND pv.enrollment_id = c.enrollment_id 
+     AND pv.`status` = 'Rejected') AS isReject
+FROM activity_initiation AS a 
+INNER JOIN activity AS b ON b.activity_id = a.activity_id 
+INNER JOIN enrollment_details AS c ON a.enrollment_id = c.enrollment_id 
+INNER JOIN users AS d ON d.id = c.user_id 
+WHERE d.id = '$id' 
+AND a.action_flag = 0 
+ORDER BY a.activity_initiation_id ASC;");
             $state  = DB::select("SELECT pvu.status as videoState, a.* ,b.*,act.*,us.* from activity_initiation AS a 
             INNER JOIN enrollment_details AS b ON  b.enrollment_id=a.enrollment_id 
             INNER JOIN activity AS act ON act.activity_id=a.activity_id 

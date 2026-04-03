@@ -173,6 +173,8 @@
                 <form action="{{route('newenrollment.update', $row['enrollment_id'])}}" method="POST" id="newenrollement" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     @method('PUT')
+                    <input type="hidden" name="full_phone" id="full_phone">
+                    <input type="hidden" name="full_alt_phone" id="full_alt_phone">
                     <input type="hidden" id="btn_status" name="btn_status" value="">
                     <div class="tile" id="tile-1" style="margin-top:10px !important; margin-bottom:10px !important;">
 
@@ -620,13 +622,13 @@
     var phone_number = document.querySelector("#child_contact_phone");
     var phone_number2 = document.querySelector("#child_alter_phone");
 
-    var iti = window.intlTelInput(phone_number, {
+    var iti1 = window.intlTelInput(phone_number, {
         initialCountry: "in",
         separateDialCode: true,
         utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
     });
 
-    var iti = window.intlTelInput(phone_number2, {
+    var iti2 = window.intlTelInput(phone_number2, {
         initialCountry: "in",
         separateDialCode: true,
         utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
@@ -781,17 +783,23 @@
 
     function save() {
         var child_name = $('#child_name').val();
+
         if (child_name == '') {
             swal.fire("Please Enter Child's Name: ", "", "error");
             return false;
         }
+
         if (validate == 1) {
             swal.fire("You have Already Enrolled With Elina", "", "error");
             return false;
         }
+
+        // ✅ ADD THIS LINE
+        setFullPhoneNumbers();
+
         document.getElementById('btn_status').value = 'saved';
         $('.loader').show();
-        document.getElementById('newenrollement').submit('saved');
+        document.getElementById('newenrollement').submit();
     }
 
     function submit(a) {
@@ -838,7 +846,7 @@
             swal.fire("Please Enter Valid Email Adress:", "", "error");
             return false;
         }
-
+        setFullPhoneNumbers();
         var child_contact_phone = $('#child_contact_phone').val();
         if (child_contact_phone == '') {
             swal.fire("Please Enter Contact Phone number:  ", "", "error");
@@ -925,6 +933,29 @@
                 return false;
             }
         });
+    }
+</script>
+<script>
+    function setFullPhoneNumbers() {
+        // Get country codes
+        var countryCode1 = iti1.getSelectedCountryData().dialCode;
+        var countryCode2 = iti2.getSelectedCountryData().dialCode;
+
+        // Get existing numbers (KEEP FORMAT)
+        var phone1 = $('#child_contact_phone').val().trim();
+        var phone2 = $('#child_alter_phone').val().trim();
+
+        // Clean extra spaces (optional safe)
+        phone1 = phone1.replace(/\s+/g, ' ');
+        phone2 = phone2.replace(/\s+/g, ' ');
+
+        // Combine (ADD COUNTRY CODE + KEEP FORMAT)
+        var fullPhone = phone1 ? '+' + countryCode1 + ' ' + phone1 : '';
+        var fullAltPhone = phone2 ? '+' + countryCode2 + ' ' + phone2 : '';
+
+        // Set hidden inputs
+        $('#full_phone').val(fullPhone);
+        $('#full_alt_phone').val(fullAltPhone);
     }
 </script>
 @endsection

@@ -320,12 +320,9 @@
 <script>
     let existingServices = @json(collect($serviceList) -> pluck('service_briefing'));
 
-</script>
-
-<script>
     function Submit_form() {
 
-        let service = document.getElementById('service_briefings').value.trim();
+        let service = document.getElementById('service_briefings').value.trim().toLowerCase();
         let amount = document.getElementById('amount').value.trim();
 
         if (service === '') {
@@ -338,10 +335,10 @@
             return false;
         }
 
-        // case-insensitive duplicate check
-        let exists = existingServices.some(
-            s => s.toLowerCase() === service.toLowerCase()
-        );
+        // ✅ Strong duplicate check (trim + lowercase)
+        let exists = existingServices.some(function(s) {
+            return s && s.trim().toLowerCase() === service;
+        });
 
         if (exists) {
             Swal.fire({
@@ -349,9 +346,10 @@
                 title: 'Duplicate Entry',
                 text: 'This service briefing already exists!'
             });
-            return false;
+            return false; // ❌ STOP SUBMIT
         }
 
+        // ✅ Submit only if not duplicate
         document.getElementById('service_briefing').submit();
     }
 </script>

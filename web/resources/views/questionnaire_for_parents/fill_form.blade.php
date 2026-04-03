@@ -235,6 +235,7 @@
         position: sticky;
         left: 0;
         background: #f5f5f5;
+        text-align: left !important;
     }
 
     .inputError {
@@ -1057,6 +1058,11 @@
                 var response = fieldOptionsDB;
                 var radioButtonHtml = '<div class="col-md-12 pagination-element' + num + '" style="background-color: rgb(218, 178, 55);font-weight: 900;font-size: 20px;">';
                 radioButtonHtml += '<label class="control-label">' + fieldLabel + '</label><br>';
+
+                var headerDescription = DataFields[index]['header_description'] || DataFields[index]['description'] || DataFields[index]['question_description'] || '';
+                if (headerDescription) {
+                    radioButtonHtml += '<label>' + headerDescription + '</label>';
+                }
 
                 for (let index = 0; index < response.length; index++) {
                     var question_details_id = response[index]['question_details_id'];

@@ -54,9 +54,9 @@
                   <tr>
                     <th width="50px">Sl. No.</th>
                     <!-- <th>OVM ID</th> -->
-                    <th>Child Name</th>
-                    <th>Enrollment Id</th>
-                    <th>IS Coordinators</th>
+                    <th class="col-2">Child Name</th>
+                    <th class="col-2">Enrollment Id</th>
+                    <th class="col-3">IS Coordinators</th>
                     <th>Meeting Date & Time</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -90,8 +90,12 @@
                         <a class="btn btn-link" title="Edit" href="{{ route('ovmsent', $row['ovm_meeting_id']) }}"><i class="fas fa-pencil-alt" style="color:green"></i></a>
                         @elseif( $row['meeting_status']== 'Sent' || $row['meeting_status']== 'Rescheduled')
 
-                        <a class="btn btn-link" title="Resend" href="{{ route('ovm1resend', ['ovm1', Crypt::encrypt($row['event_id'])]) }}">Resend</a>
-                        <a class="btn btn-link" title="Edit" href="{{ route('ovmsent', $row['ovm_meeting_id']) }}"><i class="fas fa-pencil-alt" style="color:green"></i></a>
+                        <a class="btn btn-link resend-btn"
+                          title="Resend"
+                          href="{{ route('ovm1resend', ['ovm1', Crypt::encrypt($row['event_id'])]) }}"
+                          onclick="disableResend(this)">
+                          Resend
+                        </a> <a class="btn btn-link" title="Edit" href="{{ route('ovmsent', $row['ovm_meeting_id']) }}"><i class="fas fa-pencil-alt" style="color:green"></i></a>
 
                         @elseif( $row['meeting_status']== 'Completed')
                         <!-- <a class="btn btn-link" title="Edit" href="{{ route('ovmcompleted', $row['ovm_meeting_id']) }}"><i class="fas fa-pencil-alt" style="color:green"></i></a> -->
@@ -217,7 +221,19 @@
 
 </div>
 
+<script>
+  function disableResend(el) {
+    // disable click
+    el.style.pointerEvents = "none";
+    el.style.opacity = "0.5";
+    el.innerText = "Resent";
 
+    // optional: prevent navigation delay issues
+    setTimeout(() => {
+      el.style.pointerEvents = "none";
+    }, 100);
+  }
+</script>
 
 <script type="text/javascript">
   $(document).ready(function() {

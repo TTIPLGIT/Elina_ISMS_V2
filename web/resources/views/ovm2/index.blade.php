@@ -83,29 +83,59 @@
 
                       <td>
 
-                        <form action method="POST" action="">
+                        <form method="POST" action="">
 
+                          @php
+                          $moId = $row['ovm_meeting_id'];
+                          $row['ovm_meeting_id'] = Crypt::encrypt($row['ovm_meeting_id']);
+                          @endphp
 
+                          <a class="btn btn-link" title="Show" href="{{ route('ovm2.show', $row['ovm_meeting_id']) }}">
+                            <i class="fas fa-eye" style="color: blue !important"></i>
+                          </a>
 
-                          @php $moId = $row['ovm_meeting_id'];
-                          $row['ovm_meeting_id'] = Crypt::encrypt($row['ovm_meeting_id']); @endphp
+                          @if($row['meeting_status'] == 'Accepted' || $row['meeting_status'] == 'Declined' || $row['meeting_status'] == 'Hold' || $row['meeting_status'] == 'Reschedule Request')
 
-                          <a class="btn btn-link" title="Show" href="{{ route('ovm2.show', $row['ovm_meeting_id']) }}"><i class="fas fa-eye" style="color: blue !important"></i></a>
-                          @if( $row['meeting_status']== 'Accepted' ||$row['meeting_status']== 'Declined' || $row['meeting_status']== 'Hold' || $row['meeting_status']== 'Reschedule Request')
-                          <a class="btn btn-link" title="Edit" href="{{ route('ovmsent2', $row['ovm_meeting_id']) }}"><i class="fas fa-pencil-alt" style="color:green"></i></a>
-                          @elseif( $row['meeting_status']== 'Sent' || $row['meeting_status']== 'Rescheduled')
+                          <a class="btn btn-link" title="Edit" href="{{ route('ovmsent2', $row['ovm_meeting_id']) }}">
+                            <i class="fas fa-pencil-alt" style="color:green"></i>
+                          </a>
 
-                          <a class="btn btn-link" title="Resend" href="{{ route('ovm1resend', ['ovm2', Crypt::encrypt($row['event_id'])]) }}">Resend</a>
-                          <a class="btn btn-link" title="Edit" href="{{ route('ovmsent2', $row['ovm_meeting_id']) }}"><i class="fas fa-pencil-alt" style="color:green"></i></a>
+                          @elseif($row['meeting_status'] == 'Sent' || $row['meeting_status'] == 'Rescheduled')
 
-                          @else
-                          <a class="btn btn-link" title="Edit" href="{{ route('ovm2.edit', $row['ovm_meeting_id']) }}"><i class="fas fa-pencil-alt" style="color:green"></i></a>
+                          <a class="btn btn-link"
+                            title="Resend"
+                            href="{{ route('ovm1resend', ['ovm2', Crypt::encrypt($row['event_id'])]) }}"
+                            onclick="disableResend(this)">
+                            Resend
+                          </a>
+
+                          <a class="btn btn-link" title="Edit" href="{{ route('ovmsent2', $row['ovm_meeting_id']) }}">
+                            <i class="fas fa-pencil-alt" style="color:green"></i>
+                          </a>
+
+                          @elseif($row['meeting_status'] != 'Completed') {{-- 🔥 FIX HERE --}}
+
+                          <a class="btn btn-link" title="Edit" href="{{ route('ovm2.edit', $row['ovm_meeting_id']) }}">
+                            <i class="fas fa-pencil-alt" style="color:green"></i>
+                          </a>
+
                           @endif
+
                           @csrf
 
-                          <input type="hidden" name="delete_id" id="<?php echo $row['ovm_meeting_id']; ?>" value="{{ route('ovm2.delete', $row['ovm_meeting_id']) }}">
-                          <a href="#addModal" data-toggle="modal" data-target="#addModal{{$moId}}" class="btn btn-primary" title="View" data-toggle="modal" data-target="#templates" style="margin-inline:5px"><i class="fa fa-bars" style="color:white!important"></i></a>
-                          <!-- <a class="btn btn-light" title="Delete" onclick="return myFunction(<?php echo $row['ovm_meeting_id']; ?>);" class="btn btn-link"><i class="far fa-trash-alt"></i></a> -->
+                          <input type="hidden"
+                            name="delete_id"
+                            id="{{ $row['ovm_meeting_id'] }}"
+                            value="{{ route('ovm2.delete', $row['ovm_meeting_id']) }}">
+
+                          <a href="#addModal"
+                            data-toggle="modal"
+                            data-target="#addModal{{$moId}}"
+                            class="btn btn-primary"
+                            title="View"
+                            style="margin-inline:5px">
+                            <i class="fa fa-bars" style="color:white!important"></i>
+                          </a>
 
                         </form>
 
@@ -218,7 +248,13 @@
 
 
   </div>
-
+  <script>
+    function disableResend(el) {
+      el.style.pointerEvents = "none";
+      el.style.opacity = "0.5";
+      el.innerText = "Resent";
+    }
+  </script>
 
   <script type="text/javascript">
     $(document).ready(function() {

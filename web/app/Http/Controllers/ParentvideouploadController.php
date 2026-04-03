@@ -329,7 +329,7 @@ class ParentvideouploadController extends BaseController
         $policy = $rows['policy'];
         $privacy_status = $rows['privacy_status'];
         $rows = $rows['rows'];
-
+        // dd($rows);
         $menus = $this->FillMenu();
         $screens = $menus['screens'];
         $modules = $menus['modules'];

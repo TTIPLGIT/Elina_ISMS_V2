@@ -219,7 +219,7 @@ class activityInitiationController extends BaseController
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
-                    // dd($lastactivity1);
+                    // dd($currentactivity);
                     // dd($datalist);
                     return view('activity_initiate.activityedit', compact('activity_materials_mapping', 'activity_materials', 'currentactivity', 'comments', 'lastactivity', 'rows', 'video_link', 'screens', 'modules', 'activity', 'lastactivity1', 'datalist'));
                 }
@@ -304,8 +304,8 @@ class activityInitiationController extends BaseController
                     // $work_flow_row =  $parant_data['work_flow_row'];
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
-                    $modules = $menus['modules'];  
-                    // dd($activity_materials);
+                    $modules = $menus['modules'];
+                    // dd($lastactivity);
                     return view('activity_initiate.activity_observation', compact('comments', 'lastactivity', 'rows', 'screens', 'modules', 'activity', 'activity_set', 'activity_materials'));
                 }
             } else {
@@ -641,7 +641,7 @@ class activityInitiationController extends BaseController
             $data['Observation'] = $request->Observation;
             $data['materials'] = $selectedMaterials; // Assigning selected materials to your data array
             $data['actionf2f'] = $request->actionf2f;
-
+            // dd($data);
             $encryptArray = $this->encryptData($data);
             $actionBtn = $request->actionf2f;
             $value = $request->enrollment_id;
@@ -776,7 +776,7 @@ class activityInitiationController extends BaseController
             $data['Observation'] = $request->Observation_edit;
             $data['materials'] = $request->materials_edit; // Assigning selected materials to your data array
             $data['parent_video_id'] = $request->parent_video_id; // Assigning selected materials to your data array
-
+            // dd($data);
             $encryptArray = $this->encryptData($data);
             $actionBtn = $request->actionBtn;
             $value = $request->enrollment_id;

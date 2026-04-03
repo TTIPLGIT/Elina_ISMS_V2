@@ -10,7 +10,7 @@ class CustomizedPaymentAPIController extends BaseController
     public function index(Request $request)
     {
         $method = 'Method => CustomizedPaymentAPIController => index';
-        try {
+        try { 
             $rows = DB::select("SELECT ppc.id,ppc.final_amount, ed.child_name, ed.enrollment_id, ed.enrollment_child_num, ppcs.name AS category_name, 
             ppft.name AS fee_type FROM payment_process_customized AS ppc 
             INNER JOIN enrollment_details AS ed ON ed.enrollment_id = ppc.enrollment_id

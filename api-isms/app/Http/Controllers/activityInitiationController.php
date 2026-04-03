@@ -431,6 +431,19 @@ class activityInitiationController extends BaseController
                 ->join('enrollment_details as b', 'a.enrollment_id', '=', 'b.enrollment_id')
                 ->join('parent_video_upload as c', 'c.activity_initiation_id', '=', 'a.activity_initiation_id')
                 ->join('activity_description as ad', 'ad.activity_description_id', '=', 'c.activity_description_id')
+                ->leftJoin(DB::raw("
+    (SELECT t1.*
+     FROM sail_activity_vlog_comments t1
+     INNER JOIN (
+         SELECT 
+             MAX(comment_id) as max_id,
+             parent_video_upload_id
+         FROM sail_activity_vlog_comments
+         GROUP BY parent_video_upload_id
+     ) t2 
+     ON t1.comment_id = t2.max_id
+    ) as ss
+"), 'ss.parent_video_upload_id', '=', 'c.parent_video_upload_id')
                 ->leftJoin('face_to_face_observation as ff', 'ff.parent_video_id', '=', 'c.parent_video_upload_id')
                 ->where('b.user_id', $userID)
                 ->select(
@@ -452,7 +465,8 @@ class activityInitiationController extends BaseController
                     'c.physical_observation_result',
                     'c.required',
                     'c.save_status',
-                    'c.instruction'
+                    'c.instruction',
+                    'ss.observation as observation'
                 )
                 ->distinct()
                 ->orderBy('c.parent_video_upload_id')
@@ -460,16 +474,43 @@ class activityInitiationController extends BaseController
                 ->orderBy('ac.activity_id')
                 ->orderBy('ad.activity_description_id')
                 ->get();
-
             $currentactivity = DB::table('activity_initiation as a')
                 ->join('activity as ac', 'ac.activity_id', '=', 'a.activity_id')
                 ->join('enrollment_details as b', 'a.enrollment_id', '=', 'b.enrollment_id')
                 ->join('parent_video_upload as c', 'c.activity_initiation_id', '=', 'a.activity_initiation_id')
                 ->join('activity_description as ad', 'ad.activity_description_id', '=', 'c.activity_description_id')
                 ->leftJoin('face_to_face_observation as ff', 'ff.parent_video_id', '=', 'c.parent_video_upload_id')
+
+                // ✅ JOIN LATEST OBSERVATION
+                ->leftJoin(DB::raw("
+    (SELECT t1.*
+     FROM sail_activity_vlog_comments t1
+     INNER JOIN (
+         SELECT 
+             MAX(comment_id) as max_id,
+             activity_id,
+             activity_description_id,
+             enrollment_id,
+             parent_video_upload_id
+         FROM sail_activity_vlog_comments
+         GROUP BY 
+             activity_id,
+             activity_description_id,
+             enrollment_id,
+             parent_video_upload_id
+     ) t2 
+     ON t1.comment_id = t2.max_id
+    ) as savc
+"), function ($join) {
+                    $join->on('savc.parent_video_upload_id', '=', 'c.parent_video_upload_id')
+                        ->on('savc.activity_id', '=', 'a.activity_id')
+                        ->on('savc.activity_description_id', '=', 'ad.activity_description_id')
+                        ->on('savc.enrollment_id', '=', 'b.enrollment_id');
+                })
                 ->where('b.user_id', $userID)
                 ->whereIn('c.status', ['Submitted', 'Re-Sent'])
                 ->where('c.enableflag', 0)
+
                 ->select(
                     'save_status1',
                     'a.activity_id',
@@ -478,6 +519,10 @@ class activityInitiationController extends BaseController
                     'c.enableflag',
                     'c.save_status',
                     'c.comments',
+
+                    // ✅ FINAL OBSERVATION FIELD
+                    'savc.observation as observation',
+
                     'a.activity_initiation_id',
                     'ac.activity_name',
                     'ad.description',
@@ -491,12 +536,10 @@ class activityInitiationController extends BaseController
                     'c.physical_observation_name',
                     'c.physical_observation_result'
                 )
-                ->distinct()
                 ->orderBy('c.enableflag')
                 ->orderBy('ac.activity_id')
                 ->orderBy('ad.activity_description_id')
                 ->get();
-
             $active = $lastactivity[0]->activity_id ?? null;
 
             $comments = DB::table('latest_video_comments as lvc')
@@ -579,7 +622,7 @@ class activityInitiationController extends BaseController
             $activity_set = DB::table('activity')
                 ->where('active_flag', 0)
                 ->get();
-            $datalist = DB::select("SELECT DISTINCT  a.activity_id, c.f2f_flag , ff.* , c.enableflag , c.save_status , c.comments, a.activity_initiation_id, ac.activity_name , ad.description , a.last_modified_date ,c.status, c.parent_video_upload_id , ad.activity_description_id ,
+            $datalist = DB::select("SELECT DISTINCT  a.activity_id, c.f2f_flag , ff.* , c.enableflag , c.save_status , c.comments, a.activity_initiation_id, ac.activity_name , ad.description ,sail.observation, a.last_modified_date ,c.status, c.parent_video_upload_id , ad.activity_description_id ,
             lv.comments as parent_comment,av.video_link,c.coordinator_observation,c.head_observation,c.physical_observation_name,c.physical_observation_result FROM activity_initiation AS a
             INNER JOIN activity AS ac ON ac.activity_id=a.activity_id
             INNER JOIN enrollment_details AS b ON a.enrollment_id=b.enrollment_id
@@ -587,6 +630,7 @@ class activityInitiationController extends BaseController
             INNER JOIN activity_description AS ad ON ad.activity_description_id=c.activity_description_id
             LEFT JOIN face_to_face_observation AS ff ON ff.parent_video_id = c.parent_video_upload_id
             INNER JOIN activity_parent_video_upload as av ON av.parent_video_upload_id = c.parent_video_upload_id
+            INNER JOIN sail_activity_vlog_comments as sail ON sail.parent_video_upload_id = c.parent_video_upload_id
             LEFT JOIN latest_video_comments as lv on lv.parent_video_upload_id=c.parent_video_upload_id
             WHERE a.enrollment_id=$enNum and c.enableflag=0  GROUP BY ad.activity_description_id ORDER BY ac.activity_id ASC ");
             // Initialize an empty array to store the transformed data
@@ -697,15 +741,17 @@ class activityInitiationController extends BaseController
 
                     $en_id = $pvu[0]->Enrollment_id;
 
-                    DB::table('sail_activity_vlog_comments')->insertGetId([
-                        'activity_id' =>  $activity_data->activity_id,
-                        'activity_description_id' => $input['activity_description_id'],
-                        'observation' => $input['observation'],
-                        'enrollment_id' => $en_id,
-                        'created_at' => NOW(),
-                        'created_by' => $authID,
-                        'parent_video_upload_id' => $initiateID
-                    ]);
+                    DB::table('sail_activity_vlog_comments')->updateOrInsert(
+                        ['parent_video_upload_id' => $initiateID],
+                        [
+                            'activity_id' =>  $activity_data->activity_id,
+                            'activity_description_id' => $input['activity_description_id'],
+                            'observation' => $input['observation'],
+                            'enrollment_id' => $en_id,
+                            'created_at' => NOW(),
+                            'created_by' => $authID
+                        ]
+                    );
 
                     return $activity_data->activity_id;
                 }
@@ -1063,55 +1109,34 @@ class activityInitiationController extends BaseController
                             ->first();
 
                         if ($observation[$video] != null) {
-                            DB::table('sail_activity_vlog_comments')->insertGetId([
-                                'activity_id' =>  $activity_data->activity_id,
-                                'activity_description_id' => $activity_data->activity_description_id,
-                                'observation' => $observation[$video],
-                                'enrollment_id' => $enrollment_id,
-                                'created_at' => NOW(),
-                                'created_by' => $authID,
-                                'parent_video_upload_id' => $video,
-                            ]);
+                            DB::table('sail_activity_vlog_comments')->updateOrInsert(
+                                ['parent_video_upload_id' => $video],
+                                [
+                                    'activity_id' =>  $activity_data->activity_id,
+                                    'activity_description_id' => $activity_data->activity_description_id,
+                                    'observation' => $observation[$video],
+                                    'enrollment_id' => $enrollment_id,
+                                    'created_at' => NOW(),
+                                    'created_by' => $authID
+                                ]
+                            );
                         }
 
-
                         if ($comments[$video] != null) {
-                            // DB::table('latest_video_comments')->insertGetId([
-                            //     'activity_initiation_id' => $activity_initiation[$video],
-                            //     'parent_video_upload_id' => $video,
-                            //     'user_name' => auth()->user()->name,
-                            //     'active_status' => $approval_status[$video],
-                            //     'created_by' => $authID,
-                            //     'created_at' => NOW(),
-                            //     'comments' => $comments[$video],
-                            //     'role' => $role_name[0]->role_name
-                            // ]);
-                            if ($comments[$video] != null) {
-                                DB::table('latest_video_comments')->updateOrInsert(
-                                    [
-                                        'parent_video_upload_id' => $video,
-                                        'created_by' => $authID,
-                                        'active_status' => $approval_status[$video],
-                                    ],
-                                    [
-                                        'activity_initiation_id' => $activity_initiation[$video],
-                                        'user_name' => auth()->user()->name,
-                                        'created_at' => NOW(),
-                                        'comments' => $comments[$video],
-                                        'role' => $role_name[0]->role_name
-                                    ]
-                                );
-                            }
-
-                            DB::table('sail_activity_vlog_comments')->insertGetId([
-                                'activity_id' =>  $activity_data->activity_id,
-                                'activity_description_id' => $activity_data->activity_description_id,
-                                'observation' => $observation[$video],
-                                'enrollment_id' => $enrollment_id,
-                                'created_at' => NOW(),
-                                'created_by' => $authID,
-                                'parent_video_upload_id' => $video,
-                            ]);
+                            DB::table('latest_video_comments')->updateOrInsert(
+                                [
+                                    'parent_video_upload_id' => $video,
+                                    'created_by' => $authID,
+                                    'active_status' => $approval_status[$video],
+                                ],
+                                [
+                                    'activity_initiation_id' => $activity_initiation[$video],
+                                    'user_name' => auth()->user()->name,
+                                    'created_at' => NOW(),
+                                    'comments' => $comments[$video],
+                                    'role' => $role_name[0]->role_name
+                                ]
+                            );
                         }
 
                         $approval_status_des = $approval_status[$video];
@@ -1270,6 +1295,26 @@ class activityInitiationController extends BaseController
                     DB::table('parent_video_upload')
                         ->where('parent_video_upload_id', $video)
                         ->update($updateData);
+
+
+                    if ($observation[$video] != null) {
+                        $activity_data = DB::table('parent_video_upload')
+                            ->select('activity_description_id', 'activity_id')
+                            ->where('parent_video_upload_id', $video)
+                            ->first();
+
+                        DB::table('sail_activity_vlog_comments')->updateOrInsert(
+                            ['parent_video_upload_id' => $video],
+                            [
+                                'activity_id' =>  $activity_data->activity_id,
+                                'activity_description_id' => $activity_data->activity_description_id,
+                                'observation' => $observation[$video],
+                                'enrollment_id' => $enrollment_id,
+                                'created_at' => NOW(),
+                                'created_by' => $authID
+                            ]
+                        );
+                    }
 
 
                     if ($comments[$video] != null) {
@@ -1435,7 +1480,7 @@ class activityInitiationController extends BaseController
 
                 // ✅ STEP 1: Check / Insert into activity_initiation
                 $exists = DB::table('activity_initiation')
-                    ->where('user_id', $authID)
+                    // ->where('user_id', $authID)
                     ->where('enrollment_id', $enrollmentID)
                     ->where('activity_id', $activity_id)
                     ->exists();
@@ -1449,7 +1494,8 @@ class activityInitiationController extends BaseController
                         'created_by' => $authID,
                         'created_date' => now(),
                         'last_modified_by' => $authID,
-                        'last_modified_date' => now()
+                        'last_modified_date' => now(),
+                        'action_flag' =>1
                     ]);
                 }
 
@@ -1595,6 +1641,12 @@ class activityInitiationController extends BaseController
                 'parent_video_id' => $inputArray['parent_video_id'],
 
             ];
+            $this->WriteFileLog($input);
+            $enrollment_id = $inputArray['enrollment_id'];
+            $parts = explode('/', $enrollment_id);
+            $extracted_number = end($parts);
+            $this->WriteFileLog($extracted_number);
+
             DB::transaction(function () use ($input) {
 
                 // New
@@ -1618,8 +1670,18 @@ class activityInitiationController extends BaseController
                     ->where('Enrollment_id', $en_id)
                     ->update([
                         'comments' => (isset($observation) ? $observation : ''), // Add the 'comments' field
+                        'status' => "Completed"
                     ]);
             });
+
+            if (!empty($inputArray['Observation'])) {
+                $this->WriteFileLog("Hey");
+                DB::table('activity_initiation')
+                    ->where('enrollment_id', $extracted_number)
+                    ->where('activity_id', $inputArray['activity_id'])
+                    // ->where('activity_description_id', $inputArray['descriptionID'])
+                    ->update(['status' => 'Completed']);
+            }
 
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');

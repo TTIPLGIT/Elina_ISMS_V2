@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\File;
 use PDF;
 use Dompdf;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\DB;
 
 class ovm1Controller extends BaseController
 {
@@ -299,7 +300,7 @@ class ovm1Controller extends BaseController
 
                         $menus = $this->FillMenu();
                         $screens = $menus['screens'];
-                        $modules = $menus['modules']; 
+                        $modules = $menus['modules'];
                         return view('ovm1.show', compact('cc', 'rows', 'users', 'screens', 'modules'));
                     }
                 } else {
@@ -446,7 +447,7 @@ class ovm1Controller extends BaseController
                     $fetchdata = $parant_data['fetchdata'];
                     $fetchdata1 = $parant_data['fetchdata1'];
                     $fetchdata2 = $parant_data['fetchdata2'];
-
+                    // dd($fetchdata2);
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
@@ -588,7 +589,7 @@ class ovm1Controller extends BaseController
                     $rows1 = $parant_data['rows1'];
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
-                    $modules = $menus['modules'];  
+                    $modules = $menus['modules'];
                     $editusername = 'IS Head';
                     return view('ovm1.ovmcompleted_edit', compact('rows', 'screens', 'modules', 'editusername', 'role', 'rolename', 'fetchdata1', 'fetchdata', 'questions', 'group', 'rows1'));
                 }
@@ -621,6 +622,7 @@ class ovm1Controller extends BaseController
             $originalTime = date('h:i A', strtotime($originalTime));
             $alert = $request->child_name . ' on ' . $request->meeting_startdate . ' ' . $originalTime;
             $type = $request->meeting_status;
+            $meeting_status = ($request->meeting_status === 'Accepted') ? 'Completed' : $request->meeting_status;
             $data = array();
             $data['id'] = $id;
             $data['enrollment_id'] = $request->enrollment_id;
@@ -634,7 +636,7 @@ class ovm1Controller extends BaseController
             $data['meeting_enddate'] = $request->meeting_enddate;
             $data['meeting_location'] = $request->meeting_location;
             $data['meeting_description'] = $request->meeting_description;
-            $data['meeting_status'] = $request->meeting_status;
+            $data['meeting_status'] =  $meeting_status;
             $data['meeting_starttime'] = $request->meeting_starttime;
             $data['meeting_endtime'] = $request->meeting_endtime;
             $data['is_coordinator1'] = $request->is_coordinator1;
@@ -647,7 +649,7 @@ class ovm1Controller extends BaseController
             $data['notes'] = $request->notes;
             $data['mail_cc'] = $request->mail_cc;
             $data['g2form_url'] = URL::signedRoute('g2form.signed', ['id' => encrypt($request->en_user)]);
-      
+            // dd($data);
             $encryptArray = $this->encryptData($data);
             $request = array();
             $request['requestData'] = $encryptArray;
@@ -1729,6 +1731,7 @@ class ovm1Controller extends BaseController
             $data['answer'] = $request->answer;
             $data['type'] = $request->type;
             $data['id'] = $request->enrollment_id;
+            // dd($data['answer']);
             $status = $data['type'];
             $encryptArray = $this->encryptData($data);
             $request = array();
@@ -1776,7 +1779,7 @@ class ovm1Controller extends BaseController
         $screens = $menus['screens'];
         $modules = $menus['modules'];
         $user_role = $modules['user_role'];
-
+        // dd($rows);
         if ($user_role == 'Parent') {
             return view('ovm1.g2formlist', compact('rows', 'modules', 'screens', 'user_id'));
         } else {

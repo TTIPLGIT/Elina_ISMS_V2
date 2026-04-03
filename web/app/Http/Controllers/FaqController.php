@@ -21,7 +21,6 @@ if ($objData->Code == 200) {
 $parant_data = json_decode(json_encode($objData->Data), true);
 $rows =  $parant_data['rows'];
 $one_row =  $parant_data['one_rows'];
-
 $gatewayURL = config('setting.api_gateway_url').'/login/background';
 $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
 $response = json_decode($response);

@@ -903,7 +903,7 @@ class QuestionCreationController extends BaseController
             $id = $this->decryptData($id);
             // $this->WriteFileLog($id);
 
-            $question = DB::select("SELECT qd.question , qd.question_field_name , qft.questionnaire_field_types_id, qd.question_details_id FROM question_details AS qd 
+            $question = DB::select("SELECT qd.question , qd.question_field_name , qft.questionnaire_field_types_id, qd.question_details_id, qd.question_description FROM question_details AS qd 
             INNER JOIN questionnaire_field_types AS qft ON qft.questionnaire_field_types_id=qd.questionnaire_field_types_id
             INNER JOIN questionnaire_details AS que ON que.questionnaire_details_id=qd.questionnaire_details_id
             WHERE qd.active_flag=1 AND qd.enable_flag=1 AND que.questionnaire_details_id=$id");

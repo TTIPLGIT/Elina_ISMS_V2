@@ -18,7 +18,7 @@ class CustomizedPaymentController extends BaseController
             // return view('paymentmaster.customized_payment.index', compact('modules', 'screens'));
 
             $gatewayURL = config('setting.api_gateway_url') . '/payment/customized/sail/index';
-            $response = $this->serviceRequest($gatewayURL, 'GET', '', $method);
+            $response = $this->serviceRequest($gatewayURL, 'GET', '', $method); 
 
             $response = json_decode($response);
             if ($response->Status == 200 && $response->Success) {

@@ -441,10 +441,10 @@
             },
 
             success: function(data) {
-
+             
                 if (data == 3 || data == 4 || data == 5) {
                     $('#edit_option' + id).show();
-                } else if (data == 6 || data == 7 || data == 12) {
+                } else if (data == 6 || data == 7 || data == 12 ) {
                     $('#edit_option' + id).hide();
                     $('#edit_sub_questions' + id).show();
                 } else if (data == 8) {
@@ -602,32 +602,34 @@
 
         var fieldtype = $('#field_type_id').val();
 
-        // alert(fieldtype);
         if (fieldtype == null || fieldtype == "") {
-            swal.fire("Please Select Question Type", "", "error");
+            Swal.fire("Please Select Question Type", "", "error");
             return false;
         }
 
         if (fieldtype == 9) {
             var header_title = $('#header_title').val();
             var header_description = $('#header_description').val();
+
             if (header_title == "" || header_title == null) {
                 if (header_description == "" || header_description == null) {
-                    swal.fire("No Data To Update", "", "error");
+                    Swal.fire("No Data To Update", "", "error");
                     return false;
                 }
             }
         } else {
             var field_question = $('#field_question').val();
+
             if (field_question == null || field_question == "") {
-                swal.fire("Please Enter Question", "", "error");
+                Swal.fire("Please Enter Question", "", "error");
                 return false;
             }
+
             if ($('#add_description').is(':checked')) {
                 var description = $('#question_description').val().trim();
 
                 if (description == "" || description == null) {
-                    swal.fire("Please Enter Question Description", "", "error");
+                    Swal.fire("Please Enter Question Description", "", "error");
                     return false;
                 }
             }
@@ -637,53 +639,67 @@
 
             var que = document.getElementsByName('options_questions[]');
             var QueLength = que.length;
-            // alert(QueLength);
 
             if (QueLength < 2) {
-                swal.fire("Required Two Option!", "", "error");
+                Swal.fire("Required Two Option!", "", "error");
                 return false;
             }
+
             for (i = 0; i < QueLength; i++) {
                 if (que[i].value == "") {
-                    swal.fire("Please Fill Option Field!", "", "error");
+                    Swal.fire("Please Fill Option Field!", "", "error");
                     return false;
                 }
             }
 
         } else if (fieldtype == 6 || fieldtype == 7 || fieldtype == 12) {
 
-
-            var Subque = document.getElementsByName('sub_question[]'); //console.log(Subque);
-            var SubLength = Subque.length; //alert(SubLength);
+            var Subque = document.getElementsByName('sub_question[]');
+            var SubLength = Subque.length;
 
             if (SubLength < 1) {
-                swal.fire("Required Two Question!", "", "error");
+                Swal.fire("Required Two Question!", "", "error");
                 return false;
             }
+
             for (i = 0; i < SubLength; i++) {
                 if (Subque[i].value == "") {
-                    swal.fire("Please Fill Sub Question Field!", "", "error");
+                    Swal.fire("Please Fill Sub Question Field!", "", "error");
                     return false;
                 }
             }
 
-            var queOpt = document.getElementsByName('sub_options[]'); //console.log(queOpt);
-            var QueOpLength = queOpt.length; //alert(QueOpLength);
+            var queOpt = document.getElementsByName('sub_options[]');
+            var QueOpLength = queOpt.length;
 
             if (QueOpLength < 2) {
-                swal.fire("Required Two Option!", "", "error");
+                Swal.fire("Required Two Option!", "", "error");
                 return false;
             }
+
             for (i = 0; i < QueOpLength; i++) {
                 if (queOpt[i].value == "") {
-                    swal.fire("Please Fill Option Field!", "", "error");
+                    Swal.fire("Please Fill Option Field!", "", "error");
                     return false;
                 }
             }
-
         }
-        // alert('End');
-        document.getElementById('add_Question').submit();
+
+        // ✅ FINAL CONFIRMATION
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to create this questionnaire?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Create",
+            cancelButtonText: "No",
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('add_Question').submit();
+            }
+        });
     }
 </script>
 <script type="application/javascript">

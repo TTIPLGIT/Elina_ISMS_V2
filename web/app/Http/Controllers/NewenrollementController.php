@@ -291,9 +291,9 @@ class NewenrollementController extends BaseController
         }
     }
 
-    public function show(Request $request , $id)
+    public function show(Request $request, $id)
     {
-       
+
         try {
             $method = 'Method => NewenrollementController => show';
             $gatewayURL = config('setting.api_gateway_url') . '/newenrollment/data_edit/' . $id;
@@ -315,11 +315,11 @@ class NewenrollementController extends BaseController
                     $sail = $parant_data['sail'];
                     $user_idEnc = $request->session()->get("userID");
                     $encUser = $this->encryptData($user_idEnc);
-                   
+
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
-                    return view('newenrollement.show', compact('encUser','sail','rows', 'screens', 'modules', 'knmabtelina_data', 'subparant_data'));
+                    return view('newenrollement.show', compact('encUser', 'sail', 'rows', 'screens', 'modules', 'knmabtelina_data', 'subparant_data'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));
@@ -442,6 +442,8 @@ class NewenrollementController extends BaseController
     {
         try {
             // dd($request);
+            $child_contact_phone = $request->full_phone;
+            $child_alter_phone   = $request->full_alt_phone;
             $btn = $request->btn_status;
             $method = 'Method =>  NewenrollementController => update_data';
             $folderPath = $request->child_contact_email;
@@ -484,15 +486,15 @@ class NewenrollementController extends BaseController
             $data['child_father_guardian_name'] = $request->child_father_guardian_name;
             $data['child_mother_caretaker_name'] = $request->child_mother_caretaker_name;
             $data['child_contact_email'] = $request->child_contact_email;
-            $data['child_contact_phone'] = $request->child_contact_phone;
+            $data['child_contact_phone'] = $child_contact_phone;
             $data['child_contact_address'] = $request->child_contact_address;
             $data['status'] = $request->btn_status;
             $data['services_from_elina'] = $request->services_from_elina;
             $data['how_knowabt_elina'] = $request->how_knowabt_elina;
             $data['consent_form'] = $output;
             $data['consent_aggrement'] = $request->consent_aggrement;
-            $data['child_alter_phone'] = $request->child_alter_phone;
-           
+            $data['child_alter_phone'] = $child_alter_phone;
+
             $encryptArray = $this->encryptData($data);
 
             $con = $request->consent_aggrement;

@@ -174,7 +174,7 @@ class ParentsQuestionnaireController extends BaseController
 				return $sendServiceResponse;
 			}
 
-			$question_details = DB::select("SELECT qd.question , qd.question_field_name , qft.questionnaire_field_types_id, qd.question_details_id FROM question_details AS qd 
+			$question_details = DB::select("SELECT qd.question , qd.question_field_name , qft.questionnaire_field_types_id, qd.question_details_id, qd.question_description FROM question_details AS qd 
 			LEFT JOIN questionnaire_field_types AS qft ON qd.questionnaire_field_types_id=qft.questionnaire_field_types_id
 			WHERE qd.questionnaire_details_id=15");
 
@@ -567,7 +567,7 @@ class ParentsQuestionnaireController extends BaseController
 			WHERE qi.questionnaire_initiation_id=$id");
 			// $this->WriteFileLog('1');
 			if ($check == []) {
-				$question = DB::select("SELECT qd.questionnaire_field_types_id ,question_details_id,question,question_field_name,questionnaire_description, qd.required, qd.other_option, qd.question_description FROM question_details AS qd 
+				$question = DB::select("SELECT qd.questionnaire_field_types_id ,qd.question_details_id,qd.question,qd.question_field_name,que.questionnaire_description, qd.required, qd.other_option, qd.question_description FROM question_details AS qd 
 				INNER JOIN questionnaire_field_types AS qft ON qft.questionnaire_field_types_id=qd.questionnaire_field_types_id
 				INNER JOIN questionnaire_details AS que ON que.questionnaire_details_id=qd.questionnaire_details_id
 				INNER JOIN questionnaire_initiation AS qi ON qi.questionnaire_id=que.questionnaire_id
@@ -716,7 +716,7 @@ class ParentsQuestionnaireController extends BaseController
 				$table_name = 'question_process';
 			}
 
-			$question = DB::select("SELECT qd.question , qd.question_field_name , qft.questionnaire_field_types_id, qd.question_details_id, qp.* ,  qd.required, qd.other_option FROM question_details AS qd 
+			$question = DB::select("SELECT qd.question , qd.question_field_name , qft.questionnaire_field_types_id, qd.question_details_id, qp.* ,  qd.required, qd.other_option, qd.question_description FROM question_details AS qd 
 				INNER JOIN questionnaire_field_types AS qft ON qft.questionnaire_field_types_id=qd.questionnaire_field_types_id
 				INNER JOIN questionnaire_details AS que ON que.questionnaire_details_id=qd.questionnaire_details_id
 				INNER JOIN questionnaire_initiation AS qi ON qi.questionnaire_id=que.questionnaire_id

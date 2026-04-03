@@ -309,7 +309,7 @@ return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getTra
 }
 
 public function delete($id)
-{
+{  
           $permission_data = $this->FillScreensByUser();
     $screen_permission = $permission_data[0];
     if(strpos($screen_permission['permissions'], 'Delete') !== false){

@@ -120,6 +120,16 @@
         flex: 1;
         min-width: 300px;
     }
+
+    .swal2-confirm {
+        background-color: #3085d6 !important;
+        border: none !important;
+    }
+
+    .swal2-cancel {
+        background-color: #d33 !important;
+        border: none !important;
+    }
 </style>
 
 <div class="main-content">
@@ -332,33 +342,29 @@
     });
 
     function submitForm() {
-        // Save TinyMCE content to textareas before submission
+        // Save TinyMCE content
         if (tinymce) {
             tinymce.triggerSave();
         }
 
         var age = $('.age').val();
-
         if (age == '') {
             Swal.fire("Please Select the Group", "", "error");
             return false;
         }
 
         var Category = $('.Category').val();
-
         if (Category == '') {
             Swal.fire("Please Select the Category", "", "error");
             return false;
         }
 
         var activity_name = $('#activity_name').val();
-
         if (activity_name == '') {
             Swal.fire("Please Enter Activity Name", "", "error");
             return false;
         }
 
-        // Check all description fields
         var allDescriptionsValid = true;
         var allInstructionsValid = true;
         var emptyDescriptionRows = [];
@@ -368,56 +374,58 @@
             var descriptionField = $(this).find('input[name="description[]"]');
             var instructionField = $(this).find('textarea[name="instruction[]"]');
 
-            // Check if description is empty
             if (descriptionField.val().trim() == '') {
                 allDescriptionsValid = false;
-                emptyDescriptionRows.push(index + 1); // +1 for human-readable row number
+                emptyDescriptionRows.push(index + 1);
             }
 
-            // Check if instruction is empty (TinyMCE content)
             if (instructionField.val().trim() == '') {
                 allInstructionsValid = false;
                 emptyInstructionRows.push(index + 1);
             }
         });
 
-        // Validate all descriptions
         if (!allDescriptionsValid) {
-            let rowNumbers = emptyDescriptionRows.join(', ');
             Swal.fire({
                 title: "Validation Error",
-                text: `Please fill in the Description for row(s): ${rowNumbers}`,
-                icon: "error",
-                confirmButtonColor: '#3085d6'
+                text: `Please fill in the Description for row(s): ${emptyDescriptionRows.join(', ')}`,
+                icon: "error"
             });
             return false;
         }
 
-        // Validate all instructions
         if (!allInstructionsValid) {
-            let rowNumbers = emptyInstructionRows.join(', ');
             Swal.fire({
                 title: "Validation Error",
-                text: `Please fill in the Instruction for row(s): ${rowNumbers}`,
-                icon: "error",
-                confirmButtonColor: '#3085d6'
+                text: `Please fill in the Instruction for row(s): ${emptyInstructionRows.join(', ')}`,
+                icon: "error"
             });
             return false;
         }
 
-        // Additional check: Make sure at least one field exists
         if ($('.multi-field').length === 0) {
             Swal.fire({
                 title: "Validation Error",
                 text: "Please add at least one description and instruction",
-                icon: "error",
-                confirmButtonColor: '#3085d6'
+                icon: "error"
             });
             return false;
         }
 
-        // Submit the form
-        document.getElementById('videouploadcreation').submit();
+        // ✅ FINAL CONFIRMATION
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to Create this activity?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Create",
+            cancelButtonText: "No",
+
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('videouploadcreation').submit();
+            }
+        });
     }
 </script>
 

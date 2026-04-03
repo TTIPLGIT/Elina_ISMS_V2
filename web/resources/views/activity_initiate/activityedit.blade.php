@@ -494,7 +494,7 @@
                         </thead>
                         <tbody>
                           @php $iteration = 0; @endphp
-                          @foreach($lastactivity as $key=>$data2)
+                          @foreach($lastactivity as $key=>$data2) 
                           @if($data2['activity_id'] == $row1['activity_id'])
                           @php $iteration = $iteration+1; @endphp
                           <tr>
@@ -506,8 +506,8 @@
                             <td>F2F</td>
                             @else
                             <td>{{$data2['status']}}</td>
-                            @endif
-                            <td>{{$data2['comments']}}</td>
+                            @endif 
+                            <td>{{$data2['observation']}}</td>
                             <td>
                               <div style="display: flex;">
                                 @if($data2['status'] == 'Complete' || $data2['status'] == 'Close')
@@ -731,7 +731,6 @@
     <input type="hidden" id="submit_type" name="submit_type">
     <input type="hidden" id="openID" name="openID">
 
-
     @foreach($currentactivity as $key => $data)
     <div class="modal fade cuModalPopup" id="cuModal{{$loop->iteration}}" role="dialog">
       <div class="modal-dialog modal-xl">
@@ -821,7 +820,6 @@
                         @endforeach
                       </div>
                     </div>
-
                     <div class="col-md-6">
                       @if($data['save_status1'] == 'Complete')
                       <div class="form-group" id="observationDiv{{$data['parent_video_upload_id']}}">
@@ -829,14 +827,14 @@
                         <div class="form-group" id="observationDiv{{$data['parent_video_upload_id']}}" style="display: none;">
                           @endif
                           <label class="control-label">Observation</label>
-                          <textarea class="form-control cuModaltextarea" style="background-color: #ffffff !important; color: #000000 !important;" name="observation[{{$data['parent_video_upload_id']}}]" id="observation{{$data['parent_video_upload_id']}}">{{$data['comments']}}</textarea>
+                          <textarea class="form-control cuModaltextarea" style="background-color: #ffffff !important; color: #000000 !important;" name="observation[{{$data['parent_video_upload_id']}}]" id="observation{{$data['parent_video_upload_id']}}">{{$data['observation'] ?? ''}}</textarea>
                         </div>
                       </div>
 
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="control-label">Comments for Parent</label>
-                          <textarea class="form-control cuModaltextarea" style="background-color: #ffffff !important; color: #000000 !important;" name="comments[{{$data['parent_video_upload_id']}}]" id="comments"></textarea>
+                          <textarea class="form-control cuModaltextarea" style="background-color: #ffffff !important; color: #000000 !important;" name="comments[{{$data['parent_video_upload_id']}}]" id="comments">{{$data['comments']}}</textarea>
                         </div>
                       </div>
                       <!-- F2F -->
@@ -1144,20 +1142,20 @@
                                 <span>{{$istDateTime}} - {{ $note_data['comments'] }}</span> <br><br>
                                 @endif
                                 @endforeach
+                                {{$data['comments']}}
                               </div>
                             </div>
-
                             <div class="col-md-6">
                               <div class="form-group" id="observationDiv{{$data['parent_video_upload_id']}}">
                                 <label class="control-label">Observation</label>
-                                <textarea class="form-control" name="observation" id="observation{{$data['parent_video_upload_id']}}">{{$data['observation']}}</textarea>
+                                <textarea class="form-control" name="observation" id="observation{{$data['parent_video_upload_id']}}">{{$data['observation'] ?? ''}}</textarea>
                               </div>
                             </div>
 
                             <div class="col-md-6">
                               <div class="form-group">
                                 <label class="control-label">Comments for Parent</label>
-                                <textarea class="form-control" name="comments" id="comments">{{$data['comments']}}</textarea>
+                                <textarea class="form-control" name="comments" id="comments"></textarea>
                               </div>
                             </div>
 
@@ -1287,7 +1285,7 @@
 
                               <div class="form-group">
                                 <label class="control-label">Observation</label>
-                                <textarea class="form-control" name="observation" id="observation{{$data['parent_video_upload_id']}}" readonly>{{$data['comments']}}</textarea>
+                                <textarea class="form-control" name="observation" id="observation{{$data['parent_video_upload_id']}}" readonly>{{$data['observation'] ?? ''}}</textarea>
                               </div>
 
                             </div>
@@ -1454,13 +1452,12 @@
                                   <tr>
                                     <th style="width: 5%;">Sl.No</th>
                                     <th style="width: 25%;">Activity Description</th>
-                                    <th style="width: 20%;">Comment</th>
+                                    <th style="width: 20%;">Observation</th>
                                     <th style="width: 10%;">Status</th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   @php
-                                  // Convert activities to array if it's an object
                                   $activitiesArray = is_object($activities) ? (array) $activities : $activities;
                                   @endphp
 
@@ -1470,21 +1467,21 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ is_object($item) ? ($item->description ?? 'N/A') : (is_array($item) ? ($item['description'] ?? 'N/A') : 'N/A') }}</td>
 
+                                    {{-- Observation column --}}
                                     <td>
                                       @php
-                                      $parent_comment = is_object($item) ? ($item->parent_comment ?? null) : (is_array($item) ? ($item['parent_comment'] ?? null) : null);
-                                      $parent_element = is_object($item) ? ($item->parent_element ?? null) : (is_array($item) ? ($item['parent_element'] ?? null) : null);
+                                      $observation = is_object($item)
+                                      ? ($item->observation ?? null)
+                                      : (is_array($item) ? ($item['observation'] ?? null) : null);
                                       @endphp
-                                      {{ $parent_comment ?? $parent_element ?? 'No comment' }}
-                                    </td>
-                                    <td>
-                                      {{$item->status}}
+                                      {{ $observation ?? 'No observation' }}
                                     </td>
 
+                                    <td>
+                                      {{ is_object($item) ? ($item->status ?? 'N/A') : (is_array($item) ? ($item['status'] ?? 'N/A') : 'N/A') }}
+                                    </td>
                                   </tr>
                                   @endforeach
-                                  @else
-
                                   @endif
                                 </tbody>
                               </table>

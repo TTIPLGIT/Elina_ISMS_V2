@@ -125,6 +125,7 @@ class BaseController extends Controller
                 $objTokenResponse = json_decode($tokenResponse);
                 $tokenType = $objTokenResponse->token_type;
                 $accessToken = $objTokenResponse->access_token;
+                // dd($accessToken);
                 //  dd($objTokenResponse);
                 session(['accessToken' => $accessToken]);
                 return 'Success';

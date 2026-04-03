@@ -118,7 +118,7 @@
         var activity_name = $('#activity_name').val();
 
         if ($.trim(activity_name) === "") {
-            swal.fire("Please Enter Activity Name", "", "error");
+            Swal.fire("Please Enter Activity Name", "", "error");
             return false;
         }
 
@@ -142,18 +142,30 @@
         });
 
         if (emptyDescriptionRows.length > 0) {
-
-            swal.fire({
+            Swal.fire({
                 title: "Validation Error",
                 text: "Please enter description for newly added row",
                 icon: "error",
                 confirmButtonColor: '#3085d6'
             });
-
             return false;
         }
 
-        document.getElementById('videouploadcreation').submit();
+        // ✅ Confirmation popup
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to Update this activity?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Update",
+            cancelButtonText: "No",
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('videouploadcreation').submit();
+            }
+        });
     }
 
     $('.multi-field-wrapper').each(function() {

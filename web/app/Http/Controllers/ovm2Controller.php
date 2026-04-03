@@ -34,14 +34,14 @@ class ovm2Controller extends BaseController
 
         $rows = json_decode(json_encode($objData->Data), true);
         $saveAlert = $rows['saveAlert'];
-        $attendee = $rows['attendee'];//dd($attendee);
-      
+        $attendee = $rows['attendee']; //dd($attendee);
+
         $attendeecount = count($attendee);
         $arr = array();
-        for($i = 0; $i < $attendeecount; $i++){
+        for ($i = 0; $i < $attendeecount; $i++) {
             array_push($arr, $attendee[$i]['ovm_id']);
         }
-        
+
         $attendeeStatus = $rows['attendeeStatus'];
         $log = $rows['log'];
         $rows = $rows['rows'];
@@ -59,7 +59,7 @@ class ovm2Controller extends BaseController
         $screens = $menus['screens'];
         $modules = $menus['modules'];
 
-        return view('ovm2.index', compact('arr','attendee','attendeeStatus','log','saveAlert','menus', 'screens', 'modules', 'rows', 'user_id'));
+        return view('ovm2.index', compact('arr', 'attendee', 'attendeeStatus', 'log', 'saveAlert', 'menus', 'screens', 'modules', 'rows', 'user_id'));
 
 
 
@@ -102,11 +102,11 @@ class ovm2Controller extends BaseController
                     $modules = $menus['modules'];
                     $users = $parant_data['users'];
                     $default_cc = $parant_data['default_cc'];
-                    return view('ovm2.Newmeetinginvite2', compact('users','rows','email', 'screens', 'modules', 'iscoordinators', 'default_cc'));
+                    return view('ovm2.Newmeetinginvite2', compact('users', 'rows', 'email', 'screens', 'modules', 'iscoordinators', 'default_cc'));
                 }
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -146,7 +146,7 @@ class ovm2Controller extends BaseController
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -167,7 +167,7 @@ class ovm2Controller extends BaseController
             $foldername = $request->enrollment_id;
             $originalTime = $request->meeting_starttime;
             $originalTime = date('h:i A', strtotime($originalTime));
-            $alert = $request->child_name.' on '.$request->meeting_startdate.' '.$originalTime;
+            $alert = $request->child_name . ' on ' . $request->meeting_startdate . ' ' . $originalTime;
             $type = $request->meeting_status;
             $storagePath = public_path() . '/ovm2_attachments/' . $foldername;
             $storagePath1 = 'ovm2_attachments/' . $foldername;
@@ -178,13 +178,13 @@ class ovm2Controller extends BaseController
                 }
                 $imageFile = $request->file('file');
                 //    
-                $findString = array(' ', '&','(',')',"'");
-                $replaceString = array('_', '_','_','','');
+                $findString = array(' ', '&', '(', ')', "'");
+                $replaceString = array('_', '_', '_', '', '');
                 $imageName = str_replace($findString, $replaceString, $imageFile->getClientOriginalName());
                 // 
                 // $imageName = $imageFile->getClientOriginalName();
                 $imageFile->move($storagePath, $imageName);
-            }else{
+            } else {
                 $imageName = '';
             }
 
@@ -220,16 +220,16 @@ class ovm2Controller extends BaseController
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
-                    if($type == 'Sent'){
-                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting Scheduled Successfully for '.$alert);
-                    }elseif($type == 'Reschedule'){
-                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting has been Rescheduled for '.$alert);
-                    }elseif($type == 'Completed'){
-                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting has been Completed for '.$alert);
-                    }elseif($type == 'Declined'){
-                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting '.$alert.' has been declined');
-                    }else{
-                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting has been Updated for '.$alert);
+                    if ($type == 'Sent') {
+                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting Scheduled Successfully for ' . $alert);
+                    } elseif ($type == 'Reschedule') {
+                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting has been Rescheduled for ' . $alert);
+                    } elseif ($type == 'Completed') {
+                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting has been Completed for ' . $alert);
+                    } elseif ($type == 'Declined') {
+                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting ' . $alert . ' has been declined');
+                    } else {
+                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting has been Updated for ' . $alert);
                     }
                     // return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting Scheduled Successfully');
                 }
@@ -243,7 +243,7 @@ class ovm2Controller extends BaseController
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -275,7 +275,7 @@ class ovm2Controller extends BaseController
                     $users = $parant_data['users'];
 
                     $rows = $parant_data['rows'];
-                    $cc = explode("," , $rows[0]['mail_cc']);
+                    $cc = explode(",", $rows[0]['mail_cc']);
                     $rows[0]['is_coordinator1'] = json_decode($rows[0]['is_coordinator1'], true);
                     $rows[0]['is_coordinator2'] = json_decode($rows[0]['is_coordinator2'], true);
 
@@ -284,7 +284,7 @@ class ovm2Controller extends BaseController
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
-                    return view('ovm2.show', compact('cc','users','rows', 'screens', 'modules'));
+                    return view('ovm2.show', compact('cc', 'users', 'rows', 'screens', 'modules'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));
@@ -324,7 +324,7 @@ class ovm2Controller extends BaseController
                     $parant_data = json_decode(json_encode($objData->Data), true);
                     $users = $parant_data['users'];
                     $rows = $parant_data['rows'];
-                    $cc = explode("," , $rows[0]['mail_cc']);
+                    $cc = explode(",", $rows[0]['mail_cc']);
                     $attachment = $parant_data['attachment'];
                     $parentID = $parant_data['parentID'];
                     $iscoordinators = $parant_data['iscoordinators'];
@@ -335,7 +335,7 @@ class ovm2Controller extends BaseController
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
 
-                    return view('ovm2.edit', compact('parentID','cc','users','iscoordinators', 'rows', 'screens', 'modules', 'attachment'));
+                    return view('ovm2.edit', compact('parentID', 'cc', 'users', 'iscoordinators', 'rows', 'screens', 'modules', 'attachment'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));
@@ -346,7 +346,7 @@ class ovm2Controller extends BaseController
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -360,8 +360,6 @@ class ovm2Controller extends BaseController
      */
     public function update(Request $request, $id)
     {
-
-
         try {
             $user_id = $request->session()->get("userID");
             // dd($request);
@@ -369,7 +367,7 @@ class ovm2Controller extends BaseController
             $originalTime = $request->meeting_starttime;
             $originalTime = date('h:i A', strtotime($originalTime));
             $foldername = $request->attachmentID;
-            $alert = $request->child_name.' on '.$request->meeting_startdate.' '.$originalTime;
+            $alert = $request->child_name . ' on ' . $request->meeting_startdate . ' ' . $originalTime;
             $type = $request->meeting_status;
             $storagePath = public_path() . '/ovm2_attachments/' . $foldername;
             $doc_storagePath = 'ovm2_attachments/' . $foldername;
@@ -380,8 +378,8 @@ class ovm2Controller extends BaseController
                 }
                 $imageFile = $request->file('file');
                 //    
-                $findString = array(' ', '&','(',')',"'");
-                $replaceString = array('_', '_','_','','');
+                $findString = array(' ', '&', '(', ')', "'");
+                $replaceString = array('_', '_', '_', '', '');
                 $imageName = str_replace($findString, $replaceString, $imageFile->getClientOriginalName());
                 // 
                 // $imageName = $imageFile->getClientOriginalName();
@@ -392,6 +390,7 @@ class ovm2Controller extends BaseController
             }
             // dd($attachmentPath);
             $url = URL::signedRoute('signed.sail.initiate', ['user_id' => $this->encryptData($request->parentID)]);
+            $meeting_status = ($request->meeting_status === 'Accepted') ? 'Completed' : $request->meeting_status;
             $data = array();
             $data['url'] = $url;
             $data['id'] = decrypt($id);
@@ -411,12 +410,12 @@ class ovm2Controller extends BaseController
             $data['meeting_endtime'] = $request->meeting_endtime;
             $data['is_coordinator1'] = $request->is_coordinator1;
             $data['is_coordinator2'] = $request->is_coordinator2;
-            $data['meeting_status'] = $request->meeting_status;
+            $data['meeting_status'] = $meeting_status ;
             $data['type'] = $request->type;
             $data['user_id'] = $user_id;
             $data['attachment'] = $attachmentPath;
             $data['notes'] = $request->notes;
-            $data['mail_cc']= $request->mail_cc;
+            $data['mail_cc'] = $request->mail_cc;
             // if ($request->meeting_status === "Completed") {
             //     if ($request->hasFile('ovmattach')) {
             //         $storagePath = public_path() . '/ovmattach';
@@ -442,16 +441,16 @@ class ovm2Controller extends BaseController
                 $objData = json_decode($this->decryptData($response1->Data));
 
                 if ($objData->Code == 200) {
-                    if($type == 'Sent'){
-                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting Scheduled Successfully for '.$alert);
-                    }elseif($type == 'Reschedule'){
-                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting has been Rescheduled for '.$alert);
-                    }elseif($type == 'Completed'){
-                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting has been Completed for '.$alert);
-                    }elseif($type == 'Declined'){
-                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting '.$alert.' has been declined');
-                    }else{
-                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting has been Updated for '.$alert);
+                    if ($type == 'Sent') {
+                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting Scheduled Successfully for ' . $alert);
+                    } elseif ($type == 'Reschedule') {
+                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting has been Rescheduled for ' . $alert);
+                    } elseif ($type == 'Completed') {
+                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting has been Completed for ' . $alert);
+                    } elseif ($type == 'Declined') {
+                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting ' . $alert . ' has been declined');
+                    } else {
+                        return redirect(route('ovm2.index'))->with('success', 'OVM-2 Meeting has been Updated for ' . $alert);
                     }
                     // return redirect(route('ovm2.index'))->with('success', 'Meeting Invite Updated Successfully');
                 }
@@ -483,13 +482,13 @@ class ovm2Controller extends BaseController
                 if ($objData->Code == 200) {
                     $parant_data = json_decode(json_encode($objData->Data), true);
                     $rows = $parant_data['rows'];
-                    $cc = explode("," , $rows[0]['mail_cc']);
+                    $cc = explode(",", $rows[0]['mail_cc']);
                     $users = $parant_data['users'];
                     $attachment = $parant_data['attachment'];
                     $parentID = $parant_data['parentID'];
                     $attendee = $parant_data['attendee'];
                     $attendeeID = [];
-                    foreach($attendee as $attendees){
+                    foreach ($attendee as $attendees) {
                         array_push($attendeeID, $attendees['attendee']);
                     }
                     $authID = session()->get("userID"); //dd($authID , $rows);
@@ -500,14 +499,10 @@ class ovm2Controller extends BaseController
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
-                    if($rows[0]['meeting_status'] == "Completed")
-                    {
-                        return view('ovm2.show', compact('cc','users','rows', 'screens', 'modules'));
-
-                    }
-                    else
-                    {
-                        return view('ovm2.ovmsent2', compact('parentID','attendeeID','cc','users','attachment','attendee','rows', 'authID', 'screens', 'modules'));
+                    if ($rows[0]['meeting_status'] == "Completed") {
+                        return view('ovm2.show', compact('cc', 'users', 'rows', 'screens', 'modules'));
+                    } else {
+                        return view('ovm2.ovmsent2', compact('parentID', 'attendeeID', 'cc', 'users', 'attachment', 'attendee', 'rows', 'authID', 'screens', 'modules'));
                     }
                 }
             } else {
@@ -519,7 +514,7 @@ class ovm2Controller extends BaseController
                 exit;
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }
@@ -555,7 +550,7 @@ class ovm2Controller extends BaseController
                 }
             }
         } catch (\Exception $exc) {
-            
+
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
     }

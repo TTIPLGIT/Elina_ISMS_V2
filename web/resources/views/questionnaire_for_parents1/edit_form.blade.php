@@ -215,8 +215,15 @@
 
     .table_content td {
         padding: 12px 15px;
-        text-align: left !important;
+        text-align: center !important;
         font-size: 16px;
+    }
+
+    .stickTd {
+        position: sticky;
+        left: 0;
+        background: #f5f5f5;
+        text-align: left !important;
     }
 
     .table_content th {
@@ -1006,10 +1013,10 @@
                 var fieldOptions = response.fieldOptions;
                 var fieldQuestions = response.fieldQuestions;
                 var radioButtonHtml = '<div class="col-md-12 divClass" id="div' + fieldName + '"><div class="form-group pagination-element' + num + '">';
-                radioButtonHtml += '<label class="control-label ' + (requiredQuestion == 1 ? ' required' : '') + '">' + questionNum + ' . ' + fieldLabel + '</label><br>'; //Sub Question Radio
+                radioButtonHtml += '<label style="text-align: left; display: block;" class="control-label ' + (requiredQuestion == 1 ? ' required' : '') + '">' + questionNum + ' . ' + fieldLabel + '</label><br>'; //Sub Question Radio
                 radioButtonHtml += '<table class="table_content">';
                 radioButtonHtml += '<tr>';
-                radioButtonHtml += '<th width="30%"></th>';
+                radioButtonHtml += '<th class="stickTd" width="30%"></th>';
                 for (let index = 0; index < fieldOptions.length; index++) {
                     const question_details_id = fieldOptions[index]['question_details_id'];
                     const option_field_name = fieldOptions[index]['option_for_question'];
@@ -1028,7 +1035,7 @@
                     // radioButtonHtml += '<div>'
                     if (question_details_id == fieldID) {
                         radioButtonHtml += '<tr>';
-                        radioButtonHtml += '<td>' + sub_question + '</td>';
+                        radioButtonHtml += '<td class="stickTd">' + sub_question + '</td>';
                         for (let index = 0; index < fieldOptions.length; index++) {
                             const question_details_id = fieldOptions[index]['question_details_id'];
                             const option_field_name = fieldOptions[index]['option_for_question'];
@@ -1096,6 +1103,11 @@
                 var radioButtonHtml = '<div class="col-md-12 pagination-element' + num + '" style="background-color: rgb(218, 178, 55);font-weight: 900;font-size: 20px;">';
                 radioButtonHtml += '<label class="control-label">' + fieldLabel + '</label><br>';
 
+                var headerDescription = DataFields[index]['header_description'] || DataFields[index]['description'] || DataFields[index]['question_description'] || '';
+                if (headerDescription) {
+                    radioButtonHtml += '<label>' + headerDescription + '</label>';
+                }
+
                 for (let index = 0; index < response.length; index++) {
                     var question_details_id = response[index]['question_details_id'];
                     var option_field_name = response[index]['option_for_question'];
@@ -1114,10 +1126,10 @@
                 var fieldOptions = response.fieldOptions;
                 var fieldQuestions = response.fieldQuestions;
                 var radioButtonHtml = '<div class="col-md-12 divClass" id="div' + fieldName + '"><div class="form-group pagination-element' + num + '">';
-                radioButtonHtml += '<label class="control-label ' + (requiredQuestion == 1 ? ' required' : '') + '">' + questionNum + ' . ' + fieldLabel + '</label><br>'; //Sub Question Radio
+                radioButtonHtml += '<label style="text-align: left; display: block;" class="control-label ' + (requiredQuestion == 1 ? ' required' : '') + '">' + questionNum + ' . ' + fieldLabel + '</label><br>'; //Sub Question Radio
                 radioButtonHtml += '<table class="table_content">';
                 radioButtonHtml += '<tr>';
-                radioButtonHtml += '<th width="30%"></th>';
+                radioButtonHtml += '<th class="stickTd" width="30%"></th>';
                 for (let index = 0; index < fieldOptions.length; index++) {
                     const question_details_id = fieldOptions[index]['question_details_id'];
                     const option_field_name = fieldOptions[index]['option_for_question'];
@@ -1136,7 +1148,7 @@
                     var obj = JSON.parse(questionValue || null);
                     if (question_details_id == fieldID) {
                         radioButtonHtml += '<tr>';
-                        radioButtonHtml += '<td>' + sub_question + '</td>';
+                        radioButtonHtml += '<td class="stickTd">' + sub_question + '</td>';
                         for (let index = 0; index < fieldOptions.length; index++) {
                             const question_details_id = fieldOptions[index]['question_details_id'];
                             const option_field_name = fieldOptions[index]['option_for_question'];
