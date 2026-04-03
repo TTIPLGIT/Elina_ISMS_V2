@@ -22,6 +22,34 @@
                   <label class="control-label">Questions</label>
                   <input class="form-control" type="text" id="edit_field_question" name="edit_field_question" value="{{$data['question']}}" autocomplete="off">
                 </div>
+                @if($data['questionnaire_field_types_id'] == 9)
+                <div class="form-group questionnaire">
+                  <label class="control-label">Description</label>
+                  @php
+                    $desc = !empty($data['header_description']) ? $data['header_description'] : 
+                           (!empty($data['description']) ? $data['description'] : 
+                           (!empty($data['question_description']) ? $data['question_description'] : ''));
+                    
+                    if (empty($desc)) {
+                        foreach($option_question_fields as $opt) {
+                            if($opt['question_details_id'] == $data['question_details_id']) {
+                                $desc = $opt['option_for_question'];
+                                break;
+                            }
+                        }
+                    }
+                    if (empty($desc)) {
+                        foreach($options as $opt) {
+                            if (isset($opt['question_details_id']) && $opt['question_details_id'] == $data['question_details_id']) {
+                                $desc = $opt['option'] ?? ($opt['option_for_question'] ?? '');
+                                break;
+                            }
+                        }
+                    }
+                  @endphp
+                  <input class="form-control" type="text" id="description" name="description" value="{{$desc}}" autocomplete="off">
+                </div>
+                @endif
               </div>
               <input type="hidden" name="client_data" value="{{$questionnaire_list[0]['questionnaire_details_id']}}">
               <input type="hidden" value="{{$data['questionnaire_field_types_id']}}" name="edit_field_types_id" id="edit_field_types_id">

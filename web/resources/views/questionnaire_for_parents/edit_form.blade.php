@@ -9,6 +9,10 @@
         /* padding-bottom: 10px; */
     }
 
+    .multi-question {
+        text-align: left;
+    }
+
     #questionnaire-intro-img img {
         max-width: 100%;
         height: auto;
@@ -200,16 +204,36 @@
 </style>
 <style>
     .multi-question {
-        text-align: center;
         width: 100%;
         overflow-x: scroll;
         overflow-y: hidden;
+    }
+
+    .multi-question table {
+        margin-left: 0;
+        margin-right: auto;
+    }
+
+    .multi-question table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .multi-question table th {
+        text-align: center;
+    }
+
+    .multi-question table td input[type="radio"],
+    .multi-question table td input[type="checkbox"] {
+        margin: 0 auto;
+        display: inline-block;
     }
 
     .stickTd {
         position: sticky;
         left: 0;
         background: #f5f5f5;
+        text-align: left !important;
     }
 
     .inputError {
@@ -1136,6 +1160,11 @@
                 var response = fieldOptionsDB;
                 var radioButtonHtml = '<div class="col-md-12 pagination-element' + num + '" style="background-color: rgb(218, 178, 55);font-weight: 900;font-size: 20px;">';
                 radioButtonHtml += '<label class="control-label">' + fieldLabel + '</label><br>';
+
+                var headerDescription = DataFields[index]['header_description'] || DataFields[index]['description'] || DataFields[index]['question_description'] || '';
+                if (headerDescription) {
+                    radioButtonHtml += '<label>' + headerDescription + '</label>';
+                }
 
                 for (let index = 0; index < response.length; index++) {
                     var question_details_id = response[index]['question_details_id'];

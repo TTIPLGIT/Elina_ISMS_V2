@@ -500,7 +500,7 @@ class ParentsQuestionnaireController extends BaseController
 					$screens = $menus['screens'];
 					$modules = $menus['modules'];
 					$user_role = $modules['user_role'];
-
+					// dd($question);
 					if ($role == 'Parent') {
 						return view('questionnaire_for_parents.submitted_form', compact('enrollmentDetails', 'questionDetails', 'fieldOptionsDB', 'fieldQuestionsDB', 'role', 'questionnaire_initiation_id', 'screens', 'modules', 'question_details', 'question'));
 					} else {

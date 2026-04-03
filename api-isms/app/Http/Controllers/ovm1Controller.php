@@ -3313,10 +3313,10 @@ class ovm1Controller extends BaseController
             if ($event_id) {
                 if ($type == 'ovm1') {
                     $eventDetails = DB::select("SELECT * FROM ovm_meeting_details WHERE event_id = ?", [$event_id]);
-                    $ovmType = 'OVM 1';
+                    $ovmType = '';
                 } else {
                     $eventDetails = DB::select("SELECT * FROM ovm_meeting_2_details WHERE event_id = ?", [$event_id]);
-                    $ovmType = 'OVM 2';
+                    $ovmType = '';
                 }
 
                 if (!empty($eventDetails)) {

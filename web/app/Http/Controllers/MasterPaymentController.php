@@ -38,7 +38,7 @@ class MasterPaymentController extends BaseController
                     $logs = $parant_data['logs'];
                     $schools = $parant_data['school'];
                     // dd($parant_data);
-                    $menus = $this->FillMenu();
+                    $menus = $this->FillMenu(); 
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
                     return view('paymentmaster.index', compact('user_id', 'modules', 'screens', 'rows', 'logs','schools'));

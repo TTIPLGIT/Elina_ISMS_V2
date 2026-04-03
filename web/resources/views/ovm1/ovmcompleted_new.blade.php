@@ -531,16 +531,7 @@
         }
 
         function correctPronounCase(text, gender) {
-            if (!text || typeof text !== 'string') return text;
-
-            var lower = (gender === 'Male') ? 'he' : 'she';
-            var upper = (gender === 'Male') ? 'He' : 'She';
-
-            return text.replace(/\b(he|she)\b/gi, function(match, offset) {
-                var isStart = offset === 0 ||
-                    /[.!?]\s*$/.test(text.substring(0, offset));
-                return isStart ? upper : lower;
-            });
+            return text;
         }
 
         function appendField(selector, value) {

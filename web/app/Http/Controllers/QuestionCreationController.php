@@ -228,8 +228,8 @@ class QuestionCreationController extends BaseController
             } else if ($field_type_id == 9) {
                 $data['header_title'] = $request->header_title;
                 $data['header_description'] = $request->header_description;
-            } 
-
+            }
+           
             $encryptArray = $this->encryptData($data);
             $request = array();
 
@@ -347,9 +347,17 @@ class QuestionCreationController extends BaseController
             $data = array();
             $data['question_id'] = $this->decryptData($id);
             $data['field_type_id'] = $request->edit_field_types_id;
-            $data['field_question'] = $request->edit_field_question;
+            if ($edit_field_types_id == 9) {
+                $data['header_title'] = $request->edit_field_question;
+                $data['header_description'] = $request->description;
+                $data['field_question'] = "";
+                $data['question_description'] = "";
+            } else {
+                $data['field_question'] = $request->edit_field_question;
+                $data['question_description'] = $request->edit_question_description;
+            }
             $data['sub_questions'] = $request->sub_questions;
-            if ($edit_field_types_id == 7 || $edit_field_types_id == 6) {
+            if ($edit_field_types_id == 7 || $edit_field_types_id == 6 || $edit_field_types_id == 12) {
                 $data['options'] = $request->edit_sub_options;
             } else {
                 $data['options'] = $request->options_question;

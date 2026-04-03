@@ -219,8 +219,15 @@
 
     .table_content td {
         padding: 12px 15px;
-        text-align: left !important;
+        text-align: center !important;
         font-size: 16px;
+    }
+
+    .stickTd {
+        position: sticky;
+        left: 0;
+        background: #f5f5f5;
+        text-align: left !important;
     }
 
     .table_content th {
@@ -730,7 +737,7 @@
                 questionIndex++
                 var questionNum = questionIndex;
             } else {
-                var questionNum = questionIndex;
+                var questionNum = '';
             }
             if (fieldTypeID == 1) {
                 var textboxHtml = '<div class="col-md-12 divClass" id="div' + fieldName + '"><div class="form-group pagination-element' + num + '">';
@@ -1004,6 +1011,11 @@
                 var response = fieldOptionsDB;
                 var radioButtonHtml = '<div class="col-md-12 pagination-element' + num + '" style="background-color: rgb(218, 178, 55);font-weight: 900;font-size: 20px;">';
                 radioButtonHtml += '<label class="control-label">' + fieldLabel + '</label><br>';
+
+                var headerDescription = DataFields[index]['header_description'] || DataFields[index]['description'] || DataFields[index]['question_description'] || '';
+                if (headerDescription) {
+                    radioButtonHtml += '<label>' + headerDescription + '</label>';
+                }
 
                 for (let index = 0; index < response.length; index++) {
                     var question_details_id = response[index]['question_details_id'];

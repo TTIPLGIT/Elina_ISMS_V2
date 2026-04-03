@@ -85,7 +85,7 @@ class ServiceBriefingController extends BaseController
                     $serviceList = $parant_data['serviceList'];
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
-                    $modules = $menus['modules'];
+                    $modules = $menus['modules']; 
                     return view('service_briefing.create', compact('user_id', 'modules', 'screens', 'serviceList'));
                     //
                 }

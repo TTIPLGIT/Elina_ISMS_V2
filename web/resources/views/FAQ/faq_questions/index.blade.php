@@ -125,7 +125,7 @@
                            @if(strpos($screen_permission['permissions'], 'Delete') !== false)
                            <input type="hidden" name="delete_id" id="<?php echo $row['id']; ?>" value="{{ route('FAQ_questions.delete', \Crypt::encrypt($row['id'])) }}">
 
-                           <a class="btn btn-danger" style="color:aliceblue"  style="cursor: pointer;"  onclick="return myFunction(<?php echo $row['id']; ?>);" >{{ __('Delete') }}<span></span></a>
+                           <a class="btn btn-danger" style="color:aliceblue"  href="{{route('FAQ_questions.delete', \Crypt::encrypt($row['id']))}}"style="cursor: pointer;"  onclick="return myFunction(<?php echo $row['id']; ?>);" >{{ __('Delete') }}<span></span></a>
                            @endif
                           </form>
 

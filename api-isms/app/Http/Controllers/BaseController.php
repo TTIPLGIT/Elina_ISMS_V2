@@ -443,7 +443,7 @@ class BaseController extends Controller
                 $activePayment = DB::table('payment_process_masters')
                     ->where('fees_type_id', $feeType)
                     ->where('category_id', $paymentCategory)
-                    // ->where('school_enrollment_id', $schoolID)
+                    ->where('school_enrollment_id', $schoolID)
                     ->select('final_amount', 'id', 'base_amount', 'gst_rate')
                     ->first();
             } else {

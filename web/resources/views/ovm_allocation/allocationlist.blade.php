@@ -48,11 +48,11 @@
                             <table class="table table-bordered" id="align1">
                                 <thead>
                                     <tr>
-                                        <th>Sl.No</th>
-                                        <th>Enrollment ID(Child Name) </th>
-                                        <th>IS-Coordinator's</th>
+                                        <th class="col-1">Sl.No</th>
+                                        <th class="col-2">Enrollment ID(Child Name) </th>
+                                        <th class="col-3">IS-Coordinator's</th>
                                         <th>Allocation Date</th>
-                                        <th style="width: 76.641px;">Status</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>

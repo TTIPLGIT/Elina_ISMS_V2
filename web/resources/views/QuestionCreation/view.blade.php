@@ -813,12 +813,17 @@
                 var radioButtonHtml = '<div class="col-md-12 pagination-element' + num + '" style="background-color: rgb(218, 178, 55);font-weight: 900;font-size: 20px;">';
                 radioButtonHtml += '<label class="control-label">' + fieldLabel + '</label><br>';
 
+                var headerDescription = DataFields[index]['header_description'] || DataFields[index]['description'] || DataFields[index]['question_description'] || '';
+                if (headerDescription) {
+                    radioButtonHtml += '<label>' + headerDescription + '</label>';
+                }
+
                 for (let index = 0; index < response.length; index++) {
                     var question_details_id = response[index]['question_details_id'];
                     var option_field_name = response[index]['option_for_question'];
-                    if (question_details_id == fieldID){
-                        if(option_field_name != null)
-                        radioButtonHtml += '<label>' + option_field_name + '</label>';
+                    if (question_details_id == fieldID) {
+                        if (option_field_name != null)
+                            radioButtonHtml += '<label>' + option_field_name + '</label>';
                     }
                 }
                 radioButtonHtml += '</div>';

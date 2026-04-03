@@ -180,7 +180,7 @@
                   <!-- <td>
                       <input class="form-control" type="text" id="observation_result{{$row['parent_video_upload_id']}}" name="observation_result[{{$row['parent_video_upload_id']}}]" value="{{$row['comments']}}" autocomplete="off">
                     </td> -->
-                  <td>{{ $row['f2f_flag'] == 2 ? 'Saved' : ($row['f2f_flag'] == 1 ? 'Initiated' : '') }}</td>
+                  <td>{{ $row['f2f_flag'] == 2 ? 'Saved' : (isset($row['f2f_flag']) && ($row['comments']) != '' ? 'Completed' : 'Initiated') }}</td>
                   <td>
                     @if($row['f2f_flag'] == 2)
                     <a class="" title="Edit" id="edit" data-activity-id="{{$row['activity_id']}}" data-description-id="{{$row['activity_description_id']}}" onclick="openInitateModal(this.dataset.activityId, this.dataset.descriptionId)" style="padding-top: 6px;"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
@@ -622,7 +622,18 @@
           Swal.fire("Please enter To Observe", "", "error");
           return false;
         }
-        document.getElementById('formmeeting').submit();
+        Swal.fire({
+          title: "Are you sure?",
+          text: "Do you want to save this data?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, Save it!",
+          cancelButtonText: "No, Cancel",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            document.getElementById('formmeeting').submit();
+          }
+        });
       }
     }
 

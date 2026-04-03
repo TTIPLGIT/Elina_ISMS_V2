@@ -46,10 +46,10 @@
                         </select>
                     </td>
                     <td>
-                        <textarea style="width: 100% !important;" class="observationSelect addProducttext{{$page['page']}}" name="evidence[{{$page['assessment_skill']}}][]" oninput="checkCharCount(this)">{{$detail['evidence']}}</textarea>
+                        <textarea style="width: 100% !important;" class="observationSelect addProducttext{{$page['page']}}" name="evidence[{{$page['assessment_skill']}}][]" oninput="checkCharCount(this)" placeholder="Enter Evidence">{{$detail['evidence']}}</textarea>
                     </td>
                     <td style="display: flex;align-items: center;height: fit-content;">
-                        <textarea style="width: 100% !important;" class="form-control default" name="recommendation[{{$page['assessment_skill']}}][]" >{{$detail['recommendation']}}</textarea>
+                        <textarea style="width: 100% !important;" class="form-control default" name="recommendation[{{$page['assessment_skill']}}][]" placeholder="Enter Recommendation">{{$detail['recommendation']}}</textarea>
                         <a class="btn remove removeR" order="{{$page['page']}}" title="Add" id="removeProduct"><i class="fa fa-times" order="{{$page['page']}}"></i></a>
                     </td>
                 </tr>
@@ -177,10 +177,10 @@
                 </select>
             </td>
             <td>
-                <textarea style="width: 100% !important;" class="observationSelect" oninput="checkCharCount(this)" name="evidence[${assesmentSkillId}][]"></textarea>
+                <textarea style="width: 100% !important;" class="observationSelect" oninput="checkCharCount(this)" name="evidence[${assesmentSkillId}][]" placeholder="Enter Evidence"></textarea>
             </td>
             <td style="display: flex; align-items: center;">
-                <textarea class="form-control default" name="recommendation[${assesmentSkillId}][]" id="recommendation${activityId}" placeholder="Enter recommendation for this skill area..."></textarea>
+                <textarea class="form-control default" name="recommendation[${assesmentSkillId}][]" id="recommendation${activityId}" placeholder="Enter Recommendation"></textarea>
                 <a class="btn remove" title="Remove" onclick="this.closest('tr').remove()">
                     <i class="fa fa-times"></i>
                 </a>
