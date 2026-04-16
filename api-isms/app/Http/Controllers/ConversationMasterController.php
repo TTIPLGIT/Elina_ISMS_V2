@@ -12,7 +12,7 @@ class ConversationMasterController extends BaseController
         try {
 
             $method = 'Method => ConversationMasterController => getdata';
-            $rows = DB::select("SELECT * FROM conversation_questions WHERE type_id = $id");
+            $rows = DB::select("SELECT * FROM conversation_questions WHERE type_id = $id   AND active_flag = 1  AND enable_flag = 1");
             $group = DB::select("SELECT * FROM conversation_summery_groups WHERE active_flag = 1");
             $response = [
                 'rows' => $rows,
@@ -53,7 +53,7 @@ class ConversationMasterController extends BaseController
                 $metadata_client_field_name = ($question_details == null) ? 'conversation_001' : ++$question_details[0]->question_column_name;
                 $table_name = ($inputArray['type_id'] == 2) ? 'ovm_conversation_feedback' : 'ovm_g2form_feedback';
                 $column_type = "ALTER TABLE $table_name ADD $metadata_client_field_name text";
-                
+
 
                 DB::table('conversation_questions')
                     ->insertGetId([
@@ -61,6 +61,8 @@ class ConversationMasterController extends BaseController
                         'group_id' => $inputArray['group'],
                         'question' => $inputArray['question'],
                         'question_description' => $inputArray['description'],
+                        'field_types_id' => $inputArray['field_types_id'] ?? null,
+                        'other_option' => $inputArray['other_option'] ?? null,
                         'prefilled_data' => $inputArray['prefilled_data'],
                         'required' => $inputArray['required'],
                         'additional_question_check' => $inputArray['additional_question_check'],
@@ -71,7 +73,7 @@ class ConversationMasterController extends BaseController
                         'version' => 2,
                     ]);
 
-                    return $column_type;
+                return $column_type;
             });
 
             DB::unprepared($column_type);
@@ -101,43 +103,59 @@ class ConversationMasterController extends BaseController
     public function update_data(Request $request)
     {
         try {
-            $method = 'Method => ConversationMasterController => update_data';
-            // $this->WriteFileLog($method);
+
             $inputArray = $this->DecryptData($request->requestData);
+
             DB::transaction(function () use ($inputArray) {
-                DB::table('conversation_questions')
-                    ->where('id', $inputArray['id'])
-                    ->update([
-                        'group_id' => $inputArray['group'],
-                        'question' => $inputArray['question'],
-                        'question_description' => $inputArray['description'],
-                        'prefilled_data' => $inputArray['prefilled_data'],
-                        'required' => $inputArray['required'],
-                        'additional_question_check' => $inputArray['additional_question_check'],
-                        'additional_question_data' => $inputArray['additional_question_data'],
-                        'created_date' => NOW(),
-                        'created_by' => auth()->user()->id,
-                    ]);
+
+                // ✅ DELETE CASE
+                if (isset($inputArray['delete_flag']) && $inputArray['delete_flag'] == 1) {
+
+                    DB::table('conversation_questions')
+                        ->where('id', $inputArray['id'])
+                        ->update([
+                            'active_flag' => 0,
+                            'enable_flag' => 0,
+                        ]);
+                } else {
+
+                    // 🔽 EXISTING UPDATE (UNCHANGED)
+                    DB::table('conversation_questions')
+                        ->where('id', $inputArray['id'])
+                        ->update([
+                            'group_id' => $inputArray['group'],
+                            'question' => $inputArray['question'],
+                            'question_description' => $inputArray['description'],
+                            'field_types_id' => $inputArray['field_types_id'] ?? null,
+                            'other_option' => $inputArray['other_option'] ?? null,
+                            'prefilled_data' => $inputArray['prefilled_data'],
+                            'required' => $inputArray['required'],
+                            'additional_question_check' => $inputArray['additional_question_check'],
+                            'additional_question_data' => $inputArray['additional_question_data'],
+                            'created_date' => NOW(),
+                            'created_by' => auth()->user()->id,
+                        ]);
+                }
             });
-            $serviceResponse = array();
-            $serviceResponse['Code'] = config('setting.status_code.success');
-            $serviceResponse['Message'] = config('setting.status_message.success');
-            $serviceResponse['Data'] = 1;
-            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
-            return $sendServiceResponse;
+
+            return $this->SendServiceResponse(
+                json_encode([
+                    'Code' => 200,
+                    'Message' => 'Success',
+                    'Data' => 1
+                ], JSON_FORCE_OBJECT),
+                200,
+                true
+            );
         } catch (\Exception $exc) {
-            $exceptionResponse = array();
-            $exceptionResponse['ServiceMethod'] = $method;
-            $exceptionResponse['Exception'] = $exc->getMessage();
-            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
-            $this->WriteFileLog($exceptionResponse);
-            $serviceResponse = array();
-            $serviceResponse['Code'] = config('setting.status_code.exception');
-            $serviceResponse['Message'] = $exc->getMessage();
-            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
-            $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
-            return $sendServiceResponse;
+            return $this->SendServiceResponse(
+                json_encode([
+                    'Code' => 500,
+                    'Message' => $exc->getMessage()
+                ], JSON_FORCE_OBJECT),
+                500,
+                false
+            );
         }
     }
 }

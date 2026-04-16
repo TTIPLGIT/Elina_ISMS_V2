@@ -51,7 +51,28 @@ class ConversationMasterController extends BaseController
             $data['prefilled_data'] = $request->prefilled_data;
             $data['additional_question_check'] = $request->additional_question_check;
             $data['additional_question_data'] = $request->additional_question_data;
-            // dd($data);
+            $data['field_types_id'] = $request->field_types_id;
+            $data['other_option'] = null;
+
+            if (in_array($request->field_types_id, [3, 4, 5])) {
+                if (is_array($request->other_option)) {
+
+                    $filteredOptions = array_filter($request->other_option);
+
+                    if ($request->field_types_id == 5) {
+                        // Wrap each option in []
+                        $wrappedOptions = array_map(function ($opt) {
+                            return '[' . trim($opt) . ']';
+                        }, $filteredOptions);
+
+                        $data['other_option'] = implode(',', $wrappedOptions);
+                    } else {
+                        $data['other_option'] = implode(',', $filteredOptions);
+                    }
+                } else {
+                    $data['other_option'] = $request->other_option;
+                }
+            }            // dd($data);
             $encryptArray = $this->encryptData($data);
             $request = array();
             $request['requestData'] = $encryptArray;
@@ -81,9 +102,31 @@ class ConversationMasterController extends BaseController
 
     public function G2_Update(Request $request)
     {
-        // dd($request);
         try {
+
+            // ✅ HANDLE DELETE FIRST
+            if ($request->delete_flag == 1) {
+
+                $data = [
+                    'id' => $request->id,
+                    'delete_flag' => 1
+                ];
+
+                $encryptArray = $this->encryptData($data);
+
+                $req = [];
+                $req['requestData'] = $encryptArray;
+
+                $gatewayURL = config('setting.api_gateway_url') . '/conversation/summery/updatedata';
+
+                $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($req), 'DELETE CALL');
+
+                return response()->json(['success' => true]);
+            }
+
+            // 🔽 EXISTING UPDATE LOGIC (UNCHANGED)
             $method = 'Method => ConversationMasterController => G2_Update';
+
             $data = array();
             $data['id'] = $request->id;
             $data['question'] = $request->question;
@@ -94,31 +137,39 @@ class ConversationMasterController extends BaseController
             $data['prefilled_data'] = $request->prefilled_data;
             $data['additional_question_check'] = $request->additional_question_check;
             $data['additional_question_data'] = $request->additional_question_data;
-            // dd($data);
-            $encryptArray = $this->encryptData($data);
-            $request = array();
-            $request['requestData'] = $encryptArray;
-            $gatewayURL = config('setting.api_gateway_url') . '/conversation/summery/updatedata';
-            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
-            $response1 = json_decode($response);
+            $data['field_types_id'] = $request->field_types_id;
+            $data['other_option'] = null;
 
-            if ($response1->Status == 200 && $response1->Success) {
-                $objData = json_decode($this->decryptData($response1->Data));
-                if ($objData->Code == 200) {
-                    $parant_data = json_decode(json_encode($objData->Data), true);
-                    return Redirect::back()->with('success', 'Updated Successfully');
+            if (in_array($request->field_types_id, [3, 4, 5])) {
+                if (is_array($request->other_option)) {
+                    $filteredOptions = array_filter($request->other_option);
+
+                    if ($request->field_types_id == 5) {
+                        $wrappedOptions = array_map(function ($opt) {
+                            return '[' . trim($opt) . ']';
+                        }, $filteredOptions);
+
+                        $data['other_option'] = implode(',', $wrappedOptions);
+                    } else {
+                        $data['other_option'] = implode(',', $filteredOptions);
+                    }
+                } else {
+                    $data['other_option'] = $request->other_option;
                 }
-                if ($objData->Code == 400) {
-                    return Redirect::back();
-                    return redirect(route('master.gform.index'))->with('fail', 'Something went wrong');
-                }
-            } else {
-                $objData = json_decode($this->decryptData($response1->Data));
-                echo json_encode($objData->Code);
-                exit;
             }
+
+            $encryptArray = $this->encryptData($data);
+
+            $req = [];
+            $req['requestData'] = $encryptArray;
+
+            $gatewayURL = config('setting.api_gateway_url') . '/conversation/summery/updatedata';
+
+            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($req), $method);
+
+            return Redirect::back()->with('success', 'Updated Successfully');
         } catch (\Exception $exc) {
-            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
+            return response()->json(['error' => $exc->getMessage()]);
         }
     }
 
@@ -148,7 +199,7 @@ class ConversationMasterController extends BaseController
                 // dd(in_array("1", $uniqueGroups));
 
                 // dd($uniqueGroups);
-                return view('conversation_master.summery_index', compact('groupdata','uniqueGroups','screen_permission', 'rows', 'menus', 'screens', 'modules'));
+                return view('conversation_master.summery_index', compact('groupdata', 'uniqueGroups', 'screen_permission', 'rows', 'menus', 'screens', 'modules'));
             } catch (\Exception $exc) {
                 return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
             }
@@ -156,5 +207,4 @@ class ConversationMasterController extends BaseController
             return redirect()->route('not_allow');
         }
     }
-
 }

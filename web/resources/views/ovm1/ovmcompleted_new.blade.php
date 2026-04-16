@@ -530,6 +530,31 @@
             return isNullValue(value) ? '' : value;
         }
 
+        function formatJsonArray(value) {
+            if (isNullValue(value)) return '';
+            
+            // Ensure value is a string for trim/startsWith
+            var str = String(value).trim();
+            
+            if (str.startsWith('[') && str.endsWith(']')) {
+                try {
+                    var arr = JSON.parse(str);
+                    if (Array.isArray(arr)) {
+                        // Remove square brackets, double quotes, and convert escaped slashes
+                        return arr.join(', ').replace(/\\\//g, '/');
+                    }
+                } catch (e) {
+                    // Manual logic for non-strict JSON or escaped strings
+                    return str.replace(/[\[\]"]/g, '').replace(/\\\//g, '/').split(',').map(function(s) { 
+                        return s.trim(); 
+                    }).filter(function(s) { 
+                        return s !== ''; 
+                    }).join(', ');
+                }
+            }
+            return value;
+        }
+
         function correctPronounCase(text, gender) {
             return text;
         }
@@ -537,17 +562,22 @@
         function appendField(selector, value) {
             if (isNullValue(value)) return;
 
+            value = formatJsonArray(value);
             value = correctPronounCase(value, childGender);
 
-            var current = $(selector).val();
-            $(selector).val(current ? current + '<br>' + value : value);
+            $(selector).each(function() {
+                var current = $(this).val() || '';
+                // Using <br> as the separator as per existing code pattern
+                $(this).val(current ? current + '<br>' + value : value);
+            });
         }
 
         // ================== FETCHDATA ==================
         var fetchdatas = <?php echo json_encode($fetchdata); ?>;
         if (fetchdatas && fetchdatas.length > 0) {
             $.each(fetchdatas[0], function(key, value) {
-                var cleaned = correctPronounCase(cleanValue(value), childGender);
+                var cleaned = formatJsonArray(cleanValue(value));
+                cleaned = correctPronounCase(cleaned, childGender);
                 $('#' + key).val(cleaned);
             });
         }
@@ -556,7 +586,8 @@
         var fetchdatas1 = <?php echo json_encode($fetchdata1); ?>;
         if (fetchdatas1 && fetchdatas1.length > 0) {
             $.each(fetchdatas1[0], function(key, value) {
-                var cleaned = correctPronounCase(cleanValue(value), childGender);
+                var cleaned = formatJsonArray(cleanValue(value));
+                cleaned = correctPronounCase(cleaned, childGender);
                 $('#note_' + key).val(cleaned);
             });
         }
@@ -565,42 +596,65 @@
         var fetchdata2 = <?php echo json_encode($fetchdata2); ?>;
 
         if (fetchdata2 && fetchdata2.length > 0) {
-
-            // Clear fields once
-            $('.f_deve, .f_assessment, .f_prev, .f_other, .f_adl, .f_support, .f_social, .f_strength, .f_parentinput')
+            // Clear all possible prefilled fields once
+            $('.f_deve, .f_assessment, .f_prev, .f_other, .f_adl, .f_support, .f_social, .f_strength, .f_parentinput, .f_problem, .f_problem2, .f_school')
                 .val('');
+            $('#conversation_029').val('');
 
             $.each(fetchdata2, function(index, data) {
-
-                // ❌ REMOVE OLD CONDITION
-                // if (data.g2form_filled != 1 && data.flag != 1) {
-
-                // ✅ NEW CONDITION
                 if (data) {
-
+                    // Original mappings
                     appendField('.f_deve', data.conversation_064);
                     appendField('.f_assessment', data.conversation_065);
                     appendField('.f_prev', data.conversation_066);
-
                     appendField('.f_other', data.conversation_067);
                     appendField('.f_other', data.conversation_068);
-                    appendField('.f_other', data.conversation_074);
-
-                    appendField('.f_adl', data.conversation_080);
-
-                    appendField('.f_support', data.conversation_075);
-                    appendField('.f_support', data.conversation_076);
-                    appendField('.f_support', data.conversation_077);
-
-                    appendField('.f_social', data.conversation_079);
-
                     appendField('.f_strength', data.conversation_071);
-                    appendField('.f_strength', data.conversation_078);
-
                     appendField('.f_parentinput', data.conversation_069);
                     appendField('.f_parentinput', data.conversation_070);
                     appendField('.f_parentinput', data.conversation_072);
                     appendField('.f_parentinput', data.conversation_073);
+                    appendField('.f_other', data.conversation_074);
+                    appendField('.f_support', data.conversation_075);
+                    appendField('.f_support', data.conversation_076);
+                    appendField('.f_support', data.conversation_077);
+                    appendField('.f_strength', data.conversation_078);
+                    appendField('.f_social', data.conversation_079);
+                    appendField('.f_adl', data.conversation_080);
+
+                    // 🔹 New Mappings from Requirement 🔹
+                    
+                    // 1. Strengths / Interests of the Child (096, 104) -> f_strength
+                    appendField('.f_strength', data.conversation_096);
+                    appendField('.f_strength', data.conversation_104);
+                    
+                    // 2. ADLs / Routine / Socialization / Emotional / Communication / Sensory (097) -> f_adl, f_social
+                    appendField('.f_adl', data.conversation_097);
+                    appendField('.f_social', data.conversation_097);
+                    
+                    // 3. Parent Input (098, 107) -> f_parentinput
+                    appendField('.f_parentinput', data.conversation_098);
+                    appendField('.f_parentinput', data.conversation_107);
+                    
+                    // 4. Ineffective Strategies / Specific Instances (102) -> #conversation_029
+                    appendField('#conversation_029', data.conversation_102);
+                    
+                    // 5. Challenges / Areas of Support (099, 103) -> f_problem, f_deve
+                    appendField('.f_problem', data.conversation_099);
+                    appendField('.f_problem', data.conversation_103);
+                    appendField('.f_deve', data.conversation_099);
+                    appendField('.f_deve', data.conversation_103);
+                    
+                    // 6. Previous / Current Interventions + School Detail (100) -> f_prev, f_school
+                    appendField('.f_prev', data.conversation_100);
+                    appendField('.f_school', data.conversation_100);
+                    
+                    // 7. Current Support System (101) -> f_support
+                    appendField('.f_support', data.conversation_101);
+                    
+                    // 10. Other Information (105, 106) -> f_other
+                    appendField('.f_other', data.conversation_105);
+                    appendField('.f_other', data.conversation_106);
                 }
             });
 
