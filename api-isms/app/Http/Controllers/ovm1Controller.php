@@ -923,9 +923,11 @@ class ovm1Controller extends BaseController
                 'notes' => $inputArray['notes'],
                 'mail_cc' => $inputArray['mail_cc'],
                 'g2form_url' => $inputArray['g2form_url'],
-            ];
+            ];  
             $type = $input['type'];
             $meeting_status = $input['meeting_status'];
+            $this->WriteFileLog($type);
+            $this->WriteFileLog($meeting_status);
             if ($type == "Sent" || $type == "Saved") {
 
                 DB::table('ovm_meeting_details')
@@ -1006,7 +1008,7 @@ class ovm1Controller extends BaseController
                             'event_id' => $eventId,
                             'event_link' => $eventLink,
                         ]);
-                    $this->g2form_initiate($input);
+                    // $this->g2form_initiate($input);
                 }
 
 
@@ -2991,7 +2993,7 @@ class ovm1Controller extends BaseController
             // $this->WriteFileLog($enrollId);
             $answers = DB::table('ovm_g2form_feedback')->where('enrollment_id', $enrollId)->get();
             if (isset($answers[0]->version) && $answers[0]->version == 2) {
-                $questions = DB::table('conversation_questions')->where('type_id', '1')->where('version', $answers[0]->version)->get();
+                $questions = DB::table('conversation_questions')->where('type_id', '1')->where('active_flag', '1')->where('version', $answers[0]->version)->get();
             } else {
                 $questions = DB::table('conversation_questions')->where('type_id', '1')->get();
             }

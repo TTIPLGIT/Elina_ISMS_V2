@@ -622,7 +622,11 @@ class ovm1Controller extends BaseController
             $originalTime = date('h:i A', strtotime($originalTime));
             $alert = $request->child_name . ' on ' . $request->meeting_startdate . ' ' . $originalTime;
             $type = $request->meeting_status;
-            $meeting_status = ($request->meeting_status === 'Accepted') ? 'Completed' : $request->meeting_status;
+            if ($request->meeting_status === 'Accepted' && $request->type === 'Completed') {
+                $meeting_status = 'Completed'; // Close button case
+            } else {
+                $meeting_status = $request->meeting_status; // Save button case
+            }
             $data = array();
             $data['id'] = $id;
             $data['enrollment_id'] = $request->enrollment_id;
@@ -649,7 +653,7 @@ class ovm1Controller extends BaseController
             $data['notes'] = $request->notes;
             $data['mail_cc'] = $request->mail_cc;
             $data['g2form_url'] = URL::signedRoute('g2form.signed', ['id' => encrypt($request->en_user)]);
-            // dd($data);
+            // dd($request);
             $encryptArray = $this->encryptData($data);
             $request = array();
             $request['requestData'] = $encryptArray;
@@ -908,7 +912,7 @@ class ovm1Controller extends BaseController
                     // $work_flow_row =  $parant_data['work_flow_row'];
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
-                    $modules = $menus['modules'];
+                    $modules = $menus['modules']; 
                     return view('ovm1.ovmmeetingcompletedlist', compact('rows', 'screens', 'modules'));
                 }
             } else {
@@ -1708,7 +1712,7 @@ class ovm1Controller extends BaseController
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
                     $user_role = $modules['user_role'];
-
+                    // dd($questions);
                     if ($user_role == 'Parent') {
                         return view('ovm1.g2form', compact('child_name', 'screens', 'modules', 'questions', 'answers', 'enrollId', 'role'));
                     } else {
@@ -1725,21 +1729,67 @@ class ovm1Controller extends BaseController
     public function g2form_storedata(Request $request)
     {
         try {
-            // dd($request);
             $method = 'Method => ovm1Controller => g2form_storedata';
-            $data = array();
-            $data['answer'] = $request->answer;
+
+            $data = [];
+            $finalAnswers = [];
+
+            $answers = $request->answer ?? [];
+            $others = $request->other ?? [];
+
+            foreach ($answers as $key => $value) {
+
+                // ✅ CASE 1: Checkbox (Array values)
+                if (is_array($value)) {
+
+                    $merged = $value;
+
+                    // ✅ Append "Other" value if exists
+                    if (!empty($others[$key])) {
+                        $merged[] = $others[$key];
+                    }
+
+                    // ✅ Store as JSON (NOT comma separated)
+                    $finalAnswers[$key] = json_encode($merged);
+                }
+
+                // ✅ CASE 2: Normal input (text, radio, etc.)
+                else {
+
+                    // ✅ If "Other" exists for non-array (rare case)
+                    if (!empty($others[$key])) {
+                        $finalAnswers[$key] = $others[$key];
+                    } else {
+                        $finalAnswers[$key] = $value;
+                    }
+                }
+            }
+
+            $data['answer'] = $finalAnswers;
             $data['type'] = $request->type;
             $data['id'] = $request->enrollment_id;
-            // dd($data['answer']);
+
             $status = $data['type'];
+
+            // ✅ Encrypt request
             $encryptArray = $this->encryptData($data);
-            $request = array();
-            $request['requestData'] = $encryptArray;
+
+            $requestPayload = [];
+            $requestPayload['requestData'] = $encryptArray;
+
             $gatewayURL = config('setting.api_gateway_url') . '/g2form/storedata';
-            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
+
+            $response = $this->serviceRequest(
+                $gatewayURL,
+                'POST',
+                json_encode($requestPayload),
+                $method
+            );
+
             $response1 = json_decode($response);
+
             if ($response1->Status == 200 && $response1->Success) {
+
                 $objData = json_decode($this->decryptData($response1->Data));
 
                 if ($objData->Code == 200) {
@@ -1747,16 +1797,27 @@ class ovm1Controller extends BaseController
                 }
 
                 if ($objData->Code == 400) {
-                    return redirect(route('ovm1.index'))->with('fail', 'OVM Meeting Already Scheduled');
+                    return redirect(route('ovm1.index'))
+                        ->with('fail', 'OVM Meeting Already Scheduled');
                 }
             } else {
+
                 $objData = json_decode($this->decryptData($response1->Data));
+
                 if ($objData->Code == 401) {
-                    return redirect(route('/'))->with('error', 'User Session Expired');
+                    return redirect(route('/'))
+                        ->with('error', 'User Session Expired');
                 }
             }
         } catch (\Exception $exc) {
-            return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
+
+            return $this->sendLog(
+                $method,
+                $exc->getCode(),
+                $exc->getMessage(),
+                $exc->getLine(),
+                $exc->getTrace()[0]['args'][2] ?? null
+            );
         }
     }
     public function g2form_list(Request $request)
