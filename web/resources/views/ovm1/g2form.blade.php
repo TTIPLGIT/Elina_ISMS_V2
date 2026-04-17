@@ -227,7 +227,7 @@
                   class="form-control other-input ml-2"
                   name="other[{{$question['question_column_name']}}]"
                   value="{{ $otherValue }}"
-                  placeholder="Enter other value"
+                  placeholder="Please enter your input"
                   style="{{ $otherValue ? 'display:inline-block; width: auto;' : 'display:none; width: auto;' }}"
                   {{ $isDisabled ? 'readonly' : '' }}>
               </div>
