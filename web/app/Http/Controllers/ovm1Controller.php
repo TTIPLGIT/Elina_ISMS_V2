@@ -1461,7 +1461,7 @@ class ovm1Controller extends BaseController
             $users = $parant_data['users'];
             $menus = $this->FillMenu();
             $screens = $menus['screens'];
-            $modules = $menus['modules'];
+            $modules = $menus['modules']; 
             return view('ovm1.preview', compact('modules', 'screens', 'report', 'email', 'rows', 'users', 'ccEmails'));
         } catch (\Exception $exc) {
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
@@ -1737,26 +1737,27 @@ class ovm1Controller extends BaseController
             $answers = $request->answer ?? [];
             $others = $request->other ?? [];
 
-            foreach ($answers as $key => $value) {
+            // ✅ Combine all keys from both answers and others to ensure missing checkbox groups are processed
+            $allKeys = array_unique(array_merge(array_keys($answers), array_keys($others)));
 
-                // ✅ CASE 1: Checkbox (Array values)
+            foreach ($allKeys as $key) {
+                $value = $answers[$key] ?? null;
+
+                // ✅ CASE 1: Checkbox (Array values) or Missing Checkbox with "Other" filled
                 if (is_array($value)) {
-
                     $merged = $value;
-
-                    // ✅ Append "Other" value if exists
                     if (!empty($others[$key])) {
                         $merged[] = $others[$key];
                     }
-
-                    // ✅ Store as JSON (NOT comma separated)
                     $finalAnswers[$key] = json_encode($merged);
+                } 
+                // ✅ CASE 2: "Other" is filled but no parent checkbox was selected ($value is null)
+                else if ($value === null && !empty($others[$key])) {
+                    // Store as JSON array since "Others" is used for multi-select checkboxes
+                    $finalAnswers[$key] = json_encode([$others[$key]]);
                 }
-
-                // ✅ CASE 2: Normal input (text, radio, etc.)
+                // ✅ CASE 3: Normal input (text, radio, etc.)
                 else {
-
-                    // ✅ If "Other" exists for non-array (rare case)
                     if (!empty($others[$key])) {
                         $finalAnswers[$key] = $others[$key];
                     } else {

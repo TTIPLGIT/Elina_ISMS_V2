@@ -17,8 +17,8 @@
 
   .option-item input[type="checkbox"],
   .option-item input[type="radio"] {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     margin-right: 8px;
     flex-shrink: 0;
     accent-color: #007bff;
@@ -34,6 +34,10 @@
   select.form-control {
     color: #000 !important;
   }
+
+  .option-item input:disabled {
+    opacity: 1 !important;
+  }
 </style>
 
 <div class="main-content">
@@ -44,7 +48,9 @@
   @if (session('success'))
   <script>
     window.onload = function() {
-      Swal.fire('Success!', @json(session('success')), 'success');
+      Swal.fire('Success!', @json(session('success')), 'success').then(() => {
+        window.location.href = "{{ route('g2form.list') }}";
+      });
     }
   </script>
   @elseif(session('fail'))
@@ -73,9 +79,15 @@
             @php
             $options = [];
             if(isset($question['other_option']) && !empty($question['other_option'])){
-              preg_match_all('/\[(.*?)\]/', $question['other_option'], $matches);
-              if(!empty($matches[1])){
-                $options = array_map('trim', $matches[1]);
+              if ($question['field_types_id'] == 5) {
+                // Checkbox: extracted using brackets
+                preg_match_all('/\[(.*?)\]/', $question['other_option'], $matches);
+                if(!empty($matches[1])){
+                  $options = array_map('trim', $matches[1]);
+                }
+              } else {
+                // Dropdown and Radio: extracted by splitting commas
+                $options = array_filter(array_map('trim', explode(',', $question['other_option'])));
               }
             }
 
@@ -109,7 +121,9 @@
                 {{ $loop->iteration }}. {!! $question['question'] !!}
               </label>
 
+              @if(!empty($question['question_description']))
               <p>{!! $question['question_description'] !!}</p>
+              @endif
 
               {{-- TEXTAREA --}}
               @if(in_array($question['field_types_id'], [1,2]))
@@ -142,7 +156,8 @@
                     value="{{ $opt }}"
                     data-required="{{$question['required']}}"
                     {{ $value == $opt ? 'checked' : '' }}
-                    {{ $isDisabled ? 'onclick=return false;' : '' }}>
+                    style="{{ $isDisabled ? 'pointer-events: none;' : '' }}"
+                  {{ $isDisabled ? 'tabindex="-1"' : '' }}>
                   <label>{{ $opt }}</label>
                 </div>
                 @endforeach
@@ -159,7 +174,8 @@
                     value="{{ $opt }}"
                     data-required="{{$question['required']}}"
                     {{ in_array($opt, $selectedValues) ? 'checked' : '' }}
-                    {{ $isDisabled ? 'onclick=return false;' : '' }}>
+                    style="{{ $isDisabled ? 'pointer-events: none;' : '' }}"
+                  {{ $isDisabled ? 'tabindex="-1"' : '' }}>
                   <label class="option-item pt-2">{{ $opt }}</label>
                 </div>
                 @endforeach
@@ -170,17 +186,17 @@
                 <input type="checkbox"
                   class="other-check"
                   {{ $otherValue ? 'checked' : '' }}
-                  {{ $isDisabled ? 'onclick=return false;' : '' }}>
-                <label>Others</label>
+                  style="{{ $isDisabled ? 'pointer-events: none;' : '' }}"
+                  {{ $isDisabled ? 'tabindex="-1"' : '' }}>
+                <label class="mb-0">Others</label>
+                <input type="text"
+                  class="form-control other-input ml-2"
+                  name="other[{{$question['question_column_name']}}]"
+                  value="{{ $otherValue }}"
+                  placeholder="Enter other value"
+                  style="{{ $otherValue ? 'display:inline-block; width: auto;' : 'display:none; width: auto;' }}"
+                  {{ $isDisabled ? 'readonly' : '' }}>
               </div>
-
-              <input type="text"
-                class="form-control other-input"
-                name="other[{{$question['question_column_name']}}]"
-                value="{{ $otherValue }}"
-                placeholder="Enter other value"
-                style="{{ $otherValue ? 'display:block;' : 'display:none;' }}"
-                {{ $isDisabled ? 'readonly' : '' }}>
 
               @endif
 
@@ -217,7 +233,7 @@
     let input = $(this).closest('.form-group').find('.other-input');
 
     if ($(this).is(':checked')) {
-      input.show();
+      input.css('display', 'inline-block');
     } else {
       input.hide().val('');
     }
@@ -233,20 +249,14 @@
   });
 
   function validateanswer() {
-
-    document.getElementById("type").value = "Submitted";
-
     let isValid = true;
-
     $('[data-required="1"]').each(function() {
-
       if ($(this).is('textarea') || $(this).is('select')) {
         if ($.trim($(this).val()) === '') {
           isValid = false;
           return false;
         }
       }
-
       if ($(this).is(':radio')) {
         let name = $(this).attr('name');
         if (!$('input[name="' + name + '"]:checked').length) {
@@ -254,7 +264,6 @@
           return false;
         }
       }
-
       if ($(this).is(':checkbox') && $(this).attr('name')) {
         let name = $(this).attr('name');
         if (!$('input[name="' + name + '"]:checked').length) {
@@ -262,7 +271,6 @@
           return false;
         }
       }
-
     });
 
     if (!isValid) {
@@ -270,12 +278,33 @@
       return false;
     }
 
-    document.getElementById('gfrom').submit();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to submit this form?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, submit it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.getElementById("type").value = "Submitted";
+        document.getElementById('gfrom').submit();
+      }
+    });
   }
 
   function saveForm() {
-    document.getElementById("type").value = "Saved";
-    document.getElementById('gfrom').submit();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to save this form?",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, save it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.getElementById("type").value = "Saved";
+        document.getElementById('gfrom').submit();
+      }
+    });
   }
 </script>
 
