@@ -149,7 +149,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label required">Required</label><br>
+                                    <label class="control-label">Required</label><br>
                                     <label class='switch'>
                                         <input type='checkbox' id="add_required" name='required' value="1">
                                         <span class='slider round'></span>
@@ -318,11 +318,20 @@
                 if (['3', '4', '5'].includes(fieldType.toString())) {
                     $('#edit_options_container').show();
                     if (rows[i].other_option) {
-                        // Match everything inside brackets as ONE option
-                        let matches = rows[i].other_option.match(/\[(.*?)\]/g);
-                        if (matches) {
-                            matches.forEach(opt => {
-                                let cleanOpt = opt.replace(/[\[\]]/g, '').trim();
+                        if (fieldType.toString() === '5') {
+                            // Checkbox: Match everything inside brackets as ONE option
+                            let matches = rows[i].other_option.match(/\[(.*?)\]/g);
+                            if (matches) {
+                                matches.forEach(opt => {
+                                    let cleanOpt = opt.replace(/[\[\]]/g, '').trim();
+                                    if (cleanOpt !== '') addOptionRow('edit_dynamic_options', cleanOpt);
+                                });
+                            }
+                        } else {
+                            // Dropdown & Radio Button: Comma-separated options without brackets
+                            let options = rows[i].other_option.split(',');
+                            options.forEach(opt => {
+                                let cleanOpt = opt.trim();
                                 if (cleanOpt !== '') addOptionRow('edit_dynamic_options', cleanOpt);
                             });
                         }
