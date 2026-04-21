@@ -246,6 +246,17 @@
         margin-bottom: 10px;
         margin-top: 10px;
     }
+
+    @media (max-width: 767px) {
+        .btn {
+            padding: 5px 10px !important;
+            font-size: 11px !important;
+            margin-bottom: 5px;
+        }
+        .btn-labeled .btn-label {
+            padding: 3px 5px !important;
+        }
+    }
 </style>
 @include('questionnaire_for_parents.style')
 <style>

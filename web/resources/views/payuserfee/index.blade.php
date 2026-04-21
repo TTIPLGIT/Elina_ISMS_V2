@@ -18,6 +18,91 @@
     .dt-buttons {
         margin-left: 10px;
     }
+
+    /* Mobile Responsive Table styling */
+    @media (max-width: 767px) {
+        #tableList, 
+        #tableList tbody, 
+        #tableList tr, 
+        #tableList td {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        #tableList thead {
+            display: none;
+        }
+
+        #tableList tbody tr {
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            padding: 10px;
+        }
+
+        #tableList tbody td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: right !important;
+            border-bottom: 1px solid #eee;
+            padding: 10px 5px;
+            word-break: break-word;
+            white-space: normal;
+        }
+
+        #tableList tbody td:last-child {
+            border-bottom: none;
+            justify-content: space-between;
+        }
+        
+        #tableList tbody td:last-child .btn, 
+        #tableList tbody td:last-child a.btn {
+            margin-left: 0;
+            margin-right: 0;
+        }
+        
+        #tableList tbody td::before {
+            content: attr(data-label);
+            font-weight: bold;
+            display: block;
+            flex-basis: 45%;
+            text-align: left;
+            margin-bottom: 0px;
+            color: #333;
+        }
+        
+        .dt-buttons .btn {
+            padding: 4px 8px !important;
+            font-size: 11px !important;
+        }
+        
+        .btn {
+            padding: 5px 10px !important;
+            font-size: 11px !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_length label,
+        div.dataTables_wrapper div.dataTables_filter label,
+        div.dataTables_wrapper div.dataTables_info,
+        div.dataTables_wrapper div.dataTables_paginate {
+            font-size: 12px !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_length select,
+        div.dataTables_wrapper div.dataTables_filter input {
+            padding: 2px 5px !important;
+            font-size: 12px !important;
+            height: auto !important;
+        }
+        
+        div.dataTables_wrapper div.dataTables_filter input {
+            width: 120px !important;
+        }
+    }
 </style>
 
 <div class="main-content">
@@ -67,11 +152,11 @@
                                 <tbody>
                                     @foreach($rows as $key=>$row)
                                     <tr>
-                                        <td>{{ $row['payment_for']}}</td>
-                                        <td>{{ $row['transaction_id']}}</td>
-                                        <td>{{ $row['receipt_num']}}</td>
-                                        <td>{{ $row['payment_status']}}</td>
-                                        <td>
+                                        <td data-label="Payment For">{{ $row['payment_for']}}</td>
+                                        <td data-label="Transaction ID">{{ $row['transaction_id']}}</td>
+                                        <td data-label="Receipt Num">{{ $row['receipt_num']}}</td>
+                                        <td data-label="Status">{{ $row['payment_status']}}</td>
+                                        <td data-label="Action">
 
                                             @if($row['payment_status'] == 'SUCCESS' || $row['payment_status'] == 'REFUND SUCCESS')
                                             <a class="btn btn-link" title="show" href="{{ route('payuserfee.show',\Crypt::encrypt($row['payment_status_id'])) }}"><i class="fas fa-eye" style="color:green"></i></a>

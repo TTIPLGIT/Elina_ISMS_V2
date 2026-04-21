@@ -390,7 +390,12 @@ class ovm2Controller extends BaseController
             }
             // dd($attachmentPath);
             $url = URL::signedRoute('signed.sail.initiate', ['user_id' => $this->encryptData($request->parentID)]);
-            $meeting_status = ($request->meeting_status === 'Accepted') ? 'Completed' : $request->meeting_status;
+            // $meeting_status = ($request->meeting_status === 'Accepted') ? 'Completed' : $request->meeting_status;
+            if ($request->meeting_status === 'Accepted' && $request->type === 'Completed') {
+                $meeting_status = 'Completed'; // Close button case
+            } else {
+                $meeting_status = $request->meeting_status; // Save button case
+            }
             $data = array();
             $data['url'] = $url;
             $data['id'] = decrypt($id);
@@ -410,7 +415,7 @@ class ovm2Controller extends BaseController
             $data['meeting_endtime'] = $request->meeting_endtime;
             $data['is_coordinator1'] = $request->is_coordinator1;
             $data['is_coordinator2'] = $request->is_coordinator2;
-            $data['meeting_status'] = $meeting_status ;
+            $data['meeting_status'] =  $meeting_status;
             $data['type'] = $request->type;
             $data['user_id'] = $user_id;
             $data['attachment'] = $attachmentPath;

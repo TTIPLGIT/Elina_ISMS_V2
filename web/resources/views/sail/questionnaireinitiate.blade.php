@@ -215,16 +215,17 @@
               console.log(data);
               if (data != '[]') {
                 var user_select = data.rows;
-                var optionsdata = "";
+                var optionsdata = "<option value=''>Select Questionnaire</option>";
+                var ddd = "";
                 for (var i = 0; i < user_select.length; i++) {
                   var questionnaire_name = user_select[i]['questionnaire_name'];
                   var questionnaire_id = user_select[i]['questionnaire_id'];
-                  var ddd = "<option value=" + questionnaire_id + ">" + questionnaire_name + "</option>";
+                  ddd += "<option value=" + questionnaire_id + ">" + questionnaire_name + "</option>";
                 }
-                var stageoption = ddd.concat(optionsdata);
+                var stageoption = optionsdata.concat(ddd);
                 var demonew = $('#questionnaire_id').html(stageoption);
               } else {
-                var stageoption = ddd.concat(optionsdata);
+                var stageoption = "<option value=''>No Questionnaire Found</option>";
                 var demonew = $('#questionnaire_id').html(stageoption);
               }
             }

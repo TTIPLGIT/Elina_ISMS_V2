@@ -301,8 +301,8 @@
               </div>
               <div class="row text-center">
                 <div class="col-md-12">
-                  <a type="button" class="btn btn-warning text-white" id="savebutton" onclick="validateForm1('Completed')" name="type" value="Saved">Close</a>
-
+                  <a type="button" class="btn btn-warning text-white"
+                    onclick="validateForm1('Completed')">Close</a>
                   @if($authID == $row['created_by'])
                   @if($row['meeting_status'] == 'Accepted')
                   <!-- <a type="button" class="btn btn-warning text-white" id="savebutton" onclick="validateForm1('Completed')" name="type" value="Saved">Close</a> -->
@@ -647,7 +647,7 @@
 
   function confirmComplete(a) {
     document.getElementById("meeting_status1").value = a;
-    document.getElementById('type').value = 'Saved';
+    document.getElementById('type').value = a;
     // console.log(document.getElementById('meeting_status').value);
     if (a == 'Saved') {
       var swalText = 'Save';
@@ -853,10 +853,10 @@
 
     if (status == "Accepted" || status == "Completed") {
       $('#video_link1').show();
-      $('#video_link').prop('required', true);
+      // $('#video_link').prop('required', true);
     } else {
       $('#video_link1').hide();
-      $('#video_link').prop('required', false);
+      // $('#video_link').prop('required', false);
     }
     //...video_link
   }

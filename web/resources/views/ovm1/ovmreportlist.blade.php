@@ -103,7 +103,6 @@
                             }
                             @endphp
 
-
                             @php $omd = Crypt::encrypt($row['ovm_meeting_id']); @endphp
                             <a class="btn btn-labeled btn-warning" style="background: warning !important; border-color:warning !important; color:warning !important" title="Report" href="{{ route('ovmreportview', $omd) }}"><span class="btn-label" style="font-size:13px !important;"><i class="fa fa-file-o"></i></span>Report </a>
                             @if(strpos($screen_permission['permissions'], 'Compare') !== false)

@@ -76,6 +76,91 @@
         text-align: center;
         vertical-align: middle;
     }
+
+    /* Mobile Responsive Table styling */
+    @media (max-width: 767px) {
+        #tableList, 
+        #tableList tbody, 
+        #tableList tr, 
+        #tableList td {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        #tableList thead {
+            display: none;
+        }
+
+        #tableList tbody tr {
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            padding: 10px;
+        }
+
+        #tableList tbody td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: right !important;
+            border-bottom: 1px solid #eee;
+            padding: 10px 5px;
+            word-break: break-word;
+            white-space: normal;
+        }
+
+        #tableList tbody td:last-child {
+            border-bottom: none;
+            justify-content: space-between;
+        }
+        
+        #tableList tbody td:last-child .btn, 
+        #tableList tbody td:last-child a.btn {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        #tableList tbody td::before {
+            content: attr(data-label);
+            font-weight: bold;
+            display: block;
+            flex-basis: 45%;
+            text-align: left;
+            margin-bottom: 0px;
+            color: #333;
+        }
+        
+        .dt-buttons .btn {
+            padding: 4px 8px !important;
+            font-size: 11px !important;
+        }
+        
+        .btn {
+            padding: 5px 10px !important;
+            font-size: 11px !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_length label,
+        div.dataTables_wrapper div.dataTables_filter label,
+        div.dataTables_wrapper div.dataTables_info,
+        div.dataTables_wrapper div.dataTables_paginate {
+            font-size: 12px !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_length select,
+        div.dataTables_wrapper div.dataTables_filter input {
+            padding: 2px 5px !important;
+            font-size: 12px !important;
+            height: auto !important;
+        }
+        
+        div.dataTables_wrapper div.dataTables_filter input {
+            width: 120px !important;
+        }
+    }
 </style>
 <div class="main-content">
     @if (session('success'))
@@ -179,19 +264,19 @@
                                 <tbody>
                                     @foreach($initiated_form as $data)
                                     <tr>
-                                        <!-- <td>{{$loop->iteration}}</td> -->
-                                        <td>{{$data['questionnaire_name']}}</td>
-                                        <td>
+                                        <!-- <td data-label="Sl.No">{{$loop->iteration}}</td> -->
+                                        <td data-label="Questionaire Name">{{$data['questionnaire_name']}}</td>
+                                        <td data-label="Progress Status">
                                             <div class="progress" style="height: 25px;">
                                                 <div class="progress-bar" role="progressbar" id="{{$data['questionnaire_initiation_id']}}" aria-valuemax="100" style="font-weight: bolder;color: black;"></div>
                                             </div>
                                         </td>
                                         @if($data['currentState'] == 'Sent')
-                                        <td>New</td>
+                                        <td data-label="Status">New</td>
                                         @else
-                                        <td>{{$data['currentState']}}</td>
+                                        <td data-label="Status">{{$data['currentState']}}</td>
                                         @endif
-                                        <td style="display:flex;justify-content:space-evenly;">
+                                        <td data-label="Action" style="display:flex;justify-content:space-evenly;">
                                             <a class="btn" style="cursor: pointer;" id="a{{$data['questionnaire_initiation_id']}}" href="{{ route('questionnaire_for_user.form.edit', \Crypt::encrypt($data['questionnaire_initiation_id'])) }}"></a>
                                             @if($data['questionnaire_id'] !='1')
                                             @if($data['currentState'] == 'Submitted' && $data['p_flag'] == '1')

@@ -613,10 +613,13 @@ class QuestionCreationController extends BaseController
             $userID = auth()->user()->id;
             $input = [
                 'question_id' => $inputArray['question_id'],
-                'field_type_id' => $inputArray['field_type_id'],
+                'field_type_id' => $inputArray['field_type_id'] ?? null,
                 'field_question' => $inputArray['field_question'],
-                'sub_questions' => $inputArray['sub_questions'],
-                'options' => $inputArray['options']
+                'sub_questions' => $inputArray['sub_questions'] ?? [],
+                'options' => $inputArray['options'] ?? [],
+                'quadrant' => $inputArray['quadrant'] ?? null,
+                'quadrant_type_id' => $inputArray['quadrant_type_id'] ?? null,
+                'other_option' => $inputArray['other_option_enabled'] ?? 0
             ];
             // $this->WriteFileLog($input);
             $id = $input['question_id'];
@@ -629,6 +632,9 @@ class QuestionCreationController extends BaseController
                     ->where('question_details_id', $id)
                     ->update([
                         'question' => $input['field_question'],
+                        'quadrant' => $input['quadrant'],
+                        'quadrant_type' => $input['quadrant_type_id'],
+                        'other_option' => $input['other_option'],
                         'last_modified_by' => auth()->user()->id,
                         'last_modified_date' => now()
                     ]);

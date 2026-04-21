@@ -394,23 +394,7 @@
             return false;
         }
 
-        if (!allInstructionsValid) {
-            Swal.fire({
-                title: "Validation Error",
-                text: `Please fill in the Instruction for row(s): ${emptyInstructionRows.join(', ')}`,
-                icon: "error"
-            });
-            return false;
-        }
-
-        if ($('.multi-field').length === 0) {
-            Swal.fire({
-                title: "Validation Error",
-                text: "Please add at least one description and instruction",
-                icon: "error"
-            });
-            return false;
-        }
+ 
 
         // ✅ FINAL CONFIRMATION
         Swal.fire({

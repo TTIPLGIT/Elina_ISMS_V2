@@ -23,7 +23,7 @@
   }
 
   .form-note {
-    width: 30%;
+    width: 30%; 
     display: flex;
     justify-content: center;
     margin: auto;
@@ -81,6 +81,95 @@
     background-color: #e53935 !important;
     border-color: #e53935 !important;
     color: #fff !important;
+  }
+  
+    /* Mobile Responsive Table styling */
+    @media (max-width: 767px) {
+        #tableList, 
+        #tableList tbody, 
+        #tableList tr, 
+        #tableList td {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        #tableList thead {
+            display: none;
+        }
+
+        #tableList tbody tr {
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            padding: 10px;
+        }
+
+        #tableList tbody td {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: left !important;
+            border-bottom: 1px solid #eee;
+            padding: 10px 5px;
+            word-break: break-word;
+            white-space: normal;
+        }
+
+        #tableList tbody td:last-child {
+            border-bottom: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #tableList tbody td:last-child::before {
+            margin-bottom: 0px;
+        }
+
+        #tableList tbody td::before {
+            content: attr(data-label);
+            font-weight: bold;
+            display: block;
+            text-align: left;
+            margin-bottom: 4px;
+            color: #333;
+        }
+        
+        .dt-buttons .btn {
+            padding: 4px 8px !important;
+            font-size: 11px !important;
+        }
+        
+        .btn {
+            padding: 5px 10px !important;
+            font-size: 11px !important;
+            margin-bottom: 5px;
+        }
+        
+        .btn-labeled .btn-label {
+            padding: 3px 5px !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_length label,
+        div.dataTables_wrapper div.dataTables_filter label,
+        div.dataTables_wrapper div.dataTables_info,
+        div.dataTables_wrapper div.dataTables_paginate {
+            font-size: 12px !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_length select,
+        div.dataTables_wrapper div.dataTables_filter input {
+            padding: 2px 5px !important;
+            font-size: 12px !important;
+            height: auto !important;
+        }
+        
+        div.dataTables_wrapper div.dataTables_filter input {
+            width: 120px !important;
+        }
   }
 </style>
 
@@ -178,24 +267,24 @@
 
                         @foreach($activitylist as $key=>$row)
                         <tr>
-                          <!-- <td>{{ $loop->iteration }}</td> -->
-                          <td <?= $row['required'] == 1 ? 'class="required"' : '' ?>>{{ $row['description'] }}</td>
+                          <!-- <td data-label="S.No">{{ $loop->iteration }}</td> -->
+                          <td data-label="Activity Description" <?= $row['required'] == 1 ? 'class="required"' : '' ?>>{{ $row['description'] }}</td>
 
                           @if($row['f2f_flag'] == 1)
-                          <td>In-Progress</td>
+                          <td data-label="Status">In-Progress</td>
                           @else
                           @if($row['save_flag'] == 1)
-                          <td>Saved</td>
+                          <td data-label="Status">Saved</td>
                           @else
                           @if($row['current_status'] == 'Complete')
-                          <td>Approved</td>
+                          <td data-label="Status">Approved</td>
                           @else
-                          <td>{{$row['current_status']}}</td>
+                          <td data-label="Status">{{$row['current_status']}}</td>
                           @endif
                           @endif
                           @endif
-                          <td style="text-wrap: wrap">{!! $row['instructionset'] !!}</td>
-                          <td>
+                          <td data-label="Instruction" style="text-wrap: wrap">{!! $row['instructionset'] !!}</td>
+                          <td data-label="Action">
                             @if($row['current_status'] == 'Re-Sent' || $row['current_status'] == 'Submitted' || $row['current_status'] == 'Close' || $row['current_status'] == 'Complete')
                             <a href="#ViewModal" data-toggle="modal" data-target="#ViewModal{{$row['parent_video_upload_id']}}" class="btn btn-info" title="View" data-toggle="modal" data-target="#templates" style="margin-inline:5px"><i class="fa fa-eye" style="color:white!important"></i></a>
                             @elseif($row['current_status'] == 'Rejected' || $row['current_status'] == 'Reject')

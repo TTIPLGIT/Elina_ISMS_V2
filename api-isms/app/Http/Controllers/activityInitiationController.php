@@ -1501,7 +1501,6 @@ class activityInitiationController extends BaseController
 
                 // ✅ STEP 2: Get activity_initiation_id
                 $activityInitiationId = DB::table('activity_initiation')
-                    ->where('user_id', $authID)
                     ->where('enrollment_id', $enrollmentID)
                     ->where('activity_id', $activity_id)
                     ->value('activity_initiation_id');

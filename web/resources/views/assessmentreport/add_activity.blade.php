@@ -33,9 +33,9 @@
         }).done(function(data) {
             var activityID = data;
             if (skill == "skill2") {
-                insertRowToTableA(pageId, assesmentSkillId, skillId , typedName, activityID);
+                insertRowToTableA(pageId, assesmentSkillId, skillId, typedName, activityID);
             } else {
-                insertRowToTable(pageId, assesmentSkillId, typedName, activityID);
+                insertRowToTable(pageId, assesmentSkillId, typedName, skillId, activityID);
             }
         })
     }
