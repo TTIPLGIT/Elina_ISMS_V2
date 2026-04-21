@@ -267,7 +267,7 @@
               if (data != '[]') {
                 var user_select = data.rows;
                 var optionsdata = "";
-                var ddd ;
+                var ddd = "";
                 for (var i = 0; i < user_select.length; i++) {
                   var questionnaire_name = user_select[i]['questionnaire_name'];
                   var questionnaire_id = user_select[i]['questionnaire_id'];

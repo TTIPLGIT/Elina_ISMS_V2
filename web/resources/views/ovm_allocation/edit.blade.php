@@ -59,6 +59,9 @@
                             <form action="{{route('ovm_allocation.update', $row['id'])}}" method="POST" id="ovm_meet" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 @method('PUT')
+                                @php
+                                    $isLocked = ($row['rsvp1'] == 'Accept' && $row['rsvp2'] == 'Accept') || ($row['rsvp1'] == 'Declined' || $row['rsvp2'] == 'Declined');
+                                @endphp
                                 <div class="row is-coordinate">
                                     <div class="col-md-4">
                                         <div class="form-group">
@@ -198,7 +201,7 @@
                                     @if(($row['cnotes'] != "")&&($row['reschedule_count'] < 2)) <div class="col-sm-12">
                                         <div class="form-group">
                                             <label class="control-label">Coordinator Notes</label>
-                                            <textarea class="form-control" name="coord_notes">{{$row['cnotes']}}</textarea>
+                                            <textarea class="form-control" name="coord_notes" {{ $isLocked ? 'disabled readonly' : '' }}>{{$row['cnotes']}}</textarea>
                                         </div>
                                 </div>
 
@@ -261,7 +264,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label required">Location</label>
                             <div class="col-sm-4">
-                                <input class="form-control" type="text" id="meeting_location" name="meeting_location" value="{{ $row['meeting_location']}}" placeholder="Enter Location" required autocomplete="off">
+                                <input class="form-control" type="text" id="meeting_location" name="meeting_location" value="{{ $row['meeting_location']}}" placeholder="Enter Location" required autocomplete="off" {{ $isLocked ? 'disabled readonly' : '' }}>
                             </div>
                         </div>
 
@@ -270,12 +273,12 @@
                             <div class="col-sm-4">
                                 <div class="inner-addon right-addon">
                                     <i class="glyphicon fas fa-calendar-alt"></i>
-                                    <input type='text' class="form-control meeting_date" id='meeting_startdate' name="meeting_startdate" onchange="autodateupdate(this)" value="{{ $row['meeting_startdate']}}" required>
+                                    <input type='text' class="form-control meeting_date" id='meeting_startdate' name="meeting_startdate" onchange="autodateupdate(this)" value="{{ $row['meeting_startdate']}}" required {{ $isLocked ? 'disabled readonly' : '' }}>
                                 </div>
                             </div>
                             <div class="col-sm-2">
                                 <div class="content">
-                                    <input class="form-control" type="time" id="meeting_starttime" name="meeting_starttime" value="{{ $row['meeting_starttime']}}" onchange="autoupdatedescription1()" required>
+                                    <input class="form-control" type="time" id="meeting_starttime" name="meeting_starttime" value="{{ $row['meeting_starttime']}}" onchange="autoupdatedescription1()" required {{ $isLocked ? 'disabled readonly' : '' }}>
                                 </div>
                             </div>
 
@@ -288,13 +291,13 @@
                             <div class="col-sm-4">
                                 <div class="inner-addon right-addon">
                                     <i class="glyphicon fas fa-calendar-alt"></i>
-                                    <input type='text' class="form-control meeting_date" id="meeting_enddate" name="meeting_enddate" onchange="autodateupdate(this)" value="{{ $row['meeting_enddate']}}" required placeholder="MM/DD/YYYY">
+                                    <input type='text' class="form-control meeting_date" id="meeting_enddate" name="meeting_enddate" onchange="autodateupdate(this)" value="{{ $row['meeting_enddate']}}" required placeholder="MM/DD/YYYY" {{ $isLocked ? 'disabled readonly' : '' }}>
                                 </div>
                             </div>
                             <div class="col-sm-2">
 
                                 <div class="content">
-                                    <input class="form-control" type="time" id="meeting_endtime" name="meeting_endtime" value="{{ $row['meeting_endtime']}}" onchange="autoupdatedescription1()" required>
+                                    <input class="form-control" type="time" id="meeting_endtime" name="meeting_endtime" value="{{ $row['meeting_endtime']}}" onchange="autoupdatedescription1()" required {{ $isLocked ? 'disabled readonly' : '' }}>
                                 </div>
                                 <br>
 
@@ -334,7 +337,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label required">Location</label>
                             <div class="col-sm-4">
-                                <input class="form-control" type="text" id="meeting_location2" name="meeting_location2" value="{{ $row['meeting_location2']}}" placeholder="Enter Location" required autocomplete="off">
+                                <input class="form-control" type="text" id="meeting_location2" name="meeting_location2" value="{{ $row['meeting_location2']}}" placeholder="Enter Location" required autocomplete="off" {{ $isLocked ? 'disabled readonly' : '' }}>
                             </div>
                         </div>
 
@@ -343,12 +346,12 @@
                             <div class="col-sm-4">
                                 <div class="inner-addon right-addon">
                                     <i class="glyphicon fas fa-calendar-alt"></i>
-                                    <input type='text' class="form-control meeting_date" id='meeting_startdate2' name="meeting_startdate2" onchange="autodateupdate2(this)" value="{{ $row['meeting_startdate2']}}" required>
+                                    <input type='text' class="form-control meeting_date" id='meeting_startdate2' name="meeting_startdate2" onchange="autodateupdate2(this)" value="{{ $row['meeting_startdate2']}}" required {{ $isLocked ? 'disabled readonly' : '' }}>
                                 </div>
                             </div>
                             <div class="col-sm-2">
                                 <div class="content">
-                                    <input class="form-control" type="time" id="meeting_starttime2" name="meeting_starttime2" value="{{ $row['meeting_starttime2']}}" required onchange="autoupdatedescription2()">
+                                    <input class="form-control" type="time" id="meeting_starttime2" name="meeting_starttime2" value="{{ $row['meeting_starttime2']}}" required onchange="autoupdatedescription2()" {{ $isLocked ? 'disabled readonly' : '' }}>
                                 </div>
                             </div>
 
@@ -361,13 +364,13 @@
                             <div class="col-sm-4">
                                 <div class="inner-addon right-addon">
                                     <i class="glyphicon fas fa-calendar-alt"></i>
-                                    <input type='text' class="form-control meeting_date" id="meeting_enddate2" name="meeting_enddate2" onchange="autodateupdate2(this)" value="{{ $row['meeting_enddate2']}}" required placeholder="MM/DD/YYYY">
+                                    <input type='text' class="form-control meeting_date" id="meeting_enddate2" name="meeting_enddate2" onchange="autodateupdate2(this)" value="{{ $row['meeting_enddate2']}}" required placeholder="MM/DD/YYYY" {{ $isLocked ? 'disabled readonly' : '' }}>
                                 </div>
                             </div>
                             <div class="col-sm-2">
 
                                 <div class="content">
-                                    <input class="form-control" type="time" id="meeting_endtime2" name="meeting_endtime2" value="{{ $row['meeting_endtime2']}}" required onchange="autoupdatedescription2()">
+                                    <input class="form-control" type="time" id="meeting_endtime2" name="meeting_endtime2" value="{{ $row['meeting_endtime2']}}" required onchange="autoupdatedescription2()" {{ $isLocked ? 'disabled readonly' : '' }}>
                                 </div>
                                 <br>
 
@@ -430,7 +433,7 @@
                     Reschedule
                 </a>
 
-                @elseif(($row['rsvp1'] != "Declined") && ($row['reschedule_count'] < 2))
+                @elseif(($row['rsvp1'] != "Declined") && ($row['reschedule_count'] < 2) && !$isLocked)
                     <a type="button"
                     class="btn btn-warning text-white action-btn"
                     id="actionButton"
@@ -1524,6 +1527,7 @@
             }).then((result) => {
                 if (result.value) {
                     $(".loader").show();
+                    $('#ovm_meet').find(':disabled').prop('disabled', false);
                     document.getElementById('ovm_meet').submit(a);
                 }
             })
@@ -1864,6 +1868,7 @@
             }).then((result) => {
                 if (result.value) {
                     $(".loader").show();
+                    $('#ovm_meet').find(':disabled').prop('disabled', false);
                     document.getElementById('ovm_meet').submit(a);
                 }
             })
@@ -2183,6 +2188,7 @@
             }).then((result) => {
                 if (result.value) {
                     $(".loader").show();
+                    $('#ovm_meet').find(':disabled').prop('disabled', false);
                     document.getElementById('ovm_meet').submit(a);
                 }
             })
@@ -2238,109 +2244,75 @@
         if (co2 != []) {
             getEventsDB('is_coordinator2');
         }
+
+        $('<style>.locked-field { pointer-events: none !important; background-color: #eee !important; cursor: not-allowed !important; }</style>').appendTo('head');
+
+        setTimeout(function() {
+            var rsvp1 = $.trim($('[name="rsvp1"]').get(0) ? $('[name="rsvp1"]').val() : "").toLowerCase();
+            var rsvp2 = $.trim($('[name="rsvp2"]').get(0) ? $('[name="rsvp2"]').val() : "").toLowerCase();
+            var $status = $('#status');
+            var statusVal = $.trim($status.val() || "").toLowerCase();
+
+            if (rsvp1.includes('accept') && rsvp2.includes('accept') || rsvp1.includes('decline') || rsvp2.includes('decline') || statusVal.includes('accept') || statusVal.includes('decline')) {
+                if (rsvp1.includes('accept') && rsvp2.includes('accept')) {
+                    $status.val('Accept');
+                }
+                $status.prop('disabled', true);
+                coonotes();
+            }
+        }, 1000);
     });
 
     function coonotes() {
-        const status = document.querySelector('#status').value;
-        var meetingLocation = document.querySelector('#meeting_location');
-        var meeting_startdate = document.querySelector('#meeting_startdate');
-        var meeting_enddate = document.querySelector('#meeting_enddate');
-        var meeting_starttime = document.querySelector('#meeting_starttime');
-        var meeting_endtime = document.querySelector('#meeting_endtime');
-        var meeting_location2 = document.querySelector('#meeting_location2');
-        var meeting_startdate2 = document.querySelector('#meeting_startdate2');
-        var meeting_enddate2 = document.querySelector('#meeting_enddate2');
-        var meeting_starttime2 = document.querySelector('#meeting_starttime2');
-        var meeting_endtime2 = document.querySelector('#meeting_endtime2');
-        var meeting_startdate = document.querySelector('#meeting_startdate');
-        const actionButton = document.querySelector('#actionButton');
-        const coord_notes = document.querySelector('.coord_notes');
-        const meeting_status = document.querySelector('#meeting_status');
-
-        if (status == "") {
-            document.querySelector('.coord_notes').style.display = "none";
-            meetingLocation.readOnly = false;
-
-        } else if (status == "Declined") {
+        var status = $.trim($('#status').val() || "");
+        var $formElements = $('#ovm_meet input, #ovm_meet textarea, #ovm_meet select').not('#status, [type="hidden"]');
+        var rsvp1 = $.trim($('[name="rsvp1"]').val() || "").toLowerCase();
+        var rsvp2 = $.trim($('[name="rsvp2"]').val() || "").toLowerCase();
+        
+        if (status === "Declined" || status === "Accept") {
             document.querySelector('.coord_notes').style.display = "block";
-            meetingLocation.readOnly = true;
-            meeting_startdate.readOnly = true;
-            meeting_enddate.readOnly = true;
-            meeting_starttime.readOnly = true;
-            meeting_endtime.readOnly = true;
-            meeting_location2.readOnly = true;
-            meeting_startdate2.readOnly = true;
-            meeting_enddate2.readOnly = true;
-            meeting_starttime2.readOnly = true;
-            meeting_endtime2.readOnly = true;
-            meeting_startdate.readOnly = true;
-            actionButton.textContent = "Decline";
-            actionButton.style.backgroundColor = "Orange";
-            actionButton.style.color = "black";
-            actionButton.style.display = "inline-block";
-            meeting_status.value = "Declined";
-            actionButton.setAttribute('onclick', "validateForm('Decline')");
-            // if (coord_notes == "") {
-            //     swal.fire("Please Enter the Coordinator Notes", "", "error");
-            //     return false;
-            // }
+            $formElements.prop('disabled', true).prop('readOnly', true).addClass('locked-field');
+            $('.meeting_date').datepicker('disable');
 
+            var swalText = (status === "Declined") ? "Decline" : "Accept";
+            var btnColor = (status === "Declined") ? "Orange" : "Green";
+            var textColor = (status === "Declined") ? "black" : "white";
 
-        } else if (status == "Accept") {
+            var $actionBtns = $('.action-btn').not('.back-btn');
+            $actionBtns.each(function() {
+                this.textContent = swalText;
+                $(this).css('background-color', btnColor).css('color', textColor);
+                
+                if (status === "Accept" && rsvp1.includes('accept') && rsvp2.includes('accept')) {
+                    $(this).attr('style', $(this).attr('style') + '; display: none !important;');
+                } else {
+                    $(this).attr('style', $(this).attr('style') + '; display: inline-block !important;');
+                }
+                $(this).attr('onclick', "validateForm('" + swalText + "')");
+            });
+
+            document.querySelector('#meeting_status').value = status;
+
+        } else if (status === "Forced Closure") {
             document.querySelector('.coord_notes').style.display = "block";
-            meetingLocation.readOnly = true;
-            meeting_startdate.readOnly = true;
-            meeting_enddate.readOnly = true;
-            meeting_starttime.readOnly = true;
-            meeting_endtime.readOnly = true;
-            meeting_location2.readOnly = true;
-            meeting_startdate2.readOnly = true;
-            meeting_enddate2.readOnly = true;
-            meeting_starttime2.readOnly = true;
-            meeting_endtime2.readOnly = true;
-            meeting_startdate.readOnly = true;
-            actionButton.textContent = "Accept";
-            actionButton.style.backgroundColor = "Green";
-            actionButton.style.color = "white";
-            actionButton.style.display = "inline-block";
-            meeting_status.value = "Accept";
-            actionButton.setAttribute('onclick', "validateForm('Accept')");
-            // if (coord_notes == "") {
-            //     swal.fire("Please Enter the Coordinator Notes", "", "error");
-            //     return false;
-            // }
-
-        } else if (status == "Forced Closure") {
-            document.querySelector('.coord_notes').style.display = "block";
-            meetingLocation.readOnly = false;
-            meeting_startdate.readOnly = false;
-            meeting_enddate.readOnly = false;
-            meeting_starttime.readOnly = false;
-            meeting_endtime.readOnly = false;
-            meeting_location2.readOnly = false;
-            meeting_startdate2.readOnly = false;
-            meeting_enddate2.readOnly = false;
-            meeting_starttime2.readOnly = false;
-            meeting_endtime2.readOnly = false;
-            meeting_startdate.readOnly = false;
-
-            actionButton.textContent = "Forced Closure";
-            // Add CSS styling
-            actionButton.style.backgroundColor = "red";
-            actionButton.style.color = "white";
-            actionButton.style.display = "inline-block";
-
-            actionButton.setAttribute('onclick', "validateForm('Forced Closure')");
-            // if (coord_notes == "") {
-            //     swal.fire("Please Enter the Coordinator Notes", "", "error");
-            //     return false;
-            // }
+            $formElements.prop('disabled', false).prop('readOnly', false).removeClass('locked-field');
+            $('.meeting_date').datepicker('enable');
+            
+            var $actionBtns = $('.action-btn').not('.back-btn');
+            $actionBtns.each(function() {
+                this.textContent = "Forced Closure";
+                $(this).css('background-color', 'red').css('color', 'white');
+                $(this).attr('style', $(this).attr('style') + '; display: inline-block !important;');
+                $(this).attr('onclick', "validateForm('Forced Closure')");
+            });
 
         } else {
             document.querySelector('.coord_notes').style.display = "none";
-            meetingLocation.readOnly = false;
+            $formElements.prop('disabled', false).prop('readOnly', false).removeClass('locked-field');
+            if ($('.meeting_date').length > 0) $('.meeting_date').datepicker('enable');
+            
+            $('.action-btn').not('.back-btn').attr('style', function(i, s) { return (s || "") + '; display: none !important;'; });
         }
-
     }
 </script>
 @endsection

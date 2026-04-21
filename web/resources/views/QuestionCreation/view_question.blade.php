@@ -420,11 +420,14 @@
 
             success: function(data) {
 
-                if (data == 3 || data == 4 || data == 5 || data == 9 || data == 8) {
+                if (data == 3 || data == 4 || data == 5) {
                     $('#edit_option' + id).show();
-                } else if (data == 6 || data == 7) {
+                } else if (data == 6 || data == 7 || data == 12) {
                     $('#edit_option' + id).hide();
                     $('#edit_sub_questions' + id).show();
+                } else if (data == 8) {
+                    $('#edit_option' + id).hide();
+                    $('#edit_multiple_questions' + id).show();
                 } else {
                     $('#edit_option' + id).hide();
                 }
@@ -437,4 +440,15 @@
 </script>
 
 
-@endsection
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: "{{ session('success') }}",
+        confirmButtonText: 'OK'
+    });
+</script>
+@endif
+
+@endsection

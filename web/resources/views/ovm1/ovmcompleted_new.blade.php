@@ -497,22 +497,17 @@
         var birthdate = new Date(dobParts[2], dobParts[1] - 1, dobParts[0]);
         var now = new Date();
 
-        var years = now.getFullYear() - birthdate.getFullYear();
-        var months = now.getMonth() - birthdate.getMonth();
-
-        if (months < 0 || (months === 0 && now.getDate() < birthdate.getDate())) {
-            years--;
-            months += 12;
+        var totalMonths = (now.getFullYear() - birthdate.getFullYear()) * 12 + (now.getMonth() - birthdate.getMonth());
+        if (now.getDate() < birthdate.getDate()) {
+            totalMonths--;
         }
+        var years = Math.floor(totalMonths / 12);
+        var months = totalMonths % 12;
 
-        var childAge = years + " years " + months + " months";
+        var childAge = years + " years" + (months > 0 ? " " + months + " months" : "");
         var childGender = $enrollment_details.child_gender;
 
-        $('.f_name').val($enrollment_details.child_name);
-        $('.f_age').val(childAge);
-        $('.f_dob').val($enrollment_details.child_dob);
-        $('.f_aor').val($enrollment_details.child_contact_address);
-        $('.f_school').val($enrollment_details.child_school_name_address);
+        var childGender = $enrollment_details.child_gender;
 
         // ================== HELPERS ==================
         function isNullValue(value) {
@@ -663,6 +658,22 @@
         } else {
             $('#g2form_filled').val(0);
         }
+
+        $('.f_name').val($enrollment_details.child_name);
+        $('.f_dob').val($enrollment_details.child_dob);
+        $('.f_aor').val($enrollment_details.child_contact_address);
+        $('.f_school').val($enrollment_details.child_school_name_address);
+
+        // 🔹 Set age with a small delay to ensure it's not overwritten by other scripts
+        setTimeout(function() {
+            $('.f_age').val(childAge);
+            $('td').each(function() {
+                var cellText = $(this).text().trim();
+                if (cellText === 'Age') {
+                    $(this).closest('tr').find('textarea').val(childAge);
+                }
+            });
+        }, 500);
 
         // ================== CLEAN FINAL ==================
         $('.instructions_textarea').each(function() {

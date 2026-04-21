@@ -26,7 +26,7 @@ class CustomizedPaymentController extends BaseController
                 if ($objData->Code == 200) {
                     $parant_data = json_decode(json_encode($objData->Data), true);
                     $rows = $parant_data['rows'];
-                    // dd($parant_data);
+                    // dd($rows);
 
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];

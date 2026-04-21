@@ -187,49 +187,37 @@ class QuestionCreationController extends BaseController
             // if ($field_type_id == 3 || $field_type_id == 4 || $field_type_id == 5) {
             //     $data['options'] = $request->options_questions;
             //     $data['sub_questions'] = "";
-            // } else if ($field_type_id == 7 || $field_type_id == 6) {
-            //     $data['sub_questions'] = $request->sub_question;
-            //     $data['options'] = $request->sub_options;
-            // }else if ($field_type_id == 8) {
-            //     $data['options'] = "";
-            //     $data['sub_questions'] = "";
-            // } else if ($field_type_id == 9){
-            //     $data['sub_questions'] = "";
-            //     $data['options'] = "";
-            //     $data['header_title'] = $request->header_title;
-            //     $data['header_description'] = $request->header_description;
-            // } else {
-            //     $data['sub_questions'] = "";
-            //     $data['options'] = "";
-            // }
-            // $data['quadrant_type_id'] = $request->quadrant_type_id;
             // $data['quadrant'] = $request->quadrant;
 
+            $f_que = $request->field_question;
+            $desc = $request->add_question_description ?? $request->question_description ?? $request->description ?? '';
+            
             $data = [
                 'questionnaire_details_id' => $client_data,
                 'field_type_id' => $request->field_type_id,
-                'field_question' => $request->field_question,
+                'field_question' => $f_que,
+                'question' => $f_que,
+                'header_title' => $f_que,
+                'title' => $f_que,
                 'question_field_name' => $clientdata,
-                'question_description' => $request->question_description,
+                'question_description' => $desc,
+                'header_description' => $desc,
+                'description' => $desc,
+                'discription' => $desc,
                 'required' => $request->required,
                 'options' => '',
                 'sub_questions' => '',
-                'header_title' => '',
-                'header_description' => '',
                 'quadrant_type_id' => $request->quadrant_type_id,
                 'quadrant' => $request->quadrant,
-                'other_option' => $request->other_option,
+                'other_option_enabled' => $request->other_option_enabled ?? 0,
             ];
+
             if ($field_type_id == 3 || $field_type_id == 4 || $field_type_id == 5) {
-                $data['options'] = $request->options_questions;
+                $data['options'] = $request->options_questions ?? '';
             } else if ($field_type_id == 7 || $field_type_id == 6 || $field_type_id == 12) {
-                $data['sub_questions'] = $request->sub_question;
-                $data['options'] = $request->sub_options;
-            } else if ($field_type_id == 9) {
-                $data['header_title'] = $request->header_title;
-                $data['header_description'] = $request->header_description;
+                $data['sub_questions'] = $request->sub_questions ?? '';
+                $data['options'] = $request->options_questions ?? '';
             }
-           
             $encryptArray = $this->encryptData($data);
             $request = array();
 
@@ -242,7 +230,7 @@ class QuestionCreationController extends BaseController
                 $objData = json_decode($this->decryptData($response1->Data));
 
                 if ($objData->Code == 200) {
-                    return redirect()->route('question_creation.add_questions', $this->encryptData($client_data));
+                    return redirect()->route('question_creation.add_questions', $this->encryptData($client_data))->with('success', 'Submitted successfully');
                 }
 
                 if ($objData->Code == 400) {
@@ -340,27 +328,57 @@ class QuestionCreationController extends BaseController
     {
         // dd($request->edit_field_types_id);
         try {
-            $method = 'Method => QuestionCreationController => store';
+            $method = 'Method => QuestionCreationController => update';
 
             $edit_field_types_id = $request->edit_field_types_id;
             $client_data = $request->client_data;
-            $data = array();
-            $data['question_id'] = $this->decryptData($id);
-            $data['field_type_id'] = $request->edit_field_types_id;
-            if ($edit_field_types_id == 9) {
-                $data['header_title'] = $request->edit_field_question;
-                $data['header_description'] = $request->description;
-                $data['field_question'] = "";
-                $data['question_description'] = "";
-            } else {
-                $data['field_question'] = $request->edit_field_question;
-                $data['question_description'] = $request->edit_question_description;
-            }
-            $data['sub_questions'] = $request->sub_questions;
-            if ($edit_field_types_id == 7 || $edit_field_types_id == 6 || $edit_field_types_id == 12) {
-                $data['options'] = $request->edit_sub_options;
-            } else {
-                $data['options'] = $request->options_question;
+
+            // Deep fallback extraction
+            $f_que = $request->input('field_question') ?? $request->input('edit_field_question') ?? $request->input('question') ?? $request->field_question ?? $request->header_title ?? '';
+            $desc = $request->input('question_description') ?? $request->input('description') ?? $request->input('edit_question_description') ?? $request->question_description ?? $request->header_description ?? $request->discription ?? '';
+            
+            $data = [
+                'question_id' => $this->decryptData($id),
+                'id' => $this->decryptData($id),
+                'question_details_id' => $this->decryptData($id),
+                'q_id' => $this->decryptData($id),
+                'questionnaire_details_id' => $client_data,
+                'field_type_id' => $edit_field_types_id,
+                
+                // Titles
+                'field_question' => $f_que,
+                'question' => $f_que,
+                'header_title' => $f_que,
+                'title' => $f_que,
+                
+                // Descriptions
+                'question_description' => $desc,
+                'header_description' => $desc,
+                'description' => $desc,
+                'discription' => $desc,
+                'field_description' => $desc,
+                'q_desc' => $desc,
+                'q_description' => $desc,
+                'item_description' => $desc,
+                'details_description' => $desc,
+                
+                'question_field_name' => $request->question_field_name,
+                'required' => 1,
+                'options' => [],
+                'sub_questions' => [],
+                'quadrant_type_id' => $request->quadrant_type_id,
+                'quadrant' => $request->quadrant,
+                'other_option_enabled' => $request->other_option_enabled ?? 0,
+            ];
+
+            if ($edit_field_types_id == 8) {
+                $data['quadrant_type'] = $request->quadrant_type_id; 
+                $data['category'] = $request->quadrant_type_id;
+            } else if ($edit_field_types_id == 7 || $edit_field_types_id == 6 || $edit_field_types_id == 12) {
+                $data['sub_questions'] = $request->sub_questions ?? [];
+                $data['options'] = $request->edit_sub_options ?? $request->options_questions ?? [];
+            } else if ($edit_field_types_id == 3 || $edit_field_types_id == 4 || $edit_field_types_id == 5) {
+                $data['options'] = $request->options_questions ?? $request->options_question ?? [];
             }
             // dd($data);
             $encryptArray = $this->encryptData($data);
@@ -373,7 +391,7 @@ class QuestionCreationController extends BaseController
                 $objData = json_decode($this->decryptData($response1->Data));
 
                 if ($objData->Code == 200) {
-                    return redirect()->route('question_creation.add_questions', $this->encryptData($client_data));
+                    return redirect()->route('question_creation.add_questions', $this->encryptData($client_data))->with('success', 'Updated successfully');
                 }
 
                 if ($objData->Code == 400) {
@@ -397,7 +415,10 @@ class QuestionCreationController extends BaseController
             $data = array();
             $data['questionnaire_details_id'] = $request->questionnaire_details_id;
             $data['questionnaire_id'] = $request->questionnaire_id;
-            $data['discription'] = $request->discription;
+            $desc = $request->discription ?? $request->description ?? '';
+            $data['discription'] = $desc;
+            $data['description'] = $desc;
+            $data['questionnaire_description'] = $desc;
             $data['no_of_ques'] = $request->no_of_ques;
             $encryptArray = $this->encryptData($data);
             $request = array();

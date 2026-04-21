@@ -16,7 +16,7 @@
                     <th colspan="4" style="background-color: white !important;color: #141414;text-align: left;border: 1px solid #040404 !important;">{{$perskills['skill_name']}}<input type="checkbox" style="float:right" name="switch[]" value="{{$perskills['skill_id']}}" class="check" onclick="handleCheckboxTable(this)" @if(in_array($perskills['skill_id'] , explode(',',$report['switch']))) checked @endif><!--2--></th>
                 </tr>
             </thead>
-            <tbody id="tablebody_a{{$page['page']}}">
+            <tbody id="tablebody_a{{$page['page']}}_{{ $perskills['skill_id'] }}">
 
                 @foreach($details2 as $detail)
                 @if($page['assessment_skill'] == $detail['performance_area_id'] && $detail['cheSkill'] == $perskills['skill_id'])
@@ -108,7 +108,7 @@
             act.skill_id == skillId
         );
 
-        const tbody = document.getElementById('tablebody_a' + pageId);
+        const tbody = document.getElementById('tablebody_a' + pageId + '_' + skillId);
         if (!tbody) {
             console.error('tbody not found for page', pageId);
             return;
@@ -172,7 +172,7 @@
     }
 
     function insertRowToTableA(pageId, assesmentSkillId, skillId, activityName, activityId = '') {
-        const tbody = document.getElementById('tablebody_a' + pageId);
+        const tbody = document.getElementById('tablebody_a' + pageId + '_' + skillId);
         if (!tbody) {
             console.error('tbody not found for page', pageId);
             return;

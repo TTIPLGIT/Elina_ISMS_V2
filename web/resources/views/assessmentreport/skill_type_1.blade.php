@@ -23,7 +23,7 @@
                     <th width="40%">Recommendation</th>
                 </tr>
             </thead>
-            <tbody id="tablebody{{$page['page']}}">
+            <tbody id="tablebody{{$page['page']}}_{{ $perskills['skill_id'] }}">
                 @foreach($activitys as $activity)
                 @if($page['assesment_skill_id'] == $activity['performance_area_id'] && $activity['skill_type'] == 1 && $activity['skill_id'] == $perskills['skill_id'])
                 <tr class="firstrow" style="{{ $activity['isVerified'] == 1 ? 'background-color:#ea5455' : '' }}">
@@ -97,7 +97,7 @@
             act.skill_id == skillId
         );
 
-        const tbody = document.getElementById('tablebody' + pageId);
+        const tbody = document.getElementById('tablebody' + pageId + '_' + skillId);
         const existingNamesInTable = Array.from(tbody.querySelectorAll('select.activitySelect option[selected]'))
             .map(opt => opt.textContent.trim().toLowerCase());
 
@@ -140,7 +140,7 @@
                 }
 
                 if (existsInDB) {
-                    insertRowToTable(pageId, assesmentSkillId, typedName, '');
+                    insertRowToTable(pageId, assesmentSkillId, typedName, skillId, '');
                 } else {
                     Swal.fire({
                         title: `Are you sure you want to submit?`,
@@ -161,9 +161,9 @@
         });
     }
 
-    function insertRowToTable(pageId, assesmentSkillId, activityName, activityId = '') {
+    function insertRowToTable(pageId, assesmentSkillId, activityName, skillId, activityId = '') {
 
-        const tbody = document.getElementById('tablebody' + pageId);
+        const tbody = document.getElementById('tablebody' + pageId + '_' + skillId);
         const newRow = document.createElement('tr');
         newRow.classList.add('firstrow');
 

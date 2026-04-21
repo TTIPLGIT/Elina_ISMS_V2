@@ -176,7 +176,7 @@
                     <div class="col-md-12" id="question_descriptionDiv" style="display: none;">
                         <div class="form-group questionnaire">
                             <label class="control-label required">Question Description</label>
-                            <textarea class="form-control default" name="question_description" id="question_description" autocomplete="off"></textarea>
+                            <textarea class="form-control default" name="add_question_description" id="add_question_description" autocomplete="off"></textarea>
                         </div>
                     </div>
 
@@ -449,6 +449,7 @@
                     $('#edit_sub_questions' + id).show();
                 } else if (data == 8) {
                     $('#edit_option' + id).hide();
+                    $('#edit_multiple_questions' + id).show();
                 } else {
                     $('#edit_option' + id).hide();
                 }
@@ -578,12 +579,13 @@
             $('#footerDiv').show();
             $('.otherBtn').hide();
         } else if (fieldtype == 9) {
-            $('#header_field').show();
+            $('#header_field').hide();
             $('#footerDiv').hide();
             $('#option').hide();
             $('#sub_questions').hide();
             $('#multiple_questions').hide();
-            $('#question_field').hide();
+            $('#question_field').show();
+            $('#question_descriptionDiv').show();
             $('.otherBtn').hide();
         } else {
             $('#footerDiv').show();
@@ -612,8 +614,11 @@
             var header_description = $('#header_description').val();
 
             if (header_title == "" || header_title == null) {
-                if (header_description == "" || header_description == null) {
-                    Swal.fire("No Data To Update", "", "error");
+                // If the specific header_title field is hidden, check the main field_question
+                header_title = $('#field_question').val();
+                header_description = $('#question_description').val();
+                if (header_title == "" || header_title == null) {
+                    Swal.fire("Please Enter Header Title", "", "error");
                     return false;
                 }
             }
@@ -626,12 +631,25 @@
             }
 
             if ($('#add_description').is(':checked')) {
-                var description = $('#question_description').val().trim();
+                var description = $('#add_question_description').val().trim();
 
                 if (description == "" || description == null) {
                     Swal.fire("Please Enter Question Description", "", "error");
                     return false;
                 }
+            }
+        }
+
+        if (fieldtype == 8) {
+            var quadrant = $('#quadrant').val();
+            if (quadrant == null || quadrant == "") {
+                Swal.fire("Please Select Quadrant", "", "error");
+                return false;
+            }
+            var category = $('#quadrant_type_id').val();
+            if (category == null || category == "") {
+                Swal.fire("Please Select Category", "", "error");
+                return false;
             }
         }
 

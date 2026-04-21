@@ -23,6 +23,8 @@ class homecontroller extends BaseController
             // $this->WriteFileLog("expiration");
             // $this->WriteFileLog($expiration);
             $roles = auth()->user()->array_roles;
+            // $this->WriteFileLog($roles);
+            // $this->WriteFileLog($user_id);
             $rolesArray = array_merge(array(auth()->user()->array_roles), explode(',', auth()->user()->roles));
             $users = DB::table('users')
                 ->select('users.name', 'users.email', 'users.id', 'uam_roles.role_name', 'login_audit.login_time', 'users.profile_image', 'users.profile_path')
@@ -31,7 +33,7 @@ class homecontroller extends BaseController
                 ->where('users.id', $user_id)
                 ->orderBy('login_audit.audit_id', 'DESC')->first();
 
-            if (in_array(4, $rolesArray)) {
+            if (!in_array(5, $rolesArray)) {
                 $chart1 =  DB::select("SELECT  (SELECT COUNT(*) FROM   enrollment_details ) AS child_enrollement_count,
                 (SELECT COUNT(*) FROM   internship_application_form) AS internship_count,
                 (SELECT COUNT(*) FROM   service_provider ) AS service_provider_count,
@@ -45,14 +47,25 @@ class homecontroller extends BaseController
                 FROM DUAL");
             }
 
-            $chart2 =  DB::select("SELECT YEAR as c_year, COALESCE(SUM(ovm_count), 0) AS ovm_count, COALESCE(SUM(sail_count), 0) AS sail_count,
-                '0' AS dropped FROM ( SELECT EXTRACT(YEAR FROM created_date) AS year, COUNT(*) AS ovm_count, NULL AS sail_count
-                FROM ovm_meeting_details GROUP BY EXTRACT(YEAR FROM created_date) 
-                UNION ALL
-                SELECT EXTRACT(YEAR FROM created_date) AS year, NULL AS ovm_count, COUNT(*) AS sail_count FROM sail_details 
-                GROUP BY EXTRACT(YEAR FROM created_date) ) AS combined_counts WHERE YEAR IS NOT NULL 
-                GROUP BY c_year ORDER BY c_year; ");
-            if (in_array(4, $rolesArray)) {
+            if (in_array(5, $rolesArray)) {
+                $chart2 =  DB::select("SELECT YEAR as c_year, COALESCE(SUM(ovm_count), 0) AS ovm_count, COALESCE(SUM(sail_count), 0) AS sail_count,
+                    '0' AS dropped FROM ( SELECT EXTRACT(YEAR FROM created_date) AS year, COUNT(*) AS ovm_count, NULL AS sail_count
+                    FROM ovm_meeting_details WHERE enrollment_id IN (SELECT enrollment_id FROM ovm_allocation WHERE (is_coordinator1 = $user_id OR is_coordinator2 = $user_id)) GROUP BY EXTRACT(YEAR FROM created_date) 
+                    UNION ALL
+                    SELECT EXTRACT(YEAR FROM created_date) AS year, NULL AS ovm_count, COUNT(*) AS sail_count FROM sail_details 
+                    WHERE enrollment_id IN (SELECT enrollment_id FROM ovm_allocation WHERE (is_coordinator1 = $user_id OR is_coordinator2 = $user_id))
+                    GROUP BY EXTRACT(YEAR FROM created_date) ) AS combined_counts WHERE YEAR IS NOT NULL 
+                    GROUP BY c_year ORDER BY c_year; ");
+            } else {
+                $chart2 =  DB::select("SELECT YEAR as c_year, COALESCE(SUM(ovm_count), 0) AS ovm_count, COALESCE(SUM(sail_count), 0) AS sail_count,
+                    '0' AS dropped FROM ( SELECT EXTRACT(YEAR FROM created_date) AS year, COUNT(*) AS ovm_count, NULL AS sail_count
+                    FROM ovm_meeting_details GROUP BY EXTRACT(YEAR FROM created_date) 
+                    UNION ALL
+                    SELECT EXTRACT(YEAR FROM created_date) AS year, NULL AS ovm_count, COUNT(*) AS sail_count FROM sail_details 
+                    GROUP BY EXTRACT(YEAR FROM created_date) ) AS combined_counts WHERE YEAR IS NOT NULL 
+                    GROUP BY c_year ORDER BY c_year; ");
+            }
+            if (!in_array(5, $rolesArray)) {
 
                 $userRow = DB::select("SELECT COUNT(*) as register_count FROM users;");
                 $ovm1Row = DB::select("SELECT COUNT(*) as ovm_count FROM ovm_meeting_details;");
@@ -74,9 +87,10 @@ class homecontroller extends BaseController
                 // WHERE d.array_roles='3' AND a.enrollment_child_num IN (SELECT enrollment_id FROM ovm_meeting_details )
                 // AND (JSON_EXTRACT(b.is_coordinator1 , '$.id') = $user_id OR JSON_EXTRACT(b.is_coordinator2 , '$.id') = $user_id) AND (JSON_EXTRACT(c.is_coordinator1 , '$.id') = $user_id OR 
                 // JSON_EXTRACT(c.is_coordinator2 , '$.id') = $user_id) ");
-                $userRow = DB::select("SELECT COUNT(*) as register_count FROM users WHERE array_roles = 3;");
-                $ovm1Row = DB::select("SELECT COUNT(*) as ovm_count FROM ovm_meeting_details;");
-                $ovm2Row = DB::select("SELECT COUNT(*) as ovm2_count FROM ovm_meeting_2_details;");
+                
+                $userRow = DB::select("SELECT COUNT(*) as register_count FROM users WHERE array_roles = 3 AND id IN (SELECT user_id FROM enrollment_details WHERE enrollment_id IN (SELECT enrollment_id FROM ovm_allocation WHERE (is_coordinator1 = $user_id OR is_coordinator2 = $user_id)));");
+                $ovm1Row = DB::select("SELECT COUNT(*) as ovm_count FROM ovm_meeting_details WHERE enrollment_id IN (SELECT enrollment_id FROM ovm_allocation WHERE (is_coordinator1 = $user_id OR is_coordinator2 = $user_id));");
+                $ovm2Row = DB::select("SELECT COUNT(*) as ovm2_count FROM ovm_meeting_2_details WHERE enrollment_id IN (SELECT enrollment_id FROM ovm_allocation WHERE (is_coordinator1 = $user_id OR is_coordinator2 = $user_id));");
 
                 $blackboard = [
                     (object) [
@@ -88,7 +102,7 @@ class homecontroller extends BaseController
                     ],
                 ];
             }
-            if (in_array(4, $rolesArray)) {
+            if (!in_array(5, $rolesArray)) {
                 // Admin: Get latest login records per user
                 $userlogin = DB::table('login_audit')
                     ->join('users', 'users.id', '=', 'login_audit.user_id')
@@ -129,10 +143,13 @@ class homecontroller extends BaseController
                 );
 
             // ✅ Apply condition ONLY if role = 5
-            if ($roles == 5) {
-                $sail->where(function ($q) use ($user_id) {
-                    $q->whereRaw("JSON_EXTRACT(sd.is_coordinator1, '$.id') = ?", [$user_id])
-                        ->orWhereRaw("JSON_EXTRACT(sd.is_coordinator2, '$.id') = ?", [$user_id]);
+            if (in_array(5, $rolesArray)) {
+                // Filter by ovm_allocation table as requested
+                $sail->whereIn('ed.enrollment_id', function ($query) use ($user_id) {
+                    $query->select('enrollment_id')
+                        ->from('ovm_allocation')
+                        ->where('is_coordinator1', $user_id)
+                        ->orWhere('is_coordinator2', $user_id);
                 });
             }
 
@@ -142,7 +159,7 @@ class homecontroller extends BaseController
 
             $elinalead = DB::table('enrollment_details')->count();
 
-            if (in_array(4, $rolesArray)) {
+            if (!in_array(5, $rolesArray)) {
                 // Admin or full-access user
                 $enrollment_details = DB::table('enrollment_details')
                     ->select('enrollment_child_num', 'child_name', 'child_contact_email', 'child_contact_phone', 'status', 'enrollment_id')
@@ -172,13 +189,10 @@ class homecontroller extends BaseController
                     ->select(DB::raw('COUNT(*) AS total'), 'report_type')
                     ->where('status', 'Published')
                     ->whereIn('enrollment_id', function ($query) use ($user_id) {
-                        $query->select('b.enrollment_id')
-                            ->from('sail_details as a')
-                            ->join('enrollment_details as b', 'a.enrollment_id', '=', 'b.enrollment_child_num')
-                            ->where(function ($subQuery) use ($user_id) {
-                                $subQuery->where(DB::raw("JSON_EXTRACT(is_coordinator1, '$.id')"), $user_id)
-                                    ->orWhere(DB::raw("JSON_EXTRACT(is_coordinator2, '$.id')"), $user_id);
-                            });
+                        $query->select('enrollment_id')
+                            ->from('ovm_allocation')
+                            ->where('is_coordinator1', $user_id)
+                            ->orWhere('is_coordinator2', $user_id);
                     })
                     ->groupBy('report_type')
                     ->get();
@@ -190,18 +204,40 @@ class homecontroller extends BaseController
                 ->where('active_flag', 0)
                 ->where('delete_status', 0)
                 ->get();
-            $totalenrolled = DB::table('enrollment_details')->count();
-            $totalsail = DB::table('sail_details')->where('consent_aggrement', 'Agreed')->count();
-            $enrollments   = DB::table('enrollment_details')->get();
-            $sailDetails   = DB::table('sail_details')->get();
-            $rows = DB::select("SELECT a.audit_table_name , a.audit_action , ed.child_name , omd.is_coordinator1 , omd.is_coordinator2 , ed.enrollment_child_num , omd.meeting_startdate , omd.meeting_starttime
+            if (in_array(5, $rolesArray)) {
+                $totalenrolled = DB::table('enrollment_details')->whereIn('enrollment_id', function ($query) use ($user_id) {
+                    $query->select('enrollment_id')->from('ovm_allocation')->where('is_coordinator1', $user_id)->orWhere('is_coordinator2', $user_id);
+                })->count();
+                $totalsail = DB::table('sail_details')->where('consent_aggrement', 'Agreed')->whereIn('enrollment_id', function ($query) use ($user_id) {
+                    $query->select('enrollment_id')->from('ovm_allocation')->where('is_coordinator1', $user_id)->orWhere('is_coordinator2', $user_id);
+                })->count();
+                $enrollments   = DB::table('enrollment_details')->whereIn('enrollment_id', function ($query) use ($user_id) {
+                    $query->select('enrollment_id')->from('ovm_allocation')->where('is_coordinator1', $user_id)->orWhere('is_coordinator2', $user_id);
+                })->get();
+                $sailDetails   = DB::table('sail_details')->whereIn('enrollment_id', function ($query) use ($user_id) {
+                    $query->select('enrollment_id')->from('ovm_allocation')->where('is_coordinator1', $user_id)->orWhere('is_coordinator2', $user_id);
+                })->get();
+
+                $rowsQuery = "SELECT a.audit_table_name , a.audit_action , ed.child_name , omd.is_coordinator1 , omd.is_coordinator2 , ed.enrollment_child_num , omd.meeting_startdate , omd.meeting_starttime
                 FROM ovm_status_logs AS a INNER JOIN enrollment_details AS ed ON ed.enrollment_child_num=a.enrollment_id
                 INNER JOIN ovm_meeting_details AS omd ON omd.enrollment_id = a.enrollment_id JOIN (SELECT enrollment_id, MAX(id) AS max_date
-                FROM ovm_status_logs WHERE audit_table_name != 'in_person_meeting' GROUP BY enrollment_id ) AS b ON a.enrollment_id = b.enrollment_id AND a.id = b.max_date ;");
+                FROM ovm_status_logs WHERE audit_table_name != 'in_person_meeting' GROUP BY enrollment_id ) AS b ON a.enrollment_id = b.enrollment_id AND a.id = b.max_date 
+                WHERE ed.enrollment_id IN (SELECT enrollment_id FROM ovm_allocation WHERE (is_coordinator1 = $user_id OR is_coordinator2 = $user_id)) ;";
+                $rows = DB::select($rowsQuery);
+            } else {
+                $totalenrolled = DB::table('enrollment_details')->count();
+                $totalsail = DB::table('sail_details')->where('consent_aggrement', 'Agreed')->count();
+                $enrollments   = DB::table('enrollment_details')->get();
+                $sailDetails   = DB::table('sail_details')->get();
+                $rows = DB::select("SELECT a.audit_table_name , a.audit_action , ed.child_name , omd.is_coordinator1 , omd.is_coordinator2 , ed.enrollment_child_num , omd.meeting_startdate , omd.meeting_starttime
+                    FROM ovm_status_logs AS a INNER JOIN enrollment_details AS ed ON ed.enrollment_child_num=a.enrollment_id
+                    INNER JOIN ovm_meeting_details AS omd ON omd.enrollment_id = a.enrollment_id JOIN (SELECT enrollment_id, MAX(id) AS max_date
+                    FROM ovm_status_logs WHERE audit_table_name != 'in_person_meeting' GROUP BY enrollment_id ) AS b ON a.enrollment_id = b.enrollment_id AND a.id = b.max_date ;");
+            }
             $leads = DB::select("SELECT '1' AS type_id , enrollment_id , child_name , enrollment_child_num, child_contact_email , child_contact_phone , created_date FROM enrollment_details WHERE STATUS = 'submitted'
-                UNION 
-                SELECT '2' AS type_id , id , NAME , unique_id , email_id , phone_no , create_at FROM webportal_may_help_you
-                ORDER BY created_date DESC ");
+                    UNION 
+                    SELECT '2' AS type_id , id , NAME , unique_id , email_id , phone_no , create_at FROM webportal_may_help_you
+                    ORDER BY created_date DESC ");
 
             $response = [
                 'users' => $users,
@@ -223,7 +259,7 @@ class homecontroller extends BaseController
                 'rows' => $rows,
                 'leads' => $leads,
             ];
-            $this->WriteFileLog($response);
+            // $this->WriteFileLog($response);
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
@@ -274,13 +310,10 @@ class homecontroller extends BaseController
                 $sql .= " $inputArray ";
             }
 
-            // 🔹 Apply coordinator filter ONLY if role = 5
-            if ($userRole == 5) {
-                $sql .= " AND (
-                JSON_UNQUOTE(JSON_EXTRACT(sd.is_coordinator1, '$.id')) = '$userId'
-                OR
-                JSON_UNQUOTE(JSON_EXTRACT(sd.is_coordinator2, '$.id')) = '$userId'
-            ) ";
+            // 🔹 Coordinator filter
+            $rolesArray = array_merge(array(auth()->user()->array_roles), explode(',', auth()->user()->roles));
+            if (in_array(5, $rolesArray)) {
+                $sql .= " AND a.enrollment_id IN (SELECT enrollment_id FROM ovm_allocation WHERE is_coordinator1 = '$userId' OR is_coordinator2 = '$userId') ";
             }
 
             $id = DB::select($sql);
@@ -322,12 +355,33 @@ class homecontroller extends BaseController
             $get_type = $input['get_type'];
             $enrollment_id = $input['enrollment_id'];
             // $this->WriteFileLog($get_type);
+            $user_id = auth()->user()->id;
+            $roles = auth()->user()->array_roles;
+            $rolesArray = array_merge(array(auth()->user()->array_roles), explode(',', auth()->user()->roles));
+
             if ($get_type == 'ovm') {
-                $rows = DB::select("SELECT a.audit_table_name , a.audit_action , ed.child_name , omd.is_coordinator1 , omd.is_coordinator2 , ed.enrollment_child_num , omd.meeting_startdate , omd.meeting_starttime
+                $rowsQuery = "SELECT a.audit_table_name , a.audit_action , ed.child_name , omd.is_coordinator1 , omd.is_coordinator2 , ed.enrollment_child_num , omd.meeting_startdate , omd.meeting_starttime
                 FROM ovm_status_logs AS a INNER JOIN enrollment_details AS ed ON ed.enrollment_child_num=a.enrollment_id
                 INNER JOIN ovm_meeting_details AS omd ON omd.enrollment_id = a.enrollment_id JOIN (SELECT enrollment_id, MAX(id) AS max_date
-                FROM ovm_status_logs WHERE audit_table_name != 'in_person_meeting' GROUP BY enrollment_id ) AS b ON a.enrollment_id = b.enrollment_id AND a.id = b.max_date ;");
+                FROM ovm_status_logs WHERE audit_table_name != 'in_person_meeting' GROUP BY enrollment_id ) AS b ON a.enrollment_id = b.enrollment_id AND a.id = b.max_date";
+                
+                if (in_array(5, $rolesArray)) {
+                    $rowsQuery .= " WHERE ed.enrollment_id IN (SELECT enrollment_id FROM ovm_allocation WHERE (is_coordinator1 = $user_id OR is_coordinator2 = $user_id))";
+                }
+                $rows = DB::select($rowsQuery . " ;");
             } else if ($get_type == 'child') {
+                $user_id = auth()->user()->id;
+                $roles = auth()->user()->array_roles;
+                if (in_array(5, $rolesArray)) {
+                    $isAllocated = DB::table('ovm_allocation')->where('enrollment_id', $enrollment_id)
+                        ->where(function ($q) use ($user_id) {
+                            $q->where('is_coordinator1', $user_id)->orWhere('is_coordinator2', $user_id);
+                        })->exists();
+                    if (!$isAllocated) {
+                        $rows = [];
+                        goto end_detailed_view; 
+                    }
+                }
                 $rows = [];
                 $enrollment_details = DB::select("SELECT enrollment_child_num FROM enrollment_details WHERE enrollment_id = $enrollment_id");
                 $enrollment_child_num = $enrollment_details[0]->enrollment_child_num;
@@ -408,6 +462,8 @@ class homecontroller extends BaseController
                 INNER JOIN students_logs AS b ON b.user_id = a.user_id
                 WHERE a.active_flag = 0 AND a.enrollment_id=$enrollment_id");
             }
+
+            end_detailed_view:
 
             // $this->WriteFileLog($rows);
             $response = [

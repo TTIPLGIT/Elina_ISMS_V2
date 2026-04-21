@@ -49,6 +49,91 @@
     .dt-buttons {
         margin-left: 10px;
     }
+
+    /* Mobile Responsive Table styling */
+    @media (max-width: 767px) {
+        #tableList, 
+        #tableList tbody, 
+        #tableList tr, 
+        #tableList td {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        #tableList thead {
+            display: none;
+        }
+
+        #tableList tbody tr {
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            padding: 10px;
+        }
+
+        #tableList tbody td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: right !important;
+            border-bottom: 1px solid #eee;
+            padding: 10px 5px;
+            word-break: break-word;
+            white-space: normal;
+        }
+
+        #tableList tbody td:last-child {
+            border-bottom: none;
+            justify-content: space-between;
+        }
+        
+        #tableList tbody td:last-child .btn, 
+        #tableList tbody td:last-child a.btn {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        #tableList tbody td::before {
+            content: attr(data-label);
+            font-weight: bold;
+            display: block;
+            flex-basis: 45%;
+            text-align: left;
+            margin-bottom: 0px;
+            color: #333;
+        }
+        
+        .dt-buttons .btn {
+            padding: 4px 8px !important;
+            font-size: 11px !important;
+        }
+        
+        .btn {
+            padding: 5px 10px !important;
+            font-size: 11px !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_length label,
+        div.dataTables_wrapper div.dataTables_filter label,
+        div.dataTables_wrapper div.dataTables_info,
+        div.dataTables_wrapper div.dataTables_paginate {
+            font-size: 12px !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_length select,
+        div.dataTables_wrapper div.dataTables_filter input {
+            padding: 2px 5px !important;
+            font-size: 12px !important;
+            height: auto !important;
+        }
+        
+        div.dataTables_wrapper div.dataTables_filter input {
+            width: 120px !important;
+        }
+    }
 </style>
 <style>
     #tableList th,
@@ -123,19 +208,19 @@
 
                                     @foreach($rows as $key=>$row)
                                     <tr>
-                                        <!-- <td>{{ $loop->iteration }}</td> -->
-                                        <td>{{ $row['activity_name']}}</td>
+                                        <!-- <td data-label="Sl.No">{{ $loop->iteration }}</td> -->
+                                        <td data-label="Activity Name">{{ $row['activity_name']}}</td>
                                         @if($row['currentStatus'] == 'initiated')
-                                        <td id="currentStatus{{$row['activity_initiation_id']}}">In-Progress</td>
+                                        <td data-label="Current Status" id="currentStatus{{$row['activity_initiation_id']}}">In-Progress</td>
                                         @else
-                                        <td id="currentStatus{{$row['activity_initiation_id']}}">{{ $row['currentStatus']}}</td>
+                                        <td data-label="Current Status" id="currentStatus{{$row['activity_initiation_id']}}">{{ $row['currentStatus']}}</td>
                                         @endif
-                                        <td>
+                                        <td data-label="Progress Status">
                                             <div class="progress" style="height: 25px;">
                                                 <div class="progress-bar" role="progressbar" id="{{$row['activity_initiation_id']}}" aria-valuemax="100" style="font-weight: bolder;color: black;"></div>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td data-label="Action">
                                             <!-- <a href="#addModal" data-toggle="modal" data-target="#addModal" class="btn btn-success" title="View" data-toggle="modal" data-target="#templates" style="margin-inline:5px"><i class="fa fa-plus"></i></span><span style="font-size:15px !important; padding:8px !important">Upload</a> -->
                                             <a class="btn btn-success" id="btn_complete_show{{$row['activity_initiation_id']}}" title="show" type="button" href="{{ route('parent_video_upload.parent_create', \Crypt::encrypt($row['activity_initiation_id'])) }}"><i class="fas fa-eye" style="color:green"></i> View</a>
                                             <a class="btn btn-success" id="btn_complete_edit{{$row['activity_initiation_id']}}" title="Upload Video" type="button" href="{{ route('parent_video_upload.parent_create', \Crypt::encrypt($row['activity_initiation_id'])) }}" onclick="return validateBeforeUpload(event);"><i class="fa fa-plus"></i><span style="font-size:15px !important; padding:8px !important">Upload</span></a>

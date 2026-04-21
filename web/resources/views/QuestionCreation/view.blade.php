@@ -608,17 +608,18 @@
             // console.log(DataFields);
             // var questionNum = Number(index) + 1;
             var checkindex = index; //alert(checkindex);
-            const fieldTypeID = DataFields[index]['questionnaire_field_types_id'];
+            const fieldTypeID = DataFields[index]['questionnaire_field_types_id'] || DataFields[index]['field_type_id'];
             const fieldID = DataFields[index]['question_details_id'];
             const fieldLabel = DataFields[index]['question'];
             const fieldName = DataFields[index]['question_field_name'];
             const fieldValue = DataFields[index][fieldName]; //console.log(DataFields[index]);console.log('field');
             var fieldOptionsDB = <?php echo (json_encode($fieldOptionsDB)); ?>;
             var fieldQuestionsDB = <?php echo (json_encode($fieldQuestionsDB)); ?>;
-            if (fieldTypeID != 9){
+            var questionTypes = [1, 2, 3, 4, 5, 7, 8, 12, 13, '1', '2', '3', '4', '5', '7', '8', '12', '13'];
+            if (questionTypes.includes(fieldTypeID)) {
                 questionIndex++
                 var questionNum = questionIndex;
-            }else{
+            } else {
                 var questionNum = questionIndex;
             }
             if (fieldTypeID == 1) {

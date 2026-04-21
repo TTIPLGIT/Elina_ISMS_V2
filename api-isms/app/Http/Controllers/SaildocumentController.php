@@ -140,27 +140,18 @@ class SaildocumentController extends BaseController
             $role_name_fetch = $role_name[0]->role_name;
 
             if ($role_name_fetch == 'IS Coordinator') {
-                $rows['questionnaire_initiation'] = DB::select("SELECT a.enrollment_id , a.enrollment_child_num , a.child_name from enrollment_details AS a
-                INNER JOIN ovm_allocation AS b ON a.enrollment_id=b.enrollment_id
-                WHERE a.enrollment_child_num IN 
-                (SELECT ovm2.enrollment_id FROM ovm_meeting_details AS ovm1 
-                INNER JOIN ovm_meeting_2_details AS ovm2 ON ovm1.enrollment_id=ovm2.enrollment_id
-                WHERE ovm2.meeting_status = 'Completed') 
-                AND a.enrollment_id NOT IN (SELECT enrollment_id FROM questionnaire_initiation)
-                AND (b.is_coordinator1 = $authID OR b.is_coordinator2 = $authID)
+                $rows['questionnaire_initiation'] = DB::select("SELECT a.enrollment_id, a.enrollment_child_num, a.child_name 
+                FROM enrollment_details AS a
+                INNER JOIN ovm_allocation AS b ON a.enrollment_id = b.enrollment_id
+                WHERE (b.is_coordinator1 = $authID OR b.is_coordinator2 = $authID)
                 ORDER BY a.enrollment_id DESC");
             } else {
-                $rows['questionnaire_initiation'] = DB::select("select enrollment_id , enrollment_child_num , child_name from enrollment_details
-                WHERE enrollment_child_num IN 
-                (SELECT ovm2.enrollment_id FROM ovm_meeting_details AS ovm1 
-                INNER JOIN ovm_meeting_2_details AS ovm2 ON ovm1.enrollment_id=ovm2.enrollment_id
-                WHERE ovm2.meeting_status = 'Completed') 
-                AND enrollment_id NOT IN (SELECT enrollment_id FROM questionnaire_initiation)
+                $rows['questionnaire_initiation'] = DB::select("SELECT enrollment_id, enrollment_child_num, child_name 
+                FROM enrollment_details
                 ORDER BY enrollment_id DESC");
             }
 
-            $rows['questionnaire'] = DB::select("SELECT * FROM questionnaire WHERE questionnaire_id NOT IN (SELECT ques.questionnaire_id  FROM questionnaire AS ques inner JOIN questionnaire_details AS qud ON ques.questionnaire_id= qud.questionnaire_id
-            INNER JOIN questionnaire_initiation AS qi ON qud.questionnaire_id = qi.questionnaire_id)");
+            $rows['questionnaire'] = DB::select("SELECT * FROM questionnaire WHERE questionnaire_type = 'OVM' ORDER BY order_id");
             $paymenttokentime = DB::Select("select token_expire_time from token_paremeterisation where token_process='Payment'");
 
 

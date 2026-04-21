@@ -751,7 +751,22 @@ class UserregisterfeeController extends BaseController
 
             if ($type == 1) {
 
-                $rows =  DB::select("SELECT a.questionnaire_id, a.questionnaire_name FROM questionnaire AS a 
+                if ($stage == 'OVM') {
+                    $already_submitted = DB::table('questionnaire_initiation')
+                        ->where('enrollment_id', $enID)
+                        ->where('activeflag', 0)
+                        ->pluck('questionnaire_id');
+
+                    $rows = DB::table('questionnaire as a')
+                        ->join('questionnaire_details as b', 'b.questionnaire_id', '=', 'a.questionnaire_id')
+                        ->select('a.questionnaire_id', 'a.questionnaire_name')
+                        ->where('a.questionnaire_type', 'OVM')
+                        ->whereRaw('b.no_questions = b.question_count')
+                        ->whereNotIn('a.questionnaire_id', $already_submitted)
+                        ->orderBy('a.order_id')
+                        ->get();
+                } else {
+                    $rows =  DB::select("SELECT a.questionnaire_id, a.questionnaire_name FROM questionnaire AS a 
                 INNER JOIN questionnaire_details AS b ON b.questionnaire_id=a.questionnaire_id
                 WHERE a.active_flag = 0 and b.no_questions=b.question_count
                 AND a.questionnaire_id NOT IN (
@@ -759,6 +774,8 @@ class UserregisterfeeController extends BaseController
                 inner JOIN questionnaire_details AS qud ON ques.questionnaire_id= qud.questionnaire_id
                 INNER JOIN questionnaire_initiation AS qi ON qud.questionnaire_id = qi.questionnaire_id 
                 WHERE qi.enrollment_id = $enID AND a.questionnaire_type = '$stage' and qi.activeflag = 0) AND a.questionnaire_type = '$stage' order by a.order_id ");
+                }
+
                 $desc = DB::select("SELECT * FROM parent_video_upload AS a
                 INNER JOIN activity AS b ON a.activity_id=b.activity_id
                 INNER JOIN activity_description AS c ON a.activity_description_id=c.activity_description_id
@@ -772,11 +789,7 @@ class UserregisterfeeController extends BaseController
                 INNER JOIN questionnaire_details AS b ON b.questionnaire_id=a.questionnaire_id 
                 INNER JOIN questionnaire_initiation AS qb ON qb.questionnaire_id = b.questionnaire_id
                 WHERE a.active_flag = 0 and b.no_questions=b.question_count
-                AND a.questionnaire_id IN (
-                SELECT ques.questionnaire_id  FROM questionnaire AS ques 
-                inner JOIN questionnaire_details AS qud ON ques.questionnaire_id= qud.questionnaire_id
-                INNER JOIN questionnaire_initiation AS qi ON qud.questionnaire_id = qi.questionnaire_id 
-                WHERE qi.enrollment_id = '$enID' AND a.questionnaire_type = '$stage')  AND a.questionnaire_type = '$stage'");
+                AND qb.enrollment_id = '$enID' AND a.questionnaire_type = '$stage'");
                 $desc = DB::select("SELECT * FROM parent_video_upload AS a
                  INNER JOIN activity AS b ON a.activity_id=b.activity_id
                  INNER JOIN activity_description AS c ON a.activity_description_id=c.activity_description_id

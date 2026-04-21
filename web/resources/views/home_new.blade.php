@@ -198,10 +198,10 @@
                                                 <div class="float-left" style="font-weight:bold;color:#6b747b;">Completed Assessment</div>
                                                 <div class="float-right newcolor">0</div>
                                             </li> -->
-                                            <a class="borderBoard" href="{{route('sail.index')}}">
+                                            <a class="borderBoard" href="{{route('sailstatus')}}">
                                                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                                     <div class="float-left" style="font-weight:bold;color:#6b747b;">Sail </div>
-                                                    <div class="float-right newcolor">{{$rows['totalsail']}}</div>
+                                                    <div class="float-right newcolor">{{ count($rows['sail'] ?? []) }}</div>
                                                 </li>
                                             </a>
                                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">

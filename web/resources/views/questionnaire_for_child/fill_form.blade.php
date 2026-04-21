@@ -1635,7 +1635,7 @@
             // var questionNum = Number(index) + 1;
             stageQuestionCount++;
             var checkindex = index; //alert(checkindex);
-            const fieldTypeID = DataFields[index]['questionnaire_field_types_id'];
+            const fieldTypeID = DataFields[index]['questionnaire_field_types_id'] || DataFields[index]['field_type_id'];
             const fieldID = DataFields[index]['question_details_id'];
             const fieldLabel = DataFields[index]['question'];
             const fieldName = DataFields[index]['question_field_name'];
@@ -1645,7 +1645,8 @@
             var fieldOptionsDB = 10;
             var fieldQuestionsDB = 10;
             var options = 4;
-            if (fieldTypeID != 9) {
+            var questionTypes = [1, 2, 3, 4, 5, 7, 8, 12, 13, '1', '2', '3', '4', '5', '7', '8', '12', '13'];
+            if (questionTypes.includes(fieldTypeID)) {
                 questionIndex++
                 var questionNum = questionIndex;
             } else {

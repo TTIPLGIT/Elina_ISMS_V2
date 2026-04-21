@@ -10,14 +10,15 @@ class CustomizedPaymentAPIController extends BaseController
     public function index(Request $request)
     {
         $method = 'Method => CustomizedPaymentAPIController => index';
-        try { 
-            $rows = DB::select("SELECT ppc.id,ppc.final_amount, ed.child_name, ed.enrollment_id, ed.enrollment_child_num, ppcs.name AS category_name, 
-            ppft.name AS fee_type FROM payment_process_customized AS ppc 
-            INNER JOIN enrollment_details AS ed ON ed.enrollment_id = ppc.enrollment_id
-            INNER JOIN payment_process_categories AS ppcs ON ppcs.id = ppc.category_id
-            INNER JOIN payment_process_fees_types AS ppft ON ppft.id = ppc.fees_type_id
-            WHERE ed.enrollment_child_num NOT IN (SELECT enrollment_id FROM sail_details WHERE consent_aggrement = 'Agreed') ORDER BY ppc.id DESC;");
-
+        try {
+            $rows = DB::select("SELECT ppc.id, ppc.final_amount, ed.child_name, ed.enrollment_id, ed.enrollment_child_num, 
+        ppcs.name AS category_name, 
+        ppft.name AS fee_type 
+    FROM payment_process_customized AS ppc 
+    INNER JOIN enrollment_details AS ed ON ed.enrollment_id = ppc.enrollment_id
+    INNER JOIN payment_process_categories AS ppcs ON ppcs.id = ppc.category_id
+    INNER JOIN payment_process_fees_types AS ppft ON ppft.id = ppc.fees_type_id
+    ORDER BY ppc.id DESC;");
             $response = [
                 'rows' => $rows,
             ];
@@ -216,7 +217,7 @@ AND pc.enrollment_id IS NULL
             $schoolists = DB::select("select * from schools_registration");
             $serviceList = DB::select("SELECT * FROM payment_process_services_customized WHERE payment_process_master_id = $payment_id");
             $taxList = DB::select("SELECT * FROM payment_process_taxes WHERE payment_process_master_id = $payment_id");
-            $serviceData = DB::table('payment_services_master')->get();
+            $serviceData = DB::table('payment_services_master')->where('active_flag',0)->get();
 
 
             $response = [

@@ -1461,7 +1461,7 @@ class ovm1Controller extends BaseController
             $users = $parant_data['users'];
             $menus = $this->FillMenu();
             $screens = $menus['screens'];
-            $modules = $menus['modules']; 
+            $modules = $menus['modules'];
             return view('ovm1.preview', compact('modules', 'screens', 'report', 'email', 'rows', 'users', 'ccEmails'));
         } catch (\Exception $exc) {
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);

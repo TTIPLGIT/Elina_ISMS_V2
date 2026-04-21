@@ -19,7 +19,7 @@
                 </th>
             </tr>
         </thead>
-        <tbody id="tablebody_a{{ $page['page'] }}" class="tablebody_a{{ $page['page'] }}_{{ $perskills['skill_id'] }}">
+        <tbody id="tablebody_a{{ $page['page'] }}_{{ $perskills['skill_id'] }}" class="tablebody_a{{ $page['page'] }}_{{ $perskills['skill_id'] }}">
             @foreach($activitys as $activity)
             @if($page['assesment_skill_id'] == $activity['performance_area_id'] && $activity['skill_type'] == 2 && $activity['skill_id'] == $perskills['skill_id'])
             <tr class="firstrow" style="{{ $activity['isVerified'] == 1 ? 'background-color:#ea5455' : '' }}">
@@ -107,7 +107,7 @@
             act.skill_id == skillId
         );
 
-        const tbody = document.getElementById('tablebody_a' + pageId);
+        const tbody = document.getElementById('tablebody_a' + pageId + '_' + skillId);
         const existingNames = Array.from(tbody.querySelectorAll('select.activitySelect option[selected]'))
             .map(opt => opt.textContent.trim().toLowerCase());
 
@@ -166,7 +166,7 @@
     }
 
     function insertRowToTableA(pageId, assesmentSkillId, skillId, activityName, activityId = '') {
-        const tbody = document.querySelector('.tablebody_a' + pageId + '_' + skillId);
+        const tbody = document.getElementById('tablebody_a' + pageId + '_' + skillId);
         const newRow = document.createElement('tr');
         newRow.classList.add('firstrow');
 

@@ -188,14 +188,14 @@
     var dobParts = dob.split('/');
     var birthdate = new Date(dobParts[2], dobParts[1] - 1, dobParts[0]);
     var now = new Date();
-    var years = now.getFullYear() - birthdate.getFullYear();
-    var months = now.getMonth() - birthdate.getMonth();
-    if (months < 0 || (months === 0 && now.getDate() < birthdate.getDate())) {
-        years--;
-        months += 12;
+    var totalMonths = (now.getFullYear() - birthdate.getFullYear()) * 12 + (now.getMonth() - birthdate.getMonth());
+    if (now.getDate() < birthdate.getDate()) {
+        totalMonths--;
     }
+    var years = Math.floor(totalMonths / 12);
+    var months = totalMonths % 12;
 
-    var childAge = years + " years " + months + " months";
+    var childAge = years + " years" + (months > 0 ? " " + months + " months" : "");
 
     var childDoB = birthdate.toLocaleDateString('en-US', {
         month: 'short',

@@ -12,10 +12,10 @@
                     <th width="40%">Recomendation</th>
                 </tr>
             </thead>
-            <tbody id="tablebody{{$page['page']}}">
+            <tbody id="tablebody{{$page['page']}}_{{ $perskills['skill_id'] }}">
 
                 @foreach($details as $detail)
-                @if($page['assessment_skill'] == $detail['performance_area_id'])
+                @if($page['assessment_skill'] == $detail['performance_area_id'] && $detail['skill_id'] == $perskills['skill_id'])
                 <tr style="{{ in_array($detail['activity_name'], $verifiedActivities) ? 'background-color:#ea5455' : '' }}">
                     <td width="30%" style="{{ in_array($detail['activity_name'], $verifiedActivities) ? 'display: flex; align-items: center; width: 100%;border: #ea5455 !important;' : '' }}">
                         @if(in_array($detail['activity_name'], $verifiedActivities))
@@ -93,7 +93,7 @@
         );
 
         // Get activity names already in table (case-insensitive)
-        const tbody = document.getElementById('tablebody' + pageId);
+        const tbody = document.getElementById('tablebody' + pageId + '_' + skillId);
         const existingNamesInTable = Array.from(tbody.querySelectorAll('select.activitySelect option[selected]'))
             .map(opt => opt.textContent.trim().toLowerCase());
 
@@ -139,7 +139,7 @@
                 }
 
                 if (existsInDB) {
-                    insertRowToTable(pageId, assesmentSkillId, typedName, '');
+                    insertRowToTable(pageId, assesmentSkillId, typedName, skillId, '');
                 } else {
                     Swal.fire({
                         title: `Are you sure you want to submit?`,
@@ -160,8 +160,8 @@
         });
     }
 
-    function insertRowToTable(pageId, assesmentSkillId, activityName, activityId = '') {
-        const tbody = document.getElementById('tablebody' + pageId);
+    function insertRowToTable(pageId, assesmentSkillId, activityName, skillId, activityId = '') {
+        const tbody = document.getElementById('tablebody' + pageId + '_' + skillId);
         const newRow = document.createElement('tr');
         newRow.classList.add('firstrow');
 
