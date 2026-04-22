@@ -53,16 +53,19 @@ class CustomizedPaymentAPIController extends BaseController
             $payment_id = 10;
 
             $childDetails = DB::select("
-SELECT ed.enrollment_id, ed.enrollment_child_num, ed.child_name
-FROM enrollment_details ed
-LEFT JOIN sail_details sd 
-    ON ed.enrollment_id = sd.enrollment_id
-LEFT JOIN payment_process_customized pc 
-    ON ed.enrollment_id = pc.enrollment_id
-WHERE ed.status = 'Submitted'
-AND sd.enrollment_id IS NULL
-AND pc.enrollment_id IS NULL
-");
+            SELECT 
+                ed.enrollment_id, 
+                ed.enrollment_child_num, 
+                ed.child_name
+            FROM enrollment_details ed
+            LEFT JOIN sail_details sd 
+                ON ed.enrollment_child_num = sd.enrollment_id
+            LEFT JOIN payment_process_customized pc 
+                ON ed.enrollment_child_num = pc.enrollment_id
+            WHERE ed.status = 'Submitted'
+            AND sd.enrollment_id IS NULL
+            AND pc.enrollment_id IS NULL
+        ");
             // $childDetails = DB::table('enrollment_details')
             //     ->select('enrollment_id', 'enrollment_child_num', 'child_name')
             //     ->where('status', 'Submitted')
@@ -217,7 +220,7 @@ AND pc.enrollment_id IS NULL
             $schoolists = DB::select("select * from schools_registration");
             $serviceList = DB::select("SELECT * FROM payment_process_services_customized WHERE payment_process_master_id = $payment_id");
             $taxList = DB::select("SELECT * FROM payment_process_taxes WHERE payment_process_master_id = $payment_id");
-            $serviceData = DB::table('payment_services_master')->where('active_flag',0)->get();
+            $serviceData = DB::table('payment_services_master')->where('active_flag', 0)->get();
 
 
             $response = [
