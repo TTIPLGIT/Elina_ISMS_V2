@@ -758,10 +758,13 @@ class UserregisterfeeController extends BaseController
                         ->pluck('questionnaire_id');
 
                     $rows = DB::table('questionnaire as a')
-                        ->join('questionnaire_details as b', 'b.questionnaire_id', '=', 'a.questionnaire_id')
+                        ->leftJoin('questionnaire_details as b', 'b.questionnaire_id', '=', 'a.questionnaire_id')
                         ->select('a.questionnaire_id', 'a.questionnaire_name')
                         ->where('a.questionnaire_type', 'OVM')
-                        ->whereRaw('b.no_questions = b.question_count')
+                        ->where(function ($query) {
+                            $query->whereRaw('b.no_questions = b.question_count')
+                                ->orWhere('a.quadrant_flag', 0);
+                        })
                         ->whereNotIn('a.questionnaire_id', $already_submitted)
                         ->orderBy('a.order_id')
                         ->get();
