@@ -837,7 +837,9 @@
             var checkindex = index; //alert(checkindex);
             const fieldTypeID = DataFields[index]['questionnaire_field_types_id'];
             const fieldID = DataFields[index]['question_details_id'];
-            const fieldLabel = DataFields[index]['question'];
+            var tmpDesc = DataFields[index]['header_description'] || DataFields[index]['description'] || DataFields[index]['question_description'] || '';
+            var descHtml = tmpDesc ? '<span style="display: block; font-size: 15px; font-weight: 800; padding-top: 5px; margin-left: 3px; color: #34395e;">' + tmpDesc + '</span>' : '';
+            const fieldLabel = DataFields[index]['question'] + (fieldTypeID != 9 && tmpDesc ? ('</label>' + descHtml + '<label style="display:none;">') : '');
             const fieldName = DataFields[index]['question_field_name'];
             const fieldValue = DataFields[index][fieldName];
             const otherOption = DataFields[index]['other_option'];
