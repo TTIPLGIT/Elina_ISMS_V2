@@ -2271,8 +2271,10 @@
         
         if (status === "Declined" || status === "Accept") {
             document.querySelector('.coord_notes').style.display = "block";
-            $formElements.prop('disabled', true).prop('readOnly', true).addClass('locked-field');
-            $('.meeting_date').datepicker('disable');
+            // Use readOnly only (NOT disabled) so field values are still submitted with the form
+            $formElements.prop('disabled', false).prop('readOnly', true).addClass('locked-field');
+            // Visually lock date pickers without disabling them (disabled fields don't submit values)
+            $('.meeting_date').addClass('locked-field');
 
             var swalText = (status === "Declined") ? "Decline" : "Accept";
             var btnColor = (status === "Declined") ? "Orange" : "Green";
@@ -2296,7 +2298,7 @@
         } else if (status === "Forced Closure") {
             document.querySelector('.coord_notes').style.display = "block";
             $formElements.prop('disabled', false).prop('readOnly', false).removeClass('locked-field');
-            $('.meeting_date').datepicker('enable');
+            $('.meeting_date').removeClass('locked-field');
             
             var $actionBtns = $('.action-btn').not('.back-btn');
             $actionBtns.each(function() {
@@ -2309,7 +2311,7 @@
         } else {
             document.querySelector('.coord_notes').style.display = "none";
             $formElements.prop('disabled', false).prop('readOnly', false).removeClass('locked-field');
-            if ($('.meeting_date').length > 0) $('.meeting_date').datepicker('enable');
+            $('.meeting_date').removeClass('locked-field');
             
             $('.action-btn').not('.back-btn').attr('style', function(i, s) { return (s || "") + '; display: none !important;'; });
         }
