@@ -615,6 +615,7 @@ class QuestionCreationController extends BaseController
                 'question_id' => $inputArray['question_id'],
                 'field_type_id' => $inputArray['field_type_id'] ?? null,
                 'field_question' => $inputArray['field_question'],
+                'question_description' => $inputArray['question_description'] ?? '',
                 'sub_questions' => $inputArray['sub_questions'] ?? [],
                 'options' => $inputArray['options'] ?? [],
                 'quadrant' => $inputArray['quadrant'] ?? null,
@@ -632,6 +633,7 @@ class QuestionCreationController extends BaseController
                     ->where('question_details_id', $id)
                     ->update([
                         'question' => $input['field_question'],
+                        'question_description' => $input['question_description'],
                         'quadrant' => $input['quadrant'],
                         'quadrant_type' => $input['quadrant_type_id'],
                         'other_option' => $input['other_option'],
