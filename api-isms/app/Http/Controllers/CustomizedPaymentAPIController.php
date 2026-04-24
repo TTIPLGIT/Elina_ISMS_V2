@@ -61,7 +61,7 @@ class CustomizedPaymentAPIController extends BaseController
             LEFT JOIN sail_details sd 
                 ON ed.enrollment_child_num = sd.enrollment_id
             LEFT JOIN payment_process_customized pc 
-                ON ed.enrollment_child_num = pc.enrollment_id
+                ON ed.enrollment_id = pc.enrollment_id
             WHERE ed.status = 'Submitted'
             AND sd.enrollment_id IS NULL
             AND pc.enrollment_id IS NULL
