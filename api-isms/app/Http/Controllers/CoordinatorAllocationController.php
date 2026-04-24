@@ -680,14 +680,27 @@ class CoordinatorAllocationController extends BaseController
         $method = 'Method => CoordinatorAllocationController => child_list';
         $authID = auth()->user()->id;
         try {
-            $rows = DB::select('SELECT o.*, e.enrollment_child_num, u1.name AS is_coordinator1_name, u2.name AS is_coordinator2_name
-            FROM ovm_allocation AS o
-            INNER JOIN enrollment_details AS e ON o.enrollment_id = e.enrollment_id
-            INNER JOIN users AS u1 ON u1.id = o.is_coordinator1
-            INNER JOIN users AS u2 ON u2.id = o.is_coordinator2
-            WHERE (o.meeting_startdate = "" and (o.is_coordinator1 = ? OR o.is_coordinator2 = ?)) 
-                OR (o.meeting_enddate is Null and (o.is_coordinator1 = ? OR o.is_coordinator2 = ?))
-            ORDER BY o.id DESC ', [$authID, $authID, $authID, $authID]);
+            $user_role = DB::select("SELECT array_roles FROM users WHERE id = ?", [$authID]);
+            $role_id = $user_role[0]->array_roles;
+
+            if ($role_id == 4) {
+                $rows = DB::select('SELECT o.*, e.enrollment_child_num, u1.name AS is_coordinator1_name, u2.name AS is_coordinator2_name
+                FROM ovm_allocation AS o
+                INNER JOIN enrollment_details AS e ON o.enrollment_id = e.enrollment_id
+                INNER JOIN users AS u1 ON u1.id = o.is_coordinator1
+                INNER JOIN users AS u2 ON u2.id = o.is_coordinator2
+                WHERE o.meeting_startdate = "" OR o.meeting_enddate is Null
+                ORDER BY o.id DESC');
+            } else {
+                $rows = DB::select('SELECT o.*, e.enrollment_child_num, u1.name AS is_coordinator1_name, u2.name AS is_coordinator2_name
+                FROM ovm_allocation AS o
+                INNER JOIN enrollment_details AS e ON o.enrollment_id = e.enrollment_id
+                INNER JOIN users AS u1 ON u1.id = o.is_coordinator1
+                INNER JOIN users AS u2 ON u2.id = o.is_coordinator2
+                WHERE (o.meeting_startdate = "" and (o.is_coordinator1 = ? OR o.is_coordinator2 = ?)) 
+                    OR (o.meeting_enddate is Null and (o.is_coordinator1 = ? OR o.is_coordinator2 = ?))
+                ORDER BY o.id DESC ', [$authID, $authID, $authID, $authID]);
+            }
 
             $response = [
                 'rows' => $rows,
