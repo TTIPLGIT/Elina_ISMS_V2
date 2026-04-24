@@ -1008,7 +1008,9 @@ class ovm1Controller extends BaseController
                             'event_id' => $eventId,
                             'event_link' => $eventLink,
                         ]);
-                    // $this->g2form_initiate($input);
+                    if ($type == 'Sent') {
+                        $this->g2form_initiate($input);
+                    }
                 }
 
 
