@@ -858,7 +858,8 @@
                     }).then((result) => {
                         if (result.value) {
                             $(".loader").show();
-                            document.getElementById('ovmmeet1').submit(a);
+                            $('.btn').prop('disabled', true);
+                            document.getElementById('ovmmeet1').submit();
                         }
                     });
                 } else {

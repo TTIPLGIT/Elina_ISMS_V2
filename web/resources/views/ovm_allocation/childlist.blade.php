@@ -59,6 +59,11 @@
                                             {{$data['is_coordinator2_name']}}(S)
                                             @elseif ($user_id == $data['is_coordinator2'])
                                             {{$data['is_coordinator1_name']}}(P)
+                                            @else
+                                            {{$data['is_coordinator1_name']}}(P)
+                                            @if(!empty($data['is_coordinator2_name']))
+                                            <br>{{$data['is_coordinator2_name']}}(S)
+                                            @endif
                                             @endif
                                         </td>
                                         <td>{{date('d-m-Y', strtotime($data['created_date']))}}</td>

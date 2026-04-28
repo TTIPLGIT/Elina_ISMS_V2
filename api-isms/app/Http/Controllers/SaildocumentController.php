@@ -140,15 +140,41 @@ class SaildocumentController extends BaseController
             $role_name_fetch = $role_name[0]->role_name;
 
             if ($role_name_fetch == 'IS Coordinator') {
-                $rows['questionnaire_initiation'] = DB::select("SELECT a.enrollment_id, a.enrollment_child_num, a.child_name 
-                FROM enrollment_details AS a
-                INNER JOIN ovm_allocation AS b ON a.enrollment_id = b.enrollment_id
-                WHERE (b.is_coordinator1 = $authID OR b.is_coordinator2 = $authID)
-                ORDER BY a.enrollment_id DESC");
+              $rows['questionnaire_initiation'] = DB::select("
+    SELECT 
+        a.enrollment_id, 
+        a.enrollment_child_num, 
+        a.child_name
+    FROM 
+        enrollment_details AS a
+    INNER JOIN 
+        ovm_allocation AS b 
+        ON a.enrollment_id = b.enrollment_id
+    INNER JOIN 
+        ovm_meeting_2_details AS c 
+        ON a.enrollment_child_num = c.enrollment_id
+    WHERE 
+        (b.is_coordinator1 = $authID OR b.is_coordinator2 = $authID)
+        AND c.meeting_status = 'Completed'
+    ORDER BY 
+        a.enrollment_id DESC
+");
             } else {
-                $rows['questionnaire_initiation'] = DB::select("SELECT enrollment_id, enrollment_child_num, child_name 
-                FROM enrollment_details
-                ORDER BY enrollment_id DESC");
+                $rows['questionnaire_initiation'] = DB::select("
+    SELECT 
+        e.enrollment_id, 
+        e.enrollment_child_num, 
+        e.child_name
+    FROM 
+        enrollment_details e
+    INNER JOIN 
+        ovm_meeting_2_details m 
+        ON e.enrollment_child_num = m.enrollment_id
+    WHERE 
+        m.meeting_status = 'Completed'
+    ORDER BY 
+        e.enrollment_id DESC
+");
             }
 
             $rows['questionnaire'] = DB::select("SELECT * FROM questionnaire WHERE questionnaire_type = 'OVM' ORDER BY order_id");

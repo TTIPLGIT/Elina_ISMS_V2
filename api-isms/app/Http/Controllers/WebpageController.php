@@ -16,14 +16,15 @@ use Google\Service\Calendar;
 use Google\Service\Calendar\Event as Google_Service_Calendar_Event;
 use Log;
 use Validator;
-use App\Mail\inquriesmail; 
+use App\Mail\inquriesmail;
 use App\Mail\newinqueryadmin;
+
 class WebpageController extends BaseController
 
 {
     public function testimonial($id)
     {
-		$this->WriteFileLog($id,"Hi");
+        $this->WriteFileLog($id, "Hi");
         try {
             $method = 'Method => WebpageController =>testimonial';
 
@@ -32,8 +33,8 @@ class WebpageController extends BaseController
                 ->select('*')
                 ->where('testimonial_type', $id)
                 ->get();
-			
-            
+
+
             $response = [
                 'rows' => $row,
             ];
@@ -46,7 +47,7 @@ class WebpageController extends BaseController
             // $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
             return $row;
         } catch (\Exception $exc) {
-			$this->WriteFileLog($exc);
+            $this->WriteFileLog($exc);
             $exceptionResponse = array();
             $exceptionResponse['ServiceMethod'] = $method;
             $exceptionResponse['Exception'] = $exc->getMessage();
@@ -61,7 +62,7 @@ class WebpageController extends BaseController
     }
     public function dailyquotes()
     {
-		
+
         try {
             $method = 'Method => WebpageController =>dailyquotes';
 
@@ -70,9 +71,9 @@ class WebpageController extends BaseController
                 ->select('*')
                 ->where('active_flag', '0')
                 ->get();
-			
-            
-            
+
+
+
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
@@ -81,7 +82,7 @@ class WebpageController extends BaseController
             // $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
             return $row;
         } catch (\Exception $exc) {
-			$this->WriteFileLog($exc);
+            $this->WriteFileLog($exc);
             $exceptionResponse = array();
             $exceptionResponse['ServiceMethod'] = $method;
             $exceptionResponse['Exception'] = $exc->getMessage();
@@ -101,19 +102,18 @@ class WebpageController extends BaseController
             $method = 'Method => WebpageController => storedata';
             $id = $request->emailid;
             $exist = DB::select("SELECT * FROM news_letters WHERE email_id='$id'");
-            if(empty($exist)){
+            if (empty($exist)) {
 
                 $newsletters = DB::table('news_letters')
                     ->insertGetId([
                         'email_id' => $request->emailid,
                         'created_at' => now(),
                         'created_by' => 0
-                       
+
                     ]);
-                }
-                else{
-                    return "User Already Subscribed";
-                }
+            } else {
+                return "User Already Subscribed";
+            }
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
@@ -143,11 +143,11 @@ class WebpageController extends BaseController
             $input = [
                 'recaptcha' => $request->input('g-recaptcha-response')
             ];
-    
+
             $rules = [
                 'recaptcha' => 'required'
             ];
-    
+            $this->WriteFileLog($request);
             $validator = Validator::make($input, $rules);
             $newinquires = DB::transaction(function () use ($request) {
                 $newinquires = DB::table('new_inquires')
@@ -157,21 +157,25 @@ class WebpageController extends BaseController
                         'email' => $request->email,
                         'phonenumber' => $request->phonenumber,
                         'comments' => $request->comments,
+                        'user_type' => $request->user_type,
                         'created_at' => now()
-                       
-                    ]);
-                    $data =[
-                        'name' =>$request->first_Name,
-                        'email' => $request->email,
-                        'comments' => $request->comments,
-                        'phonenumber' => $request->phonenumber
 
-                    ];
-                    Mail::to($data['email'])->send(new inquriesmail($data));
-                    Mail::to(config('setting.webportal.newsletter_call'))->send(new newinqueryadmin($data));
-                    return $newinquires;
-                });
-                
+                    ]);
+                $data = [
+                    'name' => $request->first_Name,
+                    'email' => $request->email,
+                    'comments' => $request->comments,
+                    'phonenumber' => $request->phonenumber,
+                    'user_type' => $request->user_type
+
+                ];
+                Mail::to($data['email'])->send(new inquriesmail($data));
+                Mail::to(config('setting.webportal.ishead'))
+                    ->bcc(config('setting.webportal.newsletter_call'))
+                    ->send(new newinqueryadmin($data));
+                return $newinquires;
+            });
+
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
@@ -196,7 +200,7 @@ class WebpageController extends BaseController
 
     public function blog_comment()
     {
-		
+
         try {
             $method = 'Method => WebpageController =>dailyquotes';
 
@@ -204,9 +208,9 @@ class WebpageController extends BaseController
             $row = DB::table('webportal_blog_comment')
                 ->select('*')
                 ->get();
-			
-            
-            
+
+
+
             $serviceResponse = array();
             $serviceResponse['Code'] = config('setting.status_code.success');
             $serviceResponse['Message'] = config('setting.status_message.success');
@@ -215,7 +219,7 @@ class WebpageController extends BaseController
             // $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
             return $row;
         } catch (\Exception $exc) {
-			$this->WriteFileLog($exc);
+            $this->WriteFileLog($exc);
             $exceptionResponse = array();
             $exceptionResponse['ServiceMethod'] = $method;
             $exceptionResponse['Exception'] = $exc->getMessage();
@@ -231,16 +235,16 @@ class WebpageController extends BaseController
 
     public function getSchoolsRegistration()
     {
-		// $this->WriteFileLog($id,"Hi");
+        // $this->WriteFileLog($id,"Hi");
         try {
             $method = 'Method => WebpageController =>testimonial';
 
             // $id = $this->decryptData($id);
             $row = DB::table('schools_registration')
-                ->select('school_name','id')
+                ->select('school_name', 'id')
                 ->get();
-			
-            
+
+
             $response = [
                 'rows' => $row,
             ];
@@ -253,7 +257,7 @@ class WebpageController extends BaseController
             // $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.success'), true);
             return $row;
         } catch (\Exception $exc) {
-			$this->WriteFileLog($exc);
+            $this->WriteFileLog($exc);
             $exceptionResponse = array();
             $exceptionResponse['ServiceMethod'] = $method;
             $exceptionResponse['Exception'] = $exc->getMessage();

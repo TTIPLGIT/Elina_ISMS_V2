@@ -653,6 +653,8 @@
       width: '550px',
     }).then((result) => {
       if (result.value) {
+        $('.btn').addClass('disabled').css('pointer-events', 'none');
+        $('.btn').prop('disabled', true);
         document.getElementById('ovm').submit(a);
       }
     })

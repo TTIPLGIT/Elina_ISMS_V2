@@ -450,12 +450,11 @@
                             <td>
                               <div style="display: flex;">
                                 @if($data2['status'] == 'Complete' || $data2['status'] == 'Close')
-                                <a href="#addModal" data-toggle="modal" data-target="#addModal{{$data2['parent_video_upload_id']}}" class="btn btn-success" title="View" data-toggle="modal" data-target="#templates" style="margin-inline:5px"><i class="fa fa-pencil"></i></a>
+                                <a href="#addModal" data-toggle="modal" data-target="#addModal{{$data2['parent_video_upload_id']}}" class="btn btn-success" title="View" style="margin-inline:5px"><i class="fa fa-pencil"></i></a>
                                 @elseif($data2['status'] == 'New' || $data2['status'] == 'Rejected')
                                 <button class="btn btn-info" style="margin-inline:5px" disabled><i class="fa fa-pencil"></i></button>
                                 @else
-                                @php $cuModaliteration = $cuModaliteration+1; @endphp
-                                <a href="#cuModal{{$cuModaliteration}}" class="btn btn-success" data-toggle="modal" title="View" style="margin-inline:5px"><i class="fa fa-pencil"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#cuModal{{$data2['parent_video_upload_id']}}" class="btn btn-success" title="View" style="margin-inline:5px"><i class="fa fa-pencil"></i></a>
                                 @endif
                                 <label class='switch' data-bs-toggle='tooltip' data-bs-placement='top' title='Enable / Disable'><input type='checkbox' class='toggle_status' onclick="functiontoggle('{{$data2['parent_video_upload_id']}}')" id="is_active{{$data2['parent_video_upload_id']}}" name='is_active' @if($data2['enableflag']=='0' ) checked @endif><span class='slider round'></span></label>
                               </div>
@@ -511,12 +510,11 @@
                             <td>
                               <div style="display: flex;">
                                 @if($data2['status'] == 'Complete' || $data2['status'] == 'Close')
-                                <a href="#addModal" data-toggle="modal" data-target="#addModal{{$data2['parent_video_upload_id']}}" class="btn btn-success" title="View" data-toggle="modal" data-target="#templates" style="margin-inline:5px"><i class="fa fa-pencil"></i></a>
+                                <a href="#addModal" data-toggle="modal" data-target="#addModal{{$data2['parent_video_upload_id']}}" class="btn btn-success" title="View" style="margin-inline:5px"><i class="fa fa-pencil"></i></a>
                                 @elseif($data2['status'] == 'New' || $data2['status'] == 'Rejected')
                                 <button class="btn btn-info" style="margin-inline:5px" disabled><i class="fa fa-pencil"></i></button>
                                 @else
-                                @php $cuModaliteration1 = $cuModaliteration1+1; @endphp
-                                <a href="#cuModal{{$cuModaliteration1}}" class="btn btn-success" data-toggle="modal" title="View" style="margin-inline:5px"><i class="fa fa-pencil"></i></a>
+                                <a href="#" data-toggle="modal" data-target="#cuModal{{$data2['parent_video_upload_id']}}" class="btn btn-success" title="View" style="margin-inline:5px"><i class="fa fa-pencil"></i></a>
                                 @endif
                                 <label class='switch' data-bs-toggle='tooltip' data-bs-placement='top' title='Enable / Disable'><input type='checkbox' class='toggle_status' onclick="functiontoggle('{{$data2['parent_video_upload_id']}}')" id="is_active{{$data2['parent_video_upload_id']}}" name='is_active' @if($data2['enableflag']=='0' ) checked @endif><span class='slider round'></span></label>
                               </div>
@@ -732,7 +730,7 @@
     <input type="hidden" id="openID" name="openID">
 
     @foreach($currentactivity as $key => $data)
-    <div class="modal fade cuModalPopup" id="cuModal{{$loop->iteration}}" role="dialog">
+    <div class="modal fade cuModalPopup" id="cuModal{{$data['parent_video_upload_id']}}" role="dialog">
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="main-contents">
@@ -815,7 +813,7 @@
 
                         $istDateTime =  gmdate('d/m/Y h:i:s A', $istTimestamp);
                         ?>
-                        <span>{{$istDateTime}} - {{ $note_data['comments'] }}</span> <br><br>
+                        <span> {{ $note_data['role'] ?? 'Parent' }} ({{ $note_data['user_name'] }}) - {{$istDateTime}} - {{ $note_data['comments'] }} </span> <br><br>
                         @endif
                         @endforeach
                       </div>
@@ -834,7 +832,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="control-label">Comments for Parent</label>
-                          <textarea class="form-control cuModaltextarea" style="background-color: #ffffff !important; color: #000000 !important;" name="comments[{{$data['parent_video_upload_id']}}]" id="comments">{{$data['comments']}}</textarea>
+                          <textarea class="form-control cuModaltextarea" style="background-color: #ffffff !important; color: #000000 !important;" name="comments[{{$data['parent_video_upload_id']}}]" id="comments"></textarea>
                         </div>
                       </div>
                       <!-- F2F -->
@@ -920,10 +918,10 @@
                 </div>
                 <div class="col-md-12 text-center" style="padding: 5px;">
 
-                  @if($loop->iteration > 1)
+                  @if(!$loop->first)
                   <a type="button"
                     class="btn btn-labeled btn-info"
-                    onclick="showModalPrev('{{$loop->iteration}}')"
+                    onclick="showModalPrev('{{$data['parent_video_upload_id']}}')"
                     id="Previous"
                     title="Previous"
                     style="height:35px;background:blue !important;border-color:blue !important;color:white !important">
@@ -970,10 +968,10 @@
                     <span class="btn-label"><i class="fa fa-times-circle-o"></i></span> Close
                   </a>
 
-                  @if($loop->iteration != count($currentactivity))
+                  @if(!$loop->last)
                   <a type="button"
                     class="btn btn-labeled btn-info"
-                    onclick="showModalNext('{{$loop->iteration}}')"
+                    onclick="showModalNext('{{$data['parent_video_upload_id']}}')"
                     id="Next"
                     title="Next"
                     style="background:blue !important;border-color:#4d94ff !important;color:white !important;height:35px;">
@@ -1009,16 +1007,14 @@
       }
     }
 
-    function showModalNext(id) {
-      var id = Number(id) + 1;
+    function showModalNext(pvid) {
       $(".modal").modal('hide');
-      $("#cuModal" + id).modal();
+      $("#cuModal" + pvid).nextAll(".cuModalPopup").first().modal('show');
     }
 
-    function showModalPrev(id) {
-      var id = Number(id) - 1;
+    function showModalPrev(pvid) {
       $(".modal").modal('hide');
-      $("#cuModal" + id).modal();
+      $("#cuModal" + pvid).prevAll(".cuModalPopup").first().modal('show');
     }
 
     function confirmclose(pvid) {
@@ -1116,7 +1112,7 @@
                                 <select class="form-control" name="approval_status" style="background-color: #ffffff !important; color: #000000 !important;" id="approval_status{{$data['parent_video_upload_id']}}" onchange="app_status('{{$data['parent_video_upload_id']}}')">
                                   <!-- <option value="">Select Status</option> -->
                                   <option value="Complete" {{ $data['status'] == 'Complete' ? 'selected' : '' }}>Approved</option>
-                                  <!-- <option value="Rejected" {{ $data['status'] == 'Rejected' ? 'selected' : '' }}>Reject</option> -->
+                                  <option value="Rejected" {{ $data['status'] == 'Rejected' ? 'selected' : '' }}>Reject</option>
                                   <!-- <option value="Close">Close</option> -->
                                 </select>
                               </div>
@@ -1129,20 +1125,14 @@
                               <div style="background-color:#E9ECEF !important; color: #000000;" class="form-group scroll_flow_class">
                                 @foreach($comments as $key1=>$note_data)
                                 @if($data['parent_video_upload_id'] == $note_data['parent_video_upload_id'])
-                                <span> {{ $note_data['role'] }} ({{ $note_data['user_name'] }}) - {{ $note_data['active_status'] }} </span> <br>
                                 <?php
-                                // Assuming $note_data['created_at'] contains the date and time in UTC
                                 $utcTimestamp = strtotime($note_data['created_at']);
-
-                                // Add 5 hours and 30 minutes for IST
                                 $istTimestamp = $utcTimestamp + (5 * 60 * 60) + (30 * 60);
-
                                 $istDateTime =  gmdate('d/m/Y h:i:s A', $istTimestamp);
                                 ?>
-                                <span>{{$istDateTime}} - {{ $note_data['comments'] }}</span> <br><br>
+                                <span> {{ $note_data['role'] ?? 'Parent' }} ({{ $note_data['user_name'] }}) - {{$istDateTime}} - {{ $note_data['comments'] }} </span> <br><br>
                                 @endif
                                 @endforeach
-                                {{$data['comments']}}
                               </div>
                             </div>
                             <div class="col-md-6">
@@ -1307,7 +1297,7 @@
 
                                 $istDateTime =  gmdate('d/m/Y h:i:s A', $istTimestamp);
                                 ?>
-                                <span>{{$istDateTime}} - {{ $note_data['comments'] }}</span> <br><br>
+                                <span> {{ $note_data['role'] ?? 'Parent' }} ({{ $note_data['user_name'] }}) - {{$istDateTime}} - {{ $note_data['comments'] }} </span> <br><br>
                                 @endif
                                 @endforeach
                               </div>
@@ -1411,94 +1401,115 @@
     </div>
   </div>
 
-  <!-- ========== UPDATED OVERALL ACTIVITY MODAL - FIXED COUNT ISSUE ========== -->
+  <!-- ========== UPDATED OVERALL ACTIVITY MODAL - MATCHING FIRST SCREEN DESIGN ========== -->
   <div class="modal fade" id="overallActivityModal" tabindex="-1" role="dialog" aria-labelledby="overallActivityModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="main-contents">
           <section class="section">
-            <div class="modal-header bg-primary" style="background-color: rgb(0 103 172) !important;">
-              <h4 class="modal-title" id="overallActivityModalLabel">Overall Activity Observation Preview</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <div class="modal-header bg-primary" style="background-color: #0067ac !important;">
+              <h4 class="modal-title" id="overallActivityModalLabel" style="color: white; font-weight: bold;">Overall Activity Observation Preview</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
             </div>
-            <div class="modal-body" style="background-color: #edfcff !important;">
-              <div class="section-body mt-2">
+            <div class="modal-body" style="background-color: #edfcff !important; padding: 20px;">
+              <div class="section-body">
                 <div class="row">
                   <div class="col-md-12">
-                    <div class="mt-0">
-
-                      <div class="card-body" id="card_header" style="overflow-y: auto; max-height: 500px;">
+                    <div class="card-body p-0" id="card_header" style="overflow-y: auto; max-height: 600px; border: 1px solid #cce5ff; border-radius: 5px; background: #edfcff;">
+                      
+                      @foreach($activity as $set)
                         @php
-                        // Convert object to array if needed for checking
-                        $hasData = false;
-                        if(is_object($datalist) && isset($datalist)) {
-                        $datalistArray = (array) $datalist;
-                        $hasData = !empty($datalistArray);
-                        } elseif(is_array($datalist)) {
-                        $hasData = !empty($datalist);
-                        }
+                          $setActivities = array_filter($lastactivity, function($a) use ($set) {
+                            return $a['activity_id'] == $set['activity_id'] && ($a['enableflag'] ?? 1) == 0;
+                          });
+                          $rowCounter = 1;
                         @endphp
 
-                        @if($hasData)
-                        @foreach($datalist as $activitySet => $activities)
-                        <div class="card mb-4">
-                          <div class="card-header bg-info text-white">
-                            <h5 class="mb-0">{{ $activitySet }}</h5>
+                        @if(!empty($setActivities))
+                        <div class="activity-set-container mb-4" style="border: 2px solid #09306e !important; margin: 15px !important; border-radius: 4px !important; overflow: hidden !important; background: #cfdbe4 !important; box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;">
+                          <div class="set-header" style="background-color: #09306e !important; color: white !important; padding: 10px !important; text-align: center !important;">
+                            <h5 class="mb-0" style="font-size: 16px !important; font-weight: 600 !important; color: white !important;">{{ $set['activity_name'] }}</h5>
                           </div>
-                          <div class="card-body p-0">
-                            <div class="table-responsive">
-                              <table style="width: 100%;" class="table table-bordered table-striped mb-0">
-                                <thead class="thead-light">
-                                  <tr>
-                                    <th style="width: 5%;">Sl.No</th>
-                                    <th style="width: 25%;">Activity Description</th>
-                                    <th style="width: 20%;">Observation</th>
-                                    <th style="width: 10%;">Status</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  @php
-                                  $activitiesArray = is_object($activities) ? (array) $activities : $activities;
-                                  @endphp
+                          <div class="table-responsive">
+                            <table class="table table-bordered mb-0" style="width: 100% !important; border-collapse: collapse !important; background-color: transparent !important; border: 1px solid #ffffff !important;">
+                              <thead>
+                                <tr style="background-color: #09306e !important; color: white !important; text-align: center !important;">
+                                  <th style="width: 5% !important; border: 1px solid #ffffff !important; vertical-align: middle !important; background-color: #09306e !important; color: white !important;">Sl.No</th>
+                                  <th style="width: 30% !important; border: 1px solid #ffffff !important; vertical-align: middle !important; background-color: #09306e !important; color: white !important;">Activity Description</th>
+                                  <th style="width: 10% !important; border: 1px solid #ffffff !important; vertical-align: middle !important; background-color: #09306e !important; color: white !important;">Status</th>
+                                  <th style="width: 15% !important; border: 1px solid #ffffff !important; vertical-align: middle !important; background-color: #09306e !important; color: white !important;">Comment</th>
+                                  <th style="width: 20% !important; border: 1px solid #ffffff !important; vertical-align: middle !important; background-color: #09306e !important; color: white !important;">Video Link</th>
+                                  <th style="width: 20% !important; border: 1px solid #ffffff !important; vertical-align: middle !important; background-color: #09306e !important; color: white !important;">Observation</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                @foreach($setActivities as $item)
+                                <tr style="background-color: transparent !important;">
+                                  <td style="text-align: center !important; border: 1px solid #ffffff !important;">{{ $rowCounter++ }}</td>
+                                  <td style="border: 1px solid #ffffff !important; padding: 8px !important;">{{ $item['description'] ?? 'N/A' }}</td>
+                                  
+                                  {{-- Status Logic --}}
+                                  <td style="text-align: center !important; border: 1px solid #ffffff !important;">
+                                    @php
+                                      $status = $item['status'] ?? '';
+                                      $displayStatus = $status;
+                                      
+                                      if ($status == 'Complete') {
+                                          $displayStatus = 'Completed';
+                                          if (($item['f2f_flag'] ?? 0) == 1) {
+                                              $displayStatus = 'Approved / F2F';
+                                          }
+                                      } elseif ($status == 'New') {
+                                          $displayStatus = '';
+                                      } elseif ($status == 'Rejected') {
+                                          $displayStatus = 'Rejected';
+                                      }
+                                    @endphp
+                                    {{ $displayStatus }}
+                                  </td>
 
-                                  @if(!empty($activitiesArray))
-                                  @foreach($activitiesArray as $index => $item)
-                                  <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ is_object($item) ? ($item->description ?? 'N/A') : (is_array($item) ? ($item['description'] ?? 'N/A') : 'N/A') }}</td>
+                                  {{-- Parent Comment --}}
+                                  <td style="border: 1px solid #dee2e6;">
+                                    @php
+                                      $itemComments = array_filter($comments, function($c) use ($item) {
+                                        return $c['parent_video_upload_id'] == $item['parent_video_upload_id'] && ($c['role'] ?? 'Parent') == 'Parent';
+                                      });
+                                      $parentComment = !empty($itemComments) ? end($itemComments)['comments'] : '';
+                                    @endphp
+                                    {{ $parentComment }}
+                                  </td>
 
-                                    {{-- Observation column --}}
-                                    <td>
-                                      @php
-                                      $observation = is_object($item)
-                                      ? ($item->observation ?? null)
-                                      : (is_array($item) ? ($item['observation'] ?? null) : null);
-                                      @endphp
-                                      {{ $observation ?? 'No observation' }}
-                                    </td>
+                                  {{-- Video Link --}}
+                                  <td style="border: 1px solid #dee2e6; word-break: break-all; font-size: 12px;">
+                                    @php
+                                      $itemVideos = array_filter($video_link, function($v) use ($item) {
+                                        return $v['parent_video_upload_id'] == $item['parent_video_upload_id'];
+                                      });
+                                      $videoUrl = !empty($itemVideos) ? reset($itemVideos)['video_link'] : '';
+                                    @endphp
+                                    @if($videoUrl)
+                                      <a href="{{ $videoUrl }}" target="_blank" class="video-link-cell" style="color: #0067ac; text-decoration: underline;">{{ $videoUrl }}</a>
+                                    @endif
+                                  </td>
 
-                                    <td>
-                                      {{ is_object($item) ? ($item->status ?? 'N/A') : (is_array($item) ? ($item['status'] ?? 'N/A') : 'N/A') }}
-                                    </td>
-                                  </tr>
-                                  @endforeach
-                                  @endif
-                                </tbody>
-                              </table>
-                            </div>
+                                  {{-- Observation --}}
+                                  <td style="border: 1px solid #dee2e6;">
+                                    {{ $item['observation'] ?? '' }}
+                                  </td>
+                                </tr>
+                                @endforeach
+                              </tbody>
+                            </table>
                           </div>
                         </div>
-                        @endforeach
-                        @else
-
                         @endif
-                      </div>
+                      @endforeach
+
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
           </section>
         </div>
       </div>

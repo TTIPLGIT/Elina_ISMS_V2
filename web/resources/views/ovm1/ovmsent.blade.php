@@ -307,18 +307,18 @@
                   @if($row['meeting_status'] == 'Accepted')
                   <!-- <a type="button" class="btn btn-warning text-white" id="savebutton" onclick="validateForm1('Completed')" name="type" value="Saved">Close</a> -->
                   @elseif($row['meeting_status'] == 'Declined')
-                  <button type="submit" id="savebutton" class="btn btn-warning" name="type" value="Saved"> Declined </button>
+                  <button type="button" id="savebutton" class="btn btn-warning" onclick="validateForm('Saved')" name="type" value="Saved"> Declined </button>
                   @elseif($row['meeting_status'] == 'Reschedule Request')
                   <a type="button" id="savebutton" class="btn btn-warning text-white" onclick="validateForm2('Reschedule')" name="type" value="Reschedule">Reschedule</a>
                   @elseif($row['meeting_status'] == 'Completed')
                   @else
-                  <button type="submit" id="savebutton" class="btn btn-warning" name="type" value="Saved">Save</button>
+                  <button type="button" id="savebutton" class="btn btn-warning" onclick="validateForm('Saved')" name="type" value="Saved">Save</button>
                   @endif
                   @else
                   @if($row['meeting_status'] == 'Accepted')
                   <!-- <a type="button" class="btn btn-warning text-white" id="savebutton" onclick="validateForm1('Completed')" name="type" value="Saved">Close</a> -->
                   @endif
-                  <button type="submit" id="savebutton" class="btn btn-warning" name="type" value="Saved">Save</button>
+                  <button type="button" id="savebutton" class="btn btn-warning" onclick="validateForm('Saved')" name="type" value="Saved">Save</button>
                   @endif
 
                   @if($authID == $row['created_by'])
@@ -593,19 +593,19 @@
     // }
 
     if (a == 'Saved') {
-      var swalText = 'Save';
+      var swalText = 'save';
     } else if (a == 'Sent') {
-      var swalText = 'Schedule';
+      var swalText = 'submit';
     } else if (a == 'Completed') {
-      var swalText = 'Complete';
+      var swalText = 'save and close';
     } else {
-      var swalText = a;
+      var swalText = a.toLowerCase();
     }
 
     Swal.fire({
 
-      title: "Do you want to " + swalText + " the Meeting?",
-      text: "Please click 'Yes' to " + swalText + " the Meeting",
+      title: "Confirmation",
+      text: "Are you sure you want to " + swalText + "?",
       icon: "warning",
       customClass: 'swalalerttext',
       showCancelButton: true,
@@ -618,7 +618,9 @@
       width: '550px',
     }).then((result) => {
       if (result.value) {
-        document.getElementById('ovm').submit(a);
+        $('.btn').addClass('disabled').css('pointer-events', 'none');
+        $('.btn').prop('disabled', true);
+        document.getElementById('ovm').submit();
       }
     })
   }
@@ -650,19 +652,19 @@
     document.getElementById('type').value = a;
     // console.log(document.getElementById('meeting_status').value);
     if (a == 'Saved') {
-      var swalText = 'Save';
+      var swalText = 'save';
     } else if (a == 'Sent') {
-      var swalText = 'Schedule';
+      var swalText = 'submit';
     } else if (a == 'Completed') {
-      var swalText = 'Complete';
+      var swalText = 'save and close';
     } else {
-      var swalText = a;
+      var swalText = a.toLowerCase();
     }
 
     Swal.fire({
 
-      title: "Do you want to " + swalText + " the Meeting?",
-      text: "Please click 'Yes' to " + swalText + " the Meeting",
+      title: "Confirmation",
+      text: "Are you sure you want to " + swalText + "?",
       icon: "warning",
       customClass: 'swalalerttext',
       showCancelButton: true,
@@ -672,7 +674,9 @@
       width: '550px',
     }).then((result) => {
       if (result.value) {
-        document.getElementById('ovm').submit(a);
+        $('.btn').addClass('disabled').css('pointer-events', 'none');
+        $('.btn').prop('disabled', true);
+        document.getElementById('ovm').submit();
       }
     })
   }
@@ -781,19 +785,19 @@
     tinyMCE.triggerSave();
 
     if (a == 'Saved') {
-      var swalText = 'Save';
+      var swalText = 'save';
     } else if (a == 'Sent') {
-      var swalText = 'Schedule';
+      var swalText = 'submit';
     } else if (a == 'Completed') {
-      var swalText = 'Complete';
+      var swalText = 'save and close';
     } else {
-      var swalText = a;
+      var swalText = a.toLowerCase();
     }
 
     Swal.fire({
 
-      title: "Do you want to " + swalText + " the Meeting?",
-      text: "Please click 'Yes' to " + swalText + " the Meeting",
+      title: "Confirmation",
+      text: "Are you sure you want to " + swalText + "?",
       icon: "warning",
       customClass: 'swalalerttext',
       showCancelButton: true,
@@ -806,7 +810,9 @@
       width: '550px',
     }).then((result) => {
       if (result.value) {
-        document.getElementById('ovm').submit(a);
+        $('.btn').addClass('disabled').css('pointer-events', 'none');
+        $('.btn').prop('disabled', true);
+        document.getElementById('ovm').submit();
       }
     })
   }

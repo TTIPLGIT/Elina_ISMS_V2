@@ -545,9 +545,10 @@ class activityInitiationController extends BaseController
             $comments = DB::table('latest_video_comments as lvc')
                 ->join('activity_initiation as ai', 'lvc.activity_initiation_id', '=', 'ai.activity_initiation_id')
                 ->where('ai.enrollment_id', $enNum)
-                ->where('lvc.active_status', '!=', 'New')
+                ->whereNotNull('lvc.comments')
+                ->where('lvc.comments', '!=', '')
                 ->select('lvc.parent_video_upload_id', 'lvc.*')
-                ->distinct()
+                ->orderBy('lvc.id', 'ASC')
                 ->get();
 
             $video_link = DB::table('activity_parent_video_upload')
@@ -708,13 +709,26 @@ class activityInitiationController extends BaseController
                 $initiateID = $input['activity_initiation_id'];
                 $authID = Auth::id();
                 $pvu = DB::select("SELECT * FROM parent_video_upload WHERE parent_video_upload_id = $initiateID");
+                $existingComments = $pvu[0]->comments;
+                $newComment = $input['comments'];
+                $finalComment = $existingComments;
+
+                if (!empty($newComment)) {
+                    $istTimestamp = time() + (5 * 60 * 60) + (30 * 60);
+                    $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
+                    $role_name_row = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=$authID");
+                    $role = $role_name_row[0]->role_name ?? 'Coordinator';
+                    $formattedComment = $role . " (" . auth()->user()->name . ") - " . $istDateTime . " - " . $newComment;
+                    $finalComment = $existingComments ? $existingComments . "\n" . $formattedComment : $formattedComment;
+                }
+
                 DB::table('parent_video_upload')
                     ->where('parent_video_upload_id', $initiateID)
                     ->update([
-                        // 'status' => $input['approval_status'],
+                        'status' => $input['approval_status'],
                         'last_modified_by' => $authID,
                         'last_modified_date' => NOW(),
-                        'comments' => $input['comments']
+                        'comments' => $finalComment
                     ]);
 
                 $role_name = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=$authID");
@@ -725,7 +739,7 @@ class activityInitiationController extends BaseController
                         'activity_initiation_id' => $pvu[0]->activity_initiation_id,
                         'parent_video_upload_id' => $initiateID,
                         'user_name' => auth()->user()->name,
-                        // 'active_status' => $input['approval_status'],
+                        'active_status' => $input['approval_status'],
                         'created_by' => $authID,
                         'created_at' => NOW(),
                         'comments' => $input['comments'],
@@ -1092,6 +1106,19 @@ class activityInitiationController extends BaseController
                     if ($approval_status_check != null) {
                         // $this->WriteFileLog('if');
                         // $this->WriteFileLog($approval_status_check );
+                        $pvu_row = DB::table('parent_video_upload')->where('parent_video_upload_id', $video)->first();
+                        $existingComments = $pvu_row->comments;
+                        $newComment = $comments[$video];
+                        $finalComment = $existingComments;
+
+                        if (!empty($newComment)) {
+                            $istTimestamp = time() + (5 * 60 * 60) + (30 * 60);
+                            $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
+                            $role = $role_name[0]->role_name ?? 'Coordinator';
+                            $formattedComment = $role . " (" . auth()->user()->name . ") - " . $istDateTime . " - " . $newComment;
+                            $finalComment = $existingComments ? $existingComments . "\n" . $formattedComment : $formattedComment;
+                        }
+
                         DB::table('parent_video_upload')
                             ->where('parent_video_upload_id', $video)
                             ->update([
@@ -1100,7 +1127,7 @@ class activityInitiationController extends BaseController
                                 'save_status1' => $approval_status[$video],
                                 'last_modified_by' => $authID,
                                 'last_modified_date' => NOW(),
-                                'comments' => $comments[$video],
+                                'comments' => $finalComment,
                             ]);
                         // Retrieve activity_description_id and activity_id
                         $activity_data = DB::table('parent_video_upload')
@@ -1123,20 +1150,16 @@ class activityInitiationController extends BaseController
                         }
 
                         if ($comments[$video] != null) {
-                            DB::table('latest_video_comments')->updateOrInsert(
-                                [
-                                    'parent_video_upload_id' => $video,
-                                    'created_by' => $authID,
-                                    'active_status' => $approval_status[$video],
-                                ],
-                                [
-                                    'activity_initiation_id' => $activity_initiation[$video],
-                                    'user_name' => auth()->user()->name,
-                                    'created_at' => NOW(),
-                                    'comments' => $comments[$video],
-                                    'role' => $role_name[0]->role_name
-                                ]
-                            );
+                            DB::table('latest_video_comments')->insert([
+                                'parent_video_upload_id' => $video,
+                                'activity_initiation_id' => $activity_initiation[$video],
+                                'user_name' => auth()->user()->name,
+                                'created_by' => $authID,
+                                'created_at' => NOW(),
+                                'comments' => $comments[$video],
+                                'role' => $role_name[0]->role_name,
+                                'active_status' => $approval_status[$video],
+                            ]);
                         }
 
                         $approval_status_des = $approval_status[$video];
@@ -1281,10 +1304,23 @@ class activityInitiationController extends BaseController
                     $approval_status_check = $approval_status[$video];
                     $f2f_flag = isset($enablef2f[$video]);
 
+                    $pvu_row = DB::table('parent_video_upload')->where('parent_video_upload_id', $video)->first();
+                    $existingComments = $pvu_row->comments;
+                    $newComment = $comments[$video];
+                    $finalComment = $existingComments;
+
+                    if (!empty($newComment)) {
+                        $istTimestamp = time() + (5 * 60 * 60) + (30 * 60);
+                        $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
+                        $role = $role_name[0]->role_name ?? 'Coordinator';
+                        $formattedComment = $role . " (" . auth()->user()->name . ") - " . $istDateTime . " - " . $newComment;
+                        $finalComment = $existingComments ? $existingComments . "\n" . $formattedComment : $formattedComment;
+                    }
+
                     $updateData = [
                         'last_modified_by'  => $authID,
                         'last_modified_date' => NOW(),
-                        'comments'          => $comments[$video],
+                        'comments'          => $finalComment,
                         'save_status1'      => $approval_status[$video],
                     ];
 
@@ -1318,21 +1354,16 @@ class activityInitiationController extends BaseController
 
 
                     if ($comments[$video] != null) {
-                        DB::table('latest_video_comments')->updateOrInsert(
-                            [
-                                'parent_video_upload_id' => $video,
-                                'created_by' => $authID,
-                                'active_status' => $approval_status[$video],
-                            ],
-                            [
-                                'activity_initiation_id' => $activity_initiation[$video],
-                                'user_name' => auth()->user()->name,
-                                'active_status' => $approval_status[$video],
-                                'created_at' => NOW(),
-                                'comments' => $comments[$video],
-                                'role' => $role_name[0]->role_name
-                            ]
-                        );
+                        DB::table('latest_video_comments')->insert([
+                            'parent_video_upload_id' => $video,
+                            'activity_initiation_id' => $activity_initiation[$video],
+                            'user_name' => auth()->user()->name,
+                            'active_status' => $approval_status[$video],
+                            'created_by' => $authID,
+                            'created_at' => NOW(),
+                            'comments' => $comments[$video],
+                            'role' => $role_name[0]->role_name
+                        ]);
                     }
 
                     if ($f2f_flag) {

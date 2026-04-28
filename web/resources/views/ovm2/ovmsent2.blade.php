@@ -659,19 +659,18 @@
     // }
 
     if (a == 'Saved') {
-      var swalText = 'Save';
+      var swalText = 'save';
     } else if (a == 'Sent') {
-      var swalText = 'Schedule';
+      var swalText = 'submit';
     } else if (a == 'Completed') {
-      var swalText = 'Complete';
+      var swalText = 'save and close';
     } else {
-      var swalText = a;
+      var swalText = a.toLowerCase();
     }
 
     Swal.fire({
-
-      title: "Do you want to " + swalText + " the Meeting?",
-      text: "Please click 'Yes' to " + swalText + " the Meeting",
+      title: "Confirmation",
+      text: "Are you sure you want to " + swalText + "?",
       icon: "warning",
       customClass: 'swalalerttext',
       showCancelButton: true,
@@ -684,7 +683,9 @@
       width: '550px',
     }).then((result) => {
       if (result.value) {
-        document.getElementById('ovm').submit(a);
+        $('.btn').addClass('disabled').css('pointer-events', 'none');
+        $('.btn').prop('disabled', true);
+        document.getElementById('ovm').submit();
       }
     })
   }
@@ -714,19 +715,18 @@
     document.getElementById('type').value = a;
     // console.log(document.getElementById('meeting_status').value);
     if (a == 'Saved') {
-      var swalText = 'Save';
+      var swalText = 'save';
     } else if (a == 'Sent') {
-      var swalText = 'Schedule';
+      var swalText = 'submit';
     } else if (a == 'Completed') {
-      var swalText = 'Complete';
+      var swalText = 'save and close';
     } else {
-      var swalText = a;
+      var swalText = a.toLowerCase();
     }
 
     Swal.fire({
-
-      title: "Do you want to " + swalText + " the Meeting?",
-      text: "Please click 'Yes' to " + swalText + " the Meeting",
+      title: "Confirmation",
+      text: "Are you sure you want to " + swalText + "?",
       icon: "warning",
       customClass: 'swalalerttext',
       showCancelButton: true,
@@ -736,7 +736,9 @@
       width: '550px',
     }).then((result) => {
       if (result.value) {
-        document.getElementById('ovm').submit(a);
+        $('.btn').addClass('disabled').css('pointer-events', 'none');
+        $('.btn').prop('disabled', true);
+        document.getElementById('ovm').submit();
       }
     })
   }
@@ -850,19 +852,18 @@
     // }
 
     if (a == 'Saved') {
-      var swalText = 'Save';
+      var swalText = 'save';
     } else if (a == 'Sent') {
-      var swalText = 'Schedule';
+      var swalText = 'submit';
     } else if (a == 'Completed') {
-      var swalText = 'Complete';
+      var swalText = 'save and close';
     } else {
-      var swalText = a;
+      var swalText = a.toLowerCase();
     }
 
     Swal.fire({
-
-      title: "Do you want to " + swalText + " the Meeting?",
-      text: "Please click 'Yes' to " + swalText + " the Meeting",
+      title: "Confirmation",
+      text: "Are you sure you want to " + swalText + "?",
       icon: "warning",
       customClass: 'swalalerttext',
       showCancelButton: true,
@@ -875,7 +876,9 @@
       width: '550px',
     }).then((result) => {
       if (result.value) {
-        document.getElementById('ovm').submit(a);
+        $('.btn').addClass('disabled').css('pointer-events', 'none');
+        $('.btn').prop('disabled', true);
+        document.getElementById('ovm').submit();
       }
     })
   }

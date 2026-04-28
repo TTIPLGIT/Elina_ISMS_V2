@@ -198,24 +198,24 @@
                                         </div>
                                     </div>
 
-                                    @if(($row['cnotes'] != "")&&($row['reschedule_count'] < 2)) <div class="col-sm-12">
+                                    @if(($row['cnotes'] != "")&&($row['reschedule_count'] < 2)) <div class="col-sm-12 coord_notes_wrapper">
                                         <div class="form-group">
                                             <label class="control-label">Coordinator Notes</label>
-                                            <textarea class="form-control" name="coord_notes" {{ $isLocked ? 'disabled readonly' : '' }}>{{$row['cnotes']}}</textarea>
+                                            <textarea class="form-control coord_notes" name="coord_notes" {{ $isLocked ? 'disabled readonly' : '' }}>{{$row['cnotes']}}</textarea>
                                         </div>
                                 </div>
 
-                                @elseif(($row['rsvp1'] == 'Reschedule' || $row['rsvp2'] == 'Reschedule') && ($row['reschedule_count'] < 2)) <div class="col-sm-12 " style="display: block !important;">
+                                @elseif(($row['rsvp1'] == 'Reschedule' || $row['rsvp2'] == 'Reschedule') && ($row['reschedule_count'] < 2)) <div class="col-sm-12 coord_notes_wrapper" style="display: block !important;">
                                     <div class="form-group">
                                         <label class="control-label">Coordinator Notes</label>
-                                        <textarea class="form-control" class="coord_notes" name="coord_notes"></textarea>
+                                        <textarea class="form-control coord_notes" name="coord_notes">{{$row['cnotes']}}</textarea>
                                     </div>
                         </div>
                         @else
-                        <div class="col-sm-12 coord_notes" style="display: none !important;">
+                        <div class="col-sm-12 coord_notes_wrapper" style="display: none !important;">
                             <div class="form-group">
                                 <label class="control-label">Coordinator Notes</label>
-                                <textarea class="form-control" class="coord_notes" name="coord_notes"></textarea>
+                                <textarea class="form-control coord_notes" name="coord_notes">{{$row['cnotes']}}</textarea>
                             </div>
                         </div>
                         @endif
@@ -1526,6 +1526,8 @@
                 width: '550px',
             }).then((result) => {
                 if (result.value) {
+                    $('.btn').addClass('disabled').css('pointer-events', 'none');
+                    $('.btn').prop('disabled', true);
                     $(".loader").show();
                     $('#ovm_meet').find(':disabled').prop('disabled', false);
                     document.getElementById('ovm_meet').submit(a);
@@ -1867,6 +1869,8 @@
                 width: '550px',
             }).then((result) => {
                 if (result.value) {
+                    $('.btn').addClass('disabled').css('pointer-events', 'none');
+                    $('.btn').prop('disabled', true);
                     $(".loader").show();
                     $('#ovm_meet').find(':disabled').prop('disabled', false);
                     document.getElementById('ovm_meet').submit(a);
@@ -2187,6 +2191,8 @@
                 width: '550px',
             }).then((result) => {
                 if (result.value) {
+                    $('.btn').addClass('disabled').css('pointer-events', 'none');
+                    $('.btn').prop('disabled', true);
                     $(".loader").show();
                     $('#ovm_meet').find(':disabled').prop('disabled', false);
                     document.getElementById('ovm_meet').submit(a);
@@ -2265,12 +2271,12 @@
 
     function coonotes() {
         var status = $.trim($('#status').val() || "");
-        var $formElements = $('#ovm_meet input, #ovm_meet textarea, #ovm_meet select').not('#status, [type="hidden"]');
+        var $formElements = $('#ovm_meet input, #ovm_meet textarea, #ovm_meet select').not('#status, [type="hidden"], [name="coord_notes"]');
         var rsvp1 = $.trim($('[name="rsvp1"]').val() || "").toLowerCase();
         var rsvp2 = $.trim($('[name="rsvp2"]').val() || "").toLowerCase();
         
         if (status === "Declined" || status === "Accept") {
-            document.querySelector('.coord_notes').style.display = "block";
+            $('.coord_notes_wrapper').css('display', 'block');
             // Use readOnly only (NOT disabled) so field values are still submitted with the form
             $formElements.prop('disabled', false).prop('readOnly', true).addClass('locked-field');
             // Visually lock date pickers without disabling them (disabled fields don't submit values)
@@ -2296,7 +2302,7 @@
             document.querySelector('#meeting_status').value = status;
 
         } else if (status === "Forced Closure") {
-            document.querySelector('.coord_notes').style.display = "block";
+            $('.coord_notes_wrapper').css('display', 'block');
             $formElements.prop('disabled', false).prop('readOnly', false).removeClass('locked-field');
             $('.meeting_date').removeClass('locked-field');
             
@@ -2309,7 +2315,7 @@
             });
 
         } else {
-            document.querySelector('.coord_notes').style.display = "none";
+            $('.coord_notes_wrapper').css('display', 'none');
             $formElements.prop('disabled', false).prop('readOnly', false).removeClass('locked-field');
             $('.meeting_date').removeClass('locked-field');
             

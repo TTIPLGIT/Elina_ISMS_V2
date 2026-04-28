@@ -178,7 +178,7 @@
             <br>
             <div class="row text-center">
                 <div class="col-md-12">
-                    @if ($rows[0]['active_flag'] != 1 && $rows[0]['active_flag'] != 2 && $rows[0]['reschedule_count'] != 3)
+                    @if ($rows[0]['active_flag'] != 1 && $rows[0]['active_flag'] != 2 && $rows[0]['reschedule_count'] != 3 && !($rows[0]['rsvp1'] == 'Accept' && $rows[0]['rsvp2'] == 'Accept'))
                     <a type="button" class="btn btn-success text-white" onclick="validateForm()" name="type">Submit</a>
                     @endif
                     <a type="button" href="{{ route('home') }}" class="btn btn-labeled responsive-button button-style back-button" title="Back">
@@ -278,8 +278,23 @@
         }
 
         if (validateDateTime()) {
-            $(".loader").show();
-            document.getElementById('ovmmeet').submit();
+            Swal.fire({
+                title: "Confirmation",
+                text: "Are you sure you want to submit?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                width: '550px',
+            }).then((result) => {
+                if (result.value) {
+                    $('.btn').addClass('disabled').css('pointer-events', 'none');
+                    $('.btn').prop('disabled', true);
+                    $(".loader").show();
+                    document.getElementById('ovmmeet').submit();
+                }
+            });
         } else {
             return false;
         }
