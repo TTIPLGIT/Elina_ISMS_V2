@@ -738,7 +738,9 @@
       width: '550px',
     }).then((result) => {
       if (result.value) {
-        document.getElementById('ovm2').submit(a);
+        $('.btn').addClass('disabled').css('pointer-events', 'none');
+        $('.btn').prop('disabled', true);
+        document.getElementById('ovm2').submit();
       }
     })
   }

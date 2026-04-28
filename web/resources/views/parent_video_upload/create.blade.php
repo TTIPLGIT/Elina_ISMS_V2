@@ -270,18 +270,14 @@
                           <!-- <td data-label="S.No">{{ $loop->iteration }}</td> -->
                           <td data-label="Activity Description" <?= $row['required'] == 1 ? 'class="required"' : '' ?>>{{ $row['description'] }}</td>
 
-                          @if($row['f2f_flag'] == 1)
-                          <td data-label="Status">In-Progress</td>
-                          @else
-                          @if($row['save_flag'] == 1)
-                          <td data-label="Status">Saved</td>
-                          @else
                           @if($row['current_status'] == 'Complete')
                           <td data-label="Status">Approved</td>
+                          @elseif($row['f2f_flag'] == 1)
+                          <td data-label="Status">In-Progress</td>
+                          @elseif($row['save_flag'] == 1)
+                          <td data-label="Status">Saved</td>
                           @else
                           <td data-label="Status">{{$row['current_status']}}</td>
-                          @endif
-                          @endif
                           @endif
                           <td data-label="Instruction" style="text-wrap: wrap">{!! $row['instructionset'] !!}</td>
                           <td data-label="Action">
@@ -446,7 +442,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="control-label">Comments</label>
-                          <textarea class="form-control" name="comments[{{$row['parent_video_upload_id']}}]" id="comments">{{$currentComment}}</textarea>
+                          <textarea class="form-control" name="comments[{{$row['parent_video_upload_id']}}]" id="comments"></textarea>
 
 
                         </div>
@@ -672,48 +668,15 @@
                           @endphp
 
                           @foreach($comments as $key=>$note_data)
-
                           @if($data1['parent_video_upload_id'] == $note_data['parent_video_upload_id'])
-
                           @php
-                          $noteKey = $note_data['comments'] . $note_data['parent_video_comments'];
-
-                          if(!in_array($noteKey,$shownNotes)){
-
-                          $shownNotes[] = $noteKey;
                           $previousNotesFound = true;
-                          @endphp
-
-                          <span>
-                            {{ $note_data['role'] ?? 'Parent' }}
-                            ({{ $note_data['user_name'] ?? 'Phone number check' }}) -
-                            {{ $note_data['active_status'] ?? 'Submitted' }}
-                          </span><br>
-
-                          @php
-                          if (!empty($note_data['created_at'])) {
                           $utcTimestamp = strtotime($note_data['created_at']);
                           $istTimestamp = $utcTimestamp + (5 * 60 * 60) + (30 * 60);
                           $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
-                          }
                           @endphp
-
-                          <span>{{ $istDateTime }}</span><br>
-
-                          @if(!empty($note_data['comments']))
-                          <span>{{ $note_data['comments'] }}</span><br>
+                          <span> {{ $note_data['role'] ?? 'Parent' }} ({{ $note_data['user_name'] ?? 'Parent' }}) - {{ $istDateTime }} - {{ $note_data['comments'] }} </span> <br><br>
                           @endif
-
-                          @if(!empty($note_data['parent_video_comments']))
-                          <span><b>IS Coordinator</b> - {{ $note_data['parent_video_comments'] }}</span><br>
-                          @endif
-
-                          <br>
-
-                          @php } @endphp
-
-                          @endif
-
                           @endforeach
 
                           @if(!$previousNotesFound)
@@ -775,17 +738,12 @@
                         <div class="form-group scroll_flow_class">
                           @foreach($comments as $key=>$note_data)
                           @if($data1['parent_video_upload_id'] == $note_data['parent_video_upload_id'])
-                          <span> {{ $note_data['role'] }} ({{ $note_data['user_name'] }}) - {{ $note_data['active_status'] }} </span> <br>
                           <?php
-                          // Assuming $note_data['created_at'] contains the date and time in UTC
                           $utcTimestamp = strtotime($note_data['created_at']);
-
-                          // Add 5 hours and 30 minutes for IST
                           $istTimestamp = $utcTimestamp + (5 * 60 * 60) + (30 * 60);
-
                           $istDateTime =  gmdate('d/m/Y h:i:s A', $istTimestamp);
                           ?>
-                          <span>{{$istDateTime}} - {{ $note_data['comments'] }}</span> <br><br>
+                          <span> {{ $note_data['role'] ?? 'Parent' }} ({{ $note_data['user_name'] }}) - {{$istDateTime}} - {{ $note_data['comments'] }} </span> <br><br>
                           @endif
                           @endforeach
                         </div>
@@ -871,7 +829,7 @@
                           @endphp
 
                           @if(!empty($note_data['comments']))
-                          <span>{{ $istDateTime }} - {{ $note_data['comments'] }}</span><br>
+                          <span> {{ $note_data['role'] ?? 'Parent' }} ({{ $note_data['user_name'] ?? 'Parent' }}) - {{ $istDateTime }} - {{ $note_data['comments'] }} </span><br>
                           @endif
 
                           @if(!empty($note_data['parent_video_comments']))

@@ -387,6 +387,13 @@ $('#chooseQuestionnaire').show();
     // }
 
     document.getElementById('btn_status').value = status;
+    
+    // Disable the button to prevent multiple clicks
+    var submitBtn = document.getElementById('submitbutton');
+    submitBtn.style.pointerEvents = 'none';
+    submitBtn.style.opacity = '0.6';
+    submitBtn.innerHTML = '<span class="btn-label" style="font-size:13px !important;"><i class="fa fa-spinner fa-spin"></i></span> Processing...';
+
     document.getElementById('enrollement').submit();
   }
 

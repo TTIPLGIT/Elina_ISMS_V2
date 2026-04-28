@@ -19,7 +19,6 @@ use Log;
 
 
 class ovm1Controller extends BaseController
-
 {
 
     /**
@@ -121,7 +120,6 @@ class ovm1Controller extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function create()
-
     {
 
         try {
@@ -170,7 +168,7 @@ class ovm1Controller extends BaseController
     {
         try {
             $method = 'Method => ovm1Controller => store';
-            $userID =  auth()->user()->id;
+            $userID = auth()->user()->id;
             $email_users = array();
             $inputArray = $this->decryptData($request->requestData);
 
@@ -303,10 +301,10 @@ class ovm1Controller extends BaseController
                     'summary' => $inputArray['meeting_subject'],
                     'location' => $inputArray['meeting_location'],
                     'description' => $inputArray['meeting_description'],
-                    'start' => array('dateTime' => $startTime, 'timeZone' => 'Asia/Kolkata',),
-                    'end' => array('dateTime' => $endTime, 'timeZone' => 'Asia/Kolkata',),
-                    'attendees' =>  array_merge($attendees1, $a, $attendees),
-                    'reminders' => array('useDefault' => FALSE, 'overrides' => array(array('method' => 'email', 'minutes' => 24 * 60), array('method' => 'popup', 'minutes' => 10),),),
+                    'start' => array('dateTime' => $startTime, 'timeZone' => 'Asia/Kolkata', ),
+                    'end' => array('dateTime' => $endTime, 'timeZone' => 'Asia/Kolkata', ),
+                    'attendees' => array_merge($attendees1, $a, $attendees),
+                    'reminders' => array('useDefault' => FALSE, 'overrides' => array(array('method' => 'email', 'minutes' => 24 * 60), array('method' => 'popup', 'minutes' => 10), ), ),
                     "conferenceData" => array("createRequest" => array("conferenceSolutionKey" => array("type" => "hangoutsMeet"), "requestId" => "123"))
                 ));
                 // $this->WriteFileLog(json_encode($event));
@@ -372,12 +370,12 @@ class ovm1Controller extends BaseController
                     $claimdetails = DB::table('ovm_meeting_details')->orderBy('ovm_meeting_unique', 'desc')->first();
 
                     if ($claimdetails == null) {
-                        $claimnoticenoNew =  'OVM-1/' . date("Y") . '/' . date("m") . '/001';
+                        $claimnoticenoNew = 'OVM-1/' . date("Y") . '/' . date("m") . '/001';
                         // $this->WriteFileLog($claimnoticenoNew);
                         // echo ($claimnoticenoNew);exit;
                     } else {
                         $claimnoticeno = $claimdetails->ovm_meeting_unique;
-                        $claimnoticenoNew =  ++$claimnoticeno;  // AAA004  
+                        $claimnoticenoNew = ++$claimnoticeno;  // AAA004  
                         // $this->WriteFileLog($claimnoticenoNew);
                     }
 
@@ -420,6 +418,37 @@ class ovm1Controller extends BaseController
 
                     $this->ovm_status_logs('ovm_meeting_details', $ovm_meeting, 'OVM Meeting ' . $ovm_status_logs, 'OVM Status', auth()->user()->id, NOW(), $input['enrollment_child_num'], auth()->user()->name);
 
+                    // Conversation summary initiation - Always generate at initiation
+                    DB::table('ovm_meeting_isc_feedback')
+                        ->insert([
+                            'enrollment_id' => $input['enrollment_child_num'],
+                            'ovm_meeting_id' => $ovm_meeting,
+                            'ovm_meeting_unique' => $claimnoticenoNew,
+                            'child_id' => $input['child_id'],
+                            'is_coordinator_id' => $is_coordinator1[0]->id,
+                            'child_name' => $input['child_name'],
+                            'status' => 'New',
+                            'user_id' => $input['user_id'],
+                            'video_link' => $eventLink,
+                            'created_at' => NOW()
+                        ]);
+
+                    if ($is_coordinator2 != '') {
+                        DB::table('ovm_meeting_isc_feedback')
+                            ->insert([
+                                'enrollment_id' => $input['enrollment_child_num'],
+                                'ovm_meeting_id' => $ovm_meeting,
+                                'ovm_meeting_unique' => $claimnoticenoNew,
+                                'child_id' => $input['child_id'],
+                                'is_coordinator_id' => $is_coordinator2[0]->id,
+                                'child_name' => $input['child_name'],
+                                'status' => 'New',
+                                'user_id' => $input['user_id'],
+                                'video_link' => $eventLink,
+                                'created_at' => NOW()
+                            ]);
+                    }
+
                     $type = $input['type'];
                     if ($type == "Sent") {
                         $admin_details = DB::SELECT("SELECT * from users where array_roles = '4'");
@@ -428,7 +457,7 @@ class ovm1Controller extends BaseController
                             for ($j = 0; $j < $adminn_count; $j++) {
 
                                 DB::table('notifications')->insertGetId([
-                                    'user_id' =>  $admin_details[$j]->id,
+                                    'user_id' => $admin_details[$j]->id,
                                     'notification_type' => 'OVM Meeting Scheduled',
                                     'notification_status' => 'OVM Meeting',
                                     'notification_url' => 'ovmsent/' . encrypt($ovm_meeting),
@@ -454,7 +483,7 @@ class ovm1Controller extends BaseController
                         ]);
 
                         DB::table('notifications')->insertGetId([
-                            'user_id' =>  $is_coordinator1[0]->id,
+                            'user_id' => $is_coordinator1[0]->id,
                             'notification_type' => 'OVM Meeting Scheduled',
                             'notification_status' => 'OVM Meeting',
                             'notification_url' => 'ovmsent/' . encrypt($ovm_meeting),
@@ -466,7 +495,7 @@ class ovm1Controller extends BaseController
 
                         if ($is_coordinator2 != '') {
                             DB::table('notifications')->insertGetId([
-                                'user_id' =>  $is_coordinator2[0]->id,
+                                'user_id' => $is_coordinator2[0]->id,
                                 'notification_type' => 'OVM Meeting Scheduled',
                                 'notification_status' => 'OVM Meeting',
                                 'notification_url' => 'ovmsent/' . encrypt($ovm_meeting),
@@ -817,7 +846,7 @@ class ovm1Controller extends BaseController
     {
         // $this->WriteFileLog("asdas");
         try {
-            $userID =  auth()->user()->id;
+            $userID = auth()->user()->id;
             $method = 'Method =>  ovm1Controller => updatedata';
             $inputArray = $this->decryptData($request->requestData);
             $status = $inputArray['meeting_status'];
@@ -923,7 +952,7 @@ class ovm1Controller extends BaseController
                 'notes' => $inputArray['notes'],
                 'mail_cc' => $inputArray['mail_cc'],
                 'g2form_url' => $inputArray['g2form_url'],
-            ];  
+            ];
             $type = $input['type'];
             $meeting_status = $input['meeting_status'];
             $this->WriteFileLog($type);
@@ -967,10 +996,10 @@ class ovm1Controller extends BaseController
                     'summary' => $inputArray['meeting_subject'],
                     'location' => $inputArray['meeting_location'],
                     'description' => $inputArray['meeting_description'],
-                    'start' => array('dateTime' => $startTime, 'timeZone' => 'Asia/Kolkata',),
-                    'end' => array('dateTime' => $endTime, 'timeZone' => 'Asia/Kolkata',),
+                    'start' => array('dateTime' => $startTime, 'timeZone' => 'Asia/Kolkata', ),
+                    'end' => array('dateTime' => $endTime, 'timeZone' => 'Asia/Kolkata', ),
                     'attendees' => array_merge($attendees1, $a, $attendees),
-                    'reminders' => array('useDefault' => FALSE, 'overrides' => array(array('method' => 'email', 'minutes' => 24 * 60), array('method' => 'popup', 'minutes' => 10),),),
+                    'reminders' => array('useDefault' => FALSE, 'overrides' => array(array('method' => 'email', 'minutes' => 24 * 60), array('method' => 'popup', 'minutes' => 10), ), ),
                     "conferenceData" => array("createRequest" => array("conferenceSolutionKey" => array("type" => "hangoutsMeet"), "requestId" => "123"))
                 ));
 
@@ -1023,7 +1052,7 @@ class ovm1Controller extends BaseController
                         for ($j = 0; $j < $adminn_count; $j++) {
 
                             DB::table('notifications')->insertGetId([
-                                'user_id' =>  $admin_details[$j]->id,
+                                'user_id' => $admin_details[$j]->id,
                                 'notification_type' => 'OVM Meeting Scheduled',
                                 'notification_status' => 'OVM Meeting',
                                 'notification_url' => 'ovm1/' . encrypt($input['id']),
@@ -1050,7 +1079,7 @@ class ovm1Controller extends BaseController
                     ]);
 
                     DB::table('notifications')->insertGetId([
-                        'user_id' =>  $input['is_coordinator1u'],
+                        'user_id' => $input['is_coordinator1u'],
                         'notification_type' => 'OVM Meeting Scheduled',
                         'notification_status' => 'OVM Meeting',
                         'notification_url' => 'ovmsent/' . encrypt($input['id']),
@@ -1061,7 +1090,7 @@ class ovm1Controller extends BaseController
                     ]);
 
                     DB::table('notifications')->insertGetId([
-                        'user_id' =>  $input['is_coordinator2u'],
+                        'user_id' => $input['is_coordinator2u'],
                         'notification_type' => 'OVM Meeting Scheduled',
                         'notification_status' => 'OVM Meeting',
                         'notification_url' => 'ovmsent/' . encrypt($input['id']),
@@ -1077,7 +1106,7 @@ class ovm1Controller extends BaseController
                         for ($j = 0; $j < $adminn_count; $j++) {
 
                             DB::table('notifications')->insertGetId([
-                                'user_id' =>  $admin_details[$j]->id,
+                                'user_id' => $admin_details[$j]->id,
                                 'notification_type' => 'OVM Meeting Scheduled',
                                 'notification_status' => 'OVM Meeting',
                                 'notification_url' => 'ovmsent/' . encrypt($input['id']),
@@ -1103,7 +1132,7 @@ class ovm1Controller extends BaseController
                     ]);
 
                     DB::table('notifications')->insertGetId([
-                        'user_id' =>  $input['is_coordinator1u'],
+                        'user_id' => $input['is_coordinator1u'],
                         'notification_type' => 'OVM Meeting Scheduled',
                         'notification_status' => 'OVM Meeting',
                         'notification_url' => 'ovmsent/' . encrypt($input['id']),
@@ -1114,7 +1143,7 @@ class ovm1Controller extends BaseController
                     ]);
 
                     DB::table('notifications')->insertGetId([
-                        'user_id' =>  $input['is_coordinator2u'],
+                        'user_id' => $input['is_coordinator2u'],
                         'notification_type' => 'OVM Meeting Scheduled',
                         'notification_status' => 'OVM Meeting',
                         'notification_url' => 'ovmsent/' . encrypt($input['id']),
@@ -1133,7 +1162,7 @@ class ovm1Controller extends BaseController
                     for ($j = 0; $j < $adminn_count; $j++) {
 
                         DB::table('notifications')->insertGetId([
-                            'user_id' =>  $admin_details[$j]->id,
+                            'user_id' => $admin_details[$j]->id,
                             'notification_type' => 'OVM Meeting Scheduled',
                             'notification_status' => 'OVM Meeting',
                             'notification_url' => 'ovm1/' . encrypt($input['id']),
@@ -1149,7 +1178,7 @@ class ovm1Controller extends BaseController
                 $is_two = $input['is_coordinator2u'];
                 if ($ReReqId != $is_one) {
                     DB::table('notifications')->insertGetId([
-                        'user_id' =>  $input['is_coordinator1u'],
+                        'user_id' => $input['is_coordinator1u'],
                         'notification_type' => 'OVM Meeting Scheduled',
                         'notification_status' => 'OVM Meeting',
                         'notification_url' => 'ovmsent/' . encrypt($input['id']),
@@ -1161,7 +1190,7 @@ class ovm1Controller extends BaseController
                 }
                 if ($is_two != "" && $ReReqId != $is_two) {
                     DB::table('notifications')->insertGetId([
-                        'user_id' =>  $input['is_coordinator2u'],
+                        'user_id' => $input['is_coordinator2u'],
                         'notification_type' => 'OVM Meeting Scheduled',
                         'notification_status' => 'OVM Meeting',
                         'notification_url' => 'ovmsent/' . encrypt($input['id']),
@@ -1194,7 +1223,7 @@ class ovm1Controller extends BaseController
                         $meSt = $c[0]->meeting_status;
                         DB::select("Delete FROM ovm_attendees WHERE ovm_id = $mid AND created_by = $au");
                         DB::table('ovm_attendees')->insertGetId([
-                            'ovm_type' =>  '1',
+                            'ovm_type' => '1',
                             'ovm_id' => $input['id'],
                             'notes' => $input['notes'],
                             'attendee' => auth()->user()->id,
@@ -1216,41 +1245,6 @@ class ovm1Controller extends BaseController
                     $this->ovm_status_logs('ovm_meeting_details', $input['id'], 'OVM Meeting ' . $input['meeting_status'], 'OVM Status', auth()->user()->id, NOW(), $input['enrollment_child_num'], auth()->user()->name);
                 }
                 $input['enrollment_id'] = $input['enrollment_child_num'];
-                $feeden = $input['enrollment_id'];
-                $feed = DB::select("SELECT COUNT(*) AS count FROM ovm_meeting_isc_feedback WHERE enrollment_id = '$feeden'");
-                $feedc = $feed[0]->count;
-                if ($feedc == 0) {
-                    DB::transaction(function () use ($input) {
-                        $isc1 =   DB::table('ovm_meeting_isc_feedback')
-                            ->insertGetId([
-                                'enrollment_id' => $input['enrollment_id'],
-                                'ovm_meeting_id' => $input['id'],
-                                'ovm_meeting_unique' => $input['ovm_meeting_unique'],
-                                'child_id' => $input['child_id'],
-                                'is_coordinator_id' => $input['is_coordinator1u'],
-                                'child_name' => $input['child_name'],
-                                'status' => 'New',
-                                'user_id' => $input['user_id'],
-                                'video_link' => $input['video_link']
-
-                            ]);
-
-
-                        $isc2 =  DB::table('ovm_meeting_isc_feedback')
-                            ->insertGetId([
-                                'enrollment_id' => $input['enrollment_id'],
-                                'ovm_meeting_id' => $input['id'],
-                                'ovm_meeting_unique' => $input['ovm_meeting_unique'],
-                                'child_id' => $input['child_id'],
-                                'is_coordinator_id' => $input['is_coordinator2u'],
-                                'child_name' => $input['child_name'],
-                                'status' => 'New',
-                                'user_id' => $input['user_id'],
-                                'video_link' => $input['video_link']
-
-                            ]);
-                    });
-                }
                 if ($status == 'Completed') {
                     $meSt = $input['meeting_status'];
                 }
@@ -1305,7 +1299,7 @@ class ovm1Controller extends BaseController
 
                     //     ]);
                     $notifications = DB::table('notifications')->insertGetId([
-                        'user_id' =>   $input['is_coordinator1u'],
+                        'user_id' => $input['is_coordinator1u'],
                         'notification_type' => 'OVM Meeting Scheduled',
                         'notification_status' => 'OVM Meeting',
                         'notification_url' => 'ovmcompleted/' . encrypt($input['id']),
@@ -1316,7 +1310,7 @@ class ovm1Controller extends BaseController
                     ]);
                     if ($input['is_coordinator2u'] != '') {
                         $notifications = DB::table('notifications')->insertGetId([
-                            'user_id' =>   $input['is_coordinator2u'],
+                            'user_id' => $input['is_coordinator2u'],
                             'notification_type' => 'OVM Meeting Scheduled',
                             'notification_status' => 'OVM Meeting',
                             'notification_url' => 'ovmcompleted/' . encrypt($input['id']),
@@ -1348,7 +1342,7 @@ class ovm1Controller extends BaseController
                     for ($j = 0; $j < $adminn_count; $j++) {
 
                         DB::table('notifications')->insertGetId([
-                            'user_id' =>  $admin_details[$j]->id,
+                            'user_id' => $admin_details[$j]->id,
                             'notification_type' => 'OVM Meeting Scheduled',
                             'notification_status' => 'OVM Meeting',
                             'notification_url' => 'ovm1/' . encrypt($input['id']),
@@ -1409,7 +1403,7 @@ class ovm1Controller extends BaseController
                         $megcontent = "OVM-1 Meeting for child-" . $input['child_name'] . " (" . $input['enrollment_id'] . ") " . " has been " . $status . " by " . auth()->user()->name;
                     }
                     DB::table('notifications')->insertGetId([
-                        'user_id' =>   $input['is_coordinator1u'],
+                        'user_id' => $input['is_coordinator1u'],
                         'notification_type' => 'OVM Meeting Scheduled',
                         'notification_status' => 'OVM Meeting',
                         'notification_url' => 'ovm1/' . encrypt($input['id']),
@@ -1421,7 +1415,7 @@ class ovm1Controller extends BaseController
 
                     if ($input['is_coordinator2u'] != '') {
                         DB::table('notifications')->insertGetId([
-                            'user_id' =>   $input['is_coordinator2u'],
+                            'user_id' => $input['is_coordinator2u'],
                             'notification_type' => 'OVM Meeting Scheduled',
                             'notification_status' => 'OVM Meeting',
                             'notification_url' => 'ovm1/' . encrypt($input['id']),
@@ -1453,7 +1447,7 @@ class ovm1Controller extends BaseController
                     if ($admin_details != []) {
                         for ($j = 0; $j < $adminn_count; $j++) {
                             DB::table('notifications')->insertGetId([
-                                'user_id' =>  $admin_details[$j]->id,
+                                'user_id' => $admin_details[$j]->id,
                                 'notification_type' => 'OVM Meeting Scheduled',
                                 'notification_status' => 'OVM Meeting',
                                 'notification_url' => 'ovm1/' . encrypt($input['id']),
@@ -1737,12 +1731,12 @@ class ovm1Controller extends BaseController
     {
         try {
             $method = 'Method => ovm1Controller => index';
-            $is_coordinator_id =  $request['is_coordinator_id'];
+            $is_coordinator_id = $request['is_coordinator_id'];
 
             $rows = array();
 
             // $rows = DB::select("SELECT * FROM ovm_meeting_isc_feedback WHERE is_coordinator_id = $is_coordinator_id ORDER BY ovm_meeting_id DESC ");
-            $rows = DB::Select("SELECT * FROM ovm_meeting_isc_feedback WHERE is_coordinator_id = $is_coordinator_id AND enrollment_id IN (SELECT enrollment_id FROM ovm_meeting_details WHERE meeting_status != 'Sent' AND meeting_status != 'Declined') ORDER BY ovm_meeting_id DESC");
+            $rows = DB::Select("SELECT * FROM ovm_meeting_isc_feedback WHERE is_coordinator_id = $is_coordinator_id AND enrollment_id IN (SELECT enrollment_id FROM ovm_meeting_details WHERE meeting_status != 'Declined') ORDER BY ovm_meeting_id DESC");
 
             $response = [
                 'rows' => $rows
@@ -1781,7 +1775,7 @@ class ovm1Controller extends BaseController
             $roleGet = DB::select("SELECT b.role_name FROM users AS a INNER JOIN uam_roles AS b ON b.role_id=a.array_roles where a.id = $authID");
             $role = $roleGet[0]->role_name;
 
-            $user_id =  $request['user_id'];
+            $user_id = $request['user_id'];
             // $this->WriteFileLog($user_id);
             $rows = array();
             $rolesArray = array_merge(array(auth()->user()->array_roles), array(auth()->user()->roles));
@@ -1837,7 +1831,7 @@ class ovm1Controller extends BaseController
             $roleGet = DB::select("SELECT b.role_name FROM users AS a INNER JOIN uam_roles AS b ON b.role_id=a.array_roles where a.id = $authID");
             $role = $roleGet[0]->role_name;
 
-            $ovm_meeting_id =  $request['ovm_meeting_id'];
+            $ovm_meeting_id = $request['ovm_meeting_id'];
             $ovm_meeting_id = decrypt($ovm_meeting_id);
 
             $rows = array();
@@ -2054,12 +2048,12 @@ class ovm1Controller extends BaseController
                         if ($input['type'] == 'Submitted') {
                             if ($role == 'IS Head') {
                                 DB::table('notifications')->insertGetId([
-                                    'user_id' =>  $noti[0]->is_coordinator_id,
+                                    'user_id' => $noti[0]->is_coordinator_id,
                                     'notification_type' => 'OVM Meeting',
                                     'notification_status' => 'OVM Meeting',
                                     'notification_url' => 'ovmcompleted/' . encrypt($noti[0]->ovm_meeting_id),
                                     'megcontent' => "OVM-1 for child-" . $noti[0]->child_name . " ( " . $noti[0]->enrollment_id . " ) " . " Conversation Report Edited by IS Head",
-                                    'alert_meg' => "OVM-1 for child-" . $noti[0]->child_name .  " ( " . $noti[0]->enrollment_id . " ) " . " Conversation Report Edited by IS Head",
+                                    'alert_meg' => "OVM-1 for child-" . $noti[0]->child_name . " ( " . $noti[0]->enrollment_id . " ) " . " Conversation Report Edited by IS Head",
                                     'created_by' => auth()->user()->id,
                                     'created_at' => NOW()
                                 ]);
@@ -2069,12 +2063,12 @@ class ovm1Controller extends BaseController
                                 $Co_details = DB::SELECT("SELECT * from users where id =$coID1");
                                 for ($i = 0; $i < count($admin_details); $i++) {
                                     DB::table('notifications')->insertGetId([
-                                        'user_id' =>  $admin_details[$i]->id,
+                                        'user_id' => $admin_details[$i]->id,
                                         'notification_type' => 'OVM Meeting',
                                         'notification_status' => 'OVM Meeting',
                                         'notification_url' => 'ovmreportview/' . encrypt($noti[0]->ovm_meeting_id),
-                                        'megcontent' => "OVM-1 for child-" . $noti[0]->child_name .  " ( " . $noti[0]->enrollment_id . " ) " . " Conversation Report Submitted by IS Coordinator " . $Co_details[0]->name,
-                                        'alert_meg' => "OVM-1 for child-" . $noti[0]->child_name .  " ( " . $noti[0]->enrollment_id . " ) " . " Conversation Report Submitted by IS Coordinator " . $Co_details[0]->name,
+                                        'megcontent' => "OVM-1 for child-" . $noti[0]->child_name . " ( " . $noti[0]->enrollment_id . " ) " . " Conversation Report Submitted by IS Coordinator " . $Co_details[0]->name,
+                                        'alert_meg' => "OVM-1 for child-" . $noti[0]->child_name . " ( " . $noti[0]->enrollment_id . " ) " . " Conversation Report Submitted by IS Coordinator " . $Co_details[0]->name,
                                         'created_by' => auth()->user()->id,
                                         'created_at' => NOW()
                                     ]);
@@ -2295,7 +2289,7 @@ class ovm1Controller extends BaseController
                             // $this->WriteFileLog($email);
                             $isc_1 = $isc[0]->is_coordinator_id;
                             // $this->WriteFileLog($isc[1]->is_coordinator_id);
-                            $isc_2 =  $isc[1]->is_coordinator_id;
+                            $isc_2 = $isc[1]->is_coordinator_id;
                             // $this->WriteFileLog($isc_2);
                             $user_id_1 = DB::select("select * from users where id='$isc_1'");
                             $user_id_2 = DB::select("select * from users where id='$isc_2'");
@@ -2303,12 +2297,12 @@ class ovm1Controller extends BaseController
                             if ($input['type'] == 'Completed') {
                                 if ($role == 'IS Head') {
                                     DB::table('notifications')->insertGetId([
-                                        'user_id' =>  $noti[0]->is_coordinator_id,
+                                        'user_id' => $noti[0]->is_coordinator_id,
                                         'notification_type' => 'OVM Meeting',
                                         'notification_status' => 'OVM Meeting',
                                         'notification_url' => 'ovmcompleted/' . encrypt($noti[0]->ovm_meeting_id),
                                         'megcontent' => "OVM-1 for child-" . $noti[0]->child_name . " ( " . $noti[0]->enrollment_id . " ) " . " Conversation Report Edited by IS Head",
-                                        'alert_meg' => "OVM-1 for child-" . $noti[0]->child_name .  " ( " . $noti[0]->enrollment_id . " ) " . " Conversation Report Edited by IS Head",
+                                        'alert_meg' => "OVM-1 for child-" . $noti[0]->child_name . " ( " . $noti[0]->enrollment_id . " ) " . " Conversation Report Edited by IS Head",
                                         'created_by' => auth()->user()->id,
                                         'created_at' => NOW()
                                     ]);
@@ -2318,12 +2312,12 @@ class ovm1Controller extends BaseController
                                     $Co_details = DB::SELECT("SELECT * from users where id =$coID1");
                                     for ($i = 0; $i < count($admin_details); $i++) {
                                         DB::table('notifications')->insertGetId([
-                                            'user_id' =>  $admin_details[$i]->id,
+                                            'user_id' => $admin_details[$i]->id,
                                             'notification_type' => 'OVM Meeting',
                                             'notification_status' => 'OVM Meeting',
                                             'notification_url' => 'ovmreportview/' . encrypt($noti[0]->ovm_meeting_id),
-                                            'megcontent' => "OVM-1 for child-" . $noti[0]->child_name .  " ( " . $noti[0]->enrollment_id . " ) " . " Conversation Report Submitted by IS Coordinator " . $Co_details[0]->name,
-                                            'alert_meg' => "OVM-1 for child-" . $noti[0]->child_name .  " ( " . $noti[0]->enrollment_id . " ) " . " Conversation Report Submitted by IS Coordinator " . $Co_details[0]->name,
+                                            'megcontent' => "OVM-1 for child-" . $noti[0]->child_name . " ( " . $noti[0]->enrollment_id . " ) " . " Conversation Report Submitted by IS Coordinator " . $Co_details[0]->name,
+                                            'alert_meg' => "OVM-1 for child-" . $noti[0]->child_name . " ( " . $noti[0]->enrollment_id . " ) " . " Conversation Report Submitted by IS Coordinator " . $Co_details[0]->name,
                                             'created_by' => auth()->user()->id,
                                             'created_at' => NOW()
                                         ]);
@@ -2482,7 +2476,7 @@ class ovm1Controller extends BaseController
         // $this->WriteFileLog($inputArray);
         $id = $inputArray['child_id'];
         $email_draft = $inputArray['email_draft'];
-        $report_id =   DB::select("select child_name,child_contact_email,user_id,enrollment_child_num from enrollment_details WHERE child_id='$id'");
+        $report_id = DB::select("select child_name,child_contact_email,user_id,enrollment_child_num from enrollment_details WHERE child_id='$id'");
         $data = array(
             'child_name' => $report_id[0]->child_name,
             'ovm_assessment' => $inputArray['ovm_assessment'],
@@ -2512,12 +2506,12 @@ class ovm1Controller extends BaseController
             ]);
 
         DB::table('notifications')->insertGetId([
-            'user_id' =>  $report_id[0]->user_id,
+            'user_id' => $report_id[0]->user_id,
             'notification_type' => 'OVM Meeting',
             'notification_status' => 'OVM Meeting',
             'notification_url' => $inputArray['notification'] . "/sail_guide.pdf",
-            'megcontent' => "Sail Guide For Child-" . $report_id[0]->child_name .  " ( " . $report_id[0]->enrollment_child_num . " ) " . " has been Generated",
-            'alert_meg' => "Sail Guide For Child-" . $report_id[0]->child_name .  " ( " . $report_id[0]->enrollment_child_num . " ) " . " has been Generated",
+            'megcontent' => "Sail Guide For Child-" . $report_id[0]->child_name . " ( " . $report_id[0]->enrollment_child_num . " ) " . " has been Generated",
+            'alert_meg' => "Sail Guide For Child-" . $report_id[0]->child_name . " ( " . $report_id[0]->enrollment_child_num . " ) " . " has been Generated",
             'created_by' => auth()->user()->id,
             'created_at' => NOW()
         ]);
@@ -2536,7 +2530,7 @@ class ovm1Controller extends BaseController
             $method = 'Method => ovm1Controller => ovm_report_download';
             $inputArray = $this->decryptData($request->requestData);
             $id = $inputArray['child_id'];
-            $report_id =   DB::select("select * from enrollment_details WHERE child_id='$id'");
+            $report_id = DB::select("select * from enrollment_details WHERE child_id='$id'");
             $ovm_report = $inputArray['ovm_report'];
             $child_name = $inputArray['child_name'];
 
@@ -2670,11 +2664,11 @@ class ovm1Controller extends BaseController
 
                 $page = $inputArray['page'];
 
-                $page_header =  DB::table('reports_copy')
+                $page_header = DB::table('reports_copy')
                     ->insertGetId([
                         'enrollment_id' => $inputArray['enrollment_id'],
                         'report_type' => 12,
-                        'status' =>  $inputArray['status'],
+                        'status' => $inputArray['status'],
                     ]);
 
                 foreach ($page as $index => $value) {
@@ -2888,7 +2882,7 @@ class ovm1Controller extends BaseController
                         if ($currentStatus != $responseStatus) {
                             DB::select("Delete FROM ovm_attendees WHERE ovm_id = $ovm_meeting_id AND ovm_type = '1' AND created_by = $userID");
                             DB::table('ovm_attendees')->insertGetId([
-                                'ovm_type' =>  '1',
+                                'ovm_type' => '1',
                                 'ovm_id' => $ovm_meeting_id,
                                 'notes' => $attendee['comment'],
                                 'attendee' => $userID,
@@ -2910,36 +2904,6 @@ class ovm1Controller extends BaseController
                             $msgcontent = "OVM-1 Meeting for " . $child_name . " (" . $enrollment_id . " ) has been " . $responseStatus . " by " . $name;
                             // Log::info($parentId);Log::info($userID);
                             if ($parentId == $userID) {
-                                $feeden = $enrollment_id;
-                                $feed = DB::select("SELECT COUNT(*) AS count FROM ovm_meeting_isc_feedback WHERE enrollment_id = '$feeden'");
-                                $feedc = $feed[0]->count;
-                                if ($feedc == 0) {
-                                    DB::table('ovm_meeting_isc_feedback')
-                                        ->insertGetId([
-                                            'enrollment_id' => $enrollment_id,
-                                            'ovm_meeting_id' => $ovm_meeting_id,
-                                            'ovm_meeting_unique' => $ovm_meeting_unique,
-                                            'child_id' => $child_id,
-                                            'is_coordinator_id' => $isc1,
-                                            'child_name' => $child_name,
-                                            'status' => 'New',
-                                            'user_id' => $userID,
-                                            'video_link' => $video_link
-                                        ]);
-
-                                    DB::table('ovm_meeting_isc_feedback')
-                                        ->insertGetId([
-                                            'enrollment_id' => $enrollment_id,
-                                            'ovm_meeting_id' => $ovm_meeting_id,
-                                            'ovm_meeting_unique' => $ovm_meeting_unique,
-                                            'child_id' => $child_id,
-                                            'is_coordinator_id' => ($isc2 != '') ? $isc2 : null,
-                                            'child_name' => $child_name,
-                                            'status' => 'New',
-                                            'user_id' => $userID,
-                                            'video_link' => $video_link
-                                        ]);
-                                }
                                 DB::table('ovm_meeting_details')
                                     ->where('ovm_meeting_id', $ovm_meeting_id)
                                     ->update([
@@ -3071,7 +3035,7 @@ class ovm1Controller extends BaseController
                 $rows = DB::select("SELECT b.user_id , b.enrollment_child_num , a.id , a.enrollment_id , a.`status` , b.child_name,a.viewed_users from ovm_g2form_feedback AS a
             INNER JOIN enrollment_details AS b ON a.enrollment_id = b.enrollment_id WHERE b.user_id = $authID LIMIT 1");
             } else {
-                $userId   = auth()->id();
+                $userId = auth()->id();
                 $userRole = auth()->user()->array_roles;
 
                 $sql = "SELECT 
@@ -3382,7 +3346,8 @@ class ovm1Controller extends BaseController
                         $date_obj->setTimezone(new DateTimeZone('UTC'));
                         $endTime = $date_obj->format('c');
                     } else {
-                        $date_str = $date_str = $eventDetails->meeting_startdate . $eventDetails->meeting_endtime;;
+                        $date_str = $date_str = $eventDetails->meeting_startdate . $eventDetails->meeting_endtime;
+                        ;
                         $date_obj = DateTime::createFromFormat('d/m/Y H:i:s', $date_str, new DateTimeZone('Asia/Kolkata'));
                         $date_obj->setTimezone(new DateTimeZone('UTC'));
                         $endTime = $date_obj->format('c');
@@ -3401,10 +3366,10 @@ class ovm1Controller extends BaseController
                         'summary' => 'Copy of ' . $ovmType . ' ' . $eventDetails->meeting_subject,
                         'location' => $eventDetails->meeting_location,
                         'description' => $summaryAdmin,
-                        'start' => array('dateTime' => $startTime, 'timeZone' => 'Asia/Kolkata',),
-                        'end' => array('dateTime' => $endTime, 'timeZone' => 'Asia/Kolkata',),
-                        'attendees' =>   array_merge($attendees1, $a, $attendees),
-                        'reminders' => array('useDefault' => FALSE, 'overrides' => array(array('method' => 'email', 'minutes' => 24 * 60), array('method' => 'popup', 'minutes' => 10),),),
+                        'start' => array('dateTime' => $startTime, 'timeZone' => 'Asia/Kolkata', ),
+                        'end' => array('dateTime' => $endTime, 'timeZone' => 'Asia/Kolkata', ),
+                        'attendees' => array_merge($attendees1, $a, $attendees),
+                        'reminders' => array('useDefault' => FALSE, 'overrides' => array(array('method' => 'email', 'minutes' => 24 * 60), array('method' => 'popup', 'minutes' => 10), ), ),
                         "conferenceData" => array("createRequest" => array("conferenceSolutionKey" => array("type" => "hangoutsMeet"), "requestId" => "123"))
                     ));
 

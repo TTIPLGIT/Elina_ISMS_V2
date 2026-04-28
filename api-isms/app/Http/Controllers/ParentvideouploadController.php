@@ -441,8 +441,9 @@ ORDER BY a.activity_initiation_id ASC;");
     INNER JOIN activity_initiation ai ON ai.activity_initiation_id = pva.activity_initiation_id
     INNER JOIN activity a ON a.activity_id = ai.activity_id
     INNER JOIN activity_description ad ON ad.activity_description_id = pva.activity_description_id
-    WHERE lvc.created_by = ?
-    ORDER BY lvc.id DESC
+    WHERE ai.enrollment_id = (SELECT enrollment_id FROM enrollment_details WHERE user_id = ?)
+    AND lvc.comments IS NOT NULL AND lvc.comments != ''
+    ORDER BY lvc.id ASC
 ", [$id]);
             $video_link = DB::select("SELECT * FROM activity_parent_video_upload WHERE parent_video_upload_id IN(SELECT distinct a.parent_video_upload_id  FROM parent_video_upload AS a
             INNER JOIN activity_parent_video_upload AS b ON a.parent_video_upload_id=b.parent_video_upload_id
@@ -577,14 +578,25 @@ ORDER BY a.activity_initiation_id ASC;");
                     $state = 'Submitted';
                 }
 
-                $last_id = DB::table('parent_video_upload')
+                $pvu_row = DB::table('parent_video_upload')->where('parent_video_upload_id', $input['parent_video_upload_id'])->first();
+                $existingComments = $pvu_row->comments;
+                $newComment = $input['comments'];
+                $finalComment = $existingComments;
 
+                if (!empty($newComment)) {
+                    $istTimestamp = time() + (5 * 60 * 60) + (30 * 60);
+                    $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
+                    $role_name_row = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id); $role = $role_name_row[0]->role_name ?? "Parent"; $formattedComment = $role . " (" . auth()->user()->name . ") - " . $istDateTime . " - " . $newComment;
+                    $finalComment = $existingComments ? $existingComments . "\n" . $formattedComment : $formattedComment;
+                }
+
+                $last_id = DB::table('parent_video_upload')
                     ->where('parent_video_upload_id', $input['parent_video_upload_id'])
                     ->update([
                         'status' => $state,
-                        // 'f2f_flag' => ($input['unable_flag'] == 1 ? '1' : '0'),
                         'last_modified_by' => auth()->user()->id,
-                        'last_modified_date' => NOW()
+                        'last_modified_date' => NOW(),
+                        'comments' => $finalComment
                     ]);
                 DB::select("Delete from activity_parent_video_upload where parent_video_upload_id =" . $input['parent_video_upload_id']);
                 foreach ($input['video_link'] as $video_link) {
@@ -868,10 +880,24 @@ ORDER BY a.activity_initiation_id ASC;");
                         $state = 'New';
                     }
 
+                    $pvu_row = DB::table('parent_video_upload')->where('parent_video_upload_id', $pId)->first();
+                    $existingComments = $pvu_row->comments;
+                    $newComment = $comments[$pId];
+                    $finalComment = $existingComments;
+
+                    if (!empty($newComment)) {
+                        $istTimestamp = time() + (5 * 60 * 60) + (30 * 60);
+                        $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
+                        $role_name_row = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id);
+                        $role = $role_name_row[0]->role_name ?? 'Parent';
+                        $formattedComment = $role . " (" . auth()->user()->name . ") - " . $istDateTime . " - " . $newComment;
+                        $finalComment = $existingComments ? $existingComments . "\n" . $formattedComment : $formattedComment;
+                    }
+
                     DB::table('parent_video_upload')
                         ->where('parent_video_upload_id', $pId)
                         ->update([
-                            // 'comments' => $comments[$pId],
+                            'comments' => $finalComment,
                             'status' => $state,
                             'save_flag' => ($input['submit_type'] == 'Save' && $video_link[$pId][0] != null ? '1' : '0'),
                             'last_modified_by' => auth()->user()->id,
@@ -894,45 +920,16 @@ ORDER BY a.activity_initiation_id ASC;");
                     }
                     if ($comments[$pId] != null) {
                         $pvu = DB::select("SELECT * FROM parent_video_upload WHERE parent_video_upload_id = $pId");
-                        if ($save_flag[$pId] == 0) {
-                            DB::table('latest_video_comments')->insertGetId([
-                                'parent_video_upload_id' => $pId,
-                                'activity_initiation_id' => $pvu[0]->activity_initiation_id,
-                                'user_name' => auth()->user()->name,
-                                'active_status' => $state,
-                                'created_by' => auth()->user()->id,
-                                'created_at' => NOW(),
-                                'comments' => $comments[$pId],
-                                'role' => $role_name[0]->role_name
-                            ]);
-                        } else {
-                            $lvc = DB::select("SELECT * FROM latest_video_comments WHERE parent_video_upload_id = $pId and created_by = " . auth()->user()->id . " ORDER BY id DESC");
-                            if (!empty($lvc)) {
-                                DB::table('latest_video_comments')
-                                    ->where('id', $lvc[0]->id)
-                                    ->update([
-                                        'parent_video_upload_id' => $pId,
-                                        'activity_initiation_id' => $pvu[0]->activity_initiation_id,
-                                        'user_name' => auth()->user()->name,
-                                        'active_status' => $state,
-                                        'created_by' => auth()->user()->id,
-                                        'created_at' => NOW(),
-                                        'comments' => $comments[$pId],
-                                        'role' => $role_name[0]->role_name
-                                    ]);
-                            } else {
-                                DB::table('latest_video_comments')->insertGetId([
-                                    'parent_video_upload_id' => $pId,
-                                    'activity_initiation_id' => $pvu[0]->activity_initiation_id,
-                                    'user_name' => auth()->user()->name,
-                                    'active_status' => $state,
-                                    'created_by' => auth()->user()->id,
-                                    'created_at' => NOW(),
-                                    'comments' => $comments[$pId],
-                                    'role' => $role_name[0]->role_name
-                                ]);
-                            }
-                        }
+                        DB::table('latest_video_comments')->insert([
+                            'parent_video_upload_id' => $pId,
+                            'activity_initiation_id' => $pvu[0]->activity_initiation_id,
+                            'user_name' => auth()->user()->name,
+                            'active_status' => $state,
+                            'created_by' => auth()->user()->id,
+                            'created_at' => NOW(),
+                            'comments' => $comments[$pId],
+                            'role' => $role_name[0]->role_name
+                        ]);
                     }
                 }
                 // }
@@ -1466,10 +1463,22 @@ ORDER BY a.activity_initiation_id ASC;");
                 $allParentIds = $input['parent_video_upload_id'];
                 $matchedKey = array_search($selectedId, $allParentIds);
 
+                $pvu_row = DB::table('parent_video_upload')->where('parent_video_upload_id', $matchedKey)->first();
+                $existingComments = $pvu_row->comments;
+                $newComment = $comments[$matchedKey];
+                $finalComment = $existingComments;
+
+                if (!empty($newComment)) {
+                    $istTimestamp = time() + (5 * 60 * 60) + (30 * 60);
+                    $istDateTime = gmdate('d/m/Y h:i:s A', $istTimestamp);
+                    $role_name_row = DB::select("SELECT role_name FROM uam_roles AS ur INNER JOIN users us ON (us.array_roles=ur.role_id) WHERE us.id=" . auth()->user()->id); $role = $role_name_row[0]->role_name ?? "Parent"; $formattedComment = $role . " (" . auth()->user()->name . ") - " . $istDateTime . " - " . $newComment;
+                    $finalComment = $existingComments ? $existingComments . "\n" . $formattedComment : $formattedComment;
+                }
+
                 DB::table('parent_video_upload')
                     ->where('parent_video_upload_id', $matchedKey)
                     ->update([
-                        // 'comments' => $comments[$pId],
+                        'comments' => $finalComment,
                         'status' => ($input['submit_type'] == 'oneSubmit') ? 'Submitted' : 'Saved',
                         'save_flag' => ($input['submit_type'] == 'Save' && $video_link[$matchedKey][0] != null ? '1' : '0'),
                         'last_modified_by' => auth()->user()->id,
@@ -1516,22 +1525,6 @@ ORDER BY a.activity_initiation_id ASC;");
 
                     // $this->WriteFileLog( $existing);
 
-                    if ($existing) {
-
-                        DB::table('latest_video_comments')
-                            // ->where('id', $existing->id)
-                            ->where('parent_video_upload_id', $matchedKey)
-                            // ->where('created_by', auth()->user()->id)
-                            ->update([
-                                'comments' => $comments[$matchedKey],
-                                'active_status' => "Submitted",
-                                'created_at' => NOW(),
-                                'role' => $role_name[0]->role_name,
-                                'user_name' => auth()->user()->name
-                            ]);
-                    } else {
-
-
                         DB::table('latest_video_comments')
                             ->insert([
                                 'parent_video_upload_id' => $matchedKey,
@@ -1543,7 +1536,6 @@ ORDER BY a.activity_initiation_id ASC;");
                                 'comments' => $comments[$matchedKey],
                                 'role' => $role_name[0]->role_name
                             ]);
-                    }
                 }
                 // }
 
