@@ -378,7 +378,7 @@
                   </div>
                   <div class="col-md-4" id="">
                     <div class="form-group questionnaire">
-                      <label class="control-label">Observation</label><span class="error-star" style="color:red;">*</span>
+                      <label class="control-label">Observation</label>
                       <textarea class="form-control default" name="Observation_edit" id="Observation_edit"
                         autocomplete="off"></textarea>
                     </div>
@@ -596,15 +596,11 @@
             Swal.fire("Please select at least one material", "", "error");
             return false;
           }
-          // var observationText = $('#Observation').val();
-          // if (isBlank(observationText)) {
-          //   Swal.fire("Please enter Observation", "", "error");
-          //   return false;
-          // }
+
 
           var toObserveText = $('#to_observe').val();
           if (isBlank(toObserveText)) {
-            Swal.fire("Please enter To Observe", "", "error");
+            Swal.fire("Please Enter To Observe", "", "error");
             return false;
           }
 
@@ -645,14 +641,10 @@
             Swal.fire("Please select at least one material", "", "error");
             return false;
           }
-          // var observationText = $('#Observation').val();
-          // if (isBlank(observationText)) {
-          //   Swal.fire("Please enter Observation", "", "error");
-          //   return false;
-          // }
+
           var toObserveText = $('#to_observe').val();
           if (isBlank(toObserveText)) {
-            Swal.fire("Please enter To Observe", "", "error");
+            Swal.fire("Please Enter To Observe", "", "error");
             return false;
           }
           Swal.fire({
@@ -714,11 +706,7 @@
           });
 
         } else if (action == "Update") {
-          var observationEditText = $('#Observation_edit').val();
-          if (isBlank(observationEditText)) {
-            Swal.fire("Please enter Observation", "", "error");
-            return;
-          }
+
           // Show confirmation dialog
           Swal.fire({
             title: 'Are you sure?',
@@ -950,9 +938,8 @@
                       $select.val(materialsArray).trigger('change');
                     });
 
+                    $('.tx_Observation').val(data.comments);
                   }
-
-                  $('.tx_Observation').val(data.comments);
                 } else {
                   materialsDropdown.html("<option value=''>No materials found</option>");
                 }
