@@ -804,7 +804,7 @@ class NewenrollementController extends BaseController
 
                 $userId = DB::table('enrollment_details')
                     ->where('enrollment_id', $input['id'])
-                    ->value('user_id');
+                    ->value('user_id'); 
                 DB::table('users')
                     ->where('id', $userId)
                     ->update([
