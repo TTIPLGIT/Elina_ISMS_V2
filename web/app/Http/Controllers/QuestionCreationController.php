@@ -215,8 +215,8 @@ class QuestionCreationController extends BaseController
             if ($field_type_id == 3 || $field_type_id == 4 || $field_type_id == 5) {
                 $data['options'] = $request->options_questions ?? '';
             } else if ($field_type_id == 7 || $field_type_id == 6 || $field_type_id == 12) {
-                $data['sub_questions'] = $request->sub_questions ?? '';
-                $data['options'] = $request->options_questions ?? '';
+                $data['sub_questions'] = $request->sub_question ?? $request->sub_questions ?? '';
+                $data['options'] = $request->sub_options ?? $request->options_questions ?? '';
             }
             $encryptArray = $this->encryptData($data);
             $request = array();

@@ -802,7 +802,7 @@
                       <label class="control-label comments_label">Previous Notes </label><br>
                       <div style="background-color:#E9ECEF !important; color: #000000;" class="form-group scroll_flow_class">
                         @foreach($comments as $key=>$note_data)
-                        @if($data['parent_video_upload_id'] == $note_data['parent_video_upload_id'])
+                        @if($data['parent_video_upload_id'] == $note_data['parent_video_upload_id'] && ($note_data['active_status'] ?? '') != 'New')
                         <span> {{ $note_data['role'] }} ({{ $note_data['user_name'] }}) - {{ $note_data['active_status'] }} </span> <br>
                         <?php
                         // Assuming $note_data['created_at'] contains the date and time in UTC
@@ -931,7 +931,7 @@
 
                   <!-- Submit -->
                   <a type="button"
-                    onclick="oneSubmit('{{$data['parent_video_upload_id']}}')"
+                    onclick="oneSubmit('{{$data['parent_video_upload_id']}}', '{{ addslashes($data['activity_name']) }}', '{{ addslashes($data['description']) }}')"
                     class="btn btn-labeled btn-submit-orange"
                     title="Submit">
                     <span class="btn-label"><i class="fa fa-check"></i></span> Submit
@@ -950,7 +950,7 @@
 
                   <!-- Submit All -->
                   <a type="button"
-                    onclick="saveall('{{$data['parent_video_upload_id']}}')"
+                    onclick="saveall('{{$data['parent_video_upload_id']}}', '{{ addslashes($data['activity_name']) }}')"
                     id="submitbutton"
                     class="btn btn-labeled btn-submit-orange"
                     title="Submit All">
@@ -1696,9 +1696,7 @@
 
     }
 
-    function saveall(parentId) {
-
-
+    function saveall(parentId, activityName) {
       if (!parentId) {
         console.error('ERROR: No parent ID received!');
         Swal.fire({
@@ -1711,16 +1709,12 @@
         return;
       }
 
-
       const checkbox = document.getElementById('enablef2f' + parentId);
       const f2fTable = document.getElementById('f2ftable' + parentId);
 
-
       if (checkbox && checkbox.checked && f2fTable && f2fTable.style.display !== 'none') {
-
         const material = document.getElementById('material' + parentId);
         const toObserve = document.getElementById('to_observe' + parentId);
-
 
         // Get activity description
         const descInput = $(`input[name="description_id[${parentId}]"]`).val();
@@ -1734,7 +1728,6 @@
             selectedMaterials = Array.from(material.selectedOptions || []).map(opt => opt.value);
           }
         }
-
 
         if (!selectedMaterials || selectedMaterials.length === 0) {
           Swal.fire({
@@ -1750,7 +1743,6 @@
         }
 
         if (!toObserve || toObserve.value.trim() === '') {
-
           Swal.fire({
             title: 'Validation Error',
             text: `Please fill "To observe"`,
@@ -1768,7 +1760,6 @@
         console.log('⏭️ F2F is NOT enabled for Parent ID:', parentId);
       }
 
-
       const video_checks = document.querySelectorAll('#video_check');
 
       var check = [];
@@ -1783,8 +1774,7 @@
       document.getElementById('check_video').value = check;
 
       Swal.fire({
-        title: 'Are you sure you want to submit all activities?',
-        text: 'This will submit all pending activities.',
+        html: '<span style="font-size: 18px;">Are you sure you want to submit all activities in this activity set <br><br><b>' + '['+activityName+']' + '</b><br><br> <span style="color: red;">Note: Only saved activities will be submitted</span></span>',
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -1801,7 +1791,7 @@
       });
     }
 
-    function oneSubmit(parentId) {
+    function oneSubmit(parentId, activityName, activityDesc) {
 
       const checkbox = document.getElementById('enablef2f' + parentId);
       const f2fTable = document.getElementById('f2ftable' + parentId);
@@ -1845,13 +1835,12 @@
       document.getElementById('video_update').action = "{{ route('activity.update.video.all') }}";
 
       Swal.fire({
-        title: 'Are you sure you want to update the status of the activity?',
-        text: 'Please review before updating.',
+        html: '<span style="font-size: 18px;">Are you sure you want to submit this activity <br><br><b>' +'['+activityName +']' + '</b> <br> <b>' + activityDesc + '</b> <br><br>This action cannot be undone.</span>',
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Upload"
+        confirmButtonText: "Submit"
       }).then((result) => {
         if (result.isConfirmed) {
           document.getElementById('video_update').submit();
