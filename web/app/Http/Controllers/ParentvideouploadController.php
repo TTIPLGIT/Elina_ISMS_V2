@@ -12,10 +12,10 @@ class ParentvideouploadController extends BaseController
     {
         $user_id = $request->session()->get("userID");
         $method = 'Method => ParentvideouploadController => index';
-        $request =  array();
+        $request = array();
         $request['user_id'] = $user_id;
         $gatewayURL = config('setting.api_gateway_url') . '/videocreation/index';
-        $response = $this->serviceRequest($gatewayURL, 'GET',  json_encode($request), $method);
+        $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
         $response = json_decode($response);
         $objData = json_decode($this->decryptData($response->Data));
         $rows = json_decode(json_encode($objData->Data), true);
@@ -42,7 +42,7 @@ class ParentvideouploadController extends BaseController
 
                 if ($objData->Code == 200) {
                     $parant_data = json_decode(json_encode($objData->Data), true);
-                    $rows =  $parant_data['rows'];
+                    $rows = $parant_data['rows'];
                     //  $email = $parant_data['email'];
 
                     $menus = $this->FillMenu();
@@ -316,10 +316,10 @@ class ParentvideouploadController extends BaseController
     {
         $user_id = $request->session()->get("userID");
         $method = 'Method => LoginController => parentindex';
-        $request =  array();
+        $request = array();
         $request['user_id'] = $user_id;
         $gatewayURL = config('setting.api_gateway_url') . '/parentvideo/index';
-        $response = $this->serviceRequest($gatewayURL, 'GET',  json_encode($request), $method);
+        $response = $this->serviceRequest($gatewayURL, 'GET', json_encode($request), $method);
         $response = json_decode($response);
         $objData = json_decode($this->decryptData($response->Data));
         $rows = json_decode(json_encode($objData->Data), true);
@@ -351,7 +351,7 @@ class ParentvideouploadController extends BaseController
 
                 if ($objData->Code == 200) {
                     $parant_data = json_decode(json_encode($objData->Data), true); //dd($parant_data);
-                    $rows =  $parant_data['rows'];
+                    $rows = $parant_data['rows'];
                     $comments = $parant_data['comments'];
                     $activitylist = $parant_data['activitylist'];
                     $video_link = $parant_data['video_link'];
@@ -442,12 +442,16 @@ class ParentvideouploadController extends BaseController
             $data = array();
 
 
-            $data['video_link'] = $request->video_link;
-            $data['parent_video_upload_id'] = $request->parent_video_upload_id;
-            $data['comments'] = $request->comments;
-            $data['activity_description_id'] = $request->activity_description_id;
-            $data['current_status'] = $request->current_status;
-            $data['unable_flag'] = $request->unable;
+            $pvu_id = is_array($request->parent_video_upload_id) ? current($request->parent_video_upload_id) : $request->parent_video_upload_id;
+            $data['parent_video_upload_id'] = $pvu_id;
+
+            $comments = is_array($request->comments) ? current($request->comments) : $request->comments;
+            $data['comments'] = $comments;
+
+            $data['video_link'] = is_array($request->video_link) && isset($request->video_link[$pvu_id]) ? $request->video_link[$pvu_id] : $request->video_link;
+            $data['activity_description_id'] = is_array($request->activity_description_id) ? current($request->activity_description_id) : $request->activity_description_id;
+            $data['current_status'] = is_array($request->current_status) ? current($request->current_status) : $request->current_status;
+            $data['unable_flag'] = is_array($request->unable) ? current($request->unable) : $request->unable;
             // dd($data);
             $encryptArray = $this->encryptData($data);
 
@@ -492,7 +496,13 @@ class ParentvideouploadController extends BaseController
 
             $data['video_link'] = $request->video_link;
             $data['parent_video_upload_id'] = $request->parent_video_upload_id;
-            $data['comments'] = $request->comments;
+            $comments = [];
+            if ($request->has('comments')) {
+                foreach ($request->comments as $id => $val) {
+                    $comments[$id] = $val;
+                }
+            }
+            $data['comments'] = $comments;
             $data['activity_description_id'] = $request->activity_description_id;
             $data['current_status'] = $request->current_status;
             $data['unable_flag'] = $request->unable;
@@ -500,6 +510,7 @@ class ParentvideouploadController extends BaseController
             $rejectedReOpen = $request->rejectedReOpen;
             $data['rejectedReOpen'] = $request->rejectedReOpen;
             // dd('bulk', $data);
+            $isAjax = $request->ajax() || $request->is_autosave;
             $encryptArray = $this->encryptData($data);
 
             $request = array();
@@ -514,6 +525,9 @@ class ParentvideouploadController extends BaseController
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
                     $rejectedReOpenID = $objData->Data;
+                    if ($isAjax) {
+                        return response()->json(['success' => true]);
+                    }
                     if ($rejectedReOpenID == null) {
                         return redirect(route('parent_video_upload.parentindex'))->with('success', 'Video uploaded successfully');
                     }
@@ -543,7 +557,13 @@ class ParentvideouploadController extends BaseController
             $data = array();
             $data['video_link'] = $request->video_link;
             $data['parent_video_upload_id'] = $request->parent_video_upload_id;
-            $data['comments'] = $request->comments;
+            $comments = [];
+            if ($request->has('comments')) {
+                foreach ($request->comments as $id => $val) {
+                    $comments[$id] = $val;
+                }
+            }
+            $data['comments'] = $comments;
             $data['activity_description_id'] = $request->activity_description_id;
             $data['current_status'] = $request->current_status;
             $data['activity_name'] = $request->activity_name;
@@ -551,6 +571,7 @@ class ParentvideouploadController extends BaseController
             $data['save_flag'] = $request->save_flag;
             $data['restorePage'] = $restorePage;
             // dd($data);
+            $isAjax = $request->ajax() || $request->is_autosave;
             $encryptArray = $this->encryptData($data);
 
             $request = array();
@@ -565,6 +586,9 @@ class ParentvideouploadController extends BaseController
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
                     $reid = $objData->Data;
+                    if ($isAjax) {
+                        return response()->json(['success' => true]);
+                    }
                     if ($submit_type == 'Save') {
                         return redirect(route('parent_video_upload.parent_create', $this->EncryptData($reid)))->with('page', $restorePage)->with('info', 'Video Saved successfully');
                     } else {
@@ -889,7 +913,13 @@ class ParentvideouploadController extends BaseController
             $data['video_link'] = $request->video_link;
             $data['parent_video_upload_id'] = $request->parent_video_upload_id;
             $data['parent_video_upload_ids'] = $request->parent_video_upload_ids;
-            $data['comments'] = $request->comments;
+            $comments = [];
+            if ($request->has('comments')) {
+                foreach ($request->comments as $id => $val) {
+                    $comments[$id] = $val;
+                }
+            }
+            $data['comments'] = $comments;
             $data['activity_description_id'] = $request->activity_description_id;
             $data['current_status'] = $request->current_status;
             $data['activity_name'] = $request->activity_name;
@@ -897,6 +927,7 @@ class ParentvideouploadController extends BaseController
             $data['save_flag'] = $request->save_flag;
             $data['restorePage'] = $restorePage;
             // dd($data);
+            $isAjax = $request->ajax() || $request->is_autosave;
             $encryptArray = $this->encryptData($data);
 
             $request = array();
@@ -912,6 +943,9 @@ class ParentvideouploadController extends BaseController
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
                     $reid = $objData->Data;
+                    if ($isAjax) {
+                        return response()->json(['success' => true]);
+                    }
                     if ($submit_type == 'Save') {
                         return redirect(route('parent_video_upload.parent_create', $this->EncryptData($reid)))->with('page', $restorePage)->with('info', 'Video Saved successfully');
                     } else {

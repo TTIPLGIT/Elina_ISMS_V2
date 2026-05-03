@@ -61,9 +61,7 @@
 
                                     @foreach($rows['rows'] as $data)
 
-                                    @php
-                                    $isCompleted = in_array($data['enrollment_child_num'], $completedEnrollments);
-                                    @endphp
+
 
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
@@ -88,8 +86,6 @@
                                         </td>
 
                                         <td>
-                                            @if(!$isCompleted)
-
                                             @if($data['status'] == 1)
                                             <a class="btn btn-link"
                                                 title="Reallocation"
@@ -111,7 +107,6 @@
                                             </a>
                                             @endif
 
-                                            @endif
 
                                             <a class="btn btn-link"
                                                 title="View"

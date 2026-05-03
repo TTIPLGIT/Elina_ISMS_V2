@@ -302,7 +302,7 @@
 
                                             <div class="form-group">
                                                 <label class="control-label" style="font-size: medium;">Email Address: </label><span class="error-star" style="color:red;">*</span>
-                                                <input id="child_contact_email" type="email" class="form-control default readonly" name="child_contact_email" value="{{ $row['child_contact_email']}}" readonly>
+                                                <input id="child_contact_email" type="email" class="form-control" name="child_contact_email" value="{{ $row['child_contact_email']}}">
                                                 @error('email')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
