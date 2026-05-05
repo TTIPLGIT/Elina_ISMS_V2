@@ -802,14 +802,10 @@ class NewenrollementController extends BaseController
                         'last_modified_date' => NOW()
                     ]);
 
-                $userId = DB::table('enrollment_details')
-                    ->where('enrollment_id', $input['id'])
-                    ->value('user_id'); 
                 DB::table('users')
-                    ->where('id', $userId)
+                    ->where('id', $authID)
                     ->update([
                         'name' => $input['child_name'],
-                        'email' => $input['child_contact_email'],
                         'Mobile_no' => $input['child_contact_phone'],
                         'active_flag' => 0,
                         'updated_at' => now(),
