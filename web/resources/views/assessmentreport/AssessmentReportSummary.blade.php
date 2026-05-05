@@ -131,6 +131,8 @@
     table {
       table-layout: fixed !important;
       width: 100% !important;
+      border-collapse: collapse !important;
+      border-bottom: 1px solid #0e0e0e !important;
     }
 
     th {
@@ -1007,34 +1009,52 @@
           });
         }
       });
+      const MAX_HEIGHT = 14 * LINE_HEIGHT;
 
       document.querySelectorAll("table").forEach((table, tableIndex) => {
         const tbody = table.querySelector("tbody");
         if (!tbody) return;
 
-
         const thead = table.querySelector("thead");
-        let columnTitles = [];
         if (thead) {
-          const headerRow = thead.querySelector("tr");
-          if (headerRow) {
-            const headerCells = headerRow.querySelectorAll("th");
-            columnTitles = Array.from(headerCells).map(th => th.textContent.trim());
-          }
+          thead.querySelectorAll("th, td").forEach(cell => {
+            cell.style.border = "1px solid #0e0e0e";
+          });
         }
 
-
         const rows = Array.from(tbody.querySelectorAll("tr"));
+        let preMergedRows = [];
+        let lastMainRow = null;
+
+        rows.forEach(row => {
+          if (row.closest('thead') || row.children.length < 4) {
+            preMergedRows.push(row);
+            lastMainRow = null;
+            return;
+          }
+
+          if (lastMainRow && 
+              row.cells[0].innerText.trim() === lastMainRow.cells[0].innerText.trim() && 
+              row.cells[1].innerText.trim() === lastMainRow.cells[1].innerText.trim() &&
+              row.cells[0].innerText.trim() !== "") {
+            
+            lastMainRow.cells[2].innerHTML += "<br>" + row.cells[2].innerHTML;
+            lastMainRow.cells[3].innerHTML += "<br>" + row.cells[3].innerHTML;
+          } else {
+            preMergedRows.push(row);
+            lastMainRow = row;
+          }
+        });
+
         let processedRows = [];
 
-        rows.forEach((row, rowIndex) => {
+        preMergedRows.forEach((row, rowIndex) => {
           if (row.closest('thead') || row.children.length < 4) {
             processedRows.push(row);
             return;
           }
 
           const cells = Array.from(row.children);
-
           const originalContent = {
             activity: cells[0].innerHTML,
             observation: cells[1].innerHTML,
@@ -1049,7 +1069,6 @@
 
           const evidenceWidth = getCellWidth(cells[2]);
           const recommendationWidth = getCellWidth(cells[3]);
-
           const effectiveEvidenceWidth = Math.max(evidenceWidth - 12, 50);
           const effectiveRecommendationWidth = Math.max(recommendationWidth - 12, 50);
 
@@ -1066,13 +1085,11 @@
 
           const evidenceSplits = needsEvidenceSplit ?
             splitContentByHeight(originalContent.evidence, effectiveEvidenceWidth, MAX_HEIGHT) : [originalContent.evidence, ''];
-
           const recommendationSplits = needsRecommendationSplit ?
             splitContentByHeight(originalContent.recommendation, effectiveRecommendationWidth, MAX_HEIGHT) : [originalContent.recommendation, ''];
 
-          cells[2].innerHTML = evidenceSplits[0] ? evidenceSplits[0] : '';
-          cells[3].innerHTML = recommendationSplits[0] ? recommendationSplits[0] : '';
-
+          cells[2].innerHTML = evidenceSplits[0] || '';
+          cells[3].innerHTML = recommendationSplits[0] || '';
           processedRows.push(row);
 
           let evidenceRemaining = evidenceSplits[1];
@@ -1090,8 +1107,6 @@
               newCell.style.boxSizing = "border-box";
               newCell.style.fontFamily = FONT_FAMILY;
               newCell.style.fontSize = FONT_SIZE;
-              newCell.style.fontWeight = "400";
-              newCell.style.letterSpacing = "0.3px";
               newCell.style.lineHeight = LINE_HEIGHT + "px";
               newCell.style.whiteSpace = "pre-line";
               newCell.style.wordWrap = "break-word";
@@ -1100,42 +1115,25 @@
               if (i === 0 || i === 1) {
                 newCell.style.textAlign = "center";
                 newCell.style.verticalAlign = "middle";
+                newCell.innerHTML = ""; 
               } else {
                 newCell.style.verticalAlign = "top";
-              }
-
-              const originalWidth = getCellWidth(cells[i]) + "px";
-              newCell.style.width = originalWidth;
-
-              if (i === 0) {
-                newCell.innerHTML = originalContent.activity || '';
-                newCell.style.backgroundColor = "#ffffff";
-              } else if (i === 1) {
-                newCell.innerHTML = originalContent.observation || '';
-                newCell.style.backgroundColor = "#ffffff";
-              } else if (i === 2) {
-                if (evidenceRemaining) {
-                  const [nextPart, remaining] = splitContentByHeight(
-                    evidenceRemaining,
-                    effectiveEvidenceWidth,
-                    MAX_HEIGHT
-                  );
+                if (i === 2) {
+                  const [nextPart, remaining] = splitContentByHeight(evidenceRemaining, effectiveEvidenceWidth, MAX_HEIGHT);
                   newCell.innerHTML = nextPart || '';
                   evidenceRemaining = remaining;
                 } else {
-                  newCell.innerHTML = '';
-                }
-              } else if (i === 3) {
-                if (recommendationRemaining) {
-                  const [nextPart, remaining] = splitContentByHeight(
-                    recommendationRemaining,
-                    effectiveRecommendationWidth,
-                    MAX_HEIGHT
-                  );
+                  const [nextPart, remaining] = splitContentByHeight(recommendationRemaining, effectiveRecommendationWidth, MAX_HEIGHT);
                   newCell.innerHTML = nextPart || '';
                   recommendationRemaining = remaining;
-                } else {
-                  newCell.innerHTML = '';
+                }
+              }
+
+              newCell.style.borderTop = "none";
+              if (processedRows.length > 0) {
+                const prevRow = processedRows[processedRows.length - 1];
+                if (prevRow.cells[i]) {
+                  prevRow.cells[i].style.borderBottom = "none";
                 }
               }
 
@@ -1151,8 +1149,8 @@
         });
 
         tbody.innerHTML = '';
-        processedRows.forEach(processedRow => {
-          tbody.appendChild(processedRow);
+        processedRows.forEach(row => {
+          tbody.appendChild(row);
         });
       });
 
