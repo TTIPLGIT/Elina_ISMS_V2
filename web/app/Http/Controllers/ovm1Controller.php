@@ -537,12 +537,13 @@ class ovm1Controller extends BaseController
                     $questions = $parant_data['questions'];
                     $fetchdata = $parant_data['fetchdata'];
                     $fetchdata1 = $parant_data['fetchdata1'];
+                    $fetchdata2 = $parant_data['fetchdata2'] ?? [];
 
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
                     $editusername = 'IS Head';
-                    return view('ovm1.ovmcompletededit', compact('rows', 'screens', 'modules', 'editusername', 'role', 'rolename', 'fetchdata1', 'fetchdata', 'questions', 'group'));
+                    return view('ovm1.ovmcompletededit', compact('rows', 'screens', 'modules', 'editusername', 'role', 'rolename', 'fetchdata1', 'fetchdata', 'fetchdata2', 'questions', 'group'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));
@@ -586,12 +587,13 @@ class ovm1Controller extends BaseController
                     $questions = $parant_data['questions'];
                     $fetchdata1 = $parant_data['fetchdata1'];
                     $fetchdata = $parant_data['fetchdata'];
+                    $fetchdata2 = $parant_data['fetchdata2'] ?? [];
                     $rows1 = $parant_data['rows1'];
                     $menus = $this->FillMenu();
                     $screens = $menus['screens'];
                     $modules = $menus['modules'];
                     $editusername = 'IS Head';
-                    return view('ovm1.ovmcompleted_edit', compact('rows', 'screens', 'modules', 'editusername', 'role', 'rolename', 'fetchdata1', 'fetchdata', 'questions', 'group', 'rows1'));
+                    return view('ovm1.ovmcompleted_edit', compact('rows', 'screens', 'modules', 'editusername', 'role', 'rolename', 'fetchdata1', 'fetchdata', 'fetchdata2', 'questions', 'group', 'rows1'));
                 }
             } else {
                 $objData = json_decode($this->decryptData($response->Data));
