@@ -2780,6 +2780,42 @@ class ovm1Controller extends BaseController
                     'ocf.*'
                 ])->get();
 
+            // Apply Priority Logic: 1. Primary Coordinator -> 2. Secondary Coordinator
+            if (count($rows) > 1) {
+                $primary = clone $rows[0];
+                $secondary = $rows[1];
+                
+                foreach ($primary as $key => $value) {
+                    $isEmpty = false;
+                    if (is_null($value) || $value === '') {
+                        $isEmpty = true;
+                    } elseif (is_string($value)) {
+                        $clean = trim($value);
+                        if ($clean === '' || strtolower($clean) === 'null' || $clean === '<p><br></p>' || $clean === '<p></p>' || $clean === '<p>&nbsp;</p>') {
+                            $isEmpty = true;
+                        }
+                    }
+                    
+                    if ($isEmpty && isset($secondary->$key)) {
+                        $secValue = $secondary->$key;
+                        $secIsEmpty = false;
+                        if (is_null($secValue) || $secValue === '') {
+                            $secIsEmpty = true;
+                        } elseif (is_string($secValue)) {
+                            $secClean = trim($secValue);
+                            if ($secClean === '' || strtolower($secClean) === 'null' || $secClean === '<p><br></p>' || $secClean === '<p></p>' || $secClean === '<p>&nbsp;</p>') {
+                                $secIsEmpty = true;
+                            }
+                        }
+                        
+                        if (!$secIsEmpty) {
+                            $primary->$key = $secondary->$key;
+                        }
+                    }
+                }
+                $rows[0] = $primary;
+            }
+
             $enrollmentID = $rows[0]->enID ?? null;
 
             $datacheck = DB::table('reports_copy')->where('enrollment_id', $enrollmentID)->where('report_type', 12)->orderByDesc('report_id')->first();

@@ -567,26 +567,6 @@
             });
         }
 
-        // ================== FETCHDATA ==================
-        var fetchdatas = <?php echo json_encode($fetchdata); ?>;
-        if (fetchdatas && fetchdatas.length > 0) {
-            $.each(fetchdatas[0], function(key, value) {
-                var cleaned = formatJsonArray(cleanValue(value));
-                cleaned = correctPronounCase(cleaned, childGender);
-                $('#' + key).val(cleaned);
-            });
-        }
-
-        // ================== FETCHDATA1 ==================
-        var fetchdatas1 = <?php echo json_encode($fetchdata1); ?>;
-        if (fetchdatas1 && fetchdatas1.length > 0) {
-            $.each(fetchdatas1[0], function(key, value) {
-                var cleaned = formatJsonArray(cleanValue(value));
-                cleaned = correctPronounCase(cleaned, childGender);
-                $('#note_' + key).val(cleaned);
-            });
-        }
-
         // ================== MAIN FIX (MULTIPLE COORDINATORS) ==================
         var fetchdata2 = <?php echo json_encode($fetchdata2); ?>;
 
@@ -657,6 +637,26 @@
 
         } else {
             $('#g2form_filled').val(0);
+        }
+
+        // ================== FETCHDATA ==================
+        var fetchdatas = <?php echo json_encode($fetchdata); ?>;
+        if (fetchdatas && fetchdatas.length > 0) {
+            $.each(fetchdatas[0], function(key, value) {
+                var cleaned = formatJsonArray(cleanValue(value));
+                cleaned = correctPronounCase(cleaned, childGender);
+                $('#' + key).val(cleaned);
+            });
+        }
+
+        // ================== FETCHDATA1 ==================
+        var fetchdatas1 = <?php echo json_encode($fetchdata1); ?>;
+        if (fetchdatas1 && fetchdatas1.length > 0) {
+            $.each(fetchdatas1[0], function(key, value) {
+                var cleaned = formatJsonArray(cleanValue(value));
+                cleaned = correctPronounCase(cleaned, childGender);
+                $('#note_' + key).val(cleaned);
+            });
         }
 
         $('.f_name').val($enrollment_details.child_name);
