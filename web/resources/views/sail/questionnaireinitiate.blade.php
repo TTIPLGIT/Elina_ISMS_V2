@@ -23,6 +23,84 @@
   #invite {
     /* display: none; */
   }
+
+  /* Mobile Responsive Styles */
+  @media (max-width: 767.98px) {
+    .main-content {
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+    }
+
+    .section-body {
+      margin-top: 10px !important;
+    }
+
+    .breadcrumb {
+      font-size: 11px !important;
+      padding: 5px 10px !important;
+    }
+
+    .breadcrumb-item {
+      font-size: 11px !important;
+    }
+
+    .is-coordinate .col-md-4 {
+      margin-bottom: 10px;
+    }
+
+    .card-body {
+      padding: 15px !important;
+    }
+
+    .form-group label {
+      font-size: 13px !important;
+    }
+
+    .form-control {
+      font-size: 13px !important;
+      height: 38px !important;
+    }
+
+    h5.text-center {
+      font-size: 16px !important;
+      margin-bottom: 15px !important;
+    }
+
+    #invite .col-md-6 {
+      margin-bottom: 15px;
+    }
+
+    .btn-labeled {
+      width: auto !important;
+      min-width: 110px;
+      display: inline-block !important;
+      margin-bottom: 10px;
+      text-align: center;
+      padding: 6px 12px !important;
+      font-size: 13px !important;
+    }
+
+    .btn-labeled .btn-label {
+      position: relative;
+      left: 0;
+      display: inline-block;
+      margin-right: 5px;
+      font-size: 12px !important;
+      padding: 0 !important;
+      background: transparent !important;
+      border: none !important;
+    }
+    
+    #invite .col-md-12.text-center {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .tile-footer-button-alignment {
+        flex-direction: column;
+    }
+  }
 </style>
 
 <div class="main-content">
@@ -122,9 +200,17 @@
             <!-- <a type="button" onclick="buttonAction('Saved')" class="btn btn-warning" name="type" value="save">Save</a>
                     <a type="button" onclick="buttonAction('Sent')" class="btn btn-success" name="type" value="sent">Submit</a>
                     <button type="" class="btn btn-danger">Cancel</button> -->
-
-            <a type="button" onclick="buttonAction('Sent')" id="submitbutton" class="btn btn-labeled btn-succes" title="Initiate Questionnaire" style="background: green !important; border-color:green !important; color:white !important">
-              <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span>Initiate</a>
+<a type="button"
+   onclick="buttonAction('Sent', this)"
+   id="submitbutton"
+   class="btn btn-labeled btn-succes"
+   title="Initiate Questionnaire"
+   style="background: green !important; border-color:green !important; color:white !important">
+    <span class="btn-label" style="font-size:13px !important;">
+        <i class="fa fa-check"></i>
+    </span>
+    Initiate
+</a>
 
             <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{ route('ovm.questionnaire') }}" style="color:white !important">
               <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back</a>
@@ -249,22 +335,32 @@
   };
 </script>
 <script>
-  function buttonAction(status) {
+function buttonAction(status, btn) {
+
     var enrollment_id = $('#enrollment_id').val();
     if (enrollment_id == '') {
-      swal.fire("Please Select Enrollment Number", "", "error");
-      return false;
+        Swal.fire("Please Select Enrollment Number", "", "error");
+        return false;
     }
 
     var questionnaire_id = $('#questionnaire_id').val();
     if (questionnaire_id == '') {
-      swal.fire("Please Enter Questionnaire Name", "", "error");
-      return false;
+        Swal.fire("Please Select Questionnaire Name", "", "error");
+        return false;
     }
 
+    // Prevent double click
+    btn.style.pointerEvents = "none";
+    btn.style.opacity = "0.6";
+
+    btn.innerHTML =
+        '<span class="btn-label"><i class="fa fa-spinner fa-spin"></i></span> Processing...';
+
     document.getElementById('btn_status').value = status;
+
+    // Submit form
     document.getElementById('enrollement').submit();
-  }
+}
 </script>
 
 
