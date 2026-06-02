@@ -140,49 +140,57 @@ class SaildocumentController extends BaseController
             $role_name_fetch = $role_name[0]->role_name;
 
             if ($role_name_fetch == 'IS Coordinator') {
-                $rows['questionnaire_initiation'] = DB::select("
-    SELECT 
-        a.enrollment_id, 
-        a.enrollment_child_num, 
+   $rows['questionnaire_initiation'] = DB::select("
+    SELECT
+        a.enrollment_id,
+        a.enrollment_child_num,
         a.child_name
-    FROM 
-        enrollment_details AS a
-    INNER JOIN 
-        ovm_allocation AS b 
+    FROM enrollment_details a
+    INNER JOIN ovm_allocation b
         ON a.enrollment_id = b.enrollment_id
-    INNER JOIN 
-        ovm_meeting_2_details AS c 
+    INNER JOIN ovm_meeting_2_details c
         ON a.enrollment_child_num = c.enrollment_id
-    WHERE 
+    WHERE
         (b.is_coordinator1 = $authID OR b.is_coordinator2 = $authID)
         AND c.meeting_status = 'Completed'
-        AND NOT EXISTS (
-            SELECT 1
+        AND (
+            SELECT COUNT(*)
             FROM questionnaire_initiation qi
+            INNER JOIN questionnaire q
+                ON qi.questionnaire_id = q.questionnaire_id
             WHERE qi.enrollment_id = a.enrollment_id
-            AND qi.questionnaire_id = 1
+              AND q.questionnaire_type = 'OVM'
+        ) < (
+            SELECT COUNT(*)
+            FROM questionnaire
+            WHERE questionnaire_type = 'OVM'
         )
-    ORDER BY 
-        a.enrollment_id DESC
+    ORDER BY a.enrollment_id DESC
 ");
             } else {
-         $rows['questionnaire_initiation'] = DB::select("
+            $rows['questionnaire_initiation'] = DB::select("
     SELECT 
-        e.enrollment_id, 
-        e.enrollment_child_num, 
+        e.enrollment_id,
+        e.enrollment_child_num,
         e.child_name
     FROM 
         enrollment_details e
     INNER JOIN 
-        ovm_meeting_2_details m 
+        ovm_meeting_2_details m
         ON e.enrollment_child_num = m.enrollment_id
     WHERE 
         m.meeting_status = 'Completed'
-        AND NOT EXISTS (
-            SELECT 1
+        AND (
+            SELECT COUNT(DISTINCT qi.questionnaire_id)
             FROM questionnaire_initiation qi
+            INNER JOIN questionnaire q
+                ON qi.questionnaire_id = q.questionnaire_id
             WHERE qi.enrollment_id = e.enrollment_id
-            AND qi.questionnaire_id = 1
+              AND q.questionnaire_type = 'OVM'
+        ) < (
+            SELECT COUNT(*)
+            FROM questionnaire
+            WHERE questionnaire_type = 'OVM'
         )
     ORDER BY 
         e.enrollment_id DESC
