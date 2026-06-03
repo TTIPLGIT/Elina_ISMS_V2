@@ -6786,6 +6786,62 @@
         "GET"
       ]
     },
+     {
+      "DownstreamPathTemplate": "/api/13_plus_migraton/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/13_plus_migraton/index",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+     {
+      "DownstreamPathTemplate": "/api/13plus/migration/store",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/13plus/migration/store",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/13plus/migration/delete",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/13plus/migration/delete",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/13plus/migration/remigrate",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 60162
+        }
+      ],
+      "UpstreamPathTemplate": "/api/gateway/13plus/migration/remigrate",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
    
   ],
   

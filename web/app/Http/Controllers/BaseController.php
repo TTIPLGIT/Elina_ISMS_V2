@@ -556,4 +556,78 @@ class BaseController extends Controller
         $words = $formatter->format($number);
         return ucwords($words);
     }
+
+    public function strapiLocalAuth($identifier, $password)
+    {
+        try {
+            $client = new Client();
+            $serviceResponse = $client->request('POST', config('setting.strapi_auth_url'), [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                ],
+                'json' => [
+                    'identifier' => $identifier,
+                    'password' => $password,
+                ],
+            ])->getBody()->getContents();
+
+            $response = json_decode($serviceResponse, true);
+
+            return $response['jwt'] ?? null;
+        } catch (\Exception $exc) {
+            $exceptionResponse = array();
+            $exceptionResponse['ServiceMethod'] = 'Method => BaseController => strapiLocalAuth';
+            $exceptionResponse['Exception'] = $exc->getMessage();
+            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+            $this->WriteFileLog($exceptionResponse);
+
+            return null;
+        }
+    }
+
+    public function strapiMigrationStore($migrationData)
+    {
+        try {
+            $client = new Client();
+            $headers = [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ];
+
+            $strapiJwt = session('strapiJwt');
+            if ($strapiJwt) {
+                $headers['Authorization'] = 'Bearer ' . $strapiJwt;
+            }
+
+            $serviceResponse = $client->request('POST', config('setting.strapi_migrations_url'), [
+                'headers' => $headers,
+                'json' => [
+                    'data' => $migrationData,
+                ],
+            ])->getBody()->getContents();
+
+            $response = json_decode($serviceResponse, true);
+
+            if ($response === true || $response === false) {
+                return $response;
+            }
+
+            if (is_array($response)) {
+                if (array_key_exists('success', $response)) {
+                    return (bool) $response['success'];
+                }
+            }
+
+            return false;
+        } catch (\Exception $exc) {
+            $exceptionResponse = array();
+            $exceptionResponse['ServiceMethod'] = 'Method => BaseController => strapiMigrationStore';
+            $exceptionResponse['Exception'] = $exc->getMessage();
+            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+            $this->WriteFileLog($exceptionResponse);
+
+            return false;
+        }
+    }
 }

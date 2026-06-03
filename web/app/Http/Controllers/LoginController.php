@@ -308,6 +308,11 @@ class LoginController extends BaseController
           return back()->withErrors(['recaptcha' => ['Multiple Sessions Detected. For security reasons, you can only be logged in from one device at a time.']]);
         }
 
+        $strapiJwt = $this->strapiLocalAuth($input['email'], $input['password']);
+        if ($strapiJwt) {
+          session(['strapiJwt' => $strapiJwt]);
+        }
+
         $gatewayURL = config('setting.api_gateway_url') . '/login/user';
         // return redirect()->route('home');
 

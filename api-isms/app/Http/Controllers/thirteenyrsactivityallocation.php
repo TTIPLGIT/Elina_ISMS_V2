@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ThirteenPlusMigrationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class thirteenyrsactivityallocation extends BaseController
 {
@@ -102,8 +104,8 @@ class thirteenyrsactivityallocation extends BaseController
             ];
             DB::transaction(function () use ($input) {
                 $videocreation = DB::table('activity')->insertGetId([
-                    'group'=>$input['group'],
-                    'category'=>$input['type'],
+                    'group' => $input['group'],
+                    'category' => $input['type'],
                     'activity_name' => $input['activity_name'],
                     // 'attached_file_path' => $input['attached_file_path'],
                     // 'filepath' => $input['filepath'],
@@ -362,7 +364,7 @@ class thirteenyrsactivityallocation extends BaseController
                 'general_instruction' => $general_instruction[0]->policy_content,
                 'activities_list' => $activities_list,
                 'activitylist_nav' => $activitylist_nav,
-                'activitylist_rejection'=>$activitylist_rejection ,
+                'activitylist_rejection' => $activitylist_rejection,
 
             ];
 
@@ -1063,6 +1065,484 @@ class thirteenyrsactivityallocation extends BaseController
             $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
             $sendServiceResponse = $this->SendServiceResponse($serviceResponse, config('setting.status_code.exception'), false);
             return $sendServiceResponse;
+        }
+    }
+    public function Migration_Thirteen_Plus(Request $request)
+    {
+        try {
+
+            $method = 'Method => thirteenyrsactivityallocation => Migration_Thirteen_Plus';
+
+            $authID = auth()->user()->id;
+
+            $role_name = DB::select(
+                "
+            SELECT role_name
+            FROM uam_roles AS ur
+            INNER JOIN users us
+                ON us.array_roles = ur.role_id
+            WHERE us.id = " . $authID
+            );
+
+            $rolesArray = array_merge(
+                array(auth()->user()->array_roles),
+                array(auth()->user()->roles)
+            );
+
+
+            // =========================================================
+            // SAIL STATUS DETAILS
+            // =========================================================
+
+            $sail_status_details = DB::select("
+
+    SELECT
+        sd.id,
+        sd.user_id,
+        sd.enrollment_id,
+        sd.child_id,
+        sd.child_name,
+        sd.current_status,
+        sd.created_by,
+        sd.created_date,
+        sd.last_modified_by,
+        sd.last_modified_date,
+
+        ed.enrollment_id        AS ed_enrollment_id,
+        ed.user_id              AS ed_user_id,
+        ed.enrollment_child_num,
+        ed.child_name           AS ed_child_name,
+        ed.child_contact_email,
+        ed.child_dob,
+        ed.child_father_guardian_name AS parent_name,
+        ed.child_gender,
+        ed.child_school_name_address,
+
+        u.name                  AS user_name,
+        u.email                 AS user_email,
+
+        sd.is_coordinator1      AS iscoordinator1_id,
+        co1.name                AS iscoordinator1_name,
+        co1.email               AS iscoordinator1_email,
+
+        sd.is_coordinator2      AS iscoordinator2_id,
+        co2.name                AS iscoordinator2_name,
+        co2.email               AS iscoordinator2_email,
+
+        pm.id                   AS migration_id,
+        pm.enrollment       AS migration_enrollment_id
+
+    FROM sail_details AS sd
+
+    LEFT JOIN enrollment_details AS ed
+        ON ed.enrollment_child_num = sd.enrollment_id
+
+    LEFT JOIN users AS u
+        ON u.id = ed.user_id
+
+    LEFT JOIN users AS co1
+        ON co1.id = sd.is_coordinator1
+
+    LEFT JOIN users AS co2
+        ON co2.id = sd.is_coordinator2
+
+    LEFT JOIN 13plus_migration AS pm
+        ON pm.enrollment = sd.enrollment_id
+
+    WHERE sd.current_status IN (
+        'Consent Sent',
+        'Payment Initiated',
+        'Payment Completed'
+    )
+
+    AND pm.enrollment IS NULL
+
+    ORDER BY sd.id DESC
+
+");
+
+            $migration_to_13_plus =  DB::table('13plus_migration')
+                ->select('*')
+                ->where('migration_status', 2)
+                ->get();
+
+            // ISMS Migration Data (migration_status 1 = ISMS, 4 = Remigrated ISMS)
+            $isms_migration_data = DB::table('13plus_migration')
+                ->select('*')
+                ->whereIn('migration_status', [1, 4])
+                ->orderBy('id', 'DESC')
+                ->get();
+
+            // Decision list: soft-deleted migrations eligible for remigration (status 3)
+            $remigration_decision_list = DB::table('13plus_migration')
+                ->select('*')
+                ->where('migration_status', 3)
+                ->orderBy('id', 'DESC')
+                ->get();
+
+
+            $response = [
+
+                'sail_status_details' => $sail_status_details,
+                'migration_to_13_plus' => $migration_to_13_plus,
+                'isms_migration_data' => $isms_migration_data,
+                'remigration_decision_list' => $remigration_decision_list,
+            ];
+
+
+            $serviceResponse = array();
+
+            $serviceResponse['Code'] = config('setting.status_code.success');
+
+            $serviceResponse['Message'] = config('setting.status_message.success');
+
+            $serviceResponse['Data'] = $response;
+
+            $serviceResponse = json_encode(
+                $serviceResponse,
+                JSON_FORCE_OBJECT
+            );
+
+            $sendServiceResponse = $this->SendServiceResponse(
+                $serviceResponse,
+                config('setting.status_code.success'),
+                true
+            );
+
+            return $sendServiceResponse;
+        } catch (\Exception $exc) {
+
+            $exceptionResponse = array();
+
+            $exceptionResponse['ServiceMethod'] = $method;
+
+            $exceptionResponse['Exception'] = $exc->getMessage();
+
+            $exceptionResponse = json_encode(
+                $exceptionResponse,
+                JSON_FORCE_OBJECT
+            );
+
+            $this->WriteFileLog($exceptionResponse);
+
+
+            $serviceResponse = array();
+
+            $serviceResponse['Code'] = config('setting.status_code.exception');
+
+            $serviceResponse['Message'] = $exc->getMessage();
+
+            $serviceResponse = json_encode(
+                $serviceResponse,
+                JSON_FORCE_OBJECT
+            );
+
+            $sendServiceResponse = $this->SendServiceResponse(
+                $serviceResponse,
+                config('setting.status_code.exception'),
+                false
+            );
+
+            return $sendServiceResponse;
+        }
+    }
+    public function Store(Request $request)
+    {
+        try {
+
+            $method = 'Method => AboveagemanagementService => Store';
+
+            $inputArray = $this->decryptData($request->requestData);
+
+            $input = [
+
+                'child_name'        => $inputArray['child_name'] ?? null,
+
+                'child_dob'         => $inputArray['child_dob'] ?? null,
+
+                'enrollment_id'     => $inputArray['enrollment_id'] ?? null,
+
+                'user_id'           => $inputArray['user_id'] ?? null,
+
+                'child_email'       => $inputArray['child_email'] ?? null,
+
+                'parent_name'       => $inputArray['parent_name'] ?? null,
+
+                'coordinator_id'    => $inputArray['coordinator_id'] ?? null,
+
+                'coordinator_name'  => $inputArray['coordinator_name'] ?? null,
+
+                'coordinator_email' => $inputArray['coordinator_email'] ?? null,
+
+                'notes' => $inputArray['notes'] ?? null,
+
+                'full_json'         => $inputArray['full_json'] ?? null,
+
+                'migration_type'    => $inputArray['migration_type'] ?? '13plus',
+
+            ];
+
+            $this->WriteFileLog($input);
+
+            // Determine migration_status based on migration_type
+            $migrationStatus = 0;
+            if ($input['migration_type'] === 'isms') {
+                $migrationStatus = 1;
+            } elseif ($input['migration_type'] === '13plus') {
+                $migrationStatus = 2;
+            } elseif ($input['migration_type'] === 'remigrate_isms') {
+                $migrationStatus = 4;
+            }
+
+            $response = DB::transaction(function () use ($input, $migrationStatus) {
+
+                DB::table('13plus_migration')->insert([
+
+                    'name'         => $input['child_name'],
+
+                    'dob'          => $input['child_dob'],
+
+                    'enrollment'      => $input['enrollment_id'],
+
+                    'user_id'            => $input['user_id'],
+
+                    'email'        => $input['child_email'],
+
+                    'parent_name'        => $input['parent_name'],
+
+                    'coordinator_id'     => $input['coordinator_id'],
+
+                    'coordinator_name'   => $input['coordinator_name'],
+
+                    'coordinator_email'  => $input['coordinator_email'],
+
+                    'notes'          => $input['notes'],
+
+                    'created_by'         => auth()->user()->id,
+
+                    'created_at'         => NOW(),
+                    'migration_status'   => $migrationStatus
+
+                ]);
+
+
+
+                // DB::table('users')
+                //     ->where('id', $input['user_id'])
+                //     ->update([
+
+                //         'thirteen_plus_migration' => 1
+
+                //     ]);
+
+
+
+                $response_status = 200;
+
+                $response = [
+
+                    'response_status' => $response_status
+
+                ];
+
+                return $response;
+            });
+
+
+
+            $serviceResponse = array();
+
+            $serviceResponse['Code'] = config('setting.status_code.success');
+
+            $serviceResponse['Message'] = config('setting.status_message.success');
+
+            $serviceResponse['Data'] = $response;
+
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+
+            $sendServiceResponse = $this->SendServiceResponse(
+                $serviceResponse,
+                config('setting.status_code.success'),
+                true
+            );
+
+            return $sendServiceResponse;
+        } catch (\Exception $exc) {
+
+            $exceptionResponse = array();
+
+            $exceptionResponse['ServiceMethod'] = $method;
+
+            $exceptionResponse['Exception'] = $exc->getMessage();
+
+            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+
+            $this->WriteFileLog($exceptionResponse);
+
+
+
+            $serviceResponse = array();
+
+            $serviceResponse['Code'] = config('setting.status_code.exception');
+
+            $serviceResponse['Message'] = $exc->getMessage();
+
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+
+            $sendServiceResponse = $this->SendServiceResponse(
+                $serviceResponse,
+                config('setting.status_code.exception'),
+                false
+            );
+
+            return $sendServiceResponse;
+        }
+    }
+
+    public function deleteMigration(Request $request, ThirteenPlusMigrationService $migrationService)
+    {
+        
+        try {
+
+            $method = 'Method => ThirteenPlusMigrationService => deleteMigration';
+
+            // Plain JSON from external application — no encrypt/decrypt on request or response.
+            // JWT: send Authorization: Bearer {token} header (auth:api middleware).
+            $input = [
+                'user_id' => $request->input('user_id'),
+                'enrollment_id' => $request->input('enrollment_id') ?? $request->input('enrollment'),
+            ];
+
+            $validator = Validator::make($input, [
+                'user_id' => 'required',
+                'enrollment_id' => 'required',
+            ], [
+                'user_id.required' => 'User ID is required',
+                'enrollment_id.required' => 'Enrollment is required',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'Success' => false,
+                    'Status' => config('setting.status_code.validation'),
+                    'Code' => config('setting.status_code.validation'),
+                    'Message' => $validator->errors()->first(),
+                    'Data' => null,
+                ], 200);
+            }
+
+            $result = $migrationService->softDeleteByUserAndEnrollment(
+                $input['user_id'],
+                $input['enrollment_id']
+            );
+
+            $httpStatus = $result['response_status'] == 200
+                ? config('setting.status_code.success')
+                : config('setting.status_code.not_found');
+
+            return response()->json([
+                'Success' => $result['response_status'] == 200,
+                'Status' => $httpStatus,
+                'Code' => $result['response_status'],
+                'Message' => $result['response_status'] == 200
+                    ? config('setting.status_message.success')
+                    : config('setting.status_message.not_found'),
+                'Data' => $result,
+            ], 200);
+        } catch (\Exception $exc) {
+
+            $exceptionResponse = array();
+            $exceptionResponse['ServiceMethod'] = $method;
+            $exceptionResponse['Exception'] = $exc->getMessage();
+            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+            $this->WriteFileLog($exceptionResponse);
+
+            return response()->json([
+                'Success' => false,
+                'Status' => config('setting.status_code.exception'),
+                'Code' => config('setting.status_code.exception'),
+                'Message' => $exc->getMessage(),
+                'Data' => null,
+            ], 200);
+        }
+    }
+
+    public function remigrateIsms(Request $request, ThirteenPlusMigrationService $migrationService)
+    {
+        try {
+
+            $method = 'Method => ThirteenPlusMigrationService => remigrateIsms';
+
+            $inputArray = $this->decryptData($request->requestData);
+
+            $input = [
+                'enrollment_id' => $inputArray['enrollment_id'] ?? null,
+                'notes' => $inputArray['notes'] ?? null,
+            ];
+
+            $validator = Validator::make($input, [
+                'enrollment_id' => 'required',
+            ], [
+                'enrollment_id.required' => 'Enrollment ID is required',
+            ]);
+
+            if ($validator->fails()) {
+                $serviceResponse = array();
+                $serviceResponse['Code'] = config('setting.status_code.validation');
+                $serviceResponse['Message'] = $validator->errors()->first();
+                $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+                return $this->SendServiceResponse(
+                    $serviceResponse,
+                    config('setting.status_code.validation'),
+                    false
+                );
+            }
+
+            $extraFields = [];
+            if (!empty($input['notes'])) {
+                $extraFields['notes'] = $input['notes'];
+            }
+
+            $response = $migrationService->remigrateIsmsByEnrollment(
+                $input['enrollment_id'],
+                $extraFields
+            );
+
+            $httpStatus = $response['response_status'] == 200
+                ? config('setting.status_code.success')
+                : config('setting.status_code.not_found');
+
+            $serviceResponse = array();
+            $serviceResponse['Code'] = $response['response_status'];
+            $serviceResponse['Message'] = $response['response_status'] == 200
+                ? config('setting.status_message.success')
+                : config('setting.status_message.not_found');
+            $serviceResponse['Data'] = $response;
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+
+            return $this->SendServiceResponse(
+                $serviceResponse,
+                $httpStatus,
+                $response['response_status'] == 200
+            );
+        } catch (\Exception $exc) {
+
+            $exceptionResponse = array();
+            $exceptionResponse['ServiceMethod'] = $method;
+            $exceptionResponse['Exception'] = $exc->getMessage();
+            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+            $this->WriteFileLog($exceptionResponse);
+
+            $serviceResponse = array();
+            $serviceResponse['Code'] = config('setting.status_code.exception');
+            $serviceResponse['Message'] = $exc->getMessage();
+            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+
+            return $this->SendServiceResponse(
+                $serviceResponse,
+                config('setting.status_code.exception'),
+                false
+            );
         }
     }
 }

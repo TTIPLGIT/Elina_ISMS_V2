@@ -635,6 +635,11 @@ Route::group(['middleware' => 'usersession'], function () {
 
     //13+ questionnaire
     Route::resource('thirteenyrs_mgmnt', AboveagemanagementController::class);
+    Route::get('/13_plus_migraton/index', [App\Http\Controllers\AboveagemanagementController::class, 'Migration_Thirteen_Plus']);
+    Route::post('/13_plus_migration/submit', [App\Http\Controllers\AboveagemanagementController::class, 'Store'])->name('13plus.migration');
+    Route::post('/13_plus_migration/delete', [App\Http\Controllers\AboveagemanagementController::class, 'MigrationDelete'])->name('13plus.migration.delete');
+    Route::post('/13_plus_migration/remigrate', [App\Http\Controllers\AboveagemanagementController::class, 'MigrationRemigrate'])->name('13plus.migration.remigrate');
+
     //Question Creation
     Route::resource('thirteenyrsquestion_creation', MasterQuestionCreationController::class);
     Route::get('/thirteenquestion_creation/add_questions/{id}', [\App\Http\Controllers\MasterQuestionCreationController::class, 'add_questions'])->name('thirteenquestion_creation.add_questions');

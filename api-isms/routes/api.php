@@ -609,6 +609,12 @@ Route::middleware('auth:api')->group(function () {
   //Activity Initiatation of 13+
   Route::post('/parentvideo13/description', [\App\Http\Controllers\thirteenyrsactivityallocation::class, 'Getdescription']);
 
+//13+ Migration
+  Route::get('/13_plus_migraton/index', [\App\Http\Controllers\thirteenyrsactivityallocation::class, 'Migration_Thirteen_Plus']);
+  Route::post('/13plus/migration/store', [App\Http\Controllers\thirteenyrsactivityallocation::class, 'Store'])->name('store');
+  Route::post('/13plus/migration/delete', [App\Http\Controllers\thirteenyrsactivityallocation::class, 'deleteMigration'])->name('migration.delete');
+  Route::post('/13plus/migration/remigrate', [App\Http\Controllers\thirteenyrsactivityallocation::class, 'remigrateIsms'])->name('migration.remigrate');
+
   //Auto Save
   Route::post('/autosave/store', [App\Http\Controllers\ovm1Controller::class, 'autosave'])->name('autosave');
 
@@ -687,6 +693,5 @@ Route::get('/service_briefing_master/create', [\App\Http\Controllers\ServiceBrie
 Route::post('/service_briefing_master/storedata', [\App\Http\Controllers\ServiceBriefingController::class, 'storedata']);
 Route::get('/service_briefing_master/delete/{id}', [\App\Http\Controllers\ServiceBriefingController::class, 'data_delete']);
 Route::get('/service_briefing/show/{id}', [\App\Http\Controllers\ServiceBriefingController::class, 'data_update']);
-Route::get('/service_briefing/edit/{id}',[App\Http\Controllers\ServiceBriefingController::class, 'data_edit']);
-Route::post('/service_briefing_master/updatedata',[\App\Http\Controllers\ServiceBriefingController::class, 'updatedata']);
-
+Route::get('/service_briefing/edit/{id}', [App\Http\Controllers\ServiceBriefingController::class, 'data_edit']);
+Route::post('/service_briefing_master/updatedata', [\App\Http\Controllers\ServiceBriefingController::class, 'updatedata']);

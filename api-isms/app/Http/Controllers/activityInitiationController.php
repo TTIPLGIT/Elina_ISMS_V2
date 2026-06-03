@@ -94,9 +94,45 @@ class activityInitiationController extends BaseController
                 (SELECT enrollment_child_num FROM payment_status_details WHERE payment_for = 'SAIL Register Fee' AND payment_status = 'SUCCESS')
                 AND enrollment_id NOT IN (SELECT enrollment_id FROM reports_copy WHERE report_type = 7) ORDER BY enrollment_id DESC");
             } else {
-                $rows = DB::select("SELECT a.* FROM enrollment_details AS a INNER JOIN sail_details AS b ON a.enrollment_child_num= b.enrollment_id
-                WHERE a.enrollment_child_num IN (SELECT enrollment_child_num FROM payment_status_details WHERE payment_for = 'SAIL Register Fee' AND payment_status = 'SUCCESS')
-                AND (JSON_EXTRACT(b.is_coordinator1, '$.id') = $id OR JSON_EXTRACT(b.is_coordinator2, '$.id') = $id) AND a.enrollment_id NOT IN (SELECT enrollment_id FROM reports_copy WHERE report_type = 7) ORDER BY a.enrollment_id DESC");
+                $this->WriteFileLog("This is new");
+                $rows = DB::table('enrollment_details as a')
+
+                    ->select('a.*')
+
+                    ->join('sail_details as b', function ($join) {
+                        $join->on('a.enrollment_child_num', '=', 'b.enrollment_id');
+                    })
+
+                    ->leftJoin('13plus_migration as m', function ($join) {
+                        $join->on('m.enrollment', '=', 'a.enrollment_child_num');
+                    })
+
+                    ->whereIn('a.enrollment_child_num', function ($query) {
+                        $query->select('enrollment_child_num')
+                            ->from('payment_status_details')
+                            ->where('payment_for', 'SAIL Register Fee')
+                            ->where('payment_status', 'SUCCESS');
+                    })
+
+                    ->where(function ($query) use ($id) {
+                        $query->whereRaw("JSON_EXTRACT(b.is_coordinator1, '$.id') = ?", [$id])
+                            ->orWhereRaw("JSON_EXTRACT(b.is_coordinator2, '$.id') = ?", [$id]);
+                    })
+
+                    ->whereNotIn('a.enrollment_id', function ($query) {
+                        $query->select('enrollment_id')
+                            ->from('reports_copy')
+                            ->where('report_type', 7);
+                    })
+
+                    ->where(function ($query) {
+                        $query->whereNull('m.enrollment')
+                            ->orWhereIn('m.migration_status', [2, 4]);
+                    })
+
+                    ->orderBy('a.enrollment_id', 'DESC')
+
+                    ->get();
             }
 
             $activity = DB::select("SELECT COUNT(*) as total FROM activity WHERE active_flag = 0 and category='3'");
@@ -1526,7 +1562,7 @@ class activityInitiationController extends BaseController
                         'created_date' => now(),
                         'last_modified_by' => $authID,
                         'last_modified_date' => now(),
-                        'action_flag' =>1
+                        'action_flag' => 1
                     ]);
                 }
 
