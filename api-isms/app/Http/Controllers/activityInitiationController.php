@@ -96,7 +96,6 @@ class activityInitiationController extends BaseController
             } else {
                 $this->WriteFileLog("This is new");
                 $rows = DB::table('enrollment_details as a')
-
                     ->select('a.*')
 
                     ->join('sail_details as b', function ($join) {
@@ -125,13 +124,13 @@ class activityInitiationController extends BaseController
                             ->where('report_type', 7);
                     })
 
+                    // Exclude children whose migration_status is 2 or 4
                     ->where(function ($query) {
                         $query->whereNull('m.enrollment')
-                            ->orWhereIn('m.migration_status', [2, 4]);
+                            ->orWhereNotIn('m.migration_status', [2, 4]);
                     })
 
                     ->orderBy('a.enrollment_id', 'DESC')
-
                     ->get();
             }
 
