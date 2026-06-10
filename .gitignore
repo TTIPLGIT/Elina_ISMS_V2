@@ -188,3 +188,5 @@ web/config/setting.php
 web/config/setting.php
 api-isms/storage/logs/laravel-2026-03-25.log
 ApiGateway_Publish/debug*
+web/vendor/
+web/public/
