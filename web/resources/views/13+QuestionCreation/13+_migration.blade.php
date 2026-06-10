@@ -334,7 +334,7 @@
                                                     ];
                                                 @endphp
                                                 <tr>
-                                                    <td>{{ $decisionRowNum }}</td>
+                                                     <td>{{ $decisionRowNum }}</td>
                                                     <td>{{ $remigArr['enrollment'] ?? '-' }}</td>
                                                     <td>{{ $remigArr['name'] ?? '-' }}</td>
                                                     <td>{{$remigArr['current_status']}}</td>       

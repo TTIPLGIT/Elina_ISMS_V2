@@ -1185,7 +1185,7 @@ class thirteenyrsactivityallocation extends BaseController
     ->orderBy('mig.id', 'DESC')
     ->get();
 
-
+ 
             $response = [
 
                 'sail_status_details' => $sail_status_details,
