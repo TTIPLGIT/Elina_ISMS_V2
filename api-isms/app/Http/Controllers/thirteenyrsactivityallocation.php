@@ -1184,7 +1184,7 @@ class thirteenyrsactivityallocation extends BaseController
     ->where('mig.migration_status', 3)
     ->orderBy('mig.id', 'DESC')
     ->get();
-
+    
  
             $response = [
 

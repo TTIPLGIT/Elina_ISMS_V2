@@ -332,7 +332,7 @@
                                                             'email' => $remigArr['coordinator_email'] ?? '',
                                                         ],
                                                     ];
-                                                @endphp
+                                                @endphp       
                                                 <tr>
                                                      <td>{{ $decisionRowNum }}</td>
                                                     <td>{{ $remigArr['enrollment'] ?? '-' }}</td>
