@@ -1174,11 +1174,16 @@ class thirteenyrsactivityallocation extends BaseController
                 ->get();
 
             // Decision list: soft-deleted migrations eligible for remigration (status 3)
-            $remigration_decision_list = DB::table('13plus_migration')
-                ->select('*')
-                ->where('migration_status', 3)
-                ->orderBy('id', 'DESC')
-                ->get();
+            $remigration_decision_list = DB::table('13plus_migration as mig')
+    ->leftJoin('sail_details as sd', 'sd.enrollment_id', '=', 'mig.enrollment')
+    ->select(
+        'mig.*',               // all columns from 13plus_migration
+        'sd.current_status',   // status from sail_details
+        'mig.notes as remigration_notes'   // notes from migration table
+    )
+    ->where('mig.migration_status', 3)
+    ->orderBy('mig.id', 'DESC')
+    ->get();
 
 
             $response = [

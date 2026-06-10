@@ -211,7 +211,11 @@
                                 {{-- ============================================================ --}}
 
                                 <div class="table-responsive table-section" id="decisionTable">
-
+  <div class="d-flex justify-content-end">
+                                        <div class="isms-remigration-legend" style="margin-bottom: 12px;">
+                                            <span>Note: Children returning between pathways are marked with <i class="fas fa-exchange-alt" aria-hidden="true"></i></span>
+                                        </div>
+                                    </div>
                                     <table class="table table-bordered table-hover table-striped unified-table"
                                         id="align">
 
@@ -333,10 +337,10 @@
                                                     <td>{{ $decisionRowNum }}</td>
                                                     <td>{{ $remigArr['enrollment'] ?? '-' }}</td>
                                                     <td>{{ $remigArr['name'] ?? '-' }}</td>
-                                                     <td><span style="color:#6c757d; font-size:13px;">Remigration Pending</span></td>
-                                                    <td class="text-center">
+                                                    <td>{{$remigArr['current_status']}}</td>       
+                                             <td class="text-center">
                                                         <button type="button"
-                                                            class="btn btn-warning btn-sm text-white openRemigrationModal"
+                                                            class="btn btn btn-sm text-blue openRemigrationModal"
                                                             data-toggle="modal" data-target="#remigrationModal"
                                                             data-enrollment="{{ $remigArr['enrollment'] ?? '' }}"
                                                             data-child="{{ $remigArr['name'] ?? '' }}"
@@ -348,7 +352,7 @@
                                                             data-coordinatorname="{{ $remigArr['coordinator_name'] ?? '' }}"
                                                             data-coordinatoremail="{{ $remigArr['coordinator_email'] ?? '' }}"
                                                             data-json='@json($remigJson)' title="Remigration">
-                                                            <i class="fas fa-redo-alt"></i>
+                                                            <i class="fas fa-exchange-alt"></i>
                                                         </button>
                                                     </td>
                                                 </tr>
