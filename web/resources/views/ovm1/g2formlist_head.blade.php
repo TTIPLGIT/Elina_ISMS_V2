@@ -19,89 +19,71 @@
       margin-left: 10px;
   }
   
-  /* Mobile Responsive Table styling */
+  /* Mobile Responsive Table styling - Compact Table (Scrollable) */
   @media (max-width: 767px) {
-      #tableList, 
-      #tableList tbody, 
-      #tableList tr, 
-      #tableList td {
-          display: block;
-          width: 100%;
-          box-sizing: border-box;
+      .main-content {
+          padding: 5px !important;
       }
 
-      #tableList thead {
-          display: none;
+      .breadcrumb {
+          margin-top: 60px !important;
+          font-size: 10px !important;
+          padding: 0 !important;
+          background: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+          width: max-content !important;
       }
-  
-      #tableList tbody tr {
-          margin-bottom: 15px;
-          border: 1px solid #ddd;
-          border-radius: 5px;
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-          background: #fff;
-          padding: 10px;
+
+      .card-body {
+          padding: 8px !important;
       }
-  
+
+      .table-responsive {
+          display: block !important;
+          width: 100% !important;
+          overflow-x: auto !important;
+          -webkit-overflow-scrolling: touch !important;
+          border: 1px solid #ddd !important;
+      }
+
+      #tableList {
+          font-size: 10px !important;
+          width: auto !important;
+          min-width: 100% !important;
+          margin-bottom: 0 !important;
+      }
+
+      #tableList thead th {
+          background-color: #003366 !important;
+          color: #fff !important;
+          padding: 8px 6px !important;
+          font-size: 10px !important;
+          white-space: nowrap !important;
+          text-align: center !important;
+      }
+
       #tableList tbody td {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          text-align: right !important;
-          border-bottom: 1px solid #eee;
-          padding: 10px 5px;
-          word-break: break-word;
-          white-space: normal;
+          padding: 8px 6px !important;
+          font-size: 10px !important;
+          white-space: nowrap !important;
+          text-align: center !important;
+          vertical-align: middle !important;
       }
-  
-      #tableList tbody td:last-child {
-          border-bottom: none;
-          justify-content: space-between;
-      }
-      
-      #tableList tbody td:last-child .btn, 
-      #tableList tbody td:last-child a.btn {
-          margin-left: 0;
-          margin-right: 0;
-      }
-      
-      #tableList tbody td::before {
-          content: attr(data-label);
-          font-weight: bold;
-          display: block;
-          flex-basis: 45%;
-          text-align: left;
-          margin-bottom: 0px;
-          color: #333;
-      }
-      
+
       .dt-buttons .btn {
-          padding: 4px 8px !important;
-          font-size: 11px !important;
-      }
-      
-      .btn {
-          padding: 5px 10px !important;
-          font-size: 11px !important;
-      }
-
-      div.dataTables_wrapper div.dataTables_length label,
-      div.dataTables_wrapper div.dataTables_filter label,
-      div.dataTables_wrapper div.dataTables_info,
-      div.dataTables_wrapper div.dataTables_paginate {
-          font-size: 12px !important;
-      }
-
-      div.dataTables_wrapper div.dataTables_length select,
-      div.dataTables_wrapper div.dataTables_filter input {
           padding: 2px 5px !important;
-          font-size: 12px !important;
-          height: auto !important;
+          font-size: 9px !important;
       }
-      
-      div.dataTables_wrapper div.dataTables_filter input {
-          width: 120px !important;
-      }
+
+         #tableList td:nth-child(2),
+    #tableList th:nth-child(2) {
+        max-width: 100px !important; 
+        width: 100px !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+    }
   }
   </style>
   <section class="section">

@@ -53,7 +53,6 @@
     }
    
     h1{
-        float: left !important;
 font-weight:300 !important;
 text-decoration: underline!important;
 font: 20px Arial, sans-serif!important;
@@ -208,10 +207,65 @@ h2,h5{
   padding:0px !important;
 }
 .index{
-  position: absolute;
-  z-index:0!important;;
+  z-index:0!important;
 }
 
+@media (max-width: 767.98px) {
+    /* Container resets */
+    .container, .container.con {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 10px !important;
+        margin: 0 !important;
+    }
+    .main-content {
+        padding: 0 !important;
+        margin-top: 180px !important;
+    }
+    .main-content .card {
+        margin-top: 20px !important;
+        margin-bottom: 60px !important;
+        border-radius: 0 !important;
+        border-left: none !important;
+        border-right: none !important;
+    }
+    .main-content .card-body {
+        padding: 15px 5px !important;
+    }
+    h1 {
+        font-size: 18px !important;
+        padding: 20px 5px 15px 5px !important;
+        line-height: 1.4;
+    }
+    .collapsible {
+        padding: 14px 10px !important;
+        font-size: 15px !important;
+    }
+    #name {
+        font-size: 16px !important;
+    }
+    .content {
+        padding: 10px 5px !important;
+    }
+    #question {
+        font-size: 14px !important;
+        padding: 0 !important;
+    }
+    #question span {
+        padding: 10px !important;
+        display: block;
+    }
+    #answer {
+        font-size: 14px !important;
+        padding: 0px 10px !important;
+    }
+    #q_faq {
+        padding: 0px 10px !important;
+    }
+    #a_faq {
+        padding: 0px 10px !important;
+    }
+}
 </style>
 @extends('layouts.adminnav')
 
@@ -219,7 +273,7 @@ h2,h5{
    
    
          
-      <nav class="navbar index" style="border:2px solid #602e9e !important; margin-top: 48px; height:max-content;position:absolute">
+      <nav class="navbar index" style="border:2px solid #602e9e !important; margin-top: 48px; height:max-content;">
  <div class="col-md-4" style="
     margin: 0;
     padding: 0;
@@ -271,8 +325,8 @@ h2,h5{
             
             <fieldset>
                <div class="row">                 
-               <h1><b><u>Frequently Asked Questions on ELINA ISMS</u></b></h1>         
                   <div class="col-lg-12">
+               <h1><b><u>Frequently Asked Questions on ELINA ISMS</u></b></h1>         
                 
             
                   <div id="faq_id">

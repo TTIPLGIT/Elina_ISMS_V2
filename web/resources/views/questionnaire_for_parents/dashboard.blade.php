@@ -374,7 +374,7 @@
         background: white !important;
     }
 </style>
-<div class="main-content contentpadding" style="position:absolute; z-index:-1;    padding: 80px 0 0 0;">
+<div class="main-content contentpadding" style="padding: 80px 0 0 0;">
 
     <!-- Main Content -->
 
@@ -388,24 +388,25 @@
                             <div class="row is-coordinate">
 
 
-                                <div class="col-md-4">
+                                <div class="col-6 col-md-4">
                                     <div class="form-group">
                                         <label class="control-label required">From</label>
                                         <input class="form-control default" type="text" id="from" name="from" placeholder="dd-mm-yyyy" autocomplete="off">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-6 col-md-4">
                                     <div class="form-group">
                                         <label class="control-label required">To</label>
                                         <input class="form-control default" type="text" id="to" name="to" placeholder="dd-mm-yyyy" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="w-100"></div>
-                                <div class="tile-footer title-footer-button-alignment" style="padding: 10px;">
-                                    <button class="btn btn-success saveButton_form" onclick="save()" type="button" id="saveButton">
-                                        <i class="fa fa-fw fa-lg fa-check-circle"></i>Show</button>&nbsp;&nbsp;&nbsp;
-                                    <a class="btn btn-primary" href="{{route('home')}}"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>&nbsp;&nbsp;&nbsp;
-                                    <button class="btn btn-info saveButton_form" type="reset" id="saveButton">
+                                <div class="col-12" style="padding: 15px 0; display: flex; justify-content: center; align-items: center; gap: 5px;">
+                                    <button class="btn btn-success saveButton_form" onclick="save()" type="button" id="saveButton" style="padding: 6px 12px; font-size: 13px;">
+                                        <i class="fa fa-fw fa-lg fa-check-circle"></i>Show</button>
+                                    <a class="btn btn-primary" href="{{route('home')}}" style="padding: 6px 12px; font-size: 13px;">
+                                        <i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+                                    <button class="btn btn-info saveButton_form" type="reset" id="saveButton" style="padding: 6px 12px; font-size: 13px;">
                                         <i class="fa fa-repeat"></i> Reset</button>
                                 </div>
                             </div>

@@ -14,7 +14,9 @@
 <div class="main-content">
   <!-- Main Content -->
   <section class="section">
-    {{ Breadcrumbs::render('profilepage') }}
+    <div style="display: none;">
+      {{ Breadcrumbs::render('profilepage') }}
+    </div>
     <div class="section-body mt-1">
       <h5 style="color:darkblue;text-align: center;">Profile Settings</h5>
       <div class="row">
@@ -44,7 +46,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="control-label">Email <span style="color: red;font-size: 16px;"></span></label>
-                      <input class="form-control" type="email" id="email" name="email" placeholder="Enter Email" value="{{ $one_row[0]['email'] }}" >
+                      <input class="form-control" type="email" id="email" name="email" placeholder="Enter Email" value="{{ $one_row[0]['email'] }}" disabled>
                       @error('email')
                       <div class="error">{{ $message }}</div>
                       @enderror
@@ -113,12 +115,11 @@
 
                   </div>
 
-                  <div class="row text-center">
-                    <div class="col-md-12">
-
-                      <button class="btn btn-success" id="update_button" type="submit"><i class="fa fa-check"></i> Update </button>&nbsp;
-                      <button class="btn btn-primary" type="reset"><i class="fa fa-undo"></i> Undo </button>&nbsp;
-                      <a class="btn btn-danger" href="{{ route('home') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>&nbsp;
+                  <div class="row text-center mt-3">
+                    <div class="col-md-12 d-flex justify-content-center align-items-center flex-wrap" style="gap: 10px;">
+                      <button class="btn btn-success" style="width: auto !important;" id="update_button" type="submit"><i class="fa fa-check"></i> Update </button>
+                      <button class="btn btn-primary" style="width: auto !important;" type="reset"><i class="fa fa-undo"></i> Undo </button>
+                      <a class="btn" style="width: auto !important; background-color: red !important; color: white !important; border-color: red !important;" href="{{ route('home') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>
                     </div>
                   </div>
               </form>

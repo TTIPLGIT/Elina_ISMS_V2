@@ -184,6 +184,37 @@
     .card_design label {
         /* text-align: center; */
     }
+    @media (max-width: 768px) {
+
+    .title-footer-button-alignment {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
+        gap: 5px !important;
+        text-align: center !important;
+    }
+
+    .title-footer-button-alignment .btn {
+        font-size: 11px !important;
+        padding: 6px 8px !important;
+        white-space: nowrap !important;
+    }
+
+    .title-footer-button-alignment .btn-label {
+        font-size: 11px !important;
+    }
+
+    .title-footer-button-alignment .fa {
+        font-size: 10px !important;
+    }
+    .btn-label{
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+}
 </style>
 <style>
     .current {
@@ -302,11 +333,85 @@
         background: #f5f5f5;
     }
 }
-@media (max-width: 767px) {
+    @media (max-width: 767px) {
         .otherOption {
             opacity: 1;
- 
             margin: -2px 0px 0px 80px;
+        }
+
+        .main-content {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+        }
+
+        .breadcrumb {
+            font-size: 11px !important;
+            padding: 5px 10px !important;
+        }
+
+        .breadcrumb-item {
+            font-size: 11px !important;
+        }
+
+        .is-coordinate {
+            flex-direction: column !important;
+            padding: 10px !important;
+        }
+
+        .is-coordinate .col-sm-3 {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 0 10px !important;
+        }
+
+        .tab {
+            width: 100% !important;
+            overflow-x: auto !important;
+            display: flex !important;
+            white-space: nowrap !important;
+            border-radius: 5px !important;
+        }
+
+        .tab button {
+            padding: 10px 15px !important;
+            font-size: 14px !important;
+            flex: 1 0 auto !important;
+            border-radius: 0 !important;
+        }
+
+        .card_design {
+            margin-top: 10px !important;
+            padding: 10px !important;
+        }
+
+        .form-group label {
+            font-size: 14px !important;
+        }
+
+        .form-group {
+            margin-bottom: 5px !important;
+        }
+
+        .form-group label {
+            margin-bottom: 0px !important;
+            font-size: 13px !important;
+            line-height: 1.2 !important;
+            padding-bottom: 2px !important;
+        }
+
+        .form-control {
+            height: 32px !important;
+            padding: 2px 8px !important;
+            font-size: 13px !important;
+        }
+
+        .card_design {
+            padding: 5px !important;
+            margin-top: 5px !important;
+        }
+
+        .stepper-horizontal {
+            display: none !important;
         }
     }
 </style>

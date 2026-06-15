@@ -867,6 +867,12 @@
                 font-weight: 900 !important;
                 top: 0.4rem;
             }
+            #email {
+                padding-right: 3.5rem !important;
+            }
+            #password {
+                padding-right: 3.5rem !important;
+            }
             .border-243c92{
                 border-color: #243c92 !important;
             }

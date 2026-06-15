@@ -219,7 +219,7 @@
         @if($page['page'] != 15)
         @if($page['enable_flag'] == 0)
         @if($page['assessment_skill'] != null && $page['enable_flag'] != 1)
-        <p style="font-size: 22px;color:blue;font-weight:bold;font-family: Barlow !important;">{{$page['tab_name']}}</p>
+        <p style="page-break-before: always; font-size: 22px;color:blue;font-weight:bold;font-family: Barlow !important; margin-top:0;">{{$page['tab_name']}}</p>
         @foreach($perskill as $perskills)
         @if($perskills['performance_area_id'] == $page['assessment_skill'] && $perskills['skill_type'] == 1)
         <div id="table{{$page['page']}}">
@@ -252,7 +252,7 @@
             </table>
           </div>
         </div>
-        <p style="page-break-after: always"></p>
+
 
         @elseif($perskills['performance_area_id'] == $page['assessment_skill'] && $perskills['skill_type'] == 2 && !in_array($perskills['skill_id'] , explode(',',$report['switch'])))
         <div class="myTableheader{{$page['page']}}" id="table_a{{$page['page']}}">
@@ -281,7 +281,7 @@
             </table>
           </div>
         </div>
-        <p style="page-break-after: always"></p>
+
 
         @elseif($perskills['performance_area_id'] == $page['assessment_skill'] && $perskills['skill_type'] == 3 && !in_array($perskills['skill_id'] , explode(',',$report['switch'])))
         <!--  -->
@@ -347,7 +347,7 @@
             </tbody>
           </table>
         </div>
-        <p style="page-break-after: always"></p>
+
         @if($f = 1) @break @endif
         @endif
         @endif

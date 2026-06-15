@@ -5,7 +5,6 @@
 <style>
     input[type=checkbox] {
         display: inline-block;
-
     }
 
     .no-arrow {
@@ -22,14 +21,10 @@
         margin: 0;
     }
 
-    /* body{
-        background-color: white !important;
-    } */
     .nav-tabs {
         background-color: #0068a7 !important;
         border-radius: 29px !important;
         padding: 1px !important;
-
     }
 
     .nav-item.active {
@@ -108,11 +103,8 @@
         text-align: center;
     }
 
-
-
     .page {
         width: 210mm;
-        /* min-height: 297mm; */
         padding: 10mm;
         margin: 10mm auto;
         border: 1px #D3D3D3 solid;
@@ -121,25 +113,6 @@
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
 
-    /* .circle-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
-
-    /* .circle {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background-color: #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
-
-    /* .circle-content {
-  text-align: center;
-} */
     .select2-container {
         width: 1% !important;
         display: table-cell !important;
@@ -154,15 +127,13 @@
         max-height: 100px;
         overflow-y: scroll;
     }
-</style>
-<style>
+
+    /* FAQ drawer (email preview) */
     input[type="checkbox"] {
         display: none;
     }
 
     .faq-drawer {
-        /* width: 75%;
-    margin-bottom: 1.8rem; */
         flex: 1;
         box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
     }
@@ -227,69 +198,204 @@
         border-bottom-right-radius: 8px;
     }
 
-    /* .tox.tox-tinymce {
-        margin: 0 0 0 85px;
-    } */
+    /* ========== MOBILE RESPONSIVE STYLES ========== */
+    @media (max-width: 768px) {
+        /* Breadcrumb single line - ensure visibility */
+        .breadcrumb {
+            flex-wrap: nowrap !important;
+            white-space: nowrap !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            display: flex !important;
+            width: 100% !important;
+            margin-top: 60px !important;
+            margin-bottom: 10px !important;
+            padding: 5px 10px !important;
+            font-size: 11px !important;
+        }
+        .breadcrumb::-webkit-scrollbar {
+            display: none;
+        }
+        .breadcrumb-item,
+        .breadcrumb-item a {
+            white-space: nowrap !important;
+            font-size: 11px !important;
+        }
 
-    /* .a4-editor {
-        width: calc(210mm / 25.4 * 96px);
-        height: calc(297mm / 25.4 * 96px);
-    } */
+        body, .main-content {
+            overflow-x: hidden !important;
+            padding: 0 5px !important;
+        }
+
+        .form-group, .form-control, .select2-container, .tox-tinymce {
+            width: 100% !important;
+        }
+
+        .card-body, .section-body {
+            padding: 10px !important;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        .page {
+            width: 100% !important;
+            padding: 10px !important;
+            margin: 0 auto !important;
+        }
+
+        /* PDF iframe height on mobile */
+        iframe {
+            height: 450px !important;
+        }
+
+        /* Mobile download button */
+        .mobile-download-btn {
+            display: block !important;
+            text-align: center;
+            margin: 15px 0;
+        }
+        .mobile-download-btn .btn {
+            background: #036B86 !important;
+            border-color: #036B86 !important;
+            color: #fff !important;
+            font-weight: 600;
+            min-width: 250px;
+        }
+
+        /* Email drawer - make TinyMCE scrollable on mobile */
+        .faq-drawer__content {
+            padding: 10px !important;
+            max-height: 70vh !important;
+            overflow-y: auto !important;
+        }
+        .faq-drawer__content .tox-tinymce {
+            max-height: 50vh !important;
+            overflow-y: auto !important;
+        }
+        .faq-drawer__content .tox-edit-area {
+            overflow-y: auto !important;
+        }
+        .faq-drawer__content .tox-edit-area__iframe {
+            height: auto !important;
+            min-height: 200px !important;
+            max-height: 50vh !important;
+            overflow-y: auto !important;
+        }
+        .mce-tinymce {
+            overflow-y: auto !important;
+        }
+        textarea#email_content {
+            max-height: 300px !important;
+            overflow-y: auto !important;
+        }
+
+        /* Action buttons on mobile - horizontal wrap */
+        .col-md-12.text-center {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 10px !important;
+            flex-wrap: wrap !important;
+        }
+        .col-md-12.text-center .btn {
+            width: auto !important;
+            min-width: 100px !important;
+            margin: 0 !important;
+        }
+    }
+
+    /* Desktop: hide mobile download button */
+    .mobile-download-btn {
+        display: none;
+    }
+
+    /* Global fix for TinyMCE scrolling */
+    .tox-tinymce, .tox-edit-area, .tox-edit-area__iframe {
+        overflow-y: auto !important;
+    }
+    .tox-edit-area__iframe {
+        height: 300px !important;
+    }
 </style>
+
 <div class="main-content">
     {{ Breadcrumbs::render('referralreport.show',$data['report_id']) }}
+
     @if (session('success'))
-
-    <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
-    <script type="text/javascript">
-        window.onload = function() {
-            var message = $('#session_data').val();
-            swal.fire("Success", message, "success");
-
-        }
-    </script>
+        <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
+        <script>
+            window.onload = function() {
+                var message = $('#session_data').val();
+                swal.fire("Success", message, "success");
+            }
+        </script>
     @elseif(session('fail'))
-
-    <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
-    <script type="text/javascript">
-        window.onload = function() {
-            var message = $('#session_data1').val();
-            swal.fire("Info", message, "info");
-
-        }
-    </script>
+        <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
+        <script>
+            window.onload = function() {
+                var message = $('#session_data1').val();
+                swal.fire("Info", message, "info");
+            }
+        </script>
     @endif
+
     <div class="section-body mt-0">
         <h4 style="color:darkblue">Referral Report Preview</h4>
-        
+
         <input type="hidden" name="child_contact_email" id="child_contact_email" value="{{$data['email']}}">
         <input type="hidden" name="child_name" id="child_name" value="{{$data['child_name']}}">
         <input type="hidden" name="enrollment_id" id="enrollment_id" value="{{$data['enrollment_id']}}">
 
-        <div>
-            <iframe src="{{$viewPDF}}" width="100%" height="600" frameborder="0"></iframe>
+        <!-- Mobile Download Button (only visible on mobile) -->
+        <div class="mobile-download-btn">
+            <a href="{{ $viewPDF }}" download="Referral_Report.pdf" class="btn report-download-btn">
+                <i class="fa fa-download"></i> Download Report (PDF)
+            </a>
         </div>
+
+        <!-- PDF Viewer -->
+        <div>
+            <iframe src="{{ $viewPDF }}" width="100%" height="600" frameborder="0"></iframe>
+        </div>
+
         @if($data['status'] != 'Published')
         <div style="display: contents;">
-        <div class="faq-drawer">
-            <input class="faq-drawer__trigger" id="faq-drawer" type="checkbox" /><label class="faq-drawer__title" style="background: #96a3d5c7;" for="faq-drawer">Email Preview</label>
-            <div class="faq-drawer__content-wrapper">
-                <div class="faq-drawer__content">
-                    <textarea class="form-control" id="email_content" name="email_content">{{$data['email_draft']}}</textarea>
+            <div class="faq-drawer">
+                <input class="faq-drawer__trigger" id="faq-drawer" type="checkbox" />
+                <label class="faq-drawer__title" style="background: #96a3d5c7;" for="faq-drawer">Email Preview</label>
+                <div class="faq-drawer__content-wrapper">
+                    <div class="faq-drawer__content">
+                        <textarea class="form-control" id="email_content" name="email_content">{{ $data['email_draft'] }}</textarea>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>@endif
+        @endif
     </div>
+
+    <!-- Action Buttons -->
     <div class="col-md-12 text-center" style="padding: 10px;">
-        <a type="button" class="btn btn-labeled back-btn" title="Cancel" href="{{ route('referralreport.index') }}" style="color:white !important">
-            <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Cancel</a>
-            @if($data['status'] != 'Published')
-        <a href="{{ route('referralreport.edit', \Crypt::encrypt($data['report_id'])) }}" type="button" id="editbutton" class="btn btn-labeled btn-succes" title="Edit" style="background: orange !important; color:white !important">
-            <span class="btn-label" style="font-size:13px !important;"><i class="fas fa-pencil-alt"></i></span> Edit </a>
-        <a type="button" onclick="pdfgenrate('{{$data['report_id']}}')" id="submitbutton" class="btn btn-labeled btn-succes" title="Submit" style="background: green !important; border-color:green !important; color:white !important">
-            <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Publish </a>
-            @endif
+        <!-- Cancel button - red color -->
+        <a type="button" class="btn btn-labeled back-btn" title="Cancel" href="{{ route('referralreport.index') }}" style="color:white !important; background: #dc3545 !important; border-color: #dc3545 !important;">
+            <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Cancel
+        </a>
+        @if($data['status'] != 'Published')
+            <a href="{{ route('referralreport.edit', \Crypt::encrypt($data['report_id'])) }}" type="button" id="editbutton" class="btn btn-labeled btn-succes" title="Edit" style="background: orange !important; color:white !important">
+                <span class="btn-label" style="font-size:13px !important;"><i class="fas fa-pencil-alt"></i></span> Edit
+            </a>
+            <a type="button" onclick="pdfgenrate('{{ $data['report_id'] }}')" id="submitbutton" class="btn btn-labeled btn-succes" title="Submit" style="background: green !important; border-color:green !important; color:white !important">
+                <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Publish
+            </a>
+        @endif
     </div>
 </div>
 
@@ -298,28 +404,20 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-
         tinymce.init({
             selector: '.tinymce-body',
             inline: true,
             menubar: false,
             branding: false,
             plugins: 'searchreplace',
-            toolbar: 'undo redo | formatselect | ' +
-                'bold italic backcolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'removeformat | searchreplace',
+            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | searchreplace',
         });
         tinymce.init({
             selector: 'textarea#email_content',
             menubar: false,
             branding: false,
-            toolbar: 'undo redo | formatselect | ' +
-                'bold italic backcolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'removeformat ',
+            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat',
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-
             setup: function(editor) {
                 var childName = <?php echo json_encode($data['child_name']); ?>;
                 editor.on('init', function() {
@@ -328,15 +426,13 @@
                     editor.setContent(content);
                 });
             },
-
         });
     });
 </script>
+
 <script>
     function pdfgenrate(reportID) {
         $(".loader").show();
-        // var entirePage = document.getElementById('entirePage').innerHTML;
-        // entirePage = entirePage.replace(/<\/?span[^>]*>/g, "");
         var child_contact_email = document.getElementById('child_contact_email').value;
         var childName = document.getElementById('child_name').value;
         var enrollment_id = document.getElementById('enrollment_id').value;
@@ -347,7 +443,6 @@
             type: 'POST',
             data: {
                 'reportID': reportID,
-                // 'entirePage': entirePage,
                 'child_contact_email': child_contact_email,
                 'enrollment_id': enrollment_id,
                 'childName': childName,
@@ -355,13 +450,11 @@
                 _token: '{{csrf_token()}}'
             }
         }).done(function(data) {
-
             $(".loader").hide();
-            // swal.fire("Success", "Report Sent Successfully", "success");
             swal.fire("Success", "The Referral Report has been published successfully.", "success").then(function() {
-                window.location.href = "{{route('referralreport.index')}}";
+                window.location.href = "{{ route('referralreport.index') }}";
             });
-        })
+        });
     }
 </script>
 

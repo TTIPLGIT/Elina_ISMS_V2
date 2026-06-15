@@ -38,11 +38,185 @@
   .option-item input:disabled {
     opacity: 1 !important;
   }
+
+  /* Mobile Responsive Overrides */
+  @media (max-width: 768px) {
+    /* Input Field Minimal Styling (Mobile Only) */
+    .form-control, .form-group textarea, .form-group select {
+      background-color: transparent !important;
+      border: none !important;
+      border-bottom: 1px solid #ced4da !important;
+      border-radius: 0 !important;
+      padding: 8px 0 !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      color: #1a1a1a !important;
+      font-family: 'Barlow Semi Condensed', sans-serif !important;
+      box-shadow: none !important;
+      min-height: auto !important;
+    }
+
+    .form-control:focus {
+      border-bottom: 2px solid #007bff !important;
+      background-color: transparent !important;
+    }
+
+    .form-control[readonly], .form-control:disabled {
+      background-color: transparent !important;
+      border-bottom: 1px dashed #ccc !important;
+    }
+
+    .main-content {
+      padding: 5px !important;
+    }
+
+    #mobile-breadcrumb-wrapper .breadcrumb, 
+    #mobile-breadcrumb-wrapper .breadcrumb-custom {
+      margin-top: 60px !important;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+    }
+
+    #mobile-breadcrumb-wrapper .breadcrumb * {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    #mobile-breadcrumb-wrapper .breadcrumb li, 
+    #mobile-breadcrumb-wrapper .breadcrumb a, 
+    #mobile-breadcrumb-wrapper .breadcrumb .active,
+    #mobile-breadcrumb-wrapper .breadcrumb-item {
+      font-size: 13px !important;
+      color: #e83e8c !important; /* Pink color */
+    }
+
+    /* Force hide all custom Elina ISMS chevrons and circular numbers using ID specificity */
+    #mobile-breadcrumb-wrapper .breadcrumb *:before,
+    #mobile-breadcrumb-wrapper .breadcrumb *:after,
+    #mobile-breadcrumb-wrapper .breadcrumb *::before,
+    #mobile-breadcrumb-wrapper .breadcrumb *::after {
+      display: none !important;
+      content: none !important;
+      background: transparent !important;
+      border: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    #mobile-breadcrumb-wrapper .breadcrumb span {
+      display: none !important;
+    }
+
+    /* Add the simple ">" arrow separator */
+    #mobile-breadcrumb-wrapper .breadcrumb li + li::before {
+      display: inline-block !important;
+      content: " \003E " !important;
+      color: #adb5bd !important;
+      padding: 0 8px !important;
+      font-weight: normal !important;
+      position: static !important;
+    }
+
+    h4 {
+      font-size: 14px !important;
+      margin-top: 10px !important;
+      margin-bottom: 10px !important;
+      font-weight: bold !important;
+    }
+
+    .card-body {
+      padding: 10px !important;
+      max-height: 500px !important;
+    }
+
+    .form-group {
+      margin-bottom: 12px !important;
+    }
+
+    .form-group label {
+      font-size: 13px !important;
+      font-weight: bold !important;
+    }
+
+    .form-group p {
+      font-size: 11px !important;
+      margin-bottom: 8px !important;
+    }
+
+    .option-item label {
+      font-size: 12px !important;
+    }
+
+    .btn {
+      padding: 6px 12px !important;
+      font-size: 12px !important;
+      margin-bottom: 5px !important;
+    }
+    /* Mobile Breadcrumb Fix */
+.breadcrumb-wrapper {
+    width: 100% !important;
+    overflow: hidden !important;
+}
+
+.breadcrumb-wrapper .breadcrumb {
+    margin-top: 60px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    white-space: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    flex-wrap: nowrap !important;
+    display: flex !important;
+    align-items: center !important;
+    scrollbar-width: none !important;
+}
+
+.breadcrumb-wrapper .breadcrumb::-webkit-scrollbar {
+    display: none !important;
+}
+
+.breadcrumb-wrapper .breadcrumb li,
+.breadcrumb-wrapper .breadcrumb a,
+.breadcrumb-wrapper .breadcrumb .active,
+.breadcrumb-wrapper .breadcrumb-item {
+    font-size: 11px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+}
+
+/* Reduce heading size */
+h4 {
+    font-size: 13px !important;
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
+}
+
+/* Reduce card padding */
+.card-body {
+    padding: 8px !important;
+}
+
+/* Make buttons fit better */
+.btn {
+    padding: 5px 10px !important;
+    font-size: 11px !important;
+}
+  }
 </style>
 
 <div class="main-content">
 
-  {{ Breadcrumbs::render('g2form.new' , $child_name) }}
+ <div class="breadcrumb-wrapper">
+    {{ Breadcrumbs::render('g2form.new' , $child_name) }}
+</div>
 
   {{-- Alerts --}}
   @if (session('success'))

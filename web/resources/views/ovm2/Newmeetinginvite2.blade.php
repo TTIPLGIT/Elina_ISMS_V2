@@ -36,9 +36,187 @@
   .select2-container--default .select2-selection--multiple .select2-selection__choice {
     color: black !important;
   }
+
+    /* Mobile Responsive Overrides */
+    @media (max-width: 768px) {
+        .main-content {
+            padding: 5px !important;
+            margin-top: 60px !important;
+            position: relative !important;
+            z-index: 1 !important;
+        }
+
+        /* Breadcrumbs - Single Line */
+        .breadcrumb {
+            padding: 2px 5px !important;
+            margin: 10px 0 10px 15px !important;
+            width: 90% !important;
+            height: auto !important;
+            font-size: 9px !important;
+            background-color: transparent !important;
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            overflow: hidden !important;
+            border: none !important;
+            box-shadow: none !important;
+            justify-content: flex-start !important;
+            align-items: center !important;
+            white-space: nowrap !important;
+        }
+        
+        .breadcrumb li span, 
+        .breadcrumb .number,
+        .breadcrumb-item::before {
+            width: 14px !important;
+            height: 14px !important;
+            line-height: 14px !important;
+            font-size: 8px !important;
+            margin-right: 3px !important;
+        }
+
+        .breadcrumb-item, .breadcrumb-item a {
+            font-size: 9px !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        /* Titles */
+        h5.text-center {
+            font-size: 14px !important;
+            margin-top: 10px !important;
+            font-weight: bold !important;
+            color: darkblue !important;
+        }
+
+        /* Form Controls */
+        .card {
+            margin: 5px 0 !important;
+        }
+        .card-body {
+            padding: 10px !important;
+        }
+        
+        .form-group {
+            margin-bottom: 8px !important;
+        }
+        
+        .control-label, .col-form-label, label {
+            font-size: 10px !important;
+            font-weight: bold !important;
+            margin-bottom: 2px !important;
+            color: #333 !important;
+        }
+        
+        .form-control {
+            height: 30px !important;
+            font-size: 10px !important;
+            padding: 5px !important;
+        }
+
+        /* Grid Adjustments */
+        .col-md-4, .col-sm-2, .col-sm-4, .col-md-2 {
+            width: 100% !important;
+            max-width: 100% !important;
+            flex: 0 0 100% !important;
+        }
+
+        .centerid {
+            text-align: left !important;
+        }
+
+        /* Date/Time Pickers side-by-side */
+        .form-group.row {
+            margin-bottom: 5px !important;
+            display: flex !important;
+            flex-wrap: wrap !important;
+        }
+        
+        .form-group.row .col-sm-4 {
+            width: 100% !important; 
+            max-width: 100% !important;
+            flex: 0 0 100% !important;
+            padding-right: 15px !important;
+        }
+
+        .form-group.row:has(.meeting_date) .col-sm-4 {
+            width: 55% !important; /* Date takes 55% */
+            max-width: 55% !important;
+            flex: 0 0 55% !important;
+            padding-right: 2px !important;
+        }
+        
+        .form-group.row:has(.meeting_date) div.col-sm-2 {
+            width: 45% !important; /* Time takes 45% */
+            max-width: 45% !important;
+            flex: 0 0 45% !important;
+        }
+
+        .form-group.row label.col-sm-2 {
+            width: 100% !important;
+            max-width: 100% !important;
+            flex: 0 0 100% !important;
+            display: block !important;
+        }
+
+        input[type="time"].form-control {
+            padding: 5px 2px !important; /* less horizontal padding to fit AM/PM */
+        }
+        
+        input[type="file"].form-control {
+            padding: 3px !important; 
+            height: auto !important; /* fix native button alignment */
+        }
+        
+        .form-group small {
+            font-size: 9px !important;
+            line-height: 1.2 !important;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        /* Action Buttons - Uniform Size */
+        .row.text-center .col-md-12 {
+            display: flex !important;
+            justify-content: center !important;
+            gap: 5px !important;
+        }
+        .btn {
+            padding: 4px 0 !important;
+            font-size: 10px !important;
+            margin: 0 !important;
+            width: 60px !important; /* Reduced width */
+            text-align: center !important;
+        }
+        .back-btn {
+            padding-left: 5px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        .back-btn .btn-label {
+            margin-right: 5px !important;
+            padding: 0 !important;
+            background: transparent !important;
+        }
+
+        /* Calendar Icon - Centered like Timer Icon */
+        .inner-addon i {
+            top: 50% !important;
+            right: 10px !important;
+            transform: translateY(-50%) !important;
+            font-size: 14px !important;
+            margin-top: 0 !important;
+        }
+        
+        /* Note at bottom */
+        .card-body p {
+            font-size: 9px !important;
+            line-height: 1.2 !important;
+        }
+    }
 </style>
 
-<div class="main-content">
+<div class="main-content" style="position:absolute !important; z-index: -2!important; ">
 
   <!-- Main Content -->
   <section class="section">

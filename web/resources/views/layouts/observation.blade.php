@@ -1452,6 +1452,29 @@
       background-color: #e9ecef !important;
       opacity: 1;
     }
+
+    @media (min-width: 768px) {
+      .navigation {
+        position: relative !important;
+      }
+
+      .badge.badgeworkflow {
+        margin-right: -132px !important;
+        top: 2px !important;
+        background-color: red !important;
+        color: white !important;
+        border-radius: 50% !important;
+        width: 18px !important;
+        height: 18px !important;
+        font-size: 8px !important;
+        font-weight: bold !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 !important;
+        line-height: normal !important;
+      }
+    }
   </style>
 
 </head>

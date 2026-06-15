@@ -49,6 +49,100 @@
         background: white;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
+
+    /* ===== MOBILE RESPONSIVE OVERRIDES ===== */
+    @media (max-width: 768px) {
+        .main-content {
+            padding: 6px !important;
+            margin-top: 55px !important;
+            overflow-x: hidden !important;
+        }
+
+        h4 {
+            font-size: 13px !important;
+            margin: 6px 0 !important;
+        }
+
+        /* Shrink the A4 container on mobile */
+        .container {
+            padding: 6px !important;
+            box-shadow: none !important;
+            margin: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        /* TinyMCE editor body offset fix */
+        .tinymce-body,
+        #page-body {
+            margin: 0 !important;
+        }
+
+        /* Action buttons row - compact and wrap */
+        .col-md-12.text-center {
+            padding: 6px !important;
+            display: flex !important;
+            flex-wrap: wrap !important;
+            gap: 4px !important;
+            justify-content: center !important;
+            align-items: center !important;
+        }
+
+        .col-md-12.text-center .btn {
+            font-size: 10px !important;
+            padding: 4px 8px !important;
+            height: auto !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            margin: 0 !important;
+            flex: 0 1 auto !important;
+            white-space: nowrap !important;
+        }
+
+        /* Fix btn-label icon overflow */
+        .col-md-12.text-center .btn .btn-label {
+            background: transparent !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            margin: 0 4px 0 0 !important;
+            border-radius: 0 !important;
+            color: inherit !important;
+            position: relative !important;
+            left: auto !important;
+            top: auto !important;
+            display: inline !important;
+            width: auto !important;
+            height: auto !important;
+        }
+
+        /* Email Preview accordion */
+        .faq-drawer__title {
+            font-size: 11px !important;
+            padding: 6px 10px 6px 20px !important;
+        }
+
+        .faq-drawer__content-wrapper {
+            font-size: 11px !important;
+        }
+
+        /* CC select and TinyMCE email editor */
+        .faq-drawer__content .form-control {
+            font-size: 10px !important;
+            height: auto !important;
+        }
+
+        /* TinyMCE editor container */
+        .tox.tox-tinymce {
+            margin: 0 !important;
+            min-height: 250px !important;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            font-size: 10px !important;
+            padding: 4px 8px !important;
+        }
+    }
 </style>
 <style>
     input[type="checkbox"] {
@@ -483,7 +577,7 @@
             content_style: "@import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');",
             content_style: "@import url(https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;display=swap);",
             content_style: "@import url(https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&display=swap);",
-            content_style: "@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');",
+            content_style: "@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); @media (max-width: 768px) { body, p, span, li, td, th, div { font-size: 9px !important; line-height: 1.4 !important; overflow-y: auto !important; } h1 { font-size: 14px !important; } h2 { font-size: 12px !important; } h3, h4 { font-size: 10px !important; } img { max-width: 100% !important; height: auto !important; max-height: 350px !important; } table { max-width: 100% !important; table-layout: fixed !important; width: 100% !important; } body { overflow-y: auto !important; } }",
             importcss_append: true,
 
             file_picker_callback: function(cb, value, meta) {
@@ -512,9 +606,9 @@
 
                 input.click();
             },
-            width: '210mm',
-            margin: 85,
-            height: 520,
+            width: (window.innerWidth <= 768) ? '100%' : '210mm',
+            margin: (window.innerWidth <= 768) ? 0 : 85,
+            height: (window.innerWidth <= 768) ? 380 : 520,
             image_caption: true,
             quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
             noneditable_noneditable_class: "mceNonEditable",

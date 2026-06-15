@@ -31,7 +31,121 @@
   }
   .select2-container--default .select2-results__option--highlighted[aria-selected=true] {
     background-color: gray;
-}
+  }
+
+  /* Mobile Responsive Overrides */
+  @media (max-width: 768px) {
+      .main-content {
+          padding: 5px !important;
+          margin-top: 60px !important;
+          position: relative !important;
+          z-index: 1 !important;
+      }
+
+      /* Breadcrumbs - Single Line */
+      .breadcrumb {
+          padding: 2px 5px !important;
+          margin: 10px 0 10px 15px !important;
+          width: 90% !important;
+          height: auto !important;
+          font-size: 9px !important;
+          background-color: transparent !important;
+          display: flex !important;
+          flex-wrap: nowrap !important;
+          overflow: hidden !important;
+          border: none !important;
+          box-shadow: none !important;
+          justify-content: flex-start !important;
+          align-items: center !important;
+          white-space: nowrap !important;
+      }
+      
+      .breadcrumb li span, 
+      .breadcrumb .number,
+      .breadcrumb-item::before {
+          width: 14px !important;
+          height: 14px !important;
+          line-height: 14px !important;
+          font-size: 8px !important;
+          margin-right: 3px !important;
+      }
+
+      .breadcrumb-item, .breadcrumb-item a {
+          font-size: 9px !important;
+          display: flex !important;
+          align-items: center !important;
+      }
+
+      /* Titles */
+      h5.text-center {
+          font-size: 14px !important;
+          margin-top: 10px !important;
+          font-weight: bold !important;
+          color: darkblue !important;
+      }
+
+      /* Form Controls */
+      .card {
+          margin: 5px 0 !important;
+      }
+      .card-body {
+          padding: 10px !important;
+      }
+      
+      .form-group {
+          margin-bottom: 8px !important;
+      }
+      
+      .control-label, .col-form-label, label {
+          font-size: 10px !important;
+          font-weight: bold !important;
+          margin-bottom: 2px !important;
+          color: #333 !important;
+      }
+      
+      .form-control {
+          height: 30px !important;
+          font-size: 10px !important;
+          padding: 5px !important;
+      }
+
+      /* Grid Adjustments */
+      .col-md-4, .col-sm-2, .col-sm-4, .col-md-2, .col-md-6, .col-md-3, .col-sm-3, .col-sm-8 {
+          width: 100% !important;
+          max-width: 100% !important;
+          flex: 0 0 100% !important;
+      }
+
+      .centerid {
+          text-align: left !important;
+      }
+
+      /* Action Buttons - Uniform Size */
+      .col-md-12.text-center {
+          display: flex !important;
+          justify-content: center !important;
+          gap: 5px !important;
+      }
+      .btn {
+          padding: 4px 10px !important;
+          font-size: 10px !important;
+          margin: 0 !important;
+          width: auto !important;
+          min-width: 70px !important;
+          text-align: center !important;
+      }
+      .back-btn {
+          padding-left: 5px !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+      }
+      .back-btn .btn-label {
+          margin-right: 5px !important;
+          padding: 0 !important;
+          background: transparent !important;
+      }
+  }
 </style>
 
 <div class="main-content">

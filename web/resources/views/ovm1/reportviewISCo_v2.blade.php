@@ -5,6 +5,108 @@
     li.paginate_button.page-item.previous.disabled {
         display: none;
     }
+
+    /* ===== MOBILE RESPONSIVE OVERRIDES ===== */
+    @media (max-width: 768px) {
+        .main-content {
+            padding: 8px !important;
+            margin-top: 55px !important;
+            overflow-x: hidden !important;
+        }
+
+        h5.text-center {
+            font-size: 13px !important;
+            margin: 8px 0 !important;
+        }
+
+        /* Table full-width with horizontal scroll on mobile */
+        .table-responsive {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            width: 100% !important;
+        }
+
+        /* Compact table cell font and padding */
+        #recap th,
+        #recap td {
+            font-size: 10px !important;
+            padding: 5px 6px !important;
+            word-break: break-word !important;
+        }
+
+        /* Coordinator name sub-text */
+        #recap th p {
+            font-size: 9px !important;
+            margin: 2px 0 0 0 !important;
+        }
+
+        /* thead background */
+        #recap thead th {
+            font-size: 10px !important;
+            background-color: rgb(9 48 110) !important;
+            color: white !important;
+        }
+
+        /* Action button compact */
+        .btn-labeled {
+            font-size: 10px !important;
+            padding: 4px 8px !important;
+            height: auto !important;
+        }
+
+        /* Report Preview button — keep floated right on mobile */
+        .section-body > a.btn {
+            float: right !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            margin: 0 0 8px 0 !important;
+            font-size: 10px !important;
+            padding: 4px 8px !important;
+            height: auto !important;
+        }
+
+        /* Fix icon overlap - reset negative margin/position from btn-label */
+        .btn .btn-label {
+            background: transparent !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            margin: 0 4px 0 0 !important;
+            border-radius: 0 !important;
+            color: inherit !important;
+            position: relative !important;
+            left: auto !important;
+            top: auto !important;
+            display: inline !important;
+            width: auto !important;
+            height: auto !important;
+        }
+
+        /* Breadcrumb compact */
+        .breadcrumb {
+            font-size: 10px !important;
+            padding: 4px 8px !important;
+        }
+
+        /* Card body padding reduction */
+        .card-body {
+            padding: 8px !important;
+        }
+
+        /* DataTable controls compact */
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter,
+        .dataTables_wrapper .dataTables_info,
+        .dataTables_wrapper .dataTables_paginate {
+            font-size: 10px !important;
+        }
+        .dataTables_wrapper select,
+        .dataTables_wrapper input {
+            font-size: 10px !important;
+            padding: 2px 4px !important;
+            height: auto !important;
+        }
+    }
+    
 </style>
 <div class="main-content">
 
@@ -54,15 +156,15 @@
                                     <table class="table table-bordered" id="recap">
                                         <thead>
                                             <tr>
-                                                <th width="30%" style="border: 1px solid black !important;">Area</th>
-                                                <th width="35%" style="border: 1px solid black !important;" class="u1_coordinator">{{$rows[0]['name']}}
+                                                <th width="10%" style="border: 1px solid black !important;">Area</th>
+                                                <th width="15%" style="border: 1px solid black !important;" class="u1_coordinator">{{$rows[0]['name']}}
                                                     @if($rows[0]['is_coordinator_id'] == $coordinator[0]['is_coordinator1'])
                                                     <p style="font-size: 15px;font-style: italic;">( Is Coordinator 1 )</p>
                                                     @elseif($rows[0]['is_coordinator_id'] == $coordinator[0]['is_coordinator2'])
                                                     <p style="font-size: 15px;font-style: italic;">( Is Coordinator 2 )</p>
                                                     @endif
                                                 </th>
-                                                <th width="35%" style="border: 1px solid black !important;" class="u2_coordinator">{{$rows[1]['name']}}
+                                                <th width="15%" style="border: 1px solid black !important;" class="u2_coordinator">{{$rows[1]['name']}}
                                                     @if($rows[1]['is_coordinator_id'] == $coordinator[0]['is_coordinator1'])
                                                     <p style="font-size: 15px;font-style: italic;">( Is Coordinator 1 )</p>
                                                     @elseif($rows[1]['is_coordinator_id'] == $coordinator[0]['is_coordinator2'])

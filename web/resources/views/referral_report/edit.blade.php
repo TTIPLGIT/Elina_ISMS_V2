@@ -661,6 +661,144 @@
 
         var remainingChars = maxChar - textarea.value.length;
         console.log("Remaining characters: " + remainingChars);
-    }
 </script>
+
+<style>
+@media only screen and (max-width: 768px) {
+
+    /* Main Content */
+    .main-content {
+        padding: 2px !important;
+        margin-top: 55px !important;
+        overflow-x: hidden !important;
+    }
+
+    .section-body {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .card,
+    .card-body {
+        padding: 6px !important;
+        margin: 0 !important;
+    }
+
+    /* Reduce left & right space */
+    .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    [class*="col-"] {
+        padding-left: 4px !important;
+        padding-right: 4px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+
+    /* Form Controls */
+    .form-control,
+    textarea,
+    select {
+        width: 100% !important;
+        font-size: 13px !important;
+        min-height: 38px;
+    }
+
+    textarea {
+        word-break: break-word;
+    }
+
+    /* Recommendation Table */
+    .table-responsive {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+
+    #recommendation_table {
+        min-width: 900px;
+    }
+
+    #recommendation_table textarea,
+    #recommendation_table select,
+    #recommendation_table input {
+        min-width: 140px;
+    }
+
+    /* TinyMCE */
+    .tox,
+    .tox-tinymce {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Signature Section */
+    .fixTableHead table {
+        min-width: 600px;
+    }
+
+    .fixTableHead .table-responsive {
+        overflow-x: auto !important;
+    }
+
+    /* Heading */
+    h5.align {
+        font-size: 16px !important;
+        text-align: center !important;
+        margin-bottom: 10px !important;
+    }
+
+   /* Submit, Save, Back - Same Line */
+.col-md-12.text-center {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 5px !important;
+    flex-wrap: nowrap !important;
+}
+
+.col-md-12.text-center .btn {
+    width: auto !important;
+    min-width: 90px !important;
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+}
+
+.col-md-12.text-center .btn-label {
+    display: none !important; /* hides icons on mobile */
+}
+
+    .back-btn {
+        margin-top: 0 !important;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+        font-size: 12px !important;
+        padding: 5px !important;
+        margin-bottom: 8px !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        margin-left:10px!important;
+    }
+
+    /* Plus & Remove Buttons */
+    .row_div .btn,
+    .remove {
+        padding: 4px 6px !important;
+    }
+
+    /* Date Input */
+    input[type="date"] {
+        width: 100% !important;
+    }
+}
+</style>
+
 @endsection

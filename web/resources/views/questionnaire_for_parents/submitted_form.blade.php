@@ -309,8 +309,118 @@
     @media (max-width: 767px) {
         .otherOption {
             opacity: 1;
-
             margin: -2px 0px 0px 80px;
+        }
+
+        .main-content {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+        }
+
+        .breadcrumb {
+            font-size: 11px !important;
+            padding: 5px 10px !important;
+        }
+
+        .breadcrumb-item {
+            font-size: 11px !important;
+        }
+
+        .is-coordinate {
+            flex-direction: column !important;
+            padding: 10px !important;
+        }
+
+        .is-coordinate .col-sm-3 {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 0 10px !important;
+        }
+
+        .tab {
+            width: 100% !important;
+            overflow-x: auto !important;
+            display: flex !important;
+            white-space: nowrap !important;
+            border-radius: 5px !important;
+        }
+
+        .tab button {
+            padding: 10px 15px !important;
+            font-size: 14px !important;
+            flex: 1 0 auto !important;
+            border-radius: 0 !important;
+        }
+
+        .card_design {
+            margin-top: 10px !important;
+            padding: 10px !important;
+        }
+
+        .form-group label {
+            font-size: 14px !important;
+        }
+
+        .form-group {
+            margin-bottom: 5px !important;
+        }
+
+        .form-group label {
+            margin-bottom: 0px !important;
+            font-size: 13px !important;
+            line-height: 1.2 !important;
+            padding-bottom: 2px !important;
+        }
+
+        .form-control {
+            height: 32px !important;
+            padding: 2px 8px !important;
+            font-size: 13px !important;
+        }
+
+        .card_design {
+            padding: 5px !important;
+            margin-top: 5px !important;
+        }
+
+        .stepper-horizontal {
+            display: none !important;
+        }
+
+        /* ---- Previous / Cancel / Next button row ---- */
+        .tile-footer {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 8px !important;
+            padding: 10px 5px !important;
+        }
+
+        .tile-footer .btn {
+            min-width: 100px !important;
+            max-width: 140px !important;
+            width: auto !important;
+            flex: 1 1 100px !important;
+            padding: 8px 10px !important;
+            font-size: 12px !important;
+            text-align: center !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            white-space: nowrap !important;
+            margin: 0 !important;
+        }
+
+        .tile-footer .btn .btn-label {
+            padding: 0 4px 0 0 !important;
+            background: transparent !important;
+            font-size: 12px !important;
+        }
+
+        /* Reset any inline display:flex on parent divs */
+        .title-footer-button-alignment {
+            flex-wrap: wrap !important;
         }
     }
 </style>
@@ -412,19 +522,19 @@
                 </div>
             </div>
         </div>
-        <div class="tile-footer title-footer-button-alignment" style="padding: 10px;display: flex;justify-content: center;">
-            <a type="button" class="btn btn-labeled btn-info" onclick="PrevTab();" id="Previous" title="Previous Stage" style="display:none;background: blue !important; border-color:blue !important; color:white !important">
-                <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Previous Stage</a>
+        <div class="tile-footer title-footer-button-alignment" style="padding: 10px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px;">
+            <a type="button" class="btn btn-labeled btn-info" onclick="PrevTab();" id="Previous" title="Previous Stage" style="display:none;background: blue !important; border-color:blue !important; color:white !important; min-width:110px;">
+                <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Previous</a>
 
             @if($role == 'Parent')
-            <a type="button" class="btn btn-labeled back-btn" title="Cancel" href="{{ route('questionnaire_for_user.index') }}" style="color:white !important;background: red !important;">
+            <a type="button" class="btn btn-labeled back-btn" title="Cancel" href="{{ route('questionnaire_for_user.index') }}" style="color:white !important;background: red !important; min-width:110px;">
                 <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left" style="color:white !important"></i></span> Cancel</a>
             @else
-            <a type="button" class="btn btn-labeled back-btn" title="Cancel"  data-toggle="tooltip" href="{{ URL::previous() }}" style="color:white !important;background: red !important;">
+            <a type="button" class="btn btn-labeled back-btn" title="Cancel"  data-toggle="tooltip" href="{{ URL::previous() }}" style="color:white !important;background: red !important; min-width:110px;">
                 <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Cancel</a>
             @endif
-            <a type="button" class="btn btn-labeled next-btn" title="Next Stage" onclick="NextTab();" id="Next"  style="color:white !important;background: blue !important;">
-                 <span class="btn-label" style="font-size:13px !important;"> <i class="fa fa-arrow-right"></i></span>Next Stage</a>
+            <a type="button" class="btn btn-labeled next-btn" title="Next Stage" onclick="NextTab();" id="Next" style="color:white !important;background: blue !important; min-width:110px;">
+                <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-right"></i></span> Next</a>
         </div>
         <!-- <div class="bs-stepper-content">
             <div id="test-l-1" class="content">

@@ -16,6 +16,85 @@
     #img_logo {
         margin: 25px 150px 0 0;
     }
+
+    /* Mobile Responsive Overrides */
+    @media (max-width: 768px) {
+        .main-content {
+            padding: 10px !important;
+            margin-top: 60px !important;
+        }
+        .container, #entirePage {
+            padding: 15px !important;
+            box-shadow: none !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+        }
+        
+        /* Stack table rows and cells */
+        table {
+            border: none !important;
+        }
+        
+        /* Hide table header row */
+        table tbody tr:first-child {
+            display: none !important;
+        }
+        
+        table, tbody, tr, td {
+            display: block !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+        
+        tr {
+            border: 1px solid #000 !important;
+            border-radius: 6px !important;
+            margin-bottom: 15px !important;
+            background: #fff !important;
+            padding: 0 !important;
+        }
+        
+        td {
+            border: none !important;
+            border-bottom: 1px solid #eee !important;
+            padding: 10px !important;
+            width: 100% !important;
+        }
+        
+        td:last-child {
+            border-bottom: none !important;
+        }
+        
+        /* Skill Name Header */
+        td:nth-child(1) {
+            background-color: #f1f8ff !important;
+            font-weight: bold !important;
+            font-size: 14px !important;
+            color: #044a95 !important;
+            width: 100% !important;
+        }
+        
+        /* Strengths label */
+        td:nth-child(2):before {
+            content: "Strengths:\n";
+            display: block !important;
+            font-weight: bold !important;
+            color: #333 !important;
+            margin-bottom: 5px !important;
+            font-size: 12px !important;
+        }
+        
+        /* Stretches label */
+        td:nth-child(3):before {
+            content: "Stretches:\n";
+            display: block !important;
+            font-weight: bold !important;
+            color: #333 !important;
+            margin-bottom: 5px !important;
+            font-size: 12px !important;
+        }
+    }
 </style>
 <style>
     .container {

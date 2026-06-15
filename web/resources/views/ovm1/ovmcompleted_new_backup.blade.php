@@ -110,110 +110,9 @@
         display: none !important;
     }
 
-    /* ========== MOBILE SPECIFIC OVERRIDES ========== */
-    @media (max-width: 768px) {
-        /* Reduce container side spacing */
-        .main-content {
-            padding-left: 8px !important;
-            padding-right: 8px !important;
-        }
-
-        /* Force white background on all containers */
-        .card, .card-body, .card-header, .section-body, .main-content {
-            background-color: #ffffff !important;
-        }
-        .card {
-            box-shadow: none !important;
-            border: 1px solid #eee !important;
-        }
-
-        /* Breadcrumb – compact and scrollable */
-        .breadcrumb-wrapper {
-            overflow-x: auto;
-            white-space: nowrap;
-            margin-bottom: 10px;
-        }
-        .breadcrumb {
-            background: transparent !important;
-            padding: 5px 0 !important;
-            font-size: 11px;
-            display: flex;
-            flex-wrap: nowrap;
-        }
-        .breadcrumb-item, .breadcrumb-item a {
-            font-size: 11px;
-            white-space: nowrap;
-        }
-        .breadcrumb-item + .breadcrumb-item::before {
-            padding: 0 4px;
-        }
-
-        /* Nav bar – horizontal scroll, all items in one line */
+    @media (max-width: 580px) {
         .nav {
-            background-color: #fff !important;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05) !important;
-            overflow-x: auto !important;
-            overflow-y: hidden;
-            white-space: nowrap;
-            justify-content: flex-start !important;
-            padding: 0 5px;
-            gap: 2px;
-            border-radius: 30px;
-            display: flex !important;
-            flex-wrap: nowrap !important;
-        }
-        .nav-item {
-            padding: 8px 12px !important;
-            font-size: 0.75rem !important;
-            margin: 0 2px !important;
-            flex-shrink: 0;
-            display: inline-block;
-        }
-        .nav-indicator {
-            height: 3px;
-        }
-
-        /* Search input field – reduced size */
-        .navcard .form-control#searchInput,
-        .navcard .card-body > input[type="text"] {
-            width: auto !important;
-            max-width: 180px !important;
-            float: right !important;
-            font-size: 0.7rem !important;
-            padding: 4px 8px !important;
-            margin-bottom: 10px;
-        }
-
-        /* Basic details card – compact */
-        .card-body .row {
-            margin-left: 0 !important;
-            margin-right: 0 !important;
-        }
-        .form-group {
-            margin-bottom: 0.5rem;
-        }
-        .form-group label {
-            font-size: 0.7rem;
-            margin-bottom: 2px;
-        }
-        .form-control {
-            padding: 4px 6px;
-            font-size: 0.75rem;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .nav-item {
-            padding: 6px 10px !important;
-            font-size: 0.7rem !important;
-        }
-        .breadcrumb-item, .breadcrumb-item a {
-            font-size: 10px;
-        }
-        .navcard .form-control#searchInput,
-        .navcard .card-body > input[type="text"] {
-            max-width: 150px !important;
-            font-size: 0.65rem !important;
+            overflow: auto;
         }
     }
 </style>
@@ -254,26 +153,36 @@
                                         <input class="form-control enrollment_id" name="enrollment_id" placeholder="Enrollment ID" value="{{ $rows[0]['enrollment_id']}}" readonly>
                                         <input type="hidden" class="form-control" name="editusername" placeholder="editusername" value="{{$editusername}}" readonly>
                                         <input type="hidden" class="form-control" name="report_id" placeholder="editusername" id="report_id" value="{{$rows[0]['ovm_isc_report_id']}}" readonly>
+
+
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">OVM Meeting ID</label>
                                         <input class="form-control" type="text" id="ovm_meeting_unique" name="ovm_meeting_unique" value="{{ $rows[0]['ovm_meeting_unique']}}" placeholder="OVM1 Meeting" autocomplete="off" readonly>
+
                                     </div>
                                 </div>
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Child ID</label>
                                         <input class="form-control" type="text" id="child_id" name="child_id" value="{{ $rows[0]['child_id']}}" placeholder="OVM1 Meeting" autocomplete="off" readonly>
+
                                     </div>
                                 </div>
+
+
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Child Name</label>
                                         <input class="form-control" type="text" id="child_name" name="child_name" value="{{ $rows[0]['child_name']}}" placeholder="Enter Name" autocomplete="off" readonly>
                                     </div>
                                 </div>
+
+
                                 @if( $rows[0]['video_link1']!= '')
                                 <div class="col-md-3">
                                     <div class="form-group">
@@ -282,10 +191,19 @@
                                             <input class="form-control" readonly type="url" id="video_link" name="video_link" autocomplete="off" value="{{$rows[0]['video_link1']}}">
                                             <a class="btn btn-link" title="show" target="_blank" href="{{$rows[0]['video_link1']}}"><i class="fas fa-eye" style="color:green"></i></a>
                                         </div>
+                                        {{-- <input class="form-control"  readonly type="url" id="video_link" name="video_link" autocomplete="off" value="Video Not Available"> --}}
+
                                     </div>
                                 </div>
                                 @endif
+
+
+
+
+
                                 <input type="hidden" id="g2form_filled" name="g2form_filled">
+
+
                             </div>
                         </div>
                     </div>
@@ -649,6 +567,26 @@
             });
         }
 
+        // ================== FETCHDATA ==================
+        var fetchdatas = <?php echo json_encode($fetchdata); ?>;
+        if (fetchdatas && fetchdatas.length > 0) {
+            $.each(fetchdatas[0], function(key, value) {
+                var cleaned = formatJsonArray(cleanValue(value));
+                cleaned = correctPronounCase(cleaned, childGender);
+                $('#' + key).val(cleaned);
+            });
+        }
+
+        // ================== FETCHDATA1 ==================
+        var fetchdatas1 = <?php echo json_encode($fetchdata1); ?>;
+        if (fetchdatas1 && fetchdatas1.length > 0) {
+            $.each(fetchdatas1[0], function(key, value) {
+                var cleaned = formatJsonArray(cleanValue(value));
+                cleaned = correctPronounCase(cleaned, childGender);
+                $('#note_' + key).val(cleaned);
+            });
+        }
+
         // ================== MAIN FIX (MULTIPLE COORDINATORS) ==================
         var fetchdata2 = <?php echo json_encode($fetchdata2); ?>;
 
@@ -719,26 +657,6 @@
 
         } else {
             $('#g2form_filled').val(0);
-        }
-
-        // ================== FETCHDATA ==================
-        var fetchdatas = <?php echo json_encode($fetchdata); ?>;
-        if (fetchdatas && fetchdatas.length > 0) {
-            $.each(fetchdatas[0], function(key, value) {
-                var cleaned = formatJsonArray(cleanValue(value));
-                cleaned = correctPronounCase(cleaned, childGender);
-                $('#' + key).val(cleaned);
-            });
-        }
-
-        // ================== FETCHDATA1 ==================
-        var fetchdatas1 = <?php echo json_encode($fetchdata1); ?>;
-        if (fetchdatas1 && fetchdatas1.length > 0) {
-            $.each(fetchdatas1[0], function(key, value) {
-                var cleaned = formatJsonArray(cleanValue(value));
-                cleaned = correctPronounCase(cleaned, childGender);
-                $('#note_' + key).val(cleaned);
-            });
         }
 
         $('.f_name').val($enrollment_details.child_name);

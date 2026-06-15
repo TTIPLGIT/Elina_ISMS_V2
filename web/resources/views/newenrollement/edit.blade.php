@@ -215,7 +215,7 @@
                             <section class="section">
                                 <div class="section-body mt-1">
                                     <hr>
-                                    <h5 style="font-weight: bold; display:flex;   width: fit-content; padding: -13px;margin-top: -18px;margin-left: auto;margin-right: auto;padding: 5px;background-color: white;">Child Enrollment Details</h5>
+                                    <h5 style="font-weight: bold; display:flex;   width: fit-content; padding: -13px;margin-top: -18px;margin-left: auto;margin-right: auto;padding: 5px;background-color: white; position: relative; z-index: 1;">Child Enrollment Details</h5>
 
                                     <div class="row">
                                         <input type="hidden" id="selected_id" name="selected_id" value="">
@@ -269,7 +269,7 @@
                                     </div>
 
                                     <hr>
-                                    <h5 style="font-weight: bold; display:flex;   width: fit-content; padding: -13px;margin-top: -18px;margin-left: auto;margin-right: auto;padding: 5px;background-color: white;">Contact Details</h5>
+                                    <h5 style="font-weight: bold; display:flex;   width: fit-content; padding: -13px;margin-top: -18px;margin-left: auto;margin-right: auto;padding: 5px;background-color: white; position: relative; z-index: 1;">Contact Details</h5>
 
 
                                     <div class="row">
@@ -721,7 +721,7 @@
     //validation
     function childName(event) {
         let value = event.target.value || '';
-        value = value.replace(/[^a-z A-Z ]/, '', );
+        value = value.replace(/[^a-zA-Z0-9\s\(\)\-\.\,\']/g, '');
         event.target.value = value;
         validateDublication();
     }

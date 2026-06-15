@@ -88,11 +88,125 @@
     gap: 5px 10px;
     /* reduce vertical gap */
   }
+
+  /* Mobile Responsive Overrides */
+  @media (max-width: 768px) {
+    .main-content {
+      padding: 5px !important;
+    }
+
+    #mobile-breadcrumb-wrapper .breadcrumb, 
+    #mobile-breadcrumb-wrapper .breadcrumb-custom {
+      margin-top: 60px !important;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+    }
+
+    #mobile-breadcrumb-wrapper .breadcrumb * {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    #mobile-breadcrumb-wrapper .breadcrumb li, 
+    #mobile-breadcrumb-wrapper .breadcrumb-item {
+      font-size: 13px !important;
+      color: #495057 !important; /* Dark Gray for active text */
+    }
+
+    #mobile-breadcrumb-wrapper .breadcrumb a {
+      font-size: 13px !important;
+      color: #007bff !important; /* Blue color for links */
+      text-decoration: none !important;
+      border: none !important;
+      border-top: none !important;
+      border-bottom: none !important;
+      outline: none !important;
+    }
+
+    #mobile-breadcrumb-wrapper .breadcrumb .active {
+      font-size: 13px !important;
+      color: #495057 !important; /* Dark Gray for active text */
+      text-decoration: none !important;
+      border: none !important;
+    }
+
+    /* Force hide all custom Elina ISMS chevrons and circular numbers using ID specificity */
+    #mobile-breadcrumb-wrapper .breadcrumb *:before,
+    #mobile-breadcrumb-wrapper .breadcrumb *:after,
+    #mobile-breadcrumb-wrapper .breadcrumb *::before,
+    #mobile-breadcrumb-wrapper .breadcrumb *::after {
+      display: none !important;
+      content: none !important;
+      background: transparent !important;
+      border: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    #mobile-breadcrumb-wrapper .breadcrumb span {
+      display: none !important;
+    }
+
+    /* Add the simple ">" arrow separator */
+    #mobile-breadcrumb-wrapper .breadcrumb li + li::before {
+      display: inline-block !important;
+      content: " \003E " !important;
+      color: #adb5bd !important;
+      padding: 0 8px !important;
+      font-weight: normal !important;
+      position: static !important;
+    }
+    h4 {
+      font-size: 14px !important;
+      margin-top: 10px !important;
+      margin-bottom: 10px !important;
+      font-weight: bold !important;
+    }
+
+    .card-body {
+      padding: 10px !important;
+      max-height: 500px !important; /* Slightly more room on mobile */
+    }
+
+    .form-group {
+      margin-bottom: 12px !important;
+    }
+
+    .form-group label {
+      font-size: 13px !important;
+      font-weight: bold !important;
+    }
+
+    .form-group p {
+      font-size: 11px !important;
+      margin-bottom: 8px !important;
+    }
+
+    .option-item label {
+      font-size: 12px !important;
+    }
+
+    .btn {
+      padding: 6px 12px !important;
+      font-size: 12px !important;
+      margin-bottom: 5px !important;
+    }
+  }
 </style>
 
 <div class="main-content">
 
-  {{ Breadcrumbs::render('g2form.new' , $child_name) }}
+  <div id="mobile-breadcrumb-wrapper">
+    {{ Breadcrumbs::render('g2form.new' , $child_name) }}
+  </div>
 
   <div class="row">
     <div class="col-lg-12 text-center">

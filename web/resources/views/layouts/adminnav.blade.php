@@ -12,7 +12,8 @@
   <link href="{{asset('asset/css/css2.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{asset('asset/css/app.min.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{asset('asset/bundles/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
-  <link href="{{asset('asset/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" />
+  <link href="{{asset('asset/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}"
+    rel="stylesheet" />
 
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
 
@@ -58,7 +59,7 @@
   <link href="{{asset('asset/css/css2.css')}}" type="text/css" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/swiper@6.8.1/swiper-bundle.min.css">
   @if(config('app.env') != 'local')
-  <script type="text/javascript" disable-devtool-auto="" src="{{ asset('asset/js/devtool-disable.js') }}"></script>
+    <script type="text/javascript" disable-devtool-auto="" src="{{ asset('asset/js/devtool-disable.js') }}"></script>
   @endif
   <style>
     .li {
@@ -769,14 +770,175 @@
     }
 
 
-    /* Media query for smaller screens (hide the timerContainer on larger screens, show btn-label) */
+    /* Media query for smaller screens */
     @media (max-width: 767px) {
-      #timerContainer {
-        display: none !important;
+      .main-navbar {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        height: 60px !important;
       }
 
+      .form-inline.mr-auto {
+        display: flex !important;
+        align-items: center !important;
+        margin-right: auto !important;
+      }
+
+      .form-inline.mr-auto .navbar-nav {
+        flex-direction: row !important;
+        align-items: center !important;
+        margin: 0 !important;
+      }
+
+      .form-inline.mr-auto .navbar-nav li {
+        margin-right: 15px !important;
+        display: flex !important;
+        align-items: center !important;
+      }
+
+      .navbar-right-group {
+        display: flex !important;
+        align-items: center !important;
+        margin-left: auto !important;
+      }
+
+      /* Standardize all action icons to the same size */
+      .clockIcon i,
+      .fa-bell,
+      .fas.fa-user.navheading {
+        font-size: 18px !important;
+      }
+
+      /* Compact and responsive mobile dropdown */
+      .dropdown-container .dropdown {
+        width: 250px !important;
+        right: 0 !important;
+        top: 60px !important;
+        max-height: 350px !important;
+        overflow-y: auto !important;
+      }
+      .dropdown-container .dropdown .notification-group {
+        min-height: 45px !important;
+      }
+      .dropdown-container .dropdown .notification-group .notification-tab {
+        padding: 5px 15px !important;
+        min-height: 45px !important;
+        display: flex !important;
+        align-items: center !important;
+      }
+      .dropdown-container .dropdown .notification-group .notification-tab h4 {
+        font-size: 14px !important;
+        margin: 0 !important;
+        margin-left: 10px !important;
+        float: none !important;
+        flex-grow: 1 !important;
+      }
+      .dropdown-container .dropdown .notification-group .notification-tab .fa {
+        margin: 0 !important;
+        float: none !important;
+        font-size: 16px !important;
+      }
+      .dropdown-container .dropdown .notification-group .label {
+        margin: 0 !important;
+        font-size: 12px !important;
+        padding: 2px 8px !important;
+        float: none !important;
+      }
+
+      /* Remove backgrounds and shades as requested */
       .clockIcon {
-        display: inline-block;
+        display: flex !important;
+        align-items: center !important;
+        margin-right: 15px !important;
+        padding: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        height: auto !important;
+      }
+
+      .menu-link.circle,
+      .menu-link.has-notifications {
+        padding: 8px !important;
+        width: 32px !important;
+        height: 32px !important;
+        line-height: normal !important;
+        box-shadow: none !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+
+      .navbar-nav.navbar-right {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        width: auto !important;
+        margin: 0 !important;
+        height: auto !important;
+      }
+
+      .navigation {
+        margin-right: 15px !important;
+        display: flex !important;
+        align-items: center !important;
+        height: auto !important;
+        background: transparent !important;
+      }
+
+      .navigation .inner-navigation {
+        display: flex !important;
+        align-items: center !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .navigation .inner-navigation .left {
+        display: flex !important;
+        align-items: center !important;
+        float: none !important;
+        margin: 0 !important;
+      }
+
+      .dropdown-container {
+        display: flex !important;
+        align-items: center !important;
+      }
+
+      .navbar-nav.navbar-right>li.dropdown {
+        width: auto !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        height: auto !important;
+      }
+
+      .nav-link-user {
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+      }
+
+      .badge {
+        margin-right: -70px !important;
+      }
+
+      /* Mobile Dropdown User Info */
+      .mobile-user-header {
+        display: block !important;
+        padding: 10px 15px;
+        background: #f8f9fa;
+        border-bottom: 1px solid #eee;
+        font-weight: 700;
+        color: #085a7e;
+        font-size: 13px;
+        text-align: center;
+      }
+
+      #timerContainer {
+        display: none !important;
       }
 
       .clockIcon:hover #timerContainer {
@@ -788,11 +950,36 @@
     @media (min-width: 768px) {
       .clockIcon {
         display: none;
-        /* Hide btn-label on larger screens */
+        /* Hide btn-label on smaller screens */
       }
 
       .fullscreen-btn {
         display: none;
+      }
+
+      .mobile-user-header {
+        display: none !important;
+      }
+
+      .navigation {
+        position: relative !important;
+      }
+
+      .badge.badgeworkflow {
+        margin-right: -132px !important; /* Cancels out inline right: 130px and shifts right */
+        top: 2px !important; /* Fine tune top alignment */
+        background-color: red !important;
+        color: white !important;
+        border-radius: 50% !important;
+        width: 18px !important;
+        height: 18px !important;
+        font-size: 8px !important;
+        font-weight: bold !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 !important;
+        line-height: normal !important;
       }
     }
   </style>
@@ -810,7 +997,8 @@
           <div class="form-inline mr-auto">
             <ul class="navbar-nav mr-3">
               <li>
-                <a href="#" data-toggle="sidebar" class="nav-link nav-link-lg collapse-btn "><i class="fas fa-bars navheading"></i></a>
+                <a href="#" data-toggle="sidebar" class="nav-link nav-link-lg collapse-btn "><i
+                    class="fas fa-bars navheading"></i></a>
               </li>
               <li>
                 <a href="#" class="fullscreen-btn">
@@ -820,21 +1008,23 @@
             </ul>
 
           </div>
-          <div class="form-inline mr-auto d-md-inline-block d-none" style="color: #2a0245!important; font-weight: 900; font-size: 28px">
+          <div class="form-inline mr-auto d-md-inline-block d-none"
+            style="color: #2a0245!important; font-weight: 900; font-size: 28px">
 
             <span style="color:white; padding: 10px;" class="nav_heading"><b class="navheading">ELINA ISMS PORTAL</b>
               <span style="color: #9958ae; right: -90px;position: relative;" class="user_name_nav"></span></span>
 
 
           </div>
-          <div id="timerContainer">
-            <p style="color: white;" id="timerText">Your Session will be</p>
-            <span style="color: white;text-align: center;" id="timer"></span>
-          </div>
-          <a class="btn-label clockIcon" id="clockIcon"><i class="fa fa-clock-o" aria-hidden="true"></i><span class="tooltip" id="tooltipContent">Session Expiry</span></a>
+          <div class="navbar-right-group d-flex align-items-center ml-auto">
+            <div id="timerContainer">
+              <p style="color: white;" id="timerText">Your Session will be</p>
+              <span style="color: white;text-align: center;" id="timer"></span>
+            </div>
+            <a class="btn-label clockIcon" id="clockIcon"><i class="fa fa-clock-o" aria-hidden="true"></i><span
+                class="tooltip" id="tooltipContent">Session Expiry</span></a>
 
-
-          <ul class="navbar-nav navbar-right" style="width: 160px;">
+            <ul class="navbar-nav navbar-right" style="width: auto;">
             <nav class="navigation" style="margin-right: 10px !important;">
 
               <span class="badge badge-light badgeworkflow" style="right: 130px !important;"></span>
@@ -851,17 +1041,17 @@
                     <ul class="dropdown" name="notificationMenu">
 
                       @if($modules['user_role'] != 'Parent')
-                      <li class="notification-group">
-                        <div class="notification-tab">
-                          <i class="fa fa-user" aria-hidden="true"></i>
-                          <h4 style="font-size:15px" class="">Users</h4>
-                          <span class="user_name_alert1"></span>
-                        </div>
-                        <!-- tab -->
-                        <ul class="notification-list user_alert_list">
+                        <li class="notification-group">
+                          <div class="notification-tab">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <h4 style="font-size:15px" class="">Users</h4>
+                            <span class="user_name_alert1"></span>
+                          </div>
+                          <!-- tab -->
+                          <ul class="notification-list user_alert_list">
 
-                        </ul>
-                      </li>
+                          </ul>
+                        </li>
                       @endif
                       <li class="notification-group">
                         <div class="notification-tab">
@@ -937,22 +1127,31 @@
 
 
             <li class="dropdown" style="width: 80%;">
-              <a data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user d-flex align-items-center">
+              <a data-toggle="dropdown"
+                class="nav-link dropdown-toggle nav-link-lg nav-link-user d-flex align-items-center">
                 <i class="fas fa-user navheading"></i>
                 @if($modules['user_role'] == 'relative')
-                <span class="d-lg-inline-block" style="margin: 0 0 0 10px;"></span>- {{$modules['user_role']}}</a>
-              @else
-              <span class="d-lg-inline-block" style="margin: 0 0 0 10px;"></span>{{$modules['user_role']}}</a>
+                  <span class="d-none d-md-inline-block" style="margin: 0 0 0 10px;">-
+                    {{$modules['user_role']}}</span></a>
+                @else
+                <span class="d-none d-md-inline-block" style="margin: 0 0 0 10px;">{{$modules['user_role']}}</span></a>
               @endif
               <div class="dropdown-menu dropdown-menu-right">
+                <div class="mobile-user-header d-md-none">
+                  {{$modules['user_role']}}
+                </div>
 
                 <!-- <a href="{{ url('admin_profile') }}" class="dropdown-item has-icon">
                 <i class="far fa-user" style="color:red !important;"></i><b style="color:blue !important;">Profile</b></a> -->
-                <a class="dropdown-item has-icon" href="{{ route('profilepage') }}"><i class="fa fa-user" style="color:red !important;"></i><b style="color:blue !important;">Profile</b></a>
-                <a class="dropdown-item has-icon" href="{{ route('main_index') }}"><i class="fa fa-question-circle" style="color:red !important;"></i><b style="color:blue !important;">FAQ</b></a>
+                <a class="dropdown-item has-icon" href="{{ route('profilepage') }}"><i class="fa fa-user"
+                    style="color:red !important;"></i><b style="color:blue !important;">Profile</b></a>
+                <a class="dropdown-item has-icon" href="{{ route('main_index') }}"><i class="fa fa-question-circle"
+                    style="color:red !important;"></i><b style="color:blue !important;">FAQ</b></a>
 
-                <a href="{{ route('logout') }}" class="dropdown-item has-icon" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                  <i class="fa fa-sign-out" style="color:red !important;"></i><b style="color:blue !important;">Logout</b></a>
+                <a href="{{ route('logout') }}" class="dropdown-item has-icon"
+                  onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                  <i class="fa fa-sign-out" style="color:red !important;"></i><b
+                    style="color:blue !important;">Logout</b></a>
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                   @csrf
@@ -963,125 +1162,137 @@
 
 
           </ul>
+          </div>
         </nav>
 
-        <div class="main-sidebar sidebar-style-2" style="background-color: {{ $modules['user_role'] == 'Child' ? '#2a0245' : 'rgb(0, 34, 102)' }} !important;">
-          <aside id="sidebar-wrapper" style="background-color: {{ $modules['user_role'] == 'Child' ? '#2a0245' : 'rgb(0, 34, 102)' }} !important;">
+        <div class="main-sidebar sidebar-style-2"
+          style="background-color: {{ $modules['user_role'] == 'Child' ? '#2a0245' : 'rgb(0, 34, 102)' }} !important;">
+          <aside id="sidebar-wrapper"
+            style="background-color: {{ $modules['user_role'] == 'Child' ? '#2a0245' : 'rgb(0, 34, 102)' }} !important;">
             <div class="sidebar-brand" style=" background-color:white!important;">
 
-              <img src="{{asset('assets/elina-logo-new.png')}}" class="logo" style="  width: 70% !important;max-width: 80px;">
+              <img src="{{asset('assets/elina-logo-new.png')}}" class="logo"
+                style="  width: 70% !important;max-width: 80px;">
               </a>
             </div>
 
             <ul class="sidebar-menu" id="sidechecks">
 
               @if($modules['user_role'] != 'Parent' && $modules['user_role'] != 'Child' && $modules['user_role'] != '')
-              <li class="dropdown "><a href="{{route('home')}}" class="nav-link"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
-              <li class="dropdown "><a href="{{route('questionnaire.dashboard')}}" class="nav-link"><i class="fa fa-pie-chart"></i><span>Feedback Dashboard</span></a></li>
+                <li class="dropdown "><a href="{{route('home')}}" class="nav-link"><i
+                      class="fas fa-home"></i><span>Dashboard</span></a></li>
+                <li class="dropdown "><a href="{{route('questionnaire.dashboard')}}" class="nav-link"><i
+                      class="fa fa-pie-chart"></i><span>Feedback Dashboard</span></a></li>
               @endif
 
               <!-- qqq -->
-              @if($modules['data'] !="")
-              @foreach ($modules['data'] as $key => $module)
+              @if($modules['data'] != "")
+                @foreach ($modules['data'] as $key => $module)
 
-              @if($screens['unique'] != "")
-              @php
-              $s = $screens['unique1'][0]['un'];
-              $array=explode(",",$s);
-              $s2 = $screens['unique2'][0]['un'];
-              $array2=explode(",",$s2);
-              $a=array();
-              @endphp
-              @foreach ($screens['unique'] as $key => $mscreen)
+                  @if($screens['unique'] != "")
+                    @php
+                      $s = $screens['unique1'][0]['un'];
+                      $array = explode(",", $s);
+                      $s2 = $screens['unique2'][0]['un'];
+                      $array2 = explode(",", $s2);
+                      $a = array();
+                    @endphp
+                    @foreach ($screens['unique'] as $key => $mscreen)
 
-              @php
-              if ($mscreen['parent_module_id'] == 1 && in_array($mscreen['module_id'], $array)) {
-              $msID = 0;
-              } elseif ($mscreen['parent_module_id'] == 1) {
-              $msID = $mscreen['module_id'];
-              } else {
-              $msID = $mscreen['parent_module_id'];
-              if(in_array($msID, $a)){
-              $msID = 0;
+                      @php
+                        if ($mscreen['parent_module_id'] == 1 && in_array($mscreen['module_id'], $array)) {
+                          $msID = 0;
+                        } elseif ($mscreen['parent_module_id'] == 1) {
+                          $msID = $mscreen['module_id'];
+                        } else {
+                          $msID = $mscreen['parent_module_id'];
+                          if (in_array($msID, $a)) {
+                            $msID = 0;
 
-              }
-              array_push($a, $msID);
-              }
-              @endphp
+                          }
+                          array_push($a, $msID);
+                        }
+                      @endphp
 
-              @if($module['module_id'] == $msID)
+                      @if($module['module_id'] == $msID)
 
-              <li class="dropdown">
+                        <li class="dropdown">
 
-                <a class="nav-link has-dropdown">
-                  <i class="{{$module['class_name']}}"></i>
-                  <span>
-                    {{$module['module_name']}}
-                  </span>
-                </a>
+                          <a class="nav-link has-dropdown">
+                            <i class="{{$module['class_name']}}"></i>
+                            <span>
+                              {{$module['module_name']}}
+                            </span>
+                          </a>
 
-                <ul class="dropdown-menu active" style="display: none;">
-                  @if($module['module_id']!=9) <!-- Need to be changed -->
-                  @if($screens !="")
-                  @foreach ($screens['screens'] as $key => $screen)
-                  @if($module['module_id'] == $screen['module_id'])
-                  <li><a class="nav-link smn" id="navLink" onclick="navclick()" href="{{ config('setting.base_url')}}{{ $screen['route_url'] }}">{{$screen['screen_name']}}</a></li>
-                  @endif
-                  @endforeach
-                  @endif
-                  @endif<!-- Need to be changed -->
-                  <!--  -->
+                          <ul class="dropdown-menu active" style="display: none;">
+                            @if($module['module_id'] != 9) <!-- Need to be changed -->
+                              @if($screens != "")
+                                @foreach ($screens['screens'] as $key => $screen)
+                                  @if($module['module_id'] == $screen['module_id'])
+                                    <li><a class="nav-link smn" id="navLink" onclick="navclick()"
+                                        href="{{ config('setting.base_url')}}{{ $screen['route_url'] }}">{{$screen['screen_name']}}</a>
+                                    </li>
+                                  @endif
+                                @endforeach
+                              @endif
+                            @endif<!-- Need to be changed -->
+                            <!--  -->
 
-                  @if($modules['sub_module'] !="")
-                  @foreach ($modules['sub_module'] as $key => $sub_module)
-                  @if($sub_module['parent_module_id'] == $module['module_id'])
+                            @if($modules['sub_module'] != "")
+                              @foreach ($modules['sub_module'] as $key => $sub_module)
+                                @if($sub_module['parent_module_id'] == $module['module_id'])
 
-                  <!--  -->
-                  @if(in_array($sub_module['module_id'],$array2))
-                  <li class="dropdown">
+                                  <!--  -->
+                                  @if(in_array($sub_module['module_id'], $array2))
+                                    <li class="dropdown">
 
-                    <a class="nav-link has-dropdown">
-                      <span>
-                        {{$sub_module['module_name']}}
-                      </span>
-                    </a>
+                                      <a class="nav-link has-dropdown">
+                                        <span>
+                                          {{$sub_module['module_name']}}
+                                        </span>
+                                      </a>
 
-                    <ul class="dropdown-menu active" style="display: none;">
-                      @if($screens['screens'] !="")
-                      @foreach ($screens['screens'] as $key => $subscreen)
-                      @if($sub_module['module_id'] == $subscreen['check_id'])
-                      @if($subscreen !="")
-                      <li><a class="nav-link smn" id="navLink" onclick="navclick()" href="{{ config('setting.base_url')}}{{ $subscreen['route_url'] }}">{{$subscreen['screen_name']}}</a></li>
+                                      <ul class="dropdown-menu active" style="display: none;">
+                                        @if($screens['screens'] != "")
+                                          @foreach ($screens['screens'] as $key => $subscreen)
+                                            @if($sub_module['module_id'] == $subscreen['check_id'])
+                                              @if($subscreen != "")
+                                                <li><a class="nav-link smn" id="navLink" onclick="navclick()"
+                                                    href="{{ config('setting.base_url')}}{{ $subscreen['route_url'] }}">{{$subscreen['screen_name']}}</a>
+                                                </li>
+                                              @endif
+                                            @endif
+                                          @endforeach
+                                        @endif
+                                      </ul>
+                                    </li>
+                                    <!--  -->
+                                  @endif
+                                @endif
+                              @endforeach
+                            @endif
+
+                            <!--  -->
+                            @if($module['module_id'] == 9)<!-- Need to be changed -->
+                              @if($screens != "")<!-- Need to be changed -->
+                                @foreach ($screens['screens'] as $key => $screen)<!-- Need to be changed -->
+                                  @if($module['module_id'] == $screen['module_id'])<!-- Need to be changed -->
+                                    <li><a class="nav-link smn"
+                                        href="{{ config('setting.base_url')}}{{ $screen['route_url'] }}">{{$screen['screen_name']}}</a>
+                                    </li><!-- Need to be changed -->
+                                  @endif<!-- Need to be changed -->
+                                @endforeach<!-- Need to be changed -->
+                              @endif<!-- Need to be changed -->
+                            @endif<!-- Need to be changed -->
+                          </ul>
+
+                        </li>
+
                       @endif
-                      @endif
-                      @endforeach
-                      @endif
-                    </ul>
-                  </li>
-                  <!--  -->
+                    @endforeach
                   @endif
-                  @endif
-                  @endforeach
-                  @endif
-
-                  <!--  -->
-                  @if($module['module_id']==9)<!-- Need to be changed -->
-                  @if($screens !="")<!-- Need to be changed -->
-                  @foreach ($screens['screens'] as $key => $screen)<!-- Need to be changed -->
-                  @if($module['module_id'] == $screen['module_id'])<!-- Need to be changed -->
-                  <li><a class="nav-link smn" href="{{ config('setting.base_url')}}{{ $screen['route_url'] }}">{{$screen['screen_name']}}</a></li><!-- Need to be changed -->
-                  @endif<!-- Need to be changed -->
-                  @endforeach<!-- Need to be changed -->
-                  @endif<!-- Need to be changed -->
-                  @endif<!-- Need to be changed -->
-                </ul>
-
-              </li>
-
-              @endif
-              @endforeach
-              @endif
-              @endforeach
+                @endforeach
               @endif
 
 
@@ -1114,7 +1325,7 @@
     <!-- <script type="text/javascript">$('#listDataTable').DataTable();</script> -->
 
     <script type="text/javascript">
-      $(window).on('load', function() {
+      $(window).on('load', function () {
         $(".loader").fadeOut("slow");
       })
     </script>
@@ -1125,7 +1336,7 @@
       // }
 
       //Open dropdown when clicking on element
-      $(document).on('click', "a[data-dropdown='notificationMenu']", function(e) {
+      $(document).on('click', "a[data-dropdown='notificationMenu']", function (e) {
         e.preventDefault();
 
         var el = $(e.currentTarget);
@@ -1151,7 +1362,7 @@
 
       //Close dropdowns on document click
 
-      $(document).on('click', '#dropdownOverlay', function(e) {
+      $(document).on('click', '#dropdownOverlay', function (e) {
         var el = $(e.currentTarget)[0].activeElement;
 
         if (typeof $(el).attr('data-dropdown') === 'undefined') {
@@ -1161,7 +1372,7 @@
       })
 
       //Dropdown collapsile tabs
-      $('.notification-tab').click(function(e) {
+      $('.notification-tab').click(function (e) {
         if ($(e.currentTarget).parent().hasClass('expanded')) {
           $('.notification-group').removeClass('expanded');
         } else {
@@ -1177,7 +1388,7 @@
       //   document.body.style.cursor = 'wait';
       // });
 
-      $(document).ready(function() {
+      $(document).ready(function () {
         var multipleDevice = <?php echo json_encode(session()->get("multipleDevice")); ?>;
         if (multipleDevice == 1) {
           swal.fire('Another Session Detected', 'You are currently logged in from another device/location. For security reasons, simultaneous logins from multiple devices/locations are not allowed. Your previous session will be auto logging out.', 'info');
@@ -1243,7 +1454,7 @@
                   userID: userID,
                   _token: '{{csrf_token()}}'
                 }
-              }).done(function(data) {
+              }).done(function (data) {
                 window.location = "{{ route('unauthenticated') }}";
               });
             }
@@ -1271,7 +1482,7 @@
               id: id,
               _token: '{{csrf_token()}}'
             },
-            success: function(data) {
+            success: function (data) {
               var data2 = data;
 
               // $('.user_login_name').text('' + data2['user'][0].name + '');
@@ -1333,7 +1544,7 @@
               }
 
             },
-            error: function(data) {
+            error: function (data) {
               //  console.log(data);
             }
           });
@@ -1349,10 +1560,10 @@
               id: id,
               _token: '{{csrf_token()}}'
             },
-            success: function(data) {
+            success: function (data) {
               // console.log(data,'success');
             },
-            error: function(xhr) {
+            error: function (xhr) {
               // console.log(xhr.status);
               window.location.href = "multipledevice";
             }
@@ -1386,12 +1597,12 @@
             _token: '{{csrf_token()}}'
           },
 
-          success: function(data) {
+          success: function (data) {
             var url = data[0].notification_url;
             window.location.href = APP_URL + '/' + url;
           },
 
-          error: function(data) {}
+          error: function (data) { }
 
         });
 
@@ -1405,7 +1616,7 @@
 
       var isTooltipVisible = false;
 
-      document.getElementById('clockIcon').addEventListener('click', function(event) {
+      document.getElementById('clockIcon').addEventListener('click', function (event) {
         // Toggle the visibility of the tooltip content
         isTooltipVisible = !isTooltipVisible;
 
@@ -1422,7 +1633,7 @@
         event.stopPropagation();
       });
 
-      document.addEventListener('click', function() {
+      document.addEventListener('click', function () {
         // Hide the tooltip content when clicking outside the clock icon
         if (isTooltipVisible) {
           tooltipContent.style.visibility = 'hidden';
@@ -1430,11 +1641,11 @@
         }
       });
 
-      document.getElementById('timerContainer').addEventListener('mouseleave', function() {
+      document.getElementById('timerContainer').addEventListener('mouseleave', function () {
         //timerContainer.classList.remove('show');
         tooltipContent.style.visibility = 'hidden';
       });
-      $(document).ready(function() {
+      $(document).ready(function () {
         $('#tableList').DataTable({
 
 

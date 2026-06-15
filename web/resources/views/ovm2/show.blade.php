@@ -24,9 +24,67 @@
   .select2-container--default .select2-selection--multiple .select2-selection__choice{
     color: black !important;
   }
+    /* Mobile Responsive Overrides */
+    @media (max-width: 768px) {
+        .main-content {
+            padding: 5px !important;
+            margin-top: 60px !important;
+            position: relative !important;
+            z-index: 1 !important;
+        }
+
+
+
+        /* Status and Yellow Button Alignment */
+        .form-group.row:has(#meeting_status) > .col-md-2 {
+            width: 80% !important;
+            max-width: 80% !important;
+            flex: 0 0 80% !important;
+            padding-right: 5px !important;
+        }
+        .form-group.row:has(#meeting_status) > .col-md-1 {
+            width: 20% !important;
+            max-width: 20% !important;
+            flex: 0 0 20% !important;
+            display: flex !important;
+            align-items: flex-end !important;
+            justify-content: center !important;
+            margin: 0 !important;
+        }
+        .form-group.row:has(#meeting_status) > .col-md-1 .btn {
+            margin-bottom: 0px !important;
+            height: 30px !important;
+            width: 100% !important;
+            min-width: 0 !important;
+        }
+        .form-group.row:has(#meeting_status) > .col-md-1 br,
+        .form-group.row:has(#meeting_status) > .col-md-1 label {
+            display: none !important;
+        }
+
+
+
+        /* Calendar Icon - Centered like Timer Icon */
+        .inner-addon i {
+            top: 50% !important;
+            right: 10px !important;
+            transform: translateY(-50%) !important;
+            font-size: 14px !important;
+            margin-top: 0 !important;
+        }
+        
+        /* Note at bottom */
+        .card-body p {
+            font-size: 9px !important;
+            line-height: 1.2 !important;
+        }
+        .is-coordinate .col-md-4, .is-coordinate .col-md-3 {
+             padding-bottom: 10px;
+        }
+    }
 </style>
 
-<div class="main-content">
+<div class="main-content" style="position:absolute !important; z-index: -2!important; ">
 @if($modules['user_role'] != 'Parent')
   {{ Breadcrumbs::render('ovm2.show',$rows[0]['ovm_meeting_id']) }}
 @endif
@@ -206,7 +264,7 @@
     @if($modules['user_role'] != 'Parent')
     <div class="row text-center" style="margin: 5px 0px 0px 0px;"> 
       <div class="col-md-12">
-        <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{route('ovm2.index')}}" style="color:white !important">
+        <a type="button" class="btn btn-labeled btn-danger" title="Back" href="{{route('ovm2.index')}}" style="color:white !important">
           <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back</a>
       </div>
     </div>
