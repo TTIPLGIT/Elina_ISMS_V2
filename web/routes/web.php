@@ -176,6 +176,7 @@ Route::group(['middleware' => 'usersession'], function () {
     Route::post('/user/update_data_permission', [\App\Http\Controllers\UserController::class, 'update_data_permission'])->name('user.update_data_permission');
     Route::resource('/uam_data', UamDataController::class);
     Route::get('/change_password_admin/{id}', [\App\Http\Controllers\UserController::class, 'change_password_admin'])->name('user.change_password_admin');
+    Route::post('/change_password_admin', [\App\Http\Controllers\UserController::class, 'change_password_admin_store'])->name('user.change_password_admin_store');
     Route::post('/designation/bulkdummyupload', [\App\Http\Controllers\DesignationController::class, 'bulkdummyupload'])->name('designation.bulkdummyupload');
     Route::post('/designation/checking_data', [\App\Http\Controllers\DesignationController::class, 'checking_data'])->name('designation.checking_data');
     Route::post('/designation/bulkdemodummyupload', [\App\Http\Controllers\DesignationController::class, 'bulkdemodummyupload'])->name('designation.bulkdemodummyupload');

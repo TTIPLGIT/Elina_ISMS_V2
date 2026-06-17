@@ -828,6 +828,9 @@ class UserregisterfeeController extends BaseController
             $pdf = PDF::loadView('pdfTemplates.receipt', compact('data'));
             $pdf->save($output);
 
+            // Capture initiated_to (email) before $request is overwritten below
+            $strapiEmail = $request->initiated_to;
+
             $data = array();
             $data['enrollment_child_num'] = $request->enrollment_child_num;
             $data['payment_status_id'] = $request->payment_status_id;
@@ -855,6 +858,15 @@ class UserregisterfeeController extends BaseController
             if ($response1->Status == 200 && $response1->Success) {
                 $objData = json_decode($this->decryptData($response1->Data));
                 if ($objData->Code == 200) {
+                    
+                    // Strapi Migration: Payment Status
+                    if (!empty($strapiEmail)) {
+                        $this->strapiMigrationApiCall(config('setting.strapi_payment_status_url'), [
+                            'email' => $strapiEmail,
+                            'status' => 'Paid',
+                        ]);
+                    }
+
                     return redirect(route('userregisterfee.index'))->with('success', 'Payment Completed Successfully');
                 }
                 if ($objData->Code == 400) {

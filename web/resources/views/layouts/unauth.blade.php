@@ -1150,9 +1150,33 @@
     }
 
     .navigation .inner-navigation li .menu-link.circle {
-      line-height: 3.8rem;
-      padding: 14px 18px !important;
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+      line-height: normal;
+      padding: 0 !important;
       border-radius: 50%;
+      position: relative;
+      width: 40px;
+      height: 40px;
+      vertical-align: middle;
+    }
+
+    .navigation .inner-navigation li .menu-link.circle .badge {
+      position: absolute !important;
+      top: -8px !important;
+      right: -8px !important;
+      z-index: 10 !important;
+      width: auto !important;
+      min-width: 20px !important;
+      height: 20px !important;
+      line-height: 18px !important;
+      font-size: 9px !important;
+      padding: 1px 6px !important;
+      border-radius: 10px !important;
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
     }
 
     .navigation .inner-navigation li .menu-link.circle:hover {
@@ -1167,7 +1191,17 @@
     }
 
     .dropdown-container {
-      overflow-y: hidden;
+      overflow: visible !important;
+    }
+
+    .navbar-nav.navbar-right {
+      width: 190px !important;
+    }
+    .navigation {
+      width: 30% !important;
+    }
+    .navbar-nav.navbar-right li.dropdown {
+      width: 70% !important;
     }
 
     .dropdown-container.expanded .dropdown {
@@ -1536,8 +1570,6 @@
           <ul class="navbar-nav navbar-right" style="width: 160px;">
             <nav class="navigation" style="width: 20%;margin-right: 10px !important;">
 
-              <span class="badge badge-light badgeworkflow" style="right: 130px !important;"></span>
-
               <ul class="inner-navigation">
 
                 <li class="left">
@@ -1545,7 +1577,7 @@
 
                   <div class="dropdown-container">
                     <a href="#" data-dropdown="notificationMenu" class="menu-link has-notifications circle">
-                      <i class="fa fa-bell"></i><span class="badge badge-light"></span>
+                      <i class="fa fa-bell"></i><span class="badge badge-light badgeworkflow"></span>
                     </a>
                     <ul class="dropdown" name="notificationMenu">
                       <!-- <li class="notification-group">

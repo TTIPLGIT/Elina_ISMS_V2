@@ -915,6 +915,8 @@
 
                 <input type="hidden" id="email" name="email" class="form-control" placeholder="Email" value="{{ $email }}">
 
+                <input type="hidden" id="token" name="token" value="{{ $token ?? '' }}">
+
 
               </div>
 

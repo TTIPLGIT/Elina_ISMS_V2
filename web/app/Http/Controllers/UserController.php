@@ -470,19 +470,20 @@ public function store(Request $request)
                $userRow['lastName'] = "A"; 
                $userRow['emailID'] = $request->email;
 
-            //    $encryptArray = $this->encryptData($userRow);
-            //    $request = array();
-            //    $request['requestData'] = $encryptArray;
-            //    $gatewayURL = config('setting.api_gateway_url').'/document/site/user/create';
+               // Lookup designation text
+               $designationRow = \Illuminate\Support\Facades\DB::table('designation')
+                                  ->where('designation_id', $request->designation)
+                                  ->first();
+               $designationText = $designationRow ? $designationRow->designation_name : $request->designation;
 
-            //    $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($request), $method);
-            //    $response1 = json_decode($response);
-
-
-
-
-
-
+               // Strapi Migration: User Creation API Call
+               $this->strapiMigrationApiCall(config('setting.strapi_user_create_url'), [
+                   'name' => $request->name,
+                   'email' => $request->email,
+                   'password' => $request->password,
+                   'confirm_password' => $request->confirm_password,
+                   'designation' => $designationText,
+               ]);
 
                return redirect(route('user.index'))->with('success', 'User created successfully and mail sent
                 ');
@@ -542,6 +543,69 @@ public function change_password_admin($id)
         $modules = $menus['modules'];
 
         return view('uam.user.change_password_admin', compact('modules', 'screens', 'id'));
+    } catch (\Exception $exc) {
+        return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
+    }
+}
+
+public function change_password_admin_store(Request $request)
+{
+    try {
+        $method = 'Method => UserController => change_password_admin_store';
+        
+        $rules = [
+            'new_password' => 'required|string|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/',
+            'confirm_password' => 'required|same:new_password',
+        ];
+
+        $messages = [
+            'new_password.required' => 'Password is required',
+            'confirm_password.required' => 'Please enter same password'
+        ];
+
+        $validator = \Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return \Redirect::back()->withErrors($validator);
+        } else {
+            $userRow = array();
+            $userRow['new_password'] = $request->new_password;
+            $userRow['user_id'] = $request->user_id;
+
+            $encryptArray = $this->encryptData($userRow);
+            $requestData = array();
+            $requestData['requestData'] = $encryptArray;
+            $gatewayURL = config('setting.api_gateway_url') . '/user/change_password_save';
+
+            $response = $this->serviceRequest($gatewayURL, 'POST', json_encode($requestData), $method);
+            $response1 = json_decode($response);
+
+            if ($response1->Status == 200 && $response1->Success) {
+                $objData = json_decode($this->decryptData($response1->Data));
+
+                if ($objData->Code == 200) {
+                    $parant_data = json_decode(json_encode($objData->Data), true);
+                    $email = $parant_data['email'] ?? '';
+                    
+                    // Strapi Migration: Admin Password Change API Call
+                    if (!empty($email)) {
+                        $this->strapiMigrationApiCall(config('setting.strapi_password_change_auth_url'), [
+                            'email' => $email,
+                            'password' => $request->new_password,
+                        ]);
+                    }
+
+                    return redirect(route('user.index'))->with('success', 'Password Changed Successfully');
+                }
+
+                if ($objData->Code == 400) {
+                    return \Redirect::back()->with('fail', 'Should not use the Previous Password');
+                }
+            } else {
+                $objData = json_decode($this->decryptData($response1->Data));
+                echo json_encode($objData->Code);exit;                            
+            }
+        }
     } catch (\Exception $exc) {
         return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
     }

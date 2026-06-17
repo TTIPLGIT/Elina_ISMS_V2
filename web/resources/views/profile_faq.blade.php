@@ -196,7 +196,7 @@ h2,h5{
 
 .navigation .inner-navigation li .menu-link.circle
 {
-  line-height: 1.8em !important;
+  line-height: normal !important;
 }
 .containernew
 {

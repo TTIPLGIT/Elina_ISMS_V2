@@ -143,6 +143,8 @@ class AboveagemanagementController extends BaseController
 
             $data['notes'] = $migrationData['notes'] ?? null;
 
+            $data['status'] = $migrationData['status'] ?? null;
+
             $data['migration_type'] = $request->migration_type ?? '13plus';
 
             $data['full_json']         = json_encode($migrationData);
@@ -172,7 +174,7 @@ class AboveagemanagementController extends BaseController
 
                 return redirect()->back()->with(
                     'success',
-                    'Child Transiton Successfully'
+                    'Child Transition Successfully'
                 );
             } else {
 

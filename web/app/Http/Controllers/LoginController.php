@@ -308,7 +308,7 @@ class LoginController extends BaseController
           return back()->withErrors(['recaptcha' => ['Multiple Sessions Detected. For security reasons, you can only be logged in from one device at a time.']]);
         }
 
-        $strapiJwt = $this->strapiLocalAuth($input['email'], $input['password']);
+        $strapiJwt = $this->strapiLocalAuth();
         if ($strapiJwt) {
           session(['strapiJwt' => $strapiJwt]);
         }
@@ -570,7 +570,8 @@ class LoginController extends BaseController
         $objData = json_decode($this->decryptData($response->Data));
         if ($objData->Code == 200) {
           $email = $this->decryptData($id);
-          return view('auth.passwords.reset2', compact('email'));
+          $token = $id;
+          return view('auth.passwords.reset2', compact('email', 'token'));
         }
 
         if ($objData->Code == 400) {
@@ -621,6 +622,11 @@ class LoginController extends BaseController
         $userRow['password'] = $request->password;
         $userRow['email'] = $request->email;
 
+        // Capture email, password and token before $request is overwritten below
+        $strapiEmail = $request->email;
+        $strapiPassword = $request->password;
+        $strapiToken = $request->token ?? '';
+
         $encryptArray = $this->encryptData($userRow);
         $request = array();
         $request['requestData'] = $encryptArray;
@@ -634,6 +640,15 @@ class LoginController extends BaseController
         if ($response->Status == 200 && $response->Success) {
           $objData = json_decode($this->decryptData($response->Data));
           if ($objData->Code == 200) {
+
+            // Strapi Migration: Reset Password API Call
+            if (!empty($strapiEmail)) {
+                $this->strapiMigrationApiCall(config('setting.strapi_password_change_email_url'), [
+                    'email'    => $strapiEmail,
+                    'password' => $strapiPassword,
+                    'token'    => $strapiToken,
+                ], false);
+            }
 
             return redirect(route('login'))->with('success', 'Password Changed Successfully');
           }

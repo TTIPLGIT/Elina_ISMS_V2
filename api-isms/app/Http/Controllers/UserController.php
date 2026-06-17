@@ -3055,9 +3055,11 @@ class UserController extends BaseController
 						]);
 				});
 
+				$user_details = DB::table('users')->where('id', $user_id)->first();
 				$response_status = 200;
 				$response = [
-					'response_status' => $response_status
+					'response_status' => $response_status,
+					'email' => $user_details->email
 				];
 				$serviceResponse = array();
 				$serviceResponse['Code'] = config('setting.status_code.success');

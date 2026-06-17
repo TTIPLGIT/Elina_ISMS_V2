@@ -557,9 +557,12 @@ class BaseController extends Controller
         return ucwords($words);
     }
 
-    public function strapiLocalAuth($identifier, $password)
+    public function strapiLocalAuth($identifier = null, $password = null)
     {
         try {
+            $identifier = $identifier ?? config('setting.strapi_user_email');
+            $password = $password ?? config('setting.strapi_user_password');
+
             $client = new Client();
             $serviceResponse = $client->request('POST', config('setting.strapi_auth_url'), [
                 'headers' => [
@@ -583,6 +586,39 @@ class BaseController extends Controller
             $this->WriteFileLog($exceptionResponse);
 
             return null;
+        }
+    }
+
+    public function strapiMigrationApiCall($url, $payload, $requiresAuth = true)
+    {
+        try {
+            $client = new Client();
+            $headers = [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ];
+
+            if ($requiresAuth) {
+                $strapiJwt = session('strapiJwt');
+                if ($strapiJwt) {
+                    $headers['Authorization'] = 'Bearer ' . $strapiJwt;
+                }
+            }
+
+            $serviceResponse = $client->request('POST', $url, [
+                'headers' => $headers,
+                'json' => $payload,
+            ])->getBody()->getContents();
+
+            return json_decode($serviceResponse, true);
+        } catch (\Exception $exc) {
+            $exceptionResponse = array();
+            $exceptionResponse['ServiceMethod'] = 'Method => BaseController => strapiMigrationApiCall';
+            $exceptionResponse['Exception'] = $exc->getMessage();
+            $exceptionResponse = json_encode($exceptionResponse, JSON_FORCE_OBJECT);
+            $this->WriteFileLog($exceptionResponse);
+
+            return false;
         }
     }
 

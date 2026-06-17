@@ -658,6 +658,16 @@
 
                         </div>
 
+                        <div class="row mb-3">
+
+                            <div class="col-md-4 detail-label">
+                                Status
+                            </div>
+
+                            <div class="col-md-8 detail-value" id="modal_status"></div>
+
+                        </div>
+
 
 
                         <h6 class="section-title-custom">
@@ -1155,6 +1165,7 @@
 
 
                 selectedJsonData.notes = notes;
+                selectedJsonData.status = $('#modal_status').text().trim();
 
 
 
