@@ -148,9 +148,10 @@
                           <a class="btn btn-warning" href="{{ route('user.show', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Show"><i class="fa fa-eye" aria-hidden="true"></i><span></span></a>
                           @endif
                           @if(strpos($screen_permission['permissions'], 'Edit') !== false)
-                          <input type="hidden" name="delete_id" id="<?php echo $row['id']; ?>" value="{{ route('user.delete', \Crypt::encrypt($row['id'])) }}">
-                          <a class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" style="cursor: pointer;" onclick="return myFunction(<?php echo $row['id']; ?>);"><i class="fa fa-trash" aria-hidden="true"></i><span></span></a>
-                          @endif
+<a class="btn btn-info"
+   onclick="myFunction('{{ Crypt::encrypt($row['id']) }}')">
+    <i class="fa fa-trash"></i>
+</a>                          @endif
 
 
                         </td>
@@ -175,6 +176,9 @@
         </div>
       </div>
     </div>
+    <form id="deleteForm" method="POST" style="display:none;">
+    @csrf
+</form>
   </section>
 </div>
 </div>
@@ -184,23 +188,30 @@
   function myFunction(id) {
 
     swal({
-      title: "Confirmation For Delete ?",
-      text: "Are You Sure to delete this data",
-      icon: "warning",
-      buttons: [
-        'No, cancel it!',
-        'Yes, I am sure!'
-      ],
-      dangerMode: true,
+        title: "Confirmation For Delete ?",
+        text: "Are You Sure to delete this data",
+        icon: "warning",
+        buttons: [
+            'No, cancel it!',
+            'Yes, I am sure!'
+        ],
+        dangerMode: true,
     }).then(function(isConfirm) {
-      if (isConfirm) {
-        var url = $('#' + id).val();
-        //alert(url);
-        window.location.href = url;
-      }
+
+        if (isConfirm) {
+
+            var form = document.getElementById('deleteForm');
+
+            form.action = "{{ route('user.delete', ':id') }}"
+                .replace(':id', id);
+
+            form.submit();
+
+        }
+
     });
 
-  }
+}
 </script>
 <script type="text/javascript">
   $.ajaxSetup({
