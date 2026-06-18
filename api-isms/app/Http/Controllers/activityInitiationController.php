@@ -96,43 +96,38 @@ class activityInitiationController extends BaseController
             } else {
                 $this->WriteFileLog("This is new");
                 $rows = DB::table('enrollment_details as a')
-                    ->select('a.*')
-
-                    ->join('sail_details as b', function ($join) {
-                        $join->on('a.enrollment_child_num', '=', 'b.enrollment_id');
-                    })
-
-                    ->leftJoin('13plus_migration as m', function ($join) {
-                        $join->on('m.enrollment', '=', 'a.enrollment_child_num');
-                    })
-
-                    ->whereIn('a.enrollment_child_num', function ($query) {
-                        $query->select('enrollment_child_num')
-                            ->from('payment_status_details')
-                            ->where('payment_for', 'SAIL Register Fee')
-                            ->where('payment_status', 'SUCCESS');
-                    })
-
-                    ->where(function ($query) use ($id) {
-                        $query->whereRaw("JSON_EXTRACT(b.is_coordinator1, '$.id') = ?", [$id])
-                            ->orWhereRaw("JSON_EXTRACT(b.is_coordinator2, '$.id') = ?", [$id]);
-                    })
-
-                    ->whereNotIn('a.enrollment_id', function ($query) {
-                        $query->select('enrollment_id')
-                            ->from('reports_copy')
-                            ->where('report_type', 7);
-                    })
-
-                    // Exclude children whose migration_status is 2 or 4
-                    ->where(function ($query) {
-                        $query->whereNull('m.enrollment')
-                            ->orWhereNotIn('m.migration_status', [2, 4]);
-                    })
-
-                    ->orderBy('a.enrollment_id', 'DESC')
-                    ->get();
-            }
+                ->select('a.*')
+            
+                ->join('sail_details as b', function ($join) {
+                    $join->on('a.enrollment_child_num', '=', 'b.enrollment_id');
+                })
+            
+                ->join('13plus_migration as m', function ($join) {
+                    $join->on('m.enrollment', '=', 'a.enrollment_child_num');
+                })
+            
+                ->whereIn('a.enrollment_child_num', function ($query) {
+                    $query->select('enrollment_child_num')
+                        ->from('payment_status_details')
+                        ->where('payment_for', 'SAIL Register Fee')
+                        ->where('payment_status', 'SUCCESS');
+                })
+            
+                ->where(function ($query) use ($id) {
+                    $query->whereRaw("JSON_EXTRACT(b.is_coordinator1, '$.id') = ?", [$id])
+                          ->orWhereRaw("JSON_EXTRACT(b.is_coordinator2, '$.id') = ?", [$id]);
+                })
+            
+                ->whereNotIn('a.enrollment_id', function ($query) {
+                    $query->select('enrollment_id')
+                        ->from('reports_copy')
+                        ->where('report_type', 7);
+                })
+            
+                ->whereIn('m.migration_status', [1, 4])
+            
+                ->orderBy('a.enrollment_id', 'DESC')
+                ->get();  }
 
             $activity = DB::select("SELECT COUNT(*) as total FROM activity WHERE active_flag = 0 and category='3'");
             $total = $activity[0]->total;
