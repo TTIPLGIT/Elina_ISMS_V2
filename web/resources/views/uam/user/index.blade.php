@@ -143,7 +143,7 @@
                           <a class="btn btn-success" href="{{ route('user.change_password_admin', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Change Password"><i class="fa fa-key" aria-hidden="true"></i><span></span></a>
 
                           @endif
-
+ 
                           @if(strpos($screen_permission['permissions'], 'Show') !== false)
                           <a class="btn btn-warning" href="{{ route('user.show', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Show"><i class="fa fa-eye" aria-hidden="true"></i><span></span></a>
                           @endif
