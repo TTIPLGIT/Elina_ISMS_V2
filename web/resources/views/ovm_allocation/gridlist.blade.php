@@ -20,11 +20,7 @@
     }
 
     .custom-month-input {
-        /* Ensure the background is transparent */
         background-color: transparent;
-        /* padding-right: 30px; */
-        /* Add padding for arrow buttons */
-        /* Adjust the width to your design */
         font-size: 16px !important;
         font-weight: 700;
     }
@@ -39,7 +35,6 @@
         width: 100%;
         text-align: center;
         cursor: pointer;
-
         pointer-events: auto;
     }
 
@@ -47,6 +42,8 @@
         position: relative;
         display: flex;
         gap: 19px;
+        align-items: center;
+        justify-content: center;
     }
 
     .month {
@@ -90,12 +87,10 @@
 
     tr:nth-child(odd) {
         background-color: #dddddd;
-        /* Light grey color for odd rows */
     }
 
     tr:nth-child(even) {
         background-color: #aaaaaa;
-        /* Dark grey color for even rows */
     }
 
     .orange-text {
@@ -108,6 +103,201 @@
 
     .red-text {
         color: red;
+    }
+
+    /* Breadcrumb – keep on one line */
+    .breadcrumb {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        -webkit-overflow-scrolling: touch;
+        padding: 8px 15px;
+        margin-bottom: 10px;
+    }
+    .breadcrumb-item + .breadcrumb-item {
+        padding-left: 0.5rem;
+    }
+    .breadcrumb-item + .breadcrumb-item::before {
+        content: "/";
+        padding-right: 0.5rem;
+    }
+
+    /* Header row – remove gray line and keep button left */
+    #weekDetails table tr:first-child td {
+        border: none !important;
+        background: #160b44 !important;
+        color: #ffffff;
+        padding: 8px 10px !important;
+    }
+
+    .week-header-row {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        flex-wrap: wrap !important;
+    }
+    .week-header-row .week-label {
+        font-weight: 600;
+        font-size: 15px;
+        flex: 1 1 auto;
+    }
+    .week-header-row .btn {
+        flex: 0 0 auto;
+        padding: 4px 12px;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    /* ==========================================
+       MOBILE RESPONSIVE
+       ========================================== */
+    @media (max-width: 768px) {
+        .main-content,
+        .card,
+        .card-body,
+        .section-body {
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+        }
+
+        .row {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        [class*="col-"] {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+            flex: 0 0 100% !important;
+            max-width: 100% !important;
+        }
+
+        .form-group {
+            margin-bottom: 15px !important;
+        }
+
+        .form-group label {
+            display: block !important;
+            width: 100% !important;
+            text-align: left !important;
+            margin-bottom: 5px !important;
+            font-weight: 600 !important;
+        }
+
+        .form-control,
+        .form-control[readonly] {
+            width: 100% !important;
+            height: 40px !important;
+            font-size: 14px !important;
+        }
+
+        select.form-control {
+            height: 40px !important;
+        }
+
+        /* Month + Week pickers – stack vertically (month first, week second) */
+        .input-container {
+            flex-direction: column !important;
+            gap: 10px !important;
+            width: 100% !important;
+            align-items: stretch !important;
+        }
+
+        .input-container .form-control {
+            width: 100% !important;
+        }
+
+        /* Week details – make table horizontally scrollable */
+        #weekDetails > div[style*="overflow-y: auto;"] {
+            overflow-x: auto !important;
+            max-height: none !important;
+            padding-bottom: 10px;
+        }
+
+        #weekDetails table {
+            min-width: 600px !important;
+            width: 100% !important;
+            font-size: 13px !important;
+        }
+
+        #weekDetails table td,
+        #weekDetails table th {
+            white-space: nowrap !important;
+            padding: 6px 4px !important;
+        }
+
+        /* Tooltip icons and counts – adjust font */
+        #weekDetails table td span {
+            font-size: 13px !important;
+        }
+
+        /* Legend – inline (colour + text on same line, items side by side) */
+        .legend-container {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            align-items: center !important;
+            gap: 4px 15px !important;
+            padding: 6px 0 !important;
+        }
+        .legend-container .legend-item {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 4px !important;
+            white-space: nowrap !important;
+        }
+        .legend-container .legend-item i {
+            display: inline-block !important;
+            margin: 0 !important;
+        }
+        .legend-container .legend-item b {
+            display: inline !important;
+            font-weight: 600 !important;
+            font-size: 13px !important;
+        }
+
+        /* Week header – keep button left and label next to it */
+        .week-header-row {
+            gap: 8px !important;
+        }
+        .week-header-row .week-label {
+            font-size: 13px !important;
+        }
+        .week-header-row .btn {
+            font-size: 12px !important;
+            padding: 3px 10px !important;
+        }
+
+        /* Modal – full width on mobile */
+        .modal-dialog.modal-xl {
+            max-width: 95% !important;
+            margin: 1.75rem auto !important;
+        }
+
+        .modal-body {
+            padding: 10px !important;
+        }
+
+        /* Modal buttons – inline */
+        .modal-body .row.text-center .col-md-12 {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            gap: 6px !important;
+        }
+
+        .modal-body .row.text-center .col-md-12 .btn {
+            width: auto !important;
+            margin: 2px !important;
+            padding: 6px 12px !important;
+            font-size: 14px !important;
+            white-space: nowrap !important;
+        }
+
+        /* Heading */
+        h5 {
+            font-size: 20px !important;
+        }
     }
 </style>
 
@@ -140,21 +330,12 @@
                         <div class="form-group">
                             <div class="input-container">
                                 <input type='text' style="background-color: #ffffff !important; color: #000000;" class="form-control custom-month-input col-md-5" id='month' name="month" title="Monthly Allocation" onfocus="clearPlaceholder(event)" onblur="setPlaceholder()" value="Select a month"><br>
-                                <!-- <div class="custom-month-placeholder" id="placeholder">Select a Month</div> -->
-
                                 <select id="weekDropdown" style="background-color: #ffffff !important; color: #000000;" class="form-control weekDropdown col-md-8" name="weekDropdown" disabled>
                                     <option value="" disabled selected>Select a week</option>
                                 </select>
-
-                                <!-- <div class="arrow-container">
-                                    <div class="arrow up" id="prevMonth"><i class="fa fa-caret-up" aria-hidden="true"></i></div>
-                                    <div class="arrow down" id="nextMonth"><i class="fa fa-caret-down" aria-hidden="true"></i></div>
-                                </div> -->
                             </div>
                         </div>
-
                     </div>
-
 
                     <div id="weekDetails" class="week-details">
                         <!-- Week details will be displayed here -->
@@ -162,11 +343,6 @@
                     <div class="table-wrapper">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="alignallocation">
-
-
-
-
-
                             </table>
                         </div>
                     </div>
@@ -201,7 +377,6 @@
                                                 <div class="row is-coordinate">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-
                                                             <label class="control-label">Enrollment ID<span class="error-star" style="color:red;">*</span></label>
                                                             <select class="form-control" style="background-color: #ffffff !important; color: #000000;" id="enrollment_child_num" name="enrollment_child_num" onchange="GetChilddetails()">
                                                                 <option value="">Select-Enrollment</option>
@@ -225,7 +400,6 @@
                                                             <input class="form-control readonly" type="text" id="child_name" name="child_name" oninput="Childname(event)" maxlength="20" value="" placeholder="Enter Name" autocomplete="off" readonly>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                                 <div class="row" style="display: flex;justify-content: center;">
                                                     <div class="col-md-4">
@@ -233,12 +407,8 @@
                                                             <label class="control-label">IS Co-ordinator-1<span class="error-star" style="color:red;">*</span></label>
                                                             <div style="display: flex;">
                                                                 <input type="hidden" id="coordinator1_id" name="coordinator1_id" autocomplete="off" readonly>
-
-
                                                                 <input class="form-control readonly" type="text" id="is_coordinator1" name="is_coordinator1" class="is_coordinator1" value="" autocomplete="off">
-
                                                             </div>
-
                                                         </div>
                                                     </div>
 
@@ -247,19 +417,14 @@
                                                             <label class="control-label">IS Co-ordinator-2<span class="error-star" style="color:red;">*</span></label>
                                                             <div style="display: flex;">
                                                                 <input type="hidden" id="coordinator2_id" name="coordinator2_id" autocomplete="off" readonly>
-
                                                                 <input class="form-control readonly" type="text" id="is_coordinator2" name="is_coordinator2" value="" autocomplete="off">
-
-
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row text-center">
                                                     <div class="col-md-12">
                                                         <button class="btn btn-success"  title="Submit" type="button" onclick="validateAndAllocate('saved')" id="savebutton"><i class="fa fa-check"></i>Submit</button>&nbsp;
-                                                        <!-- <button class="btn btn-primary" type="reset" onclick="mycheckfunction()"><i class="fa fa-undo"></i> Undo</button>&nbsp; -->
                                                         <a class="btn btn-danger"  title="Cancel" href=""><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>&nbsp;
                                                     </div>
                                                 </div>
@@ -267,9 +432,7 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
                     </section>
                 </div>
@@ -291,7 +454,6 @@
     }
 
     function clearPlaceholder(e) {
-
         var monthInput = document.getElementById('month');
         if (monthInput.value === 'Select a month') {
             monthInput.value = '';
@@ -333,7 +495,7 @@
             const startDate = new Date(selectedMonth.getFullYear(), selectedMonth.getMonth(), (selectedWeek - 1) * 7 + 1);
             const endDate = new Date(selectedMonth.getFullYear(), selectedMonth.getMonth(), Math.min(selectedWeek * 7, daysInMonth));
             const weekLabel = `Week ${selectedWeek}: ${startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })} - ${endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}`;
-            getWeekTable(weekLabel); // Call the getWeekTable function with the weekLabel
+            getWeekTable(weekLabel);
         });
 
         function generateWeekDropdown() {
@@ -341,8 +503,6 @@
 
             const firstDay = new Date(selectedMonth.getFullYear(), selectedMonth.getMonth(), 1);
             const weeksInMonth = Math.min(5, Math.ceil((firstDay.getDay() + daysInMonth) / 7));
-
-            const today = new Date(); // Current date to compare
 
             for (let i = 1; i <= weeksInMonth; i++) {
                 const startDate = new Date(selectedMonth.getFullYear(), selectedMonth.getMonth(), (i - 1) * 7 + 1);
@@ -354,7 +514,6 @@
                 option.value = i;
                 option.textContent = weekLabel;
 
-                // Disable if week has already passed
                 if (endDate < new Date().setHours(0, 0, 0, 0)) {
                     option.disabled = true;
                     option.style.color = "red";
@@ -367,19 +526,16 @@
             weekDropdown.disabled = false;
         }
 
-
         function getWeekTable(weekLabel) {
-            // Initialize an empty table
+            // Build the table header with button on the left
             let tableHTML = `
         <div style="max-height: 220px; overflow-y: auto;">
             <table style="width: 100%;">
                 <tr>
-                    <td colspan="4" style="background: #160b44; color: #ffffff;">
-                        <div class="col-md-12" style="display: flex;align-items: center;">
-                            <span class="col-md-10">${weekLabel}</span>
-                            <span class="col-md-2">
-                                <a type="button" id="allocationButton" class="btn btn-success text-white" onclick="validateAndAllocate1('Saved')" name="type" value="Saved">Allocation<i class="fa fa-plus" aria-hidden="true" style="padding-left: 5px;"></i></a>
-                            </span>
+                    <td colspan="4" style="background: #160b44; color: #ffffff; border: none !important; padding: 8px 10px !important;">
+                        <div class="week-header-row">
+                            <a type="button" id="allocationButton" class="btn btn-success text-white" onclick="validateAndAllocate1('Saved')" name="type" value="Saved">Allocation<i class="fa fa-plus" aria-hidden="true" style="padding-left: 5px;"></i></a>
+                            <span class="week-label">${weekLabel}</span>
                         </div>
                     </td>
                 </tr>                  
@@ -393,29 +549,21 @@
 
             // Make an AJAX request to fetch IS Coordinator names
             $.ajax({
-                url: '/coordinator_allocation', // Replace with the actual endpoint URL
+                url: '/coordinator_allocation',
                 type: 'GET',
                 data: {
                     _token: '{{ csrf_token() }}',
                     is_ajax: "yes"
                 },
                 success: function(data) {
-                    // Iterate through the retrieved data and add rows to the table
-
                     data.forEach(function(row) {
-                        console.log(row);
-                        console.log(row.sail_inprogress_count);
-                        // Initialize an empty string for the tooltip title
                         let tooltipContent = "";
                         let tooltipContent1 = "";
 
-                        // Loop through the array to construct the tooltip title
                         row.sail_inprogress_count.forEach(function(item, index) {
-                            // Add each enrollment record as a separate row without HTML tags
                             tooltipContent += `${index + 1})${item.enrollment_id} (${item.child_name}) - ${item.current_status}\n`;
                         });
                         row.inprogress_count.forEach(function(item, index) {
-                            // Add each enrollment record as a separate row without HTML tags
                             tooltipContent1 += `${index + 1})${item.enrollment_id} (${item.child_name}) - ${item.meeting_status} (${item.Type})\n`;
                         });
 
@@ -423,51 +571,53 @@
 
                         tableHTML += `
                     <tr>
-                    
                         <td style="font-weight:700;">
                             <div class="form-check checkbox-label">
                                 <input class="form-check-input checkbox_btn" type="checkbox" value="${row.id}" id="checkbox${row.id}" data-name="${dataName}">${row.name}
                             </div>
                         </td>
                         <td style="font-weight:700;">
-    <span data-toggle="tooltip" data-placement="top" id="sail_inprogress${row.id}"  title="${tooltipContent1}"  class="">
-        ${row.inprogress_count.length}
-        <a href="#" class="text-inherit mr-3 fa fa-circle ${getRowColorClass(row.inprogress_count.length)}"></a>
-    </span>
-</td>
-                        <td style="font-weight:700;">${row.ovm2_completion_count}
+                            <span data-toggle="tooltip" data-placement="top" id="sail_inprogress${row.id}"  title="${tooltipContent1}"  class="">
+                                ${row.inprogress_count.length}
+                                <a href="#" class="text-inherit mr-3 fa fa-circle ${getRowColorClass(row.inprogress_count.length)}"></a>
+                            </span>
                         </td>
-                      
+                        <td style="font-weight:700;">${row.ovm2_completion_count}</td>
                         <td style="font-weight:700;">
-    <span data-toggle="tooltip" data-placement="top" id="sail_inprogress${row.id}"  title="${tooltipContent}"  class="">
-        ${row.sail_inprogress_count.length}
-        <a href="#" class="text-inherit mr-3 fa fa-circle ${getRowColorClass(row.sail_inprogress_count.length)}"></a>
-    </span>
-</td>
+                            <span data-toggle="tooltip" data-placement="top" id="sail_inprogress${row.id}"  title="${tooltipContent}"  class="">
+                                ${row.sail_inprogress_count.length}
+                                <a href="#" class="text-inherit mr-3 fa fa-circle ${getRowColorClass(row.sail_inprogress_count.length)}"></a>
+                            </span>
+                        </td>
                     </tr>
-                    
                 `;
                     });
 
-                    // Close the table HTML
                     tableHTML += '</table></div>';
 
-                    // Update the weekDetails element with the generated table
                     weekDetails.innerHTML = tableHTML;
+
+                    // Legend – inline
                     weekDetails.insertAdjacentHTML('beforeend', `
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div>
-                            <i class="fa fa-circle orange-text" aria-hidden="true"></i><b>-less than and equal to 2,</b>
-                            <i class="fa fa-circle green-text" aria-hidden="true"></i><b>-greater than 2 and less than equal to 4,</b>
-                            <i class="fa fa-circle red-text" aria-hidden="true"></i><b>-greater than 4.</b>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="legend-container">
+                                    <span class="legend-item">
+                                        <i class="fa fa-circle orange-text" aria-hidden="true"></i>
+                                        <b>- less than and equal to 2,</b>
+                                    </span>
+                                    <span class="legend-item">
+                                        <i class="fa fa-circle green-text" aria-hidden="true"></i>
+                                        <b>- greater than 2 and less than equal to 4,</b>
+                                    </span>
+                                    <span class="legend-item">
+                                        <i class="fa fa-circle red-text" aria-hidden="true"></i>
+                                        <b>- greater than 4.</b>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            `);
-
-
-
+                    `);
                 },
                 error: function(error) {
                     console.error('Error fetching IS Coordinator names: ' + error);
@@ -475,51 +625,27 @@
             });
         }
     });
-    let firstSelectedCoordinator = null;
-    let secondSelectedCoordinator = null;
-    // Function to update the modal with selected coordinators
-    // function updateModal() {
-    //     const isCoordinatorInput1 = document.getElementById('is_coordinator1');
-
-    //     const isCoordinatorInput2 = document.getElementById('is_coordinator2');
-
-
-    //     // Update is_coordinator1 and is_coordinator2 inputs based on the selected coordinators
-    //     if (firstSelectedCoordinator && secondSelectedCoordinator) {
-    //         isCoordinatorInput1.value = firstSelectedCoordinator.getAttribute('data-name');
-    //         isCoordinatorInput2.value = secondSelectedCoordinator.getAttribute('data-name');
-
-    //     } else {
-    //         isCoordinatorInput1.value = '';
-    //         isCoordinatorInput2.value = '';
-    //     }
-    // }
 
     // Event listener for checkbox changes
     document.addEventListener('click', function(e) {
         if (e.target.classList.contains('checkbox_btn')) {
-
             const coordinatorId = e.target.value;
             const coordinatorName = e.target.getAttribute('data-name');
             const selectedMonth = document.getElementById('month').value;
             const selectedWeek = document.getElementById('weekDropdown').value;
-            //alert(e.target.getAttribute('value'));
+
             if (e.target.checked) {
-                //alert('checked');
                 const checkboxes = document.querySelectorAll('.form-check-input:checked');
                 if (checkboxes.length > 2) {
-                    // alert('eegeg');
                     swal.fire("You need to remove one IS-Coordinator for a allocation", "", "error");
-
                     e.target.checked = false;
                     return false;
                 }
                 if (document.getElementById('is_coordinator1').value == "") {
                     document.querySelector('#is_coordinator1').value = coordinatorName;
-                    document.getElementById('coordinator1_id').value = coordinatorId; // Set the coordinator2_id
+                    document.getElementById('coordinator1_id').value = coordinatorId;
                     document.getElementById('selected_month').value = selectedMonth;
                     document.getElementById('selected_week').value = selectedWeek;
-
                 } else if (document.getElementById('is_coordinator2').value == "") {
                     document.querySelector('#is_coordinator2').value = coordinatorName;
                     document.getElementById('coordinator2_id').value = coordinatorId;
@@ -527,10 +653,7 @@
                     document.getElementById('selected_week').value = selectedWeek;
                 }
             } else {
-                //alert('not checked');
-
                 if (document.getElementById('is_coordinator1').value == e.target.getAttribute('data-name')) {
-                    // alert('in');
                     document.getElementById('is_coordinator1').value = '';
                     document.getElementById('selected_month').value = '';
                     document.getElementById('selected_week').value = '';
@@ -543,113 +666,38 @@
         }
     });
 
-
-    // const label = this.parentElement.querySelector('span'); // Get the span inside the label
-    // const coordinatorName = label.textContent.trim(); // Get the coordinator's name
-    // const coordinatorId = this.value;
-
-
-    // if (this.checked) {
-    //     // Set the coordinator's name and ID in the is_coordinator1 input and user_id hidden field
-    //     document.getElementById('is_coordinator1').value = coordinatorName;
-    //     document.getElementById('user_id').value = coordinatorId;
-    // } else {
-    //     // Clear the is_coordinator1 input and user_id hidden field
-    //     document.getElementById('is_coordinator1').value = '';
-    //     document.getElementById('user_id').value = '';
-    // }
-
-    // // Update the modal when a checkbox is changed
-    // updateModal();
-
-
-    // Allocation button click event
-    const allocationButton = document.getElementById('allocationButton');
-
-    allocationButton.addEventListener('click', function() {
-        // Check if at least two coordinators are selected
-        const isCoordinator1 = document.getElementById('is_coordinator1').value;
-        const isCoordinator2 = document.getElementById('is_coordinator2').value;
-
-        if (isCoordinator1 !== "" && isCoordinator2 !== "") {
-            // Show the modal
-            $('#addModal').modal('show');
-        } else {
-            // alert('Please select at least two coordinators for allocation.');
+    // Allocation button click event (to open modal)
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('#allocationButton')) {
+            const isCoordinator1 = document.getElementById('is_coordinator1').value;
+            const isCoordinator2 = document.getElementById('is_coordinator2').value;
+            if (isCoordinator1 !== "" && isCoordinator2 !== "") {
+                $('#addModal').modal('show');
+            } else {
+                swal.fire("Please select at least two IS-Coordinators", "", "info");
+            }
         }
     });
 
-
     function getRowColorClass(count) {
-        if (count <= 2) {
-            return 'orange-text';
-        } else if (count > 2 && count <= 4) {
-            return 'green-text';
-        } else {
-            return 'red-text';
-        }
+        if (count <= 2) return 'orange-text';
+        else if (count > 2 && count <= 4) return 'green-text';
+        else return 'red-text';
     }
-
-    // Find the element with the data-toggle="tooltip" attribute that you want to update
-    const elementToUpdate = document.querySelector('#sail_inprogress'); // Replace with the actual ID or selector of your element
-
-    // Check if the element exists
-    if (elementToUpdate) {
-        // Update the title attribute to change the tooltip content
-        elementToUpdate.setAttribute('title', 'New Tooltip Content');
-
-        // Destroy the old Bootstrap Tooltip instance and create a new one with the updated title
-        const oldTooltipInstance = bootstrap.Tooltip.getInstance(elementToUpdate);
-        if (oldTooltipInstance) {
-            oldTooltipInstance.dispose(); // Destroy the old tooltip
-        }
-
-        // Create a new Bootstrap Tooltip instance with the updated title
-        const newTooltipInstance = new bootstrap.Tooltip(elementToUpdate);
-
-        // Show the updated tooltip
-        newTooltipInstance.show();
-    }
-
 
     function validateAndAllocate1(allocationType) {
         const checkboxes = document.querySelectorAll('.form-check-input:checked');
-        console.log(checkboxes);
-        // Check if any checkboxes are selected
         if (checkboxes.length === 0) {
             swal.fire("Please select at least two IS-Coordinator", "", "error");
             return false;
         }
         const selectedCoordinators = [];
-        // Collect the selected IS-Coordinators' names
         checkboxes.forEach(checkbox => {
-            const span = checkbox;
-
-            if (span) {
-
-                const coordinatorName = span.textContent.trim();
-                selectedCoordinators.push(coordinatorName);
-            }
-
+            const coordinatorName = checkbox.textContent.trim();
+            selectedCoordinators.push(coordinatorName);
         });
 
-        const checkedCount = selectedCoordinators.length;
-
-        if (checkedCount == 2) {
-            const isCoordinatorInput1 = document.getElementById('is_coordinator1');
-            const isCoordinatorInput2 = document.getElementById('is_coordinator2');
-
-            // if (isCoordinatorInput1 && isCoordinatorInput2) { // Check if the inputs exist
-            //     // Assign names to IS Coordinators in the input fields
-            //     isCoordinatorInput1.value = selectedCoordinators[0];
-            //     isCoordinatorInput2.value = selectedCoordinators[1];
-            // }
-
-            // Disable the checkboxes after selection
-            // checkboxes.forEach(checkbox => {
-            //     checkbox.disabled = true;
-            // });
-            // updateModal();
+        if (selectedCoordinators.length == 2) {
             $('#addModal').modal('show');
         } else {
             swal.fire("Please select at least two IS-Coordinator", "", "error");
@@ -657,7 +705,6 @@
         }
     }
 
-    // Rest of your code
     $(document).ready(function() {
         $("input[type='month']").on("change", function() {
             const selectedDate = $(this).val();
@@ -668,8 +715,6 @@
                 $(this).removeAttr("placeholder");
             }
         });
-
-        // Trigger initial change event to handle any pre-selected value
         $("input[type='month']").trigger("change");
     });
 
@@ -677,54 +722,9 @@
         let value = event.target.value || '';
         value = value.replace(/[^a-z A-Z ]/, '', );
         event.target.value = value;
-
     }
 </script>
 
-
-
-<!-- <script>
-    const myModal = document.querySelectorAll('.modalreset');
-
-    for (const myModals of myModal) {
-
-        myModals.addEventListener('hidden.bs.modal', function() {
-
-            const form = this.querySelector('.reset');
-
-            form.reset();
-        });
-
-    }
-    $(document).ready(function() {
-        $(document).on('hidden.bs.modal', function() {
-            // const form = this.querySelector('.reset');
-
-            // form.reset();
-            const form_count = document.querySelectorAll('form.reset');
-            for (let index = 0; index < form_count.length; index++) {
-                $('.reset')[index].reset();
-
-            }
-
-        })
-
-    })
-    $(document).ready(function() {
-        $("input[type='month']").on("change", function() {
-            const selectedDate = $(this).val();
-            if (selectedDate === "") {
-                $(this).css("color", "#aaa");
-            } else {
-                $(this).css("color", "black");
-                $(this).removeAttr("placeholder");
-            }
-        });
-
-        // Trigger initial change event to handle any pre-selected value
-        $("input[type='month']").trigger("change");
-    });
-</script> -->
 <script>
     function GetChilddetails() {
         var enrollment_child_num = $("select[name='enrollment_child_num']").val();
@@ -738,57 +738,30 @@
                     _token: '{{csrf_token()}}'
                 }
             }).done(function(data) {
-                console.log(data);
                 if (data != '[]') {
-                    var optionsdata = "";
                     document.getElementById('child_id').value = data[0].child_id;
                     document.getElementById('child_name').value = data[0].child_name;
                     document.getElementById('enrollment_id').value = data[0].enrollment_id;
                     document.getElementById('user_id').value = data[0].user_id;
-                } else {
-                    document.getElementById('child_name');
-                    var ddd = '<option value="child_name">Select Enrollment_child_num</option>';
-                    var demonew = $('#child_name').html(ddd);
                 }
             })
-        } else {
-            document.getElementById('initiated_by');
-            var ddd = '<option value="initiated_by">Select Enrollment_child_num</option>';
-            var demonew = $('#initiated_by').html(ddd);
         }
-    };
-</script>
+    }
 
-
-
-<script>
     const monthInput = document.getElementById('month');
-
-    // Disable keyboard input by capturing the keydown event and preventing default
-    monthInput.addEventListener('keydown', function(event) {
-        event.preventDefault();
-    });
-
-    // Disable mouse wheel events to prevent changing the month with the wheel
-    monthInput.addEventListener('wheel', function(event) {
-        event.preventDefault();
-    });
+    monthInput.addEventListener('keydown', function(event) { event.preventDefault(); });
+    monthInput.addEventListener('wheel', function(event) { event.preventDefault(); });
 </script>
-
 
 <script>
     window.onload = function() {
         let url = new URL(window.location.href)
         let message = url.searchParams.get("message6");
         if (message != null) {
-
             window.history.pushState("object or string", "Title", "/coordinator/list/view");
         }
-
     };
-</script>
 
-<script>
     function showSuccessAlert() {
         Swal.fire({
             title: "Success",
@@ -798,10 +771,8 @@
     }
 
     function validateAndAllocate(allocationType) {
-
         if (allocationType == "saved") {
             var enrollment_child_num = $("#enrollment_child_num").val();
-
             if (enrollment_child_num == '') {
                 swal.fire("Please Select Enrollment ID", "", "error");
                 return false;
@@ -822,60 +793,21 @@
                     width: '550px',
                 }).then((result) => {
                     if (result.value) {
-                        // Simulating a success response with a delay
                         document.getElementById('create_form').submit();
-                        // setTimeout(() => {
-                        //     // showSuccessAlert();
-                        //     // Redirect with a message parameter
-                        //     const message6 = "Valuer List Approved Successfully";
-                        //     
-                        //     location.replace(`/coordinator/list/view/?message6="${message6}"`);
-                        // }, 1000);
                     }
                 });
-
-
             }
         }
-        // if (allocationType == "saved") {
-        //     Swal.fire({
-        //         title: "Do you want to Allocate the IS-Coordinator for the child of Naz Naz?",
-        //         text: "Please click 'Yes' to proceed for the Allocation",
-        //         icon: "warning",
-        //         customClass: 'swalalerttext',
-        //         showCancelButton: true,
-        //         confirmButtonColor: '#3085d6',
-        //         confirmButtonText: "Yes",
-        //         cancelButtonText: "No",
-        //         closeOnConfirm: false,
-        //         closeOnCancel: true,
-        //         showLoaderOnConfirm: true,
-        //         width: '550px',
-        //     }).then((result) => {
-        //         if (result.value) {
-        //             // Simulating a success response with a delay
-        //             setTimeout(() => {
-        //                 // showSuccessAlert();
-        //                 // Redirect with a message parameter
-        //                 const message6 = "Valuer List Approved Successfully";
-        //                 location.replace(`/coordinator/list/view/?message6="${message6}"`);
-        //             }, 1000);
-        //         }
-        //     });
-        // }
     }
 
     window.onload = function() {
         let url = new URL(window.location.href);
         let message6 = url.searchParams.get("message6");
-
         if (message6 != null) {
-            // Remove the parameter from the URL after showing the success message
             window.history.pushState({}, document.title, "/coordinator/list/view");
             showSuccessAlert();
         }
     };
 </script>
-
 
 @endsection
