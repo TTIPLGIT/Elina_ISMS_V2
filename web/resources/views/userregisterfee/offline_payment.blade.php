@@ -8,6 +8,103 @@
     margin: auto;
     justify-content: center;
   }
+
+  /* ==========================================
+     BREADCRUMB – KEEP ON ONE LINE
+     ========================================== */
+  .breadcrumb {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 15px;
+    margin-bottom: 10px;
+  }
+  .breadcrumb-item + .breadcrumb-item {
+    padding-left: 0.5rem;
+  }
+  .breadcrumb-item + .breadcrumb-item::before {
+    content: "/";
+    padding-right: 0.5rem;
+  }
+
+  /* ==========================================
+     MOBILE RESPONSIVE – FORM PAGES
+     ========================================== */
+  @media (max-width: 768px) {
+    .main-content,
+    .card,
+    .card-body,
+    .section-body {
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+    }
+
+    .row {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    [class*="col-"] {
+      padding-left: 5px !important;
+      padding-right: 5px !important;
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+    }
+
+    .form-group {
+      margin-bottom: 15px !important;
+    }
+
+    .form-group label {
+      display: block !important;
+      width: 100% !important;
+      text-align: left !important;
+      margin-bottom: 5px !important;
+      font-weight: 600 !important;
+    }
+
+    .form-control,
+    .form-control[readonly] {
+      width: 100% !important;
+      height: 40px !important;
+      font-size: 14px !important;
+    }
+
+    select.form-control {
+      height: 40px !important;
+    }
+
+    /* BUTTONS – INLINE ON MOBILE */
+    .row.text-center .col-md-12,
+    .col-md-12.text-center {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      gap: 6px !important;
+    }
+
+    .row.text-center .col-md-12 .btn,
+    .col-md-12.text-center .btn {
+      width: auto !important;
+      margin: 2px !important;
+      padding: 6px 12px !important;
+      font-size: 14px !important;
+      white-space: nowrap !important;
+    }
+
+    h5 {
+      font-size: 20px !important;
+    }
+
+    /* File input – adjust for mobile */
+    input[type="file"] {
+      height: 40px !important;
+      font-size: 13px !important;
+      padding: 4px !important;
+    }
+  }
 </style>
 
 <div class="main-content">

@@ -1,6 +1,185 @@
 @extends('layouts.adminnav')
 
 @section('content')
+<style>
+    .tax-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .tax-row input {
+        margin-right: 10px;
+    }
+    .removeTaxButton {
+        margin-left: 10px;
+    }
+    #serviceTable .removeServiceButton {
+        margin-left: 10px;
+    }
+    #serviceTable input,
+    #serviceTable select {
+        margin-right: 10px;
+    }
+    #serviceTable input.form-control,
+    #serviceTable select.form-control {
+        background-color: #ffffff !important;
+    }
+    #serviceTable input.amount.gray-bg,
+    #serviceTable input.rate.gray-bg {
+        background-color: #e9ecef !important;
+        color: #495057;
+        cursor: not-allowed;
+    }
+    .rate-disabled {
+        background-color: #e9ecef !important;
+        cursor: not-allowed;
+    }
+    #child_enrollment {
+        background-color: #ffffff !important;
+    }
+    .gray-bg {
+        background-color: #f8f9fa !important;
+        border-color: #ced4da;
+    }
+    #child_enrollment:disabled {
+        background-color: #e9ecef !important;
+        color: black !important;
+        opacity: 1 !important;
+    }
+
+    /* Breadcrumb – keep on one line */
+    .breadcrumb {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        -webkit-overflow-scrolling: touch;
+        padding: 8px 15px;
+        margin-bottom: 10px;
+    }
+    .breadcrumb-item + .breadcrumb-item {
+        padding-left: 0.5rem;
+    }
+    .breadcrumb-item + .breadcrumb-item::before {
+        content: "/";
+        padding-right: 0.5rem;
+    }
+
+    /* ==========================================
+       MOBILE RESPONSIVE – FORM PAGES
+       ========================================== */
+    @media (max-width: 768px) {
+        .main-content,
+        .card,
+        .card-body,
+        .section-body {
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+        }
+
+        .row {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        [class*="col-"] {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+            flex: 0 0 100% !important;
+            max-width: 100% !important;
+        }
+
+        .form-group {
+            margin-bottom: 15px !important;
+        }
+
+        .form-group label {
+            display: block !important;
+            width: 100% !important;
+            text-align: left !important;
+            margin-bottom: 5px !important;
+            font-weight: 600 !important;
+        }
+
+        .form-control,
+        .form-control[readonly] {
+            width: 100% !important;
+            height: 40px !important;
+            font-size: 14px !important;
+        }
+
+        select.form-control {
+            height: 40px !important;
+        }
+
+        /* BUTTONS – INLINE ON MOBILE */
+        .row.text-center .col-md-12,
+        .row .col-lg-12.text-center {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            gap: 6px !important;
+        }
+
+        .row.text-center .col-md-12 .btn,
+        .row .col-lg-12.text-center .btn {
+            width: auto !important;
+            margin: 2px !important;
+            padding: 6px 12px !important;
+            font-size: 14px !important;
+            white-space: nowrap !important;
+        }
+
+        h5 {
+            font-size: 20px !important;
+        }
+
+        /* ==========================================
+           SERVICE TABLE – IMPROVED FOR MOBILE
+           ========================================== */
+        .table-responsive-wrapper {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch;
+            margin: 0 -5px;
+            padding: 0 5px;
+        }
+
+        #serviceTable {
+            min-width: 600px !important;
+            width: 100% !important;
+            font-size: 13px !important;
+        }
+
+        #serviceTable th,
+        #serviceTable td {
+            padding: 6px 4px !important;
+            white-space: nowrap !important;
+        }
+
+        #serviceTable .form-control {
+            height: 34px !important;
+            font-size: 13px !important;
+            padding: 2px 4px !important;
+            min-width: 50px !important;
+        }
+
+        #serviceTable select.form-control {
+            min-width: 80px !important;
+        }
+
+        #serviceTable .btn {
+            font-size: 12px !important;
+            padding: 2px 6px !important;
+        }
+
+        /* Add Service button – full width on mobile */
+        #addServiceButton {
+            width: 100% !important;
+            margin-top: 8px !important;
+        }
+    }
+</style>
+
 <div class="main-content">
     <section class="section">
         {{ Breadcrumbs::render('paymentmaster.customized.getdata', $rows['id']) }}
@@ -68,26 +247,28 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Service Details Table -->
+                        <!-- Service Details Table – now with a responsive wrapper -->
                         <div class="card mb-1 mt-1">
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="serviceTable">Service Details:</label>
-                                    <table class="table" id="serviceTable">
-                                        <thead>
-                                            <tr>
-                                                <th>SI.NO</th>
-                                                <th>Service Briefing</th>
-                                                <th>QTY</th>
-                                                <th>Rate (in ₹)</th>
-                                                <th>Amount (in ₹)</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <!-- Dynamic rows will be added here -->
-                                        </tbody>
-                                    </table>
+                                    <div class="table-responsive-wrapper">
+                                        <table class="table" id="serviceTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>SI.NO</th>
+                                                    <th>Service Briefing</th>
+                                                    <th>QTY</th>
+                                                    <th>Rate (in ₹)</th>
+                                                    <th>Amount (in ₹)</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Dynamic rows will be added here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     <button type="button" id="addServiceButton" class="btn btn-info">Add Service</button>
                                 </div>
                             </div>
@@ -589,62 +770,5 @@
         });
     }
 </script>
-
-<style>
-    .tax-row {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-
-    .tax-row input {
-        margin-right: 10px;
-    }
-
-    .removeTaxButton {
-        margin-left: 10px;
-    }
-
-    #serviceTable .removeServiceButton {
-        margin-left: 10px;
-    }
-
-    #serviceTable input,
-    #serviceTable select {
-        margin-right: 10px;
-    }
-
-    #serviceTable input.form-control,
-    #serviceTable select.form-control {
-        background-color: #ffffff !important;
-    }
-
-    #serviceTable input.amount.gray-bg,
-    #serviceTable input.rate.gray-bg {
-        background-color: #e9ecef !important;
-        color: #495057;
-        cursor: not-allowed;
-    }
-
-    .rate-disabled {
-        background-color: #e9ecef !important;
-        cursor: not-allowed;
-    }
-
-    #child_enrollment {
-        background-color: #ffffff !important;
-    }
-
-    .gray-bg {
-        background-color: #f8f9fa !important;
-        border-color: #ced4da;
-    }
-
-    #child_enrollment:disabled {
-        background-color: #e9ecef !important;
-        color: black !important;
-        opacity: 1 !important;
-    }
-</style>
 
 @endsection
