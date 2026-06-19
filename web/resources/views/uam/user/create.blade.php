@@ -59,6 +59,94 @@
         color: black;
         font-weight: 600;
     }
+
+    /* ==========================================
+       MOBILE RESPONSIVE – FORM PAGES
+       ========================================== */
+    @media (max-width: 768px) {
+        .main-content,
+        .card,
+        .card-body,
+        .section-body {
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+        }
+
+        .row {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        [class*="col-"] {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+            flex: 0 0 100% !important;
+            max-width: 100% !important;
+        }
+
+        .form-group {
+            margin-bottom: 15px !important;
+        }
+
+        .form-group label {
+            display: block !important;
+            width: 100% !important;
+            text-align: left !important;
+            margin-bottom: 5px !important;
+            font-weight: 600 !important;
+        }
+
+        .form-control,
+        .form-control[readonly] {
+            width: 100% !important;
+            height: 40px !important;
+            font-size: 14px !important;
+        }
+
+        select.form-control {
+            height: 40px !important;
+        }
+
+        /* BUTTONS – INLINE ON MOBILE (same line) */
+        .row.text-center .col-md-12 {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            gap: 6px !important;
+        }
+
+        .row.text-center .col-md-12 .btn {
+            width: auto !important;
+            margin: 2px !important;
+            padding: 6px 12px !important;
+            font-size: 14px !important;
+            white-space: nowrap !important;
+        }
+
+        h5 {
+            font-size: 20px !important;
+        }
+
+        /* Password notes – smaller font and better spacing */
+        .form-group p {
+            font-size: 12px !important;
+            margin-top: 4px !important;
+        }
+
+        /* Select2 – full width and adjust height */
+        .select2-container {
+            width: 100% !important;
+        }
+        .select2-selection {
+            height: 40px !important;
+        }
+        .select2-selection__rendered {
+            line-height: 38px !important;
+        }
+        .select2-selection__arrow {
+            height: 38px !important;
+        }
+    }
 </style>
 
 <div class="main-content">
@@ -67,7 +155,7 @@
         {{ Breadcrumbs::render('user.create') }}
 
         <div class="section-body mt-1">
-            <h5 class="usercreate" style="color:darkblue; text-align: center;">Users Create</h5>
+            <h5 class="text-center" style="color:darkblue;">Users Create</h5>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -77,10 +165,9 @@
                                 <div class="row">
 
                                     <div class="col-md-6">
-
                                         <div class="form-group">
                                             <label class="control-label">User Name <span style="color: red;font-size: 16px;">*</span></label>
-                                            <input class="form-control" type="text"style="background-color: #ffffff !important;" id="name" name="name" placeholder="Enter User Name">
+                                            <input class="form-control" type="text" style="background-color: #ffffff !important;" id="name" name="name" placeholder="Enter User Name">
                                             @error('name')
                                             <div class="error">{{ $message }}</div>
                                             @enderror
@@ -90,16 +177,17 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Email <span style="color: red;font-size: 16px;">*</span></label>
-                                            <input class="form-control" type="email" style="background-color: #ffffff !important;"   id="email" name="email" placeholder="Enter Email">
+                                            <input class="form-control" type="email" style="background-color: #ffffff !important;" id="email" name="email" placeholder="Enter Email">
                                             @error('email')
                                             <div class="error">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Password <span style="color: red;font-size: 16px;">*</span></label>
-                                            <input class="form-control" type="text"  style="background-color: #ffffff !important;"  id="password" name="password" placeholder="Enter Password">
+                                            <input class="form-control" type="text" style="background-color: #ffffff !important;" id="password" name="password" placeholder="Enter Password">
                                             <label style="color:#f30202!important">Notes</label>
                                             <p> Password Format - at least 1 uppercase character (A-Z),
                                                 at least 1 lowercase character (a-z),
@@ -112,10 +200,11 @@
                                             @enderror
                                         </div>
                                     </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Confirm Password <span style="color: red;font-size: 16px;">*</span></label>
-                                            <input class="form-control"  style="background-color: #ffffff !important;"  type="password" id="confirm_password" name="confirm_password" placeholder="Enter Password">
+                                            <input class="form-control" style="background-color: #ffffff !important;" type="password" id="confirm_password" name="confirm_password" placeholder="Enter Password">
                                             @error('confirm_password')
                                             <div class="error">{{ $message }}</div>
                                             @enderror
@@ -125,8 +214,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Screen Roles <span style="color: red;font-size: 16px;">*</span></label>
-                                            <select class="form-control" style="background-color: #ffffff !important;"  id="roles_id" name="roles_id">
-
+                                            <select class="form-control" style="background-color: #ffffff !important;" id="roles_id" name="roles_id">
                                                 <option value="">Please Select Role</option>
                                                 @foreach($rows as $key=>$row)
                                                 <option value="{{ $row['role_id']}}">{{ $row['role_name'] }}</option>
@@ -141,7 +229,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Additional Roles & Responsibilities</label>
-                                            <select class="form-control js-select2"  id="additional_roles_id" name="additional_roles_id[]" multiple>
+                                            <select class="form-control js-select2" id="additional_roles_id" name="additional_roles_id[]" multiple>
                                                 <option value="">Please Select Roles</option>
                                                 @foreach($rows as $key=>$row)
                                                 <option value="{{ $row['role_id']}}">{{ $row['role_name'] }}</option>
@@ -156,7 +244,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Designation <span style="color: red;font-size: 16px;">*</span></label>
-                                            <select class="form-control" style="background-color: #ffffff !important;"   id="designation" name="designation">
+                                            <select class="form-control" style="background-color: #ffffff !important;" id="designation" name="designation">
                                                 <option value="">Please Select Designation</option>
                                                 @foreach($designation as $key=>$row)
                                                 <option value="{{ $row['designation_id'] }}">{{ $row['designation_name'] }}</option>
@@ -172,21 +260,19 @@
                                         <div class="form-group">
                                             <label class="control-label">Dashboard List <span style="color: red;font-size: 16px;">*</span></label>
                                             <select class="js-select5 form-control dashboard_list_id" id="dashboard_list_id" multiple="multiple" name="dashboard_list_id[]" style="color: black;">
-
                                                 @foreach($dashboard as $key=>$row)
                                                 <option value="{{ $row['dashboard_list_id'] }}" selected>{{ $row['dashboard_list_name'] }}</option>
                                                 @endforeach
                                             </select>
-
                                             @error('dashboard_list_id')
                                             <div class="error">{{ $message }}</div>
                                             @enderror
-
-
                                         </div>
                                     </div>
                                 </div>
-                                <input class="form-control" type="hidden" id="user_type" name="user_type" placeholder="Enter Password" value="AD">
+
+                                <input class="form-control" type="hidden" id="user_type" name="user_type" value="AD">
+
                                 <div class="row text-center">
                                     <div class="col-md-12">
                                         <a type="button" onclick="submit()" class="btn btn-success"><i class="fa fa-check"></i> Submit</a>&nbsp;
@@ -202,10 +288,11 @@
         </div>
     </section>
 </div>
+
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-
+        // any initialisation if needed
     });
 
     $(".js-select2").select2({
@@ -224,6 +311,7 @@
         tags: true
     });
 </script>
+
 <script>
     function submit() {
         var name = $('#name').val();
@@ -286,27 +374,28 @@
         }
 
         document.getElementById('formSubmit').submit();
-
     }
 </script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    var rolesSelect = document.getElementById("roles_id");
-    var additionalRolesSelect = document.getElementById("additional_roles_id");
 
-    rolesSelect.addEventListener("change", function() {
-        var selectedRoleId = this.value;
-        if (selectedRoleId) {
-            var options = additionalRolesSelect.options;
-            for (var i = 0; i < options.length; i++) {
-                options[i].disabled = false;
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var rolesSelect = document.getElementById("roles_id");
+        var additionalRolesSelect = document.getElementById("additional_roles_id");
+
+        rolesSelect.addEventListener("change", function() {
+            var selectedRoleId = this.value;
+            if (selectedRoleId) {
+                var options = additionalRolesSelect.options;
+                for (var i = 0; i < options.length; i++) {
+                    options[i].disabled = false;
+                }
+                var optionToDisable = additionalRolesSelect.querySelector("option[value='" + selectedRoleId + "']");
+                if (optionToDisable) {
+                    optionToDisable.disabled = true;
+                }
             }
-            var optionToDisable = additionalRolesSelect.querySelector("option[value='" + selectedRoleId + "']");
-            if (optionToDisable) {
-                optionToDisable.disabled = true;
-            }
-        }
+        });
     });
-});
 </script>
+
 @endsection

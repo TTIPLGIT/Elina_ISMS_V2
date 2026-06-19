@@ -1,8 +1,127 @@
-
 @extends('layouts.adminnav')
 
 @section('content')
+<style>
+  /* ==========================================
+     REMOVE BORDER FROM TREEVIEW CONTAINER
+     ========================================== */
+  #treeview_container,
+  .hummingbird-treeview,
+  .well,
+  .h-scroll-large {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 10px 0 !important;
+  }
 
+  /* ==========================================
+     MOBILE RESPONSIVE – FORM PAGES
+     ========================================== */
+  @media (max-width: 768px) {
+    .main-content,
+    .card,
+    .card-body,
+    .section-body {
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+    }
+
+    .row {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    [class*="col-"] {
+      padding-left: 5px !important;
+      padding-right: 5px !important;
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+    }
+
+    .form-group {
+      margin-bottom: 15px !important;
+    }
+
+    .form-group label {
+      display: block !important;
+      width: 100% !important;
+      text-align: left !important;
+      margin-bottom: 5px !important;
+      font-weight: 600 !important;
+    }
+
+    .form-control,
+    .form-control[readonly] {
+      width: 100% !important;
+      height: 40px !important;
+      font-size: 14px !important;
+    }
+
+    select.form-control {
+      height: 40px !important;
+    }
+
+    /* BUTTONS – INLINE ON MOBILE (same line) */
+    .row.text-center .col-md-12 {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      gap: 6px !important;
+    }
+
+    .row.text-center .col-md-12 .btn {
+      width: auto !important;
+      margin: 2px !important;
+      padding: 6px 12px !important;
+      font-size: 14px !important;
+      white-space: nowrap !important;
+    }
+
+    h5 {
+      font-size: 20px !important;
+    }
+
+    /* TREEVIEW – no border, scrollable */
+    #treeview_container {
+      overflow-x: auto !important;
+      max-width: 100% !important;
+      padding: 10px 0 !important;
+      border: none !important;
+    }
+
+    #treeview_container ul {
+      padding-left: 20px !important;
+    }
+
+    /* Permission lists – adapt for mobile */
+    #treeview_container ul ul ul ul ul {
+      display: block !important;
+      float: none !important;
+      padding-left: 0 !important;
+      margin-top: 4px !important;
+    }
+
+    #treeview_container ul ul ul ul ul li {
+      display: inline-block !important;
+      margin-right: 8px !important;
+      margin-bottom: 4px !important;
+      white-space: nowrap !important;
+    }
+
+    /* Remove float:right from permission spans/lists */
+    #treeview_container ul ul ul ul ul {
+      float: none !important;
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 4px 8px !important;
+    }
+
+    #treeview_container li {
+      word-break: break-word !important;
+    }
+  }
+</style>
 
 <div class="main-content">
 
@@ -11,7 +130,7 @@
    {{ Breadcrumbs::render('uam_roles.create') }}
 
       <div class="section-body mt-1">
-         <h5 style="color:darkblue;text-align: center;">Role Create</h5>
+         <h5 class="text-center" style="color:darkblue;">Role Create</h5>
          <div class="row">
 
             <div class="col-12">
@@ -31,7 +150,8 @@
                                  @enderror
                               </div>
                               <div class="col-md-12">
-                                 <div id="treeview_container" class="hummingbird-treeview well h-scroll-large">
+                                 <!-- Removed the "well" class to eliminate border -->
+                                 <div id="treeview_container" class="hummingbird-treeview h-scroll-large">
                                     <label class="control-label">Modules and Screen Permission <span style="color: red;font-size: 16px;">*</span></label>
                                     <ul id="treeview" class="hummingbird-base">
 
@@ -219,8 +339,9 @@
                            <div class="para"></div>
                            <div class="row text-center">
                               <div class="col-md-12">
-                                 <button class="btn btn-success" type="submit"><i class="fa fa-check"></i> Submit</button>&nbsp; <button class="btn btn-primary" type="reset" onclick="mycheckfunction()"><i class="fa fa-undo"></i> Undo</button>&nbsp;
-                                 <a class="btn btn-danger" href="{{ route('uam_roles.index') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>&nbsp;
+                                 <button class="btn btn-success" type="submit"><i class="fa fa-check"></i> Submit</button>&nbsp;
+                                 <button class="btn btn-primary" type="reset" onclick="mycheckfunction()"><i class="fa fa-undo"></i> Undo</button>&nbsp;
+                                 <a class="btn btn-danger" href="{{ route('uam_roles.index') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel</a>&nbsp;
                               </div>
                            </div>
                         </form>
