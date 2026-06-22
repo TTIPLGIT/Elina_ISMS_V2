@@ -17,6 +17,366 @@
         border-radius: 8px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     }
+
+    /* =========================================================================
+       MOBILE RESPONSIVE - EXACTLY AS OVM-1 INDEX
+       ========================================================================= */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    @media (max-width: 768px) {
+
+        /* Remove extra padding/margins */
+        .main-content,
+        .card,
+        .card-body,
+        .table-wrapper,
+        .searchResultStudent,
+        .table-responsive {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .row,
+        .col-12,
+        .col-lg-12 {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+        }
+
+        .main-content {
+            padding-top: 0 !important;
+        }
+
+        .breadcrumb {
+            font-size: 11px !important;
+            margin-bottom: 10px !important;
+            margin-top: 60px !important;
+            margin-left: 10px !important;
+        }
+
+        .card {
+            margin-top: 0 !important;
+        }
+
+        .table-responsive {
+            overflow-x: hidden !important;
+            overflow-y: visible !important;
+            max-height: none !important;
+        }
+
+        .table-responsive table {
+            font-size: 12px;
+            min-width: 100% !important;
+            width: 100% !important;
+        }
+
+        /* Convert table to cards */
+        .searchResultStudent table,
+        .searchResultStudent thead,
+        .searchResultStudent tbody,
+        .searchResultStudent th,
+        .searchResultStudent td {
+            display: block !important;
+            width: 100% !important;
+        }
+
+        .searchResultStudent thead {
+            display: none !important;
+        }
+
+        .searchResultStudent tbody {
+            background: transparent !important;
+        }
+
+        #tableList {
+            width: 100% !important;
+            margin: 0 !important;
+        }
+
+        #tableList tr {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: stretch !important;
+            border: 1px solid #e0e0e0 !important;
+            border-radius: 8px !important;
+            margin: 8px 5px !important;
+            position: relative !important;
+            padding: 10px 15px 10px 45px !important;
+            background: #fff !important;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+            cursor: pointer;
+            width: calc(100% - 10px) !important;
+        }
+
+        #tableList td {
+            display: block !important;
+            border: none !important;
+            padding: 0 !important;
+            text-align: left !important;
+            white-space: normal !important;
+            width: 100% !important;
+            background: transparent !important;
+            height: auto !important;
+            min-height: 0 !important;
+            line-height: 1.2 !important;
+        }
+
+        /* Sl No – absolute positioned */
+        #tableList td:nth-of-type(1) {
+            position: absolute !important;
+            left: 15px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            width: 25px !important;
+            display: flex !important;
+            font-weight: bold !important;
+            font-size: 13px !important;
+            color: #2c3e50 !important;
+        }
+
+        #tableList tr.expanded-row td:nth-of-type(1) {
+            top: 20px !important;
+            transform: translateY(0) !important;
+        }
+
+        /* Question – main visible field (column 2) */
+        #tableList td:nth-of-type(2) {
+            display: block !important;
+            font-weight: 600 !important;
+            font-size: 16px !important;
+            color: #2c3e50 !important;
+            margin-bottom: 4px !important;
+            padding-right: 25px !important;
+            order: 1 !important;
+        }
+
+        /* Hide Description (col3), Type (col4), Action (col5) initially */
+        #tableList td:nth-of-type(3),
+        #tableList td:nth-of-type(4),
+        #tableList td:nth-of-type(5) {
+            display: none !important;
+        }
+
+        /* Arrow */
+        #tableList tr::after {
+            content: '\f054';
+            font-family: 'FontAwesome';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #bdc3c7;
+            transition: transform 0.3s;
+            font-size: 12px;
+        }
+
+        #tableList tr.expanded-row::after {
+            transform: translateY(-50%) rotate(90deg);
+            top: 35px;
+        }
+
+        /* Expanded: show Description, Type, Action */
+        #tableList tr.expanded-row td:nth-of-type(3) {
+            display: block !important;
+            margin-top: 8px !important;
+            font-size: 12px !important;
+            color: #34495e !important;
+            order: 2 !important;
+        }
+        #tableList tr.expanded-row td:nth-of-type(3):before {
+            content: "Description: ";
+            font-weight: 600 !important;
+            color: #000 !important;
+        }
+
+        #tableList tr.expanded-row td:nth-of-type(4) {
+            display: block !important;
+            margin-top: 6px !important;
+            font-size: 12px !important;
+            color: #34495e !important;
+            order: 3 !important;
+        }
+        #tableList tr.expanded-row td:nth-of-type(4):before {
+            content: "Type: ";
+            font-weight: 600 !important;
+            color: #000 !important;
+        }
+
+        #tableList tr.expanded-row td:nth-of-type(5) {
+            display: flex !important;
+            align-items: center !important;
+            flex-wrap: nowrap !important;
+            gap: 6px !important;
+            margin-top: 6px !important;
+            order: 4 !important;
+            white-space: nowrap !important;
+        }
+        #tableList tr.expanded-row td:nth-of-type(5):before {
+            content: "Action: ";
+            font-weight: 600 !important;
+            color: #000 !important;
+            margin-right: 6px !important;
+            flex-shrink: 0 !important;
+        }
+        #tableList tr.expanded-row td:nth-of-type(5) button {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin-right: 0 !important;
+            padding: 2px !important;
+            font-size: 14px !important;
+        }
+
+        /* No records row */
+        #tableList td.dataTables_empty {
+            display: table-cell !important;
+            width: 100% !important;
+            text-align: center !important;
+            white-space: nowrap !important;
+            padding: 15px !important;
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            color: #666 !important;
+        }
+
+        #tableList tr:has(td.dataTables_empty) {
+            display: table-row !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            background: transparent !important;
+        }
+        #tableList tr:has(td.dataTables_empty)::after {
+            display: none !important;
+        }
+
+        /* ---- DataTable controls – search on right, length on left ---- */
+        .dataTables_wrapper .row:first-child {
+            margin: 0 !important;
+            padding: 0 !important;
+            display: flex !important;
+            flex-wrap: wrap !important;
+        }
+
+        .dataTables_wrapper .dataTables_length {
+            float: left !important;
+            margin-left: 8px !important;
+        }
+
+        .dataTables_wrapper .dataTables_filter {
+            float: right !important;
+            padding-right: 8px !important;
+        }
+
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter,
+        .dataTables_wrapper .dataTables_info,
+        .dataTables_wrapper .dataTables_paginate {
+            font-size: 10px !important;
+        }
+
+        .dataTables_wrapper .dataTables_length select {
+            font-size: 11px !important;
+            height: 32px !important;
+            width: 60px !important;
+        }
+
+        .dataTables_wrapper .dataTables_filter input {
+            width: 90px !important;
+            height: 24px !important;
+            font-size: 10px !important;
+        }
+
+        /* ---- Pagination & Info on same line - like screenshot 3 ---- */
+        .dataTables_wrapper .row:last-child {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 5px 10px !important;
+            margin: 0 !important;
+        }
+
+        .dataTables_wrapper .dataTables_info {
+            float: left !important;
+            padding-top: 8px !important;
+            font-size: 11px !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate {
+            float: right !important;
+            padding-top: 5px !important;
+            text-align: right !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding: 3px 8px !important;
+            margin: 0 2px !important;
+            font-size: 11px !important;
+            border-radius: 3px !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: #044a95 !important;
+            color: white !important;
+            border: 1px solid #044a95 !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: #e9ecef !important;
+        }
+
+        /* ---- Title – ensure visible with margin top ---- */
+        .screen-title {
+            font-size: 18px !important;
+            margin-top: 20px !important;
+            margin-bottom: 10px !important;
+        }
+
+        /* ---- Add Question button – left aligned, auto width ---- */
+        .row.mb-3 .col-lg-12.text-left {
+            text-align: left !important;
+            padding-left: 10px !important;
+        }
+
+        .btn-labeled.btn-info {
+            width: auto !important;
+            display: inline-block !important;
+            padding: 6px 12px !important;
+            font-size: 13px !important;
+            white-space: nowrap !important;
+        }
+
+        /* Hide icon on mobile */
+        .btn-labeled.btn-info .btn-label,
+        .btn-labeled.btn-info i {
+            display: none !important;
+        }
+
+        /* ---- Modals full-screen on mobile ---- */
+        .modal-dialog {
+            max-width: 95% !important;
+            margin: 10px auto !important;
+        }
+        .modal-dialog.modal-lg {
+            max-width: 95% !important;
+        }
+        .modal-body {
+            padding: 10px !important;
+        }
+        .modal-header h5 {
+            font-size: 16px !important;
+        }
+        .modal-footer .btn {
+            font-size: 12px !important;
+            padding: 6px 12px !important;
+        }
+    }
 </style>
 
 @if (session('success'))
@@ -61,7 +421,7 @@
 
                     <!-- Table -->
                     <div class="table-wrapper">
-                        <div class="table-responsive">
+                        <div class="table-responsive searchResultStudent">
                             <table class="table table-bordered table-striped" id="tableList" width="100%">
                                 <thead>
                                     <tr>
@@ -248,6 +608,7 @@
     var rows = <?php echo json_encode($rows); ?>;
 
     $(document).ready(function() {
+        // Safe DataTable init
         if ($.fn.DataTable.isDataTable('#tableList')) {
             $('#tableList').DataTable().destroy();
         }
@@ -256,6 +617,17 @@
             "language": {
                 "search": "_INPUT_",
                 "searchPlaceholder": "Search..."
+            }
+        });
+
+        // ---- Row expansion on mobile ----
+        $('#tableList tbody').on('click', 'tr', function(e) {
+            // Ignore clicks inside action buttons
+            if ($(e.target).closest('button').length) {
+                return;
+            }
+            if ($(window).width() <= 768) {
+                $(this).toggleClass('expanded-row');
             }
         });
     });
@@ -377,9 +749,6 @@
     }
 
     function deleteQuestion(id) {
-
-        console.log("Delete clicked:", id);
-
         Swal.fire({
             title: 'Are you sure?',
             text: "This will delete the question!",
@@ -388,28 +757,23 @@
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-
                 $.ajax({
-                    url: "{{ route('master.gform.update') }}", // same controller
+                    url: "{{ route('master.gform.update') }}",
                     type: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
                         id: id,
-                        delete_flag: 1 // 👈 IMPORTANT
+                        delete_flag: 1
                     },
                     success: function(res) {
-                        console.log("Success:", res);
-
                         Swal.fire('Question Deleted Successfully', '', 'success').then(() => {
                             location.reload();
                         });
                     },
                     error: function(err) {
-                        console.log("Error:", err);
                         Swal.fire('Error!', 'Something went wrong', 'error');
                     }
                 });
-
             }
         });
     }
