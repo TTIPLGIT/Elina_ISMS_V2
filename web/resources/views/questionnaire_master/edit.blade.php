@@ -5,7 +5,6 @@
 <style>
   input[type=checkbox] {
     display: inline-block;
-
   }
 
   .no-arrow {
@@ -22,14 +21,10 @@
     margin: 0;
   }
 
-  /* body{
-        background-color: white !important;
-    } */
   .nav-tabs {
     background-color: #0068a7 !important;
     border-radius: 29px !important;
     padding: 1px !important;
-
   }
 
   .nav-item.active {
@@ -84,7 +79,155 @@
   .btn-success {
     margin: auto;
   }
+
+  /* ============================================================
+     MOBILE RESPONSIVE STYLING – same as create page
+     ============================================================ */
+  @media (max-width: 768px) {
+
+    /* Reset paddings */
+    .main-content,
+    .card,
+    .card-body,
+    .form-group {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    .row,
+    .col-12,
+    .col-md-6,
+    .col-lg-12 {
+      padding-left: 5px !important;
+      padding-right: 5px !important;
+    }
+
+    .main-content {
+      padding-top: 0 !important;
+    }
+
+    .breadcrumb {
+      font-size: 11px !important;
+      margin: 60px 10px 10px 10px !important;
+    }
+
+    .card {
+      margin-top: 0 !important;
+    }
+
+    h4 {
+      font-size: 18px !important;
+    }
+
+    /* Stack columns */
+    .col-md-6 {
+      width: 100% !important;
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+    }
+
+    /* Form inputs full width */
+    .form-control,
+    .form-control[type="text"],
+    textarea.form-control,
+    select.form-control {
+      font-size: 14px !important;
+      height: auto !important;
+      padding: 8px 10px !important;
+    }
+
+    /* Labels */
+    .control-label {
+      font-size: 13px !important;
+    }
+
+    /* ---- Dynamic fields – keep option+value and X inline ---- */
+    .multi-field {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      align-items: center !important;
+      gap: 6px !important;
+      margin-bottom: 8px !important;
+    }
+
+    /* Option and Value inputs – side by side, shrinkable */
+    .multi-field input[name="option[]"],
+    .multi-field input[name="value[]"] {
+      flex: 1 1 0 !important;
+      min-width: 0 !important;
+      width: auto !important;
+      margin: 0 !important;
+    }
+
+    /* Remove button – stays on the same line */
+    .multi-field .remove-field {
+      flex: 0 0 auto !important;
+      padding: 4px 10px !important;
+      font-size: 14px !important;
+      margin: 0 !important;
+      line-height: 1.4 !important;
+    }
+
+    /* Quadrant and Category fields – also inline */
+    .multi-field input[name="quadrant[]"],
+    .multi-field input[name="category[]"] {
+      flex: 1 1 0 !important;
+      min-width: 0 !important;
+      width: auto !important;
+      margin: 0 !important;
+    }
+
+    /* Buttons for adding fields – full width */
+    .add-field {
+      width: 100% !important;
+      margin-top: 6px !important;
+      font-size: 14px !important;
+      padding: 8px !important;
+    }
+
+    /* ---- Action buttons: keep them in one line (wrap if needed) ---- */
+    .row.text-center .col-md-12 {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 6px !important;
+      padding: 0 5px !important;
+    }
+
+    .row.text-center .col-md-12 .btn,
+    .row.text-center .col-md-12 a.btn {
+      flex: 0 0 auto !important;
+      width: auto !important;
+      min-width: 80px !important;
+      margin: 0 !important;
+      font-size: 13px !important;
+      padding: 6px 12px !important;
+    }
+
+    /* Toggle */
+    .switch {
+      margin: 10px 0 !important;
+    }
+
+    /* Reduce spacing */
+    .question {
+      margin-top: 1rem !important;
+      padding: 10px !important;
+    }
+
+    .form-group {
+      margin-bottom: 12px !important;
+    }
+
+    .multi-field-wrapper {
+      padding: 0 5px !important;
+    }
+  }
 </style>
+
 <div class="main-content">
   <div class="section-body mt-0">
     <h4> Questionnaire Creation </h4>
@@ -224,6 +367,7 @@
     </form>
   </div>
 </div>
+
 <script type="text/javascript">
   function validateForm() {
     // Save TinyMCE content

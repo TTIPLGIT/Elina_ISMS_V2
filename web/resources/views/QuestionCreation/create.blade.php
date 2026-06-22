@@ -5,7 +5,6 @@
 <style>
     input[type=checkbox] {
         display: inline-block;
-
     }
 
     .no-arrow {
@@ -22,14 +21,10 @@
         margin: 0;
     }
 
-    /* body{
-        background-color: white !important;
-    } */
     .nav-tabs {
         background-color: #0068a7 !important;
         border-radius: 29px !important;
         padding: 1px !important;
-
     }
 
     .nav-item.active {
@@ -84,7 +79,129 @@
     .btn-success {
         margin: auto;
     }
+
+    /* ============================================================
+       MOBILE RESPONSIVE – same patterns as other pages
+       ============================================================ */
+    @media (max-width: 768px) {
+
+        /* Reset paddings and prevent horizontal scroll */
+        .main-content,
+        .card,
+        .card-body,
+        .form-group,
+        .table-wrapper,
+        .table-responsive {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            overflow-x: hidden !important;
+            max-width: 100% !important;
+        }
+
+        .row,
+        .col-12,
+        .col-md-4,
+        .col-md-6,
+        .col-lg-12 {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .main-content {
+            padding-top: 0 !important;
+        }
+
+        /* ---- Breadcrumbs: keep on one line ---- */
+        .breadcrumb {
+            font-size: 10px !important;
+            margin: 60px 10px 10px 10px !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            padding: 6px 10px !important;
+        }
+
+        .breadcrumb li {
+            display: inline !important;
+            white-space: nowrap !important;
+        }
+
+        .card {
+            margin-top: 0 !important;
+        }
+
+        h4 {
+            font-size: 18px !important;
+        }
+
+        /* Stack columns */
+        .col-md-4 {
+            width: 100% !important;
+            flex: 0 0 100% !important;
+            max-width: 100% !important;
+        }
+
+        .col-md-12 {
+            width: 100% !important;
+            flex: 0 0 100% !important;
+            max-width: 100% !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        /* Form inputs full width */
+        .form-control,
+        .form-control[type="text"],
+        .form-control[type="number"],
+        textarea.form-control,
+        select.form-control {
+            font-size: 14px !important;
+            height: auto !important;
+            padding: 8px 10px !important;
+        }
+
+        /* Labels */
+        .control-label {
+            font-size: 13px !important;
+        }
+
+        /* TinyMCE editor – adapt to container */
+        .tox-tinymce {
+            max-width: 100% !important;
+        }
+
+        /* Button – full width with spacing */
+        .btn-success {
+            width: 100% !important;
+            margin: 10px 0 5px 0 !important;
+            font-size: 14px !important;
+            padding: 10px !important;
+        }
+
+        /* Adjust top row margins */
+        .question .row {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .form-group {
+            margin-bottom: 12px !important;
+        }
+
+        /* Reduce card padding */
+        .question {
+            padding: 10px !important;
+            margin-top: 1rem !important;
+        }
+    }
 </style>
+
 <div class="main-content">
     {{ Breadcrumbs::render('question_creation.create') }}
     <div class="section-body mt-0">
@@ -94,7 +211,7 @@
                 <div class="col-md-4">
                     <div class="form-group questionnaire">
                         <label class="control-label required">Questionnaire Name</label>
-                        <select class="form-control" name="questionnaire_id" style="background-color: #ffffff !important; color: #000000;"id="questionnaire_id" onchange="questionnaireChange()">
+                        <select class="form-control" name="questionnaire_id" style="background-color: #ffffff !important; color: #000000;" id="questionnaire_id" onchange="questionnaireChange()">
                             <option value="">Select Questionnaire</option>
                             @foreach($questionnaire_list as $data)
                             <option value="{{$data['questionnaire_id']}}">{{$data['questionnaire_name']}}</option>
@@ -154,12 +271,6 @@
             return false;
         }
 
-        // var discription1 = $('#Question_discription1').val();
-        // if (discription1 == null || discription1 == "") {
-        //     swal.fire("Please Fill Description", "", "error");
-        //     return false;
-        // }
-
         var no_of_ques = document.getElementById("no_of_ques").value;
         if (no_of_ques == '' || no_of_ques == null) {
             swal.fire("Please Enter No Of Questions", "", "error");
@@ -167,13 +278,13 @@
         }
 
         $('#saveButton').prop('disabled', true);
-        var editor = tinymce.get('Question_discription1'); 
+        var editor = tinymce.get('Question_discription1');
         var content = editor.getContent();
         if (content == null || content == "") {
             swal.fire("Please Fill Description", "", "error");
             return false;
         }
-        // window.location.href = "/question_creation/add_questions/" + 10;
+
         $.ajax({
             url: "{{ url('/question_creation/store_data') }}",
             type: "POST",
@@ -216,7 +327,6 @@
         var questionnaire_id = document.getElementById('questionnaire_id').value;
         for (const question of questionnaire) {
             if (question['questionnaire_id'] == questionnaire_id && question['questionnaire_description'] != null) {
-                // document.getElementById('Question_discription1').value = question['questionnaire_description'];
                 const textarea = tinymce.get('Question_discription1');
                 textarea.setContent(question['questionnaire_description']);
             }

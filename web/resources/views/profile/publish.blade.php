@@ -3,22 +3,66 @@
 @section('content')
 
 <style>
-    /* Mobile only: remove left/right spacing */
+    /* ---- Mobile‐only overrides ---- */
     @media (max-width: 768px) {
+
+        .main-content,
+        .row,
+        .col-lg-12,
+        .col-md-12,
+        .tile,
+        .tile-body,
+        .form-group {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            overflow-x: hidden !important;
+            max-width: 100% !important;
+        }
+
         .tile {
-            padding-left: 0 !important;
-            padding-right: 0 !important;
+            padding: 10px !important;
         }
-        .tile-body {
-            padding-left: 0 !important;
-            padding-right: 0 !important;
+
+        .tile-title {
+            font-size: 18px !important;
         }
-        .col-md-12 {
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-        }
+
+        /* Make TinyMCE container full width */
         .tox-tinymce {
             width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        .tox .tox-editor-container {
+            width: 100% !important;
+        }
+
+        /* ---- Buttons: side by side on mobile ---- */
+        .text-center .col-md-12 {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+
+        .text-center .btn {
+            flex: 0 0 auto !important;
+            width: auto !important;
+            min-width: 100px !important;
+            margin: 0 !important;
+            font-size: 14px !important;
+            padding: 8px 16px !important;
+            display: inline-block !important;
+        }
+
+        /* Remove extra spacing from the form row */
+        .row.text-center {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
         }
     }
 </style>
@@ -141,4 +185,5 @@
 
     });
 </script>
+
 @endsection
