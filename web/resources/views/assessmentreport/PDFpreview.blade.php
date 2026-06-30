@@ -216,8 +216,16 @@
         </div>
     </div>
     <div class="col-md-12 text-center" style="padding: 10px;">
-        <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{ URL::previous() }}" style="color:white !important">
-            <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back</a>
+    <a type="button"
+   class="btn btn-labeled back-btn"
+   title="Back"
+   href="{{ route('assessmentreport.index') }}"
+   style="color:white !important">
+    <span class="btn-label" style="font-size:13px !important;">
+        <i class="fa fa-arrow-left"></i>
+    </span>
+    Back
+</a>
         <input type="hidden" value="{{ route('assessmentreport.edit', \Crypt::encrypt($data['report_id'])) }}" id="routeUrl">
         <a href="{{ route('assessmentreport.edit', \Crypt::encrypt($data['report_id'])) }}" type="button" id="editbutton" class="btn btn-labeled btn-succes" title="Edit" style="background: orange !important; color:white !important">
             <span class="btn-label" style="font-size:13px !important;"><i class="fas fa-pencil-alt"></i></span> Edit </a>

@@ -149,8 +149,8 @@
                                 <hr>
                                 <h5 class="centerid">OR</h5>
 
-                                <a class="formfont" onclick="mobile()">
-                                    Signin Using OTP
+                                <a class="formfont" onclick="mobile()" style="cursor: pointer;">
+                                    Signin Using OTP 
                                 </a>
 
 

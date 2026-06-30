@@ -984,8 +984,9 @@
             let savedNotes = {};
             let savedRemigrationNotes = {};
 
-
-            // TABLE SWITCHING
+            // Flags to indicate form submission so that we don't prompt on close
+            let childModalSubmitting = false;
+            let remigrationModalSubmitting = false;
 
             // TABLE SWITCHING
 
@@ -1058,6 +1059,9 @@
 
                 childName = $(this).data('child');
 
+                // Reset submitting flag for fresh open
+                childModalSubmitting = false;
+
             });
 
             // Save Migration Modal notes on typing
@@ -1101,6 +1105,9 @@
 
                 remigrationChildName = $(this).data('child');
 
+                // Reset submitting flag for fresh open
+                remigrationModalSubmitting = false;
+
             });
 
             // Save Remigration Modal notes on typing
@@ -1112,6 +1119,91 @@
             });
 
 
+            // ============================================================
+            // MIGRATION MODAL - UNSAVED NOTES HANDLING
+            // ============================================================
+            $('#childModal').on('hide.bs.modal', function(e) {
+                // If form is being submitted, allow close without prompt
+                if (childModalSubmitting) {
+                    return;
+                }
+
+                let enrollment = $('#modal_enrollment').text().trim();
+                let notes = $('#notes').val().trim();
+
+                // Only prompt if there is text in the notes field
+                if (notes !== '') {
+                    e.preventDefault(); // prevent immediate close
+
+                    Swal.fire({
+                        title: 'Unsaved Changes',
+                        text: 'Your notes have not been saved. Do you want to close this screen?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Yes, close',
+                        cancelButtonText: 'No, stay'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // User wants to discard notes and close
+                            // Clear the notes field and remove saved entry
+                            $('#notes').val('');
+                            if (enrollment) {
+                                delete savedNotes[enrollment];
+                            }
+                            // Now close the modal programmatically
+                            $('#childModal').modal('hide');
+                        } else {
+                            // User clicked "No, stay" – do nothing, modal stays open
+                        }
+                    });
+                }
+            });
+
+            // Reset submitting flag after modal is fully hidden
+            $('#childModal').on('hidden.bs.modal', function() {
+                childModalSubmitting = false;
+            });
+
+            // ============================================================
+            // REMIGRATION MODAL - UNSAVED NOTES HANDLING
+            // ============================================================
+            $('#remigrationModal').on('hide.bs.modal', function(e) {
+                if (remigrationModalSubmitting) {
+                    return;
+                }
+
+                let enrollment = $('#remigrate_modal_enrollment').text().trim();
+                let notes = $('#remigrate_notes').val().trim();
+
+                if (notes !== '') {
+                    e.preventDefault();
+
+                    Swal.fire({
+                        title: 'Unsaved Changes',
+                        text: 'Your notes have not been saved. Do you want to close this screen?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Yes, close',
+                        cancelButtonText: 'No, stay'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#remigrate_notes').val('');
+                            if (enrollment) {
+                                delete savedRemigrationNotes[enrollment];
+                            }
+                            $('#remigrationModal').modal('hide');
+                        }
+                    });
+                }
+            });
+
+            $('#remigrationModal').on('hidden.bs.modal', function() {
+                remigrationModalSubmitting = false;
+            });
 
 
             // 13+ BUTTON
@@ -1214,6 +1306,8 @@
                 }).then((result) => {
 
                     if (result.isConfirmed) {
+                        // Set flag to prevent unsaved prompt during submission
+                        childModalSubmitting = true;
 
                         var jsonData = JSON.stringify(selectedJsonData);
 
@@ -1274,6 +1368,7 @@
                 }).then((result) => {
 
                     if (result.isConfirmed) {
+                        remigrationModalSubmitting = true;
 
                         var jsonData = JSON.stringify(remigrationJsonData);
 
