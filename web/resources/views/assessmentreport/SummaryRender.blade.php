@@ -250,6 +250,41 @@ $barlowCondensedBold = str_replace('\\', '/', storage_path('fonts/BarlowCondense
       margin: 4px 0;
       padding: 0;
     }
+
+    /* ── Issue 1: Recommendation / Evidence column alignment ──────────────── */
+    /* Columns 3 (Evidence) and 4 (Recommendation) must be top-left aligned.  */
+    /* These selectors use attribute selectors that survive JS DOM serialisation */
+    td[style*="vertical-align: top"],
+    td[style*="vertical-align:top"] {
+      vertical-align: top !important;
+      text-align: left !important;
+    }
+
+    /* ── Issue 2: Sensory Profiling table — keep header with first row ─────── */
+    /* Wrapper div keeps intro text + table header as one inseparable block.   */
+    .sensory-section-wrapper {
+      page-break-inside: avoid;
+    }
+
+    #sensoryTable thead tr {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+
+    #sensoryTable tbody tr:first-child {
+      page-break-before: avoid;
+      break-before: avoid;
+    }
+
+    #sensoryTable tr {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    #sensoryTable td {
+      vertical-align: top !important;
+      text-align: left !important;
+    }
   </style>
 </head>
 
