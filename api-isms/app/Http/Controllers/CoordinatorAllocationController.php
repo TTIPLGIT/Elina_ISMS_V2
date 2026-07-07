@@ -258,10 +258,38 @@ class CoordinatorAllocationController extends BaseController
             $completedEnrollments = collect($ovmCompleted)->pluck('enrollment_id')->toArray();
 
             $this->WriteFileLog($ovmCompleted);
+
+             $deleted_coordinators = DB::select("
+    SELECT 
+        o.*,
+        e.enrollment_child_num,
+        u1.name AS is_coordinator1_name,
+        u1.delete_status AS u1_delete_status,
+        u1.active_flag AS u1_active_flag,
+        u2.name AS is_coordinator2_name,
+        u2.delete_status AS u2_delete_status,
+        u2.active_flag AS u2_active_flag
+    FROM ovm_allocation AS o
+    INNER JOIN enrollment_details AS e
+        ON o.enrollment_id = e.enrollment_id
+    INNER JOIN users AS u1
+        ON u1.id = o.is_coordinator1
+    INNER JOIN users AS u2
+        ON u2.id = o.is_coordinator2
+    WHERE o.status != ''
+    AND (
+        (u1.delete_status = 1 AND u1.active_flag = 1)
+        OR
+        (u2.delete_status = 1 AND u2.active_flag = 1)
+    )
+    ORDER BY o.id DESC
+");
+
             $response = [
                 'rows' => $rows,
                 'ovmCompleted' => $ovmCompleted,
-                'completedEnrollments' => $completedEnrollments
+                'completedEnrollments' => $completedEnrollments,
+                'deleted_coordinators' => $deleted_coordinators
 
             ];
 

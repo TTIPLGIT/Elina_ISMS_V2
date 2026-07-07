@@ -478,6 +478,7 @@ public function store(Request $request)
 
                // Strapi Migration: User Creation API Call
                $this->strapiMigrationApiCall(config('setting.strapi_user_create_url'), [
+                   'user_id' => $parant_data,
                    'name' => $request->name,
                    'email' => $request->email,
                    'password' => $request->password,

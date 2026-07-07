@@ -134,7 +134,7 @@ class BaseController extends Controller
             } else if ($objServiceResponse->Status == 406) {
                 return 'Active';
             } else {
-                return  'Failure';
+                return 'Failure';
             }
 
             $tokenResponse = $this->decryptData($objServiceResponse->Data);
@@ -311,7 +311,7 @@ class BaseController extends Controller
     public function FillScreensByUser()
     {
 
-        $url =  request()->segment(1); // This doesnot work on the two segments
+        $url = request()->segment(1); // This doesnot work on the two segments
         //  $url = request()->segment(2) == '' ? request()->segment(1) : request()->segment(1) . '/' . request()->segment(2);
 
         try {
@@ -343,7 +343,7 @@ class BaseController extends Controller
 
     public function FillDyanamiclist()
     {
-        $url =  request()->segment(1);
+        $url = request()->segment(1);
         try {
             $screenurl = $this->encryptData($url);
 
@@ -410,7 +410,7 @@ class BaseController extends Controller
 
     public function FillScreensByDash()
     {
-        $url =  request()->segment(1);
+        $url = request()->segment(1);
         try {
             $screenurl = $this->encryptData($url);
             $method = 'Method => BaseController => FillScreensByDash';

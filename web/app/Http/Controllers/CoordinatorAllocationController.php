@@ -74,15 +74,18 @@ class CoordinatorAllocationController extends BaseController
             }
             $rows = json_decode(json_encode($objData->Data), true);
             $rows = json_decode(json_encode($objData->Data), true);
-            $ovmCompleted=$rows['ovmCompleted']; 
-            $completedEnrollments= $rows['completedEnrollments'];
+            $ovmCompleted = $rows['ovmCompleted'];
+            $completedEnrollments = $rows['completedEnrollments'];
+            $deleted_coordinators = $rows['deleted_coordinators'];
+
             $menus = $this->FillMenu();
             if ($menus == "401") {
                 return redirect(url('/'))->with('danger', 'User session Exipired');
             }
             $screens = $menus['screens'];
             $modules = $menus['modules'];
-            return view('ovm_allocation.allocationlist', compact('user_id', 'rows', 'menus', 'screens', 'modules','ovmCompleted','completedEnrollments'));
+            // dd($rows['deleted_coordinators']);
+            return view('ovm_allocation.allocationlist', compact('user_id', 'rows', 'menus', 'screens', 'modules', 'ovmCompleted', 'completedEnrollments', 'deleted_coordinators'));
         } catch (\Exception $exc) {
             return $this->sendLog($method, $exc->getCode(), $exc->getMessage(), $exc->getLine(), $exc->getTrace()[0]['args'][2]);
         }
