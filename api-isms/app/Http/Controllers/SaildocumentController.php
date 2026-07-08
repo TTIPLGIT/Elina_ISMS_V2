@@ -140,7 +140,7 @@ class SaildocumentController extends BaseController
             $role_name_fetch = $role_name[0]->role_name;
 
             if ($role_name_fetch == 'IS Coordinator') {
-   $rows['questionnaire_initiation'] = DB::select("
+                $rows['questionnaire_initiation'] = DB::select("
     SELECT
         a.enrollment_id,
         a.enrollment_child_num,
@@ -168,7 +168,7 @@ class SaildocumentController extends BaseController
     ORDER BY a.enrollment_id DESC
 ");
             } else {
-            $rows['questionnaire_initiation'] = DB::select("
+                $rows['questionnaire_initiation'] = DB::select("
     SELECT 
         e.enrollment_id,
         e.enrollment_child_num,
@@ -249,50 +249,29 @@ class SaildocumentController extends BaseController
 
             if ($role_name_fetch == 'IS Coordinator') {
                 $rows['questionnaire_initiation'] = DB::table('enrollment_details as a')
-
-                    ->select('a.*')
-
-                    ->join('sail_details as b', function ($join) {
-                        $join->on('b.enrollment_id', '=', 'a.enrollment_child_num');
-                    })
-
-                    ->leftJoin('13plus_migration as m', function ($join) {
-                        $join->on('m.enrollment', '=', 'a.enrollment_child_num');
-                    })
-
-                    ->whereIn('a.Enrollment_id', function ($query) {
-                        $query->select('Enrollment_id')
-                            ->from('activity_initiation');
-                    })
-
-                    ->whereNotIn('a.Enrollment_id', function ($query) {
-                        $query->select('enrollment_id')
-                            ->from('reports_copy')
-                            ->where('report_type', 7);
-                    })
-
-                    ->where(function ($query) use ($authId) {
-                        $query->whereRaw("JSON_EXTRACT(is_coordinator1, '$.id') = ?", [$authId])
-                            ->orWhereRaw("JSON_EXTRACT(is_coordinator2, '$.id') = ?", [$authId]);
-                    })
-
-                    ->where(function ($query) {
-
-                        // If migration record does not exist
-                        $query->whereNull('m.enrollment')
-
-                            // If migration record exists,
-                            // then status must be 2 or 4
-                            ->orWhere(function ($subQuery) {
-                                $subQuery->whereNotNull('m.enrollment')
-                                    ->whereIn('m.migration_status', [2, 4]);
-                            });
-                    })
-
-                    ->orderBy('a.Enrollment_id', 'DESC')
-
-                    ->get();
-            } else {
+                ->select('a.*')
+                ->join('sail_details as b', function ($join) {
+                    $join->on('b.enrollment_id', '=', 'a.enrollment_child_num');
+                })
+            
+                ->whereIn('a.Enrollment_id', function ($query) {
+                    $query->select('Enrollment_id')
+                        ->from('activity_initiation');
+                })
+            
+                ->whereNotIn('a.Enrollment_id', function ($query) {
+                    $query->select('enrollment_id')
+                        ->from('reports_copy')
+                        ->where('report_type', 7);
+                })
+            
+                ->where(function ($query) use ($authId) {
+                    $query->whereRaw("JSON_EXTRACT(is_coordinator1, '$.id') = ?", [$authId])
+                          ->orWhereRaw("JSON_EXTRACT(is_coordinator2, '$.id') = ?", [$authId]);
+                })
+            
+                ->orderBy('a.Enrollment_id', 'DESC')
+                ->get(); } else {
                 $rows['questionnaire_initiation'] = DB::select("SELECT * FROM enrollment_details WHERE Enrollment_id IN (SELECT Enrollment_id FROM activity_initiation)
                 AND Enrollment_id NOT IN (SELECT enrollment_id FROM reports_copy where report_type = 7) ORDER BY Enrollment_id DESC ");
             }
@@ -1592,6 +1571,13 @@ class SaildocumentController extends BaseController
                         ->where('enrollment_id', $enrollmentID)
                         ->select('final_amount', 'id', 'base_amount', 'gst_rate')
                         ->first();
+                    if (!$activePayment) {
+                        $activePayment = DB::table('payment_process_masters')
+                            ->where('fees_type_id', $feeType)
+                            ->where('category_id', $paymentCategory)
+                            ->select('final_amount', 'id', 'base_amount', 'gst_rate')
+                            ->first();
+                    }
                 } else {
                     // $this->WriteFileLog('Else');
                     $feeType = ($feeType == 2) ? $feeType - 1 : $feeType;
@@ -1619,6 +1605,13 @@ class SaildocumentController extends BaseController
                         ->where('school_enrollment_id', $schoolID)
                         ->select('final_amount', 'id', 'base_amount', 'gst_rate')
                         ->first();
+                    if (!$activePayment) {
+                        $activePayment = DB::table('payment_process_masters')
+                            ->where('fees_type_id', $feeType)
+                            ->where('category_id', $paymentCategory)
+                            ->select('final_amount', 'id', 'base_amount', 'gst_rate')
+                            ->first();
+                    }
                 } else {
                     // $this->WriteFileLog('Else else');
                     $activePayment = DB::table('payment_process_masters')

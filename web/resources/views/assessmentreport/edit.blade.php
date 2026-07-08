@@ -2267,4 +2267,6 @@
         activeRecommendationTextarea = null;
     });
 </script>
+
+
 @endsection

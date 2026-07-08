@@ -833,7 +833,7 @@
 
       return originalWidth !== newWidth;
     }
-
+ 
     function getActualWidth(element) {
       if (element.offsetWidth > 0) return element.offsetWidth;
 
