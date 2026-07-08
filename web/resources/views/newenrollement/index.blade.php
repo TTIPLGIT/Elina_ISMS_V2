@@ -127,361 +127,374 @@
         opacity: 1;
     }
 
-    /* =========================================================================
+    /* ==============================================================
+       FIX: Prevent Status header & cell text from wrapping
+       ============================================================== */
+    #align thead th {
+        white-space: nowrap;
+    }
+    /* Prevent status values like "submitted" from wrapping */
+    #align td:nth-of-type(5) {
+        white-space: nowrap;
+    }
+
+    /* ==============================================================
        RESPONSIVE MOBILE STYLING (No Horizontal Scroll, Auto-Adjusts UI Layout)
-       ========================================================================= */
+       ============================================================== */
     .table-responsive {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
 
- @media (max-width: 768px) {
+    @media (max-width: 768px) {
 
-    /* Remove unwanted left/right spacing */
-    .main-content,
-    .card,
-    .card-body,
-    .table-wrapper,
-    .searchResultStudent,
-    .table-responsive {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+        /* Remove unwanted left/right spacing */
+        .main-content,
+        .card,
+        .card-body,
+        .table-wrapper,
+        .searchResultStudent,
+        .table-responsive {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .row,
+        .col-12,
+        .col-lg-12 {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+        }
+
+        .table-responsive {
+            overflow-x: hidden !important;
+            overflow-y: auto !important;
+            max-height: 80vh;
+        }
+
+        .table-responsive table {
+            font-size: 12px;
+            min-width: 100% !important;
+            width: 100% !important;
+        }
+
+        .searchResultStudent table,
+        .searchResultStudent thead,
+        .searchResultStudent tbody,
+        .searchResultStudent th,
+        .searchResultStudent td {
+            display: block !important;
+            width: 100% !important;
+        }
+
+        .searchResultStudent thead {
+            display: none !important;
+        }
+
+        .searchResultStudent tbody {
+            background: transparent !important;
+        }
+
+        #align {
+            width: 100% !important;
+            margin: 0 !important;
+        }
+
+        #align tr {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: stretch !important;
+            border: 1px solid #e0e0e0 !important;
+            border-radius: 8px !important;
+            margin: 8px 5px !important;
+            position: relative !important;
+            padding: 10px 15px 10px 45px !important;
+            background: #fff !important;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+            cursor: pointer;
+            width: calc(100% - 10px) !important;
+        }
+
+        #align td {
+            display: block !important;
+            border: none !important;
+            padding: 0 !important;
+            text-align: left !important;
+            white-space: normal !important;
+            width: 100% !important;
+            background: transparent !important;
+            height: auto !important;
+            min-height: 0 !important;
+            line-height: 1.2 !important;
+        }
+
+        /* S.No */
+        #align td:nth-of-type(1) {
+            position: absolute !important;
+            left: 15px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            width: 25px !important;
+            display: flex !important;
+            font-weight: bold !important;
+            font-size: 13px !important;
+            color: #2c3e50 !important;
+        }
+
+        #align tr.expanded-row td:nth-of-type(1) {
+            top: 20px !important;
+            transform: translateY(0) !important;
+        }
+
+        #align td:nth-of-type(2) {
+            display: block !important;
+            font-weight: 600 !important;
+            font-size: 16px !important;
+            color: #2c3e50 !important;
+            margin-bottom: 4px !important;
+            padding-right: 25px !important;
+            order: 1 !important;
+        }
+        #align td:nth-of-type(4) {
+            display: block !important;
+            font-size: 13px !important;
+            color: #34495e !important;
+            margin-bottom: 10px !important;
+            order: 2 !important;
+        }
+        #align td:nth-of-type(4):before {
+            content: "ID: ";
+            font-weight: 600 !important;
+            color: #000 !important;
+        }
+
+        /* Hidden Fields */
+        #align td:nth-of-type(3),
+        #align td:nth-of-type(5),
+        #align td:nth-of-type(6) {
+            display: none !important;
+        }
+
+        /* Arrow */
+        #align tr::after {
+            content: '\f054';
+            font-family: 'FontAwesome';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #bdc3c7;
+            transition: transform 0.3s;
+            font-size: 12px;
+        }
+
+        #align tr.expanded-row::after {
+            transform: translateY(-50%) rotate(90deg);
+            top: 35px;
+        }
+
+        #align tr.expanded-row td:nth-of-type(3) {
+            display: block !important;
+            margin-top: 8px !important;
+            font-size: 12px !important;
+            color: #34495e !important;
+            order: 3 !important;
+        }
+
+        #align tr.expanded-row td:nth-of-type(3):before {
+            content: "Email: ";
+            font-weight: 600 !important;
+            color: #000 !important;
+            margin-right: 4px !important;
+        }
+
+        #align tr.expanded-row td:nth-of-type(5) {
+            display: block !important;
+            margin-top: 6px !important;
+            font-size: 12px !important;
+            color: #34495e !important;
+            order: 4 !important;
+            white-space: nowrap !important; /* Keep status value on one line even in expanded view */
+        }
+
+        /* No Matching Records Found - Mobile Fix */
+        #align td.dataTables_empty {
+            display: table-cell !important;
+            width: 100% !important;
+            text-align: center !important;
+            white-space: nowrap !important;
+            padding: 15px !important;
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            color: #666 !important;
+        }
+
+        #align tr:has(td.dataTables_empty) {
+            display: table-row !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            background: transparent !important;
+        }
+
+        #align tr:has(td.dataTables_empty)::after {
+            display: none !important;
+        }
+
+        #align tr.expanded-row td:nth-of-type(5):before {
+            content: "Status: ";
+            font-weight: 600 !important;
+            color: #000 !important;
+            margin-right: 4px !important;
+        }
+
+        #align tr.expanded-row td:nth-of-type(6) {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            margin-top: 8px !important;
+            font-size: 12px !important;
+            order: 5 !important;
+        }
+
+        #align tr.expanded-row td:nth-of-type(6) a {
+            display: inline-flex !important;
+            align-items: center !important;
+            margin-right: 8px !important;
+            font-size: 15px !important;
+        }
+
+        #align tr.expanded-row td:nth-of-type(6):before {
+            content: "Action: ";
+            font-weight: 600 !important;
+            color: #000 !important;
+            margin-right: 4px !important;
+        }
+
+        /* Action icons smaller */
+        #align td a {
+            font-size: 12px !important;
+            padding: 2px !important;
+        }
+
+        /* DataTable controls */
+        .dataTables_wrapper,
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter,
+        .dataTables_wrapper .dataTables_info,
+        .dataTables_wrapper .dataTables_paginate {
+            font-size: 11px !important;
+        }
+
+        .dataTables_wrapper .dataTables_length select {
+            font-size: 11px !important;
+            height: 26px !important;
+            padding: 2px 4px !important;
+        }
+
+        .dataTables_wrapper .dataTables_filter input {
+            font-size: 11px !important;
+            height: 26px !important;
+            width: 110px !important;
+        }
+
+        .dataTables_wrapper .paginate_button {
+            font-size: 11px !important;
+            padding: 2px 5px !important;
+        }
+
+        /* PDF / Excel / Copy / Print Buttons */
+        .dt-buttons .btn,
+        .buttons-copy,
+        .buttons-csv,
+        .buttons-excel,
+        .buttons-pdf,
+        .buttons-print {
+            font-size: 10px !important;
+            padding: 4px 6px !important;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            font-size: 11px !important;
+        }
+
+        /* Heading */
+        .card-body h4 {
+            font-size: 18px !important;
+        }
+
+        /* DataTable Top Controls - Mobile */
+        .dataTables_wrapper .row:first-child {
+            margin: 0 !important;
+        }
+
+        .dataTables_wrapper .row:first-child > div:first-child {
+            padding-left: 0 !important;
+            text-align: left !important;
+        }
+
+        .dataTables_wrapper .row:first-child > div:last-child {
+            padding-right: 0 !important;
+            text-align: right !important;
+        }
+
+        .dataTables_wrapper .dataTables_length {
+            float: left !important;
+            margin-left: 8px !important;
+        }
+
+        .dataTables_wrapper .dataTables_filter {
+            float: right !important;
+            margin-right: 0 !important;
+        }
+
+        .dataTables_wrapper .dataTables_filter {
+            text-align: right !important;
+            padding-right: 8px !important;
+        }
+
+        /* Reduce font size */
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter,
+        .dataTables_wrapper .dataTables_info,
+        .dataTables_wrapper .dataTables_paginate {
+            font-size: 10px !important;
+        }
+
+        .dataTables_wrapper .dataTables_length select {
+            font-size: 11px !important;
+            height: 32px !important;
+            line-height: 32px !important;
+            min-width: 60px !important;
+            width: 60px !important;
+            padding: 0 18px 0 6px !important;
+            margin-bottom: 8px !important;
+            box-sizing: border-box !important;
+        }
+        /* Search box */
+        .dataTables_wrapper .dataTables_filter input {
+            width: 90px !important;
+            height: 24px !important;
+            font-size: 10px !important;
+            margin-left: 4px !important;
+        }
+
+        /* Search label */
+        .dataTables_wrapper .dataTables_filter label,
+        .dataTables_wrapper .dataTables_length label {
+            font-size: 10px !important;
+            margin-bottom: 0 !important;
+        }
+
+        /* Pagination buttons */
+        .dataTables_wrapper .paginate_button {
+            font-size: 10px !important;
+            padding: 2px 4px !important;
+        }
     }
-
-    .row,
-    .col-12,
-    .col-lg-12 {
-        padding-left: 5px !important;
-        padding-right: 5px !important;
-    }
-
-    .table-responsive {
-        overflow-x: hidden !important;
-        overflow-y: auto !important;
-        max-height: 80vh;
-    }
-
-    .table-responsive table {
-        font-size: 12px;
-        min-width: 100% !important;
-        width: 100% !important;
-    }
-
-    .searchResultStudent table,
-    .searchResultStudent thead,
-    .searchResultStudent tbody,
-    .searchResultStudent th,
-    .searchResultStudent td {
-        display: block !important;
-        width: 100% !important;
-    }
-
-    .searchResultStudent thead {
-        display: none !important;
-    }
-
-    .searchResultStudent tbody {
-        background: transparent !important;
-    }
-
-    #align {
-        width: 100% !important;
-        margin: 0 !important;
-    }
-
-    #align tr {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: stretch !important;
-        border: 1px solid #e0e0e0 !important;
-        border-radius: 8px !important;
-        margin: 8px 5px !important;
-        position: relative !important;
-        padding: 10px 15px 10px 45px !important;
-        background: #fff !important;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
-        cursor: pointer;
-        width: calc(100% - 10px) !important;
-    }
-
-    #align td {
-        display: block !important;
-        border: none !important;
-        padding: 0 !important;
-        text-align: left !important;
-        white-space: normal !important;
-        width: 100% !important;
-        background: transparent !important;
-        height: auto !important;
-        min-height: 0 !important;
-        line-height: 1.2 !important;
-    }
-
-    /* S.No */
-    #align td:nth-of-type(1) {
-        position: absolute !important;
-        left: 15px !important;
-        top: 50% !important;
-        transform: translateY(-50%) !important;
-        width: 25px !important;
-        display: flex !important;
-        font-weight: bold !important;
-        font-size: 13px !important;
-        color: #2c3e50 !important;
-    }
-
-    #align tr.expanded-row td:nth-of-type(1) {
-        top: 20px !important;
-        transform: translateY(0) !important;
-    }
-
-#align td:nth-of-type(2) {
-    display: block !important;
-    font-weight: 600 !important;
-    font-size: 16px !important;
-    color: #2c3e50 !important;
-    margin-bottom: 4px !important;
-    padding-right: 25px !important;
-    order: 1 !important;
-}
-   #align td:nth-of-type(4) {
-    display: block !important;
-    font-size: 13px !important;
-    color: #34495e !important;
-    margin-bottom: 10px !important;
-    order: 2 !important;
-}
-    #align td:nth-of-type(4):before {
-        content: "ID: ";
-        font-weight: 600 !important;
-        color: #000 !important;
-    }
-
-    /* Hidden Fields */
-    #align td:nth-of-type(3),
-    #align td:nth-of-type(5),
-    #align td:nth-of-type(6) {
-        display: none !important;
-    }
-
-    /* Arrow */
-    #align tr::after {
-        content: '\f054';
-        font-family: 'FontAwesome';
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #bdc3c7;
-        transition: transform 0.3s;
-        font-size: 12px;
-    }
-
-    #align tr.expanded-row::after {
-        transform: translateY(-50%) rotate(90deg);
-        top: 35px;
-    }
-
-#align tr.expanded-row td:nth-of-type(3) {
-    display: block !important;
-    margin-top: 8px !important;
-    font-size: 12px !important;
-    color: #34495e !important;
-    order: 3 !important;
-}
-
-    #align tr.expanded-row td:nth-of-type(3):before {
-        content: "Email: ";
-        font-weight: 600 !important;
-        color: #000 !important;
-        margin-right: 4px !important;
-    }
-
-   #align tr.expanded-row td:nth-of-type(5) {
-    display: block !important;
-    margin-top: 6px !important;
-    font-size: 12px !important;
-    color: #34495e !important;
-    order: 4 !important;
-}
-/* No Matching Records Found - Mobile Fix */
-#align td.dataTables_empty {
-    display: table-cell !important;
-    width: 100% !important;
-    text-align: center !important;
-    white-space: nowrap !important;
-    padding: 15px !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    color: #666 !important;
-}
-
-#align tr:has(td.dataTables_empty) {
-    display: table-row !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    background: transparent !important;
-}
-
-#align tr:has(td.dataTables_empty)::after {
-    display: none !important;
-}
-    #align tr.expanded-row td:nth-of-type(5):before {
-        content: "Status: ";
-        font-weight: 600 !important;
-        color: #000 !important;
-        margin-right: 4px !important;
-    }
-#align tr.expanded-row td:nth-of-type(6) {
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-    margin-top: 8px !important;
-    font-size: 12px !important;
-    order: 5 !important;
-}
-#align tr.expanded-row td:nth-of-type(6) a {
-    display: inline-flex !important;
-    align-items: center !important;
-    margin-right: 8px !important;
-    font-size: 15px !important;
-}
-
-    #align tr.expanded-row td:nth-of-type(6):before {
-        content: "Action: ";
-        font-weight: 600 !important;
-        color: #000 !important;
-        margin-right: 4px !important;
-    }
-
-    /* Action icons smaller */
-    #align td a {
-        font-size: 12px !important;
-        padding: 2px !important;
-    }
-
-    /* DataTable controls */
-    .dataTables_wrapper,
-    .dataTables_wrapper .dataTables_length,
-    .dataTables_wrapper .dataTables_filter,
-    .dataTables_wrapper .dataTables_info,
-    .dataTables_wrapper .dataTables_paginate {
-        font-size: 11px !important;
-    }
-
-    .dataTables_wrapper .dataTables_length select {
-        font-size: 11px !important;
-        height: 26px !important;
-        padding: 2px 4px !important;
-    }
-
-    .dataTables_wrapper .dataTables_filter input {
-        font-size: 11px !important;
-        height: 26px !important;
-        width: 110px !important;
-    }
-
-    .dataTables_wrapper .paginate_button {
-        font-size: 11px !important;
-        padding: 2px 5px !important;
-    }
-
-    /* PDF / Excel / Copy / Print Buttons */
-    .dt-buttons .btn,
-    .buttons-copy,
-    .buttons-csv,
-    .buttons-excel,
-    .buttons-pdf,
-    .buttons-print {
-        font-size: 10px !important;
-        padding: 4px 6px !important;
-    }
-
-    /* Breadcrumb */
-    .breadcrumb {
-        font-size: 11px !important;
-    }
-
-    /* Heading */
-    .card-body h4 {
-        font-size: 18px !important;
-    }
-    /* DataTable Top Controls - Mobile */
-
-/* DataTable Top Controls - Mobile */
-.dataTables_wrapper .row:first-child {
-    margin: 0 !important;
-}
-
-.dataTables_wrapper .row:first-child > div:first-child {
-    padding-left: 0 !important;
-    text-align: left !important;
-}
-
-.dataTables_wrapper .row:first-child > div:last-child {
-    padding-right: 0 !important;
-    text-align: right !important;
-}
-
-.dataTables_wrapper .dataTables_length {
-    float: left !important;
-    margin-left: 8px !important;
-}
-
-.dataTables_wrapper .dataTables_filter {
-    float: right !important;
-    margin-right: 0 !important;
-}
-
-
-
-.dataTables_wrapper .dataTables_filter {
-    text-align: right !important;
-    padding-right: 8px !important;
-}
-
-/* Reduce font size */
-.dataTables_wrapper .dataTables_length,
-.dataTables_wrapper .dataTables_filter,
-.dataTables_wrapper .dataTables_info,
-.dataTables_wrapper .dataTables_paginate {
-    font-size: 10px !important;
-}
-
-.dataTables_wrapper .dataTables_length select {
-    font-size: 11px !important;
-    height: 32px !important;
-    line-height: 32px !important;
-    min-width: 60px !important;
-    width: 60px !important;
-    padding: 0 18px 0 6px !important;
-    margin-bottom: 8px !important;
-    box-sizing: border-box !important;
-}
-/* Search box */
-.dataTables_wrapper .dataTables_filter input {
-    width: 90px !important;
-    height: 24px !important;
-    font-size: 10px !important;
-    margin-left: 4px !important;
-}
-
-/* Search label */
-.dataTables_wrapper .dataTables_filter label,
-.dataTables_wrapper .dataTables_length label {
-    font-size: 10px !important;
-    margin-bottom: 0 !important;
-}
-
-/* Pagination buttons */
-.dataTables_wrapper .paginate_button {
-    font-size: 10px !important;
-    padding: 2px 4px !important;
-}
-}
 </style>
 
 @if (session('success'))

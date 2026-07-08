@@ -219,7 +219,7 @@
         <form action="{{route('g2form.store')}}" method="POST" id="gfrom">
           {{ csrf_field() }}
 
-          <div class="card-body" style="max-height:400px;overflow:auto;">
+          <div class="card-body">
 
             @foreach($questions as $question)
 

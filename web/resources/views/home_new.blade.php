@@ -2,6 +2,16 @@
 @section('content')
     @include('dashboard_css')
     <style>
+        /* ----- Reduce column gutters in the top row ----- */
+        .row.gutter-sm {
+            margin-right: -5px;
+            margin-left: -5px;
+        }
+        .row.gutter-sm > [class*="col-"] {
+            padding-right: 5px;
+            padding-left: 5px;
+        }
+
         .borderBoard {
             border: 1px solid rgba(0, 0, 0, .125);
         }
@@ -51,8 +61,8 @@
             overflow: unset !important;
         }
 
-        /* Mobile font adjust */
-        @media (max-width: 768px) {
+        /* Mobile & tablet font adjust and accordion */
+        @media (max-width: 1024px) {
             .table-responsive {
                 overflow-x: hidden !important;
                 overflow-y: auto !important;
@@ -537,22 +547,73 @@
             .hidden-row {
                 display: none !important;
             }
+
+            /* ===== Profile card centering on mobile/tablet ===== */
+            .profile-card .list-group-item {
+                justify-content: center !important;
+                flex-wrap: wrap !important;
+                text-align: center !important;
+            }
+            .profile-card .list-group-item h6,
+            .profile-card .list-group-item span,
+            .profile-card .list-group-item a {
+                text-align: center !important;
+                width: 100% !important;
+                justify-content: center !important;
+            }
+            .profile-card .list-group-item a {
+                display: inline-block !important;
+                margin: 2px 0 !important;
+            }
+            /* Stack the View Profile & Logout links vertically */
+            .profile-card .list-group-item:last-child {
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 4px;
+            }
+        }
+
+        /* Ensure equal height for Access History and Sail cards on all devices */
+        #row3 .card {
+            height: 100%;
+        }
+
+        /* Prevent Last Login timestamp from wrapping */
+        .last-login-value {
+            white-space: nowrap !important;
+        }
+
+        /* Enrollment ISMS Analysis card – match height and prevent scroll */
+        .analysis-card {
+            height: 100% !important;
+            overflow: hidden !important;
+        }
+        .analysis-card .card-body {
+            overflow: hidden !important;
+            padding-bottom: 0 !important;
+        }
+        .analysis-card #chart_div {
+            width: 100%;
+            height: 100%;
+            min-height: 280px;
         }
     </style>
     <div class="main-content contentpadding" style="position:absolute; z-index:-1">
         <div class="section-body">
-            <div class="row">
+            <!-- ---------- TOP ROW with reduced gutters ---------- -->
+            <div class="row gutter-sm">
                 @if($modules['user_role'] != 'IS Coordinator')
                     <div class="col-md-3">
                 @else
-                        <div class="col-md-4">
-                    @endif
-                        <div class="card">
+                    <div class="col-md-4">
+                @endif
+                        <div class="card profile-card">
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
                                     @if($rows['users']['profile_image'] != "")
                                         <img src="{{$rows['users']['profile_image'] }}" alt="" width="100" height="100"
-                                            style="border-radius:50%;height: 130px;width: 130px;margin: 10px 0px 10px 0px;">
+                                            style="border-radius:50%;height: 130px;width: 130px;margin: 10px 0px 10px 0px;"
+                                            onerror="this.onerror=null;this.src='{{ asset('images/profile-picture.webp') }}';">
                                     @else
                                         <img style="margin-top: 10px;" src="{{ asset('images/profile-picture.webp') }}" alt="profile"
                                             class="rounded-circle p-1 bg-primary" width="110">
@@ -570,12 +631,13 @@
                                         <span class="text-secondary"
                                             style="font-weight:bold;">{{$rows['users']['role_name']}}</span>
                                     </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-nowrap">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                         <h6 class="mb-0" style="color:#6b747b; white-space: nowrap;">
                                             <i class="fa fa-clock mr-2" style="width: 20px; text-align: center;"></i> Last Login
                                         </h6>
-                                        <span class="text-secondary"
-                                            style="padding: 0 0 0 14px;font-weight: 700;">{{ date('d M - h:i A', strtotime($rows['users']['login_time'])) }}</span>
+                                        <span class="text-secondary last-login-value" style="padding: 0 0 0 14px; font-weight: 700;">
+                                            {{ date('d M - h:i A', strtotime($rows['users']['login_time'])) }}
+                                        </span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                         <a href="{{ route('profilepage') }}" class="mb-0"
@@ -594,8 +656,8 @@
                     @if($modules['user_role'] != 'IS Coordinator')
                         <div class="col-md-5">
                     @else
-                            <div class="col-md-8">
-                        @endif
+                        <div class="col-md-8">
+                    @endif
                             <div class="card cardheight headercolor">
                                 <div class="card-header"><i class="fa fa-folder-open" id="fa-icon" aria-hidden="true"></i>
                                     Elina Student Activity List</div>
@@ -775,8 +837,9 @@
                                 </div>
                             @endif
 
+                            <!-- ========== SEARCH HERE – now a card wrapper matching Black Board ========== -->
                             <div class="col-md-12">
-                                <div class="col-xs-12">
+                                <div class="card">
                                     <div class="card-header">
                                         <i class="fa fa-search" id="fa-icon" aria-hidden="true"></i><a
                                             style="color: #5263dd;font-weight: bold;" href=""> Search Here</a>
@@ -870,10 +933,9 @@
                                             onclick="resetsearch()" title="{{ __('Reset') }}"><span class="text-white"><i
                                                     class="fa fa-refresh" aria-hidden="true"></i> Reset</span></a>
                                     </div>
-
                                 </div>
-
                             </div>
+                            <!-- ========== End Search Here ========== -->
 
                         </div>
                         <div>
@@ -889,7 +951,7 @@
 
                     <div class="row" id="row3">
                         <div class="col-12 col-md-6">
-                            <div class="card justify-content-md-center">
+                            <div class="card justify-content-md-center h-100">
                                 <div class="card-header headercolor justify-content-between"><i class="fa fa-history"
                                         id="fa-icon" aria-hidden="true"> Access History</i>
                                     <a href="{{url('auditlog/login_report')}}">
@@ -940,17 +1002,17 @@
 
                         @if($modules['user_role'] != 'IS Coordinator')
                             <div class="col-12 col-md-6">
-                                <div class="card">
+                                <div class="card analysis-card h-100">
                                     <div class="card-header headercolor"><i class="fa fa-area-chart" id="fa-icon"
                                             aria-hidden="true"></i>Enrollment ISMS Analysis </div>
                                     <div class="card-body chartspace">
-                                        <div id="chart_div" style="width: 100%; height: 300px;"></div>
+                                        <div id="chart_div" style="width: 100%; height: 100%; min-height: 280px;"></div>
                                     </div>
                                 </div>
                             </div>
                         @else
                             <div class="col-12 col-md-6">
-                                <div class="card justify-content-md-center">
+                                <div class="card justify-content-md-center h-100">
                                     <div class="card-header headercolor justify-content-between"><i class="fa fa-history"
                                             id="fa-icon" aria-hidden="true"> Sail</i>
 
@@ -1111,22 +1173,18 @@
 
                     var options = {
                         backgroundColor: 'transparent',
-                        width: 550,
-                        height: 250,
-
+                        width: '100%',
+                        height: '100%',
                         isStacked: false,
                         pointSize: 6,
                         lineWidth: 3,
-
                         hAxis: {
                             title: 'Year'
                         },
-
                         vAxis: {
                             minValue: 0,
                             title: 'No of Enrollment'
                         },
-
                         legend: {
                             position: 'bottom',
                             alignment: 'start',
@@ -1135,24 +1193,26 @@
                                 fontSize: 12
                             }
                         },
-
                         curveType: 'function',
-
-                        // Area-style look like your screenshot
                         series: {
                             0: {
                                 areaOpacity: 0.15
-                            }, // Dropped
+                            },
                             1: {
                                 areaOpacity: 0.25
-                            }, // OVM
+                            },
                             2: {
                                 areaOpacity: 0.25
-                            } // Sail
+                            }
+                        },
+                        chartArea: {
+                            left: 60,
+                            top: 20,
+                            right: 20,
+                            bottom: 60
                         }
                     };
 
-                    // 🔹 Use AreaChart to match your UI
                     var chart = new google.visualization.AreaChart(
                         document.getElementById('chart_div')
                     );
@@ -1276,7 +1336,7 @@
                 // Handle mobile row expansion logic
                 $(document).ready(function() {
                     $(document).on('click', '.searchResultStudent tr, .table-access tr, .table-sail tr', function() {
-                        if($(window).width() <= 768) {
+                        if($(window).width() <= 1024) {
                             if ($(this).hasClass('expanded-row')) {
                                 $(this).removeClass('expanded-row');
                             } else {
@@ -1288,7 +1348,7 @@
                     
                     // Prevent action button click from collapsing row
                     $(document).on('click', '.searchResultStudent td:nth-of-type(6) a', function(e) {
-                        if($(window).width() <= 768) {
+                        if($(window).width() <= 1024) {
                             e.stopPropagation();
                         }
                     });
