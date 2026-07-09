@@ -2089,52 +2089,52 @@
     });
 </script>
 <script>
-    $(window).on('load', function() {
-        var id = @json($id);
+    // // $(window).on('load', function() {
+    // //     var id = @json($id);
 
-        Swal.fire({
-            title: 'Success',
-            text: "",
-            icon: 'success',
-            showCancelButton: false,
-            confirmButtonText: 'Okay!',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                localStorage.setItem('reportPreviewGenerate', 'false');
-                const url = `${window.location.origin}/assessment-report-save/${id}`;
-                const features = 'width=1,height=1,left=9999,top=9999,noopener,noreferrer';
-                const newWindow = window.open(url, '_blank', features);
+    // //     Swal.fire({
+    // //         title: 'Success',
+    // //         text: "",
+    // //         icon: 'success',
+    // //         showCancelButton: false,
+    // //         confirmButtonText: 'Okay!',
+    // //     }).then((result) => {
+    // //         if (result.isConfirmed) {
+    // //             localStorage.setItem('reportPreviewGenerate', 'false');
+    // //             const url = `${window.location.origin}/assessment-report-save/${id}`;
+    // //             const features = 'width=1,height=1,left=9999,top=9999,noopener,noreferrer';
+    // //             const newWindow = window.open(url, '_blank', features);
 
-                if (newWindow) {
-                    newWindow.blur();
-                    window.focus();
-                }
-            }
-        });
-    });
+    // //             if (newWindow) {
+    // //                 newWindow.blur();
+    // //                 window.focus();
+    // //             }
+    // //         }
+    // //     });
+    // // });
 
-    const checkInterval = setInterval(() => {
-        const previewFlag = localStorage.getItem('reportPreviewGenerate');
+    // const checkInterval = setInterval(() => {
+    //     const previewFlag = localStorage.getItem('reportPreviewGenerate');
 
-        if (previewFlag === 'true') {
-            console.log('Report preview generation flag is true. Starting next process...');
-            clearInterval(checkInterval);
-            localStorage.setItem('reportPreviewGenerate', 'false');
-            Swal.fire({
-                toast: true,
-                position: 'top-end',
-                icon: 'success',
-                title: 'Report Preview is Ready now.',
-                showConfirmButton: false,
-                timer: 2000,
-                timerProgressBar: true
-            });
+    //     if (previewFlag === 'true') {
+    //         console.log('Report preview generation flag is true. Starting next process...');
+    //         clearInterval(checkInterval);
+    //         localStorage.setItem('reportPreviewGenerate', 'false');
+    //         Swal.fire({
+    //             toast: true,
+    //             position: 'top-end',
+    //             icon: 'success',
+    //             title: 'Report Preview is Ready now.',
+    //             showConfirmButton: false,
+    //             timer: 2000,
+    //             timerProgressBar: true
+    //         });
 
-            var c_report = @json($c_report);
-            // console.log(c_report);
-            updateIframeAndShow(c_report);
-        }
-    }, 10000);
+    //         var c_report = @json($c_report);
+    //         // console.log(c_report);
+    //         updateIframeAndShow(c_report);
+    //     }
+    // }, 10000);
 
     function updateIframeAndShow(reportName) {
         const iframe = document.getElementById('pdfViewerPIP');
