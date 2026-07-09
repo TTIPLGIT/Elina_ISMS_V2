@@ -409,6 +409,13 @@ class BaseController extends Controller
                     ->where('enrollment_id', $enrollmentID)
                     ->select('final_amount', 'id', 'base_amount', 'gst_rate')
                     ->first();
+                if (!$activePayment) {
+                    $activePayment = DB::table('payment_process_masters')
+                        ->where('fees_type_id', $feeType)
+                        ->where('category_id', $paymentCategory)
+                        ->select('final_amount', 'id', 'base_amount', 'gst_rate')
+                        ->first();
+                }
                 // $this->WriteFileLog($activePayment);
             } else {
                 // $this->WriteFileLog('Else');
@@ -433,7 +440,7 @@ class BaseController extends Controller
                     ->where('category_id', $paymentCategory)
                     ->select('final_amount', 'id', 'base_amount', 'gst_rate')
                     ->first();
-                $this->WriteFileLog($feeType);    
+                $this->WriteFileLog($feeType);
                 $this->WriteFileLog($paymentCategory);
             } elseif ($paymentCategory == 2) {
                 // $feeType = ($feeType == 2) ? $feeType - 1 : $feeType;
@@ -446,6 +453,13 @@ class BaseController extends Controller
                     ->where('school_enrollment_id', $schoolID)
                     ->select('final_amount', 'id', 'base_amount', 'gst_rate')
                     ->first();
+                if (!$activePayment) {
+                    $activePayment = DB::table('payment_process_masters')
+                        ->where('fees_type_id', $feeType)
+                        ->where('category_id', $paymentCategory)
+                        ->select('final_amount', 'id', 'base_amount', 'gst_rate')
+                        ->first();
+                }
             } else {
                 $feeType = ($feeType == 2) ? $feeType - 1 : $feeType;
                 $paymentCategory = ($paymentCategory == 2) ? $paymentCategory - 1 : $paymentCategory;
