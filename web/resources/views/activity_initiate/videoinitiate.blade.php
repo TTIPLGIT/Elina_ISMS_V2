@@ -119,7 +119,6 @@
         gap: 8px !important;
         cursor: pointer !important;
         text-decoration: none !important;
-        /* Original button colors (green) kept exactly */
         background: green !important;
         border-color: green !important;
         color: white !important;
@@ -178,6 +177,8 @@
         background-repeat: no-repeat;
         background-position: right 0.75rem top 0.625rem;
         background-size: 1.5rem;
+        /* === FIX: prevent double-tap zoom on tablets === */
+        touch-action: manipulation;
     }
 
     .accordion .accordion__title::marker,
@@ -190,8 +191,8 @@
         background-color: #1e1a72;
     }
 
-    /* ========== MOBILE RESPONSIVE STYLES (unchanged from original) ========== */
-    @media (max-width: 768px) {
+    /* ========== MOBILE & TABLET RESPONSIVE STYLES ========== */
+    @media (max-width: 1024px) {
         .main-content {
             padding: 5px !important;
             margin-top: 60px !important;
@@ -267,15 +268,6 @@
             padding: 5px !important;
         }
 
-        .col-md-4,
-        .col-sm-2,
-        .col-sm-4,
-        .col-md-2 {
-            width: 100% !important;
-            max-width: 100% !important;
-            flex: 0 0 100% !important;
-        }
-
         .centerid {
             text-align: left !important;
         }
@@ -337,7 +329,8 @@
                             <div class="card-body">
                                 <input type="hidden" id="prevData" name="prevData" value="">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <!-- ===== ONE FIELD PER ROW ON TABLET & MOBILE, THREE ON DESKTOP ===== -->
+                                    <div class="col-lg-4 col-md-12 col-sm-12 col-12">
                                         <div class="form-group">
                                             <label class="control-label">Enrollment ID</label><span class="error-star" style="color:red;">*</span>
                                             <select class="form-control default" name="enrollment_id" id="enrollment_id" onchange="myFunction()">
@@ -351,29 +344,31 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-lg-4 col-md-12 col-sm-12 col-12">
                                         <div class="form-group">
                                             <label class="control-label">Child ID</label><span class="error-star" style="color:red;">*</span>
                                             <input class="form-control" type="text" id="child_id" name="child_id" autocomplete="off" readonly>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-lg-4 col-md-12 col-sm-12 col-12">
                                         <div class="form-group">
                                             <label class="control-label">Child Name</label><span class="error-star" style="color:red;">*</span>
                                             <input class="form-control" type="text" id="child_name" name="child_name" autocomplete="off" readonly>
                                         </div>
                                     </div>
+
                                     <input type="hidden" id="user_id" name="user_id" value="">
                                     <input type="hidden" id="descriptionID" name="descriptionID" value="">
-                                    <div class="col-md-4">
+
+                                    <div class="col-lg-4 col-md-12 col-sm-12 col-12">
                                         <div class="form-group">
                                             <label class="control-label">Initiated By</label><span class="error-star" style="color:red;">*</span>
                                             <input class="form-control" type="text" id="initiated_by" name="initiated_by" value=" {{$email[0]['email'] }}" autocomplete="off" readonly>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-lg-4 col-md-12 col-sm-12 col-12">
                                         <div class="form-group">
                                             <label class="control-label">Initiated To</label><span class="error-star" style="color:red;">*</span>
                                             <input class="form-control" type="text" id="initiated_to" name="initiated_to" autocomplete="off" readonly>
@@ -381,7 +376,8 @@
                                     </div>
 
                                     <input type="hidden" id="actionBtn" name="actionBtn">
-                                    <div class="col-md-4" id="divActivityName" style="display: none;">
+
+                                    <div class="col-lg-4 col-md-12 col-sm-12 col-12" id="divActivityName" style="display: none;">
                                         <div class="form-group">
                                             <label class="control-label">Activity Name</label><span class="error-star" style="color:red;">*</span>
                                             <select class="js-select5 form-control" name="activity_id[]" id="activity_id" onchange="Description()" multiple="multiple">
@@ -671,6 +667,33 @@
         }
         data3 = data3.filter(value2 => value2 !== selectedOptionText);
     }
+
+    // ========== TABLET FIX: Block sidebar toggle & zoom on accordion title ==========
+    (function() {
+        function isTablet() {
+            return window.matchMedia('(min-width: 769px) and (max-width: 1024px)').matches;
+        }
+
+        function handleAccordionEvent(e) {
+            if (!isTablet()) return;
+            var target = e.target;
+            var summary = target.closest('.accordion__title');
+            if (!summary) return;
+
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            e.preventDefault();
+
+            var details = summary.closest('details');
+            if (details) {
+                details.open = !details.open;
+            }
+        }
+
+        document.addEventListener('click', handleAccordionEvent, true);
+        document.addEventListener('touchstart', handleAccordionEvent, true);
+        document.addEventListener('mousedown', handleAccordionEvent, true);
+    })();
 </script>
 
 @include('newenrollement.formmodal')

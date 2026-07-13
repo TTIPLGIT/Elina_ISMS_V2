@@ -306,6 +306,101 @@
             font-size: 18px !important;
         }
     }
+
+    /* ==========================================
+       TABLET-ONLY (769px - 1024px)
+       ========================================== */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        .table-responsive {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+        }
+
+        #align1 {
+            table-layout: fixed !important;
+            width: 100% !important;
+            min-width: 800px !important;
+        }
+
+        /* Column widths */
+        #align1 th:nth-child(1),
+        #align1 td:nth-child(1) {
+            width: 5% !important;
+        }
+        #align1 th:nth-child(2),
+        #align1 td:nth-child(2) {
+            width: 14% !important;
+        }
+        #align1 th:nth-child(3),
+        #align1 td:nth-child(3) {
+            width: 17% !important;
+        }
+        #align1 th:nth-child(4),
+        #align1 td:nth-child(4) {
+            width: 12% !important;
+        }
+        #align1 th:nth-child(5),
+        #align1 td:nth-child(5) {
+            width: 11% !important;
+        }
+        #align1 th:nth-child(6),
+        #align1 td:nth-child(6) {
+            width: 41% !important;
+        }
+
+        /* Sl.No – keep on one line (no wrap) */
+        #align1 th:nth-child(1),
+        #align1 td:nth-child(1) {
+            white-space: nowrap !important;
+        }
+
+        /* Allow wrapping for Enrollment ID and IS-Coordinator's */
+        #align1 th:nth-child(2),
+        #align1 td:nth-child(2),
+        #align1 th:nth-child(3),
+        #align1 td:nth-child(3) {
+            white-space: normal !important;
+            word-break: normal !important;
+            overflow-wrap: break-word !important;
+        }
+
+        /* Allocation Date: header wraps, cell stays nowrap */
+        #align1 th:nth-child(4) {
+            white-space: normal !important;
+            word-break: normal !important;
+            overflow-wrap: break-word !important;
+        }
+        #align1 td:nth-child(4) {
+            white-space: nowrap !important;
+        }
+
+        /* Status: no wrap at all */
+        #align1 th:nth-child(5),
+        #align1 td:nth-child(5) {
+            white-space: nowrap !important;
+        }
+
+        /* Action: inline buttons with proper spacing */
+        #align1 td:nth-child(6) {
+            white-space: normal !important;
+        }
+        #align1 td:nth-child(6) .btn {
+            display: inline-block !important;
+            font-size: 12px !important;
+            padding: 3px 8px !important;
+            margin: 0 3px 3px 0 !important;
+            white-space: nowrap !important;
+            border-radius: 4px !important;
+            vertical-align: middle !important;
+        }
+        #align1 td:nth-child(6) .btn-link {
+            text-decoration: none !important;
+        }
+        #align1 td:nth-child(6) .btn-link i {
+            font-size: 14px !important;
+            vertical-align: middle !important;
+        }
+    }
 </style>
 
 <div class="main-content">

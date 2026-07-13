@@ -14,8 +14,6 @@
     justify-content: center;
   }
 
-
-
   .centerid {
     width: 100%;
     text-align: center;
@@ -37,8 +35,10 @@
     color: black !important;
   }
 
-    /* Mobile Responsive Overrides */
-    @media (max-width: 768px) {
+  /* ==========================================
+     MOBILE RESPONSIVE (≤768px)
+     ========================================== */
+  @media (max-width: 768px) {
         .main-content {
             padding: 5px !important;
             margin-top: 60px !important;
@@ -214,6 +214,65 @@
             line-height: 1.2 !important;
         }
     }
+
+  /* ==========================================
+     TABLET-ONLY (769px - 1024px)
+     ========================================== */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    /* Make Enrollment ID, Child ID, Child Name, Co‑ordinators → 50% width (two per row) */
+    .is-coordinate .col-md-4 {
+      flex: 0 0 50% !important;
+      max-width: 50% !important;
+      width: 50% !important;
+    }
+
+    /* CC field – wider (60%) */
+    .form-group.row .col-sm-4:has(#mail_cc) {
+      flex: 0 0 60% !important;
+      max-width: 60% !important;
+      width: 60% !important;
+    }
+
+    /* To, Subject, Location – same width (50%) */
+    .form-group.row .col-sm-4:has(#meeting_to),
+    .form-group.row .col-sm-4:has(#meeting_subject),
+    .form-group.row .col-sm-4:has(#meeting_location) {
+      flex: 0 0 50% !important;
+      max-width: 50% !important;
+      width: 50% !important;
+    }
+
+    /* Time fields – date and time inputs wider and better aligned */
+    .form-group.row .col-sm-4:has(.meeting_date) {
+      flex: 0 0 50% !important;
+      max-width: 50% !important;
+      width: 50% !important;
+    }
+    .form-group.row .col-sm-2:has(input[type="time"]) {
+      flex: 0 0 35% !important;
+      max-width: 35% !important;
+      width: 35% !important;
+    }
+
+    /* Ensure labels stay beside the inputs (15%) */
+    .form-group.row label.col-sm-2 {
+      flex: 0 0 15% !important;
+      max-width: 15% !important;
+      width: 15% !important;
+    }
+
+    /* File attachment – input wider (50%), view button 20% */
+    .form-group.row .col-sm-4:has(input[type="file"]) {
+      flex: 0 0 50% !important;
+      max-width: 50% !important;
+      width: 50% !important;
+    }
+    .form-group.row .col-sm-2:has(#viewLink) {
+      flex: 0 0 20% !important;
+      max-width: 20% !important;
+      width: 20% !important;
+    }
+  }
 </style>
 
 <div class="main-content" style="position:absolute !important; z-index: -2!important; ">

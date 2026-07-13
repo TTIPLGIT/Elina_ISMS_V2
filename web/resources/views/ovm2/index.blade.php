@@ -391,6 +391,98 @@
         .status-col { width: 10% !important; white-space: nowrap !important; }
         .meeting-time-col { width: 15% !important; white-space: nowrap !important; }
     }
+
+    /* ==========================================
+       TABLET-ONLY (769px - 1024px) – optimise column widths & text wrapping
+       ========================================== */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        .table-responsive {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+        }
+
+        #align {
+            table-layout: fixed !important;
+            width: 100% !important;
+            min-width: 780px !important;
+        }
+
+        /* Column widths – balanced for tablet readability */
+        #align th:nth-child(1),
+        #align td:nth-child(1) {
+            width: 6% !important;
+        }
+        #align th:nth-child(2),
+        #align td:nth-child(2) {
+            width: 15% !important;   /* Child Name – wrap */
+        }
+        #align th:nth-child(3),
+        #align td:nth-child(3) {
+            width: 13% !important;   /* Enrollment ID */
+        }
+        #align th:nth-child(4),
+        #align td:nth-child(4) {
+            width: 18% !important;   /* IS Coordinators – wrap */
+        }
+        #align th:nth-child(5),
+        #align td:nth-child(5) {
+            width: 16% !important;   /* Meeting Date & Time – wrap */
+        }
+        #align th:nth-child(6),
+        #align td:nth-child(6) {
+            width: 10% !important;   /* Status – no wrap */
+        }
+        #align th:nth-child(7),
+        #align td:nth-child(7) {
+            width: 22% !important;   /* Action – keep buttons inline */
+        }
+
+        /* Allow wrapping for columns that may have long content */
+        #align th:nth-child(2),
+        #align td:nth-child(2),
+        #align th:nth-child(4),
+        #align td:nth-child(4),
+        #align th:nth-child(5),
+        #align td:nth-child(5) {
+            white-space: normal !important;
+            word-break: normal !important;
+            overflow-wrap: break-word !important;
+        }
+
+        /* Keep Sl. No., Status, Action single-line */
+        #align th:nth-child(1),
+        #align td:nth-child(1),
+        #align th:nth-child(6),
+        #align td:nth-child(6),
+        #align th:nth-child(7),
+        #align td:nth-child(7) {
+            white-space: nowrap !important;
+        }
+
+        /* Action buttons – compact and inline */
+        #align td:nth-child(7) {
+            white-space: nowrap !important;
+        }
+        #align td:nth-child(7) .btn {
+            display: inline-block !important;
+            font-size: 11px !important;
+            padding: 2px 6px !important;
+            margin: 0 2px !important;
+            white-space: nowrap !important;
+            border-radius: 4px !important;
+            vertical-align: middle !important;
+        }
+        #align td:nth-child(7) .btn-link i {
+            font-size: 13px !important;
+            vertical-align: middle !important;
+        }
+
+        /* "Resend" button – keep compact */
+        #align td:nth-child(7) .resend-btn {
+            font-size: 11px !important;
+            padding: 2px 6px !important;
+        }
+    }
 </style>
 
 <div class="main-content">

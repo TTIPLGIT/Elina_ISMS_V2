@@ -128,8 +128,30 @@
         opacity: 1;
     }
 
+    /* ==============================================================
+       DESKTOP & TABLET: proper text wrapping for Start Date & Status
+       ============================================================== */
+    /* Allow wrapping only for these columns, but without breaking words in the middle */
+    #align td:nth-of-type(5), /* Start Date */
+    #align td:nth-of-type(6) { /* Status */
+        white-space: normal !important;
+        word-break: normal !important;       /* Do not break words anywhere */
+        overflow-wrap: break-word !important; /* Break only when necessary (long unbroken strings) */
+    }
+
+    /* Keep column headers on a single line */
+    #align th {
+        white-space: nowrap !important;
+    }
+
+    /* Let the table auto-size columns (remove any fixed width constraints) */
+    #align {
+        table-layout: auto !important;
+        width: 100% !important;
+    }
+
     /* =========================================================================
-       RESPONSIVE MOBILE STYLING (No Horizontal Scroll, Auto-Adjusts UI Layout)
+       RESPONSIVE MOBILE STYLING (unchanged, up to 768px)
        ========================================================================= */
     .table-responsive {
         overflow-x: auto;
@@ -506,13 +528,13 @@
                             <table class="table table-bordered" id="align">
                                 <thead>
                                     <tr>
-                                        <th class='col-1'>S.No</th>
-                                        <th class='col-2'>Intern Name</th>
+                                        <th>S.No</th>
+                                        <th>Intern Name</th>
                                         <th>Email Address</th>
                                         <th>Contact number</th>
                                         <th>Start Date</th>
                                         <th>Status</th>
-                                        <th class='col-1'>Action</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -92,6 +92,58 @@
     .dataTables_wrapper .dataTables_length select { font-size: 11px !important; height: 32px !important; width: 60px !important; }
     .dataTables_wrapper .dataTables_filter input { width: 90px !important; height: 24px !important; font-size: 10px !important; }
 }
+
+/* =========================================================================
+   TABLET RESPONSIVE – FIX "Stage" HEADING WRAPPING AND ALLOW SCROLL
+   ========================================================================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .table-responsive {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+    .table-wrapper {
+        overflow-x: auto !important;
+    }
+    #align {
+        table-layout: auto !important;
+        width: 100% !important;
+        min-width: 800px !important; /* ensures horizontal scroll if needed */
+    }
+    #align th,
+    #align td {
+        white-space: nowrap !important;
+        padding: 8px 10px !important;
+        font-size: 13px !important;
+    }
+    /* Allow wrapping on Child Name and Questionnaire Name */
+    #align th:nth-child(3),
+    #align td:nth-child(3),   /* Child Name */
+    #align th:nth-child(5),
+    #align td:nth-child(5) {  /* Questionnaire Name */
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        min-width: 120px !important;
+    }
+    /* Give Stage column enough width so "Stage" fits */
+    #align th:nth-child(4),
+    #align td:nth-child(4) {
+        min-width: 85px !important;
+        white-space: nowrap !important;
+    }
+    /* Ensure Enrollment ID and Status stay on one line */
+    #align th:nth-child(2),
+    #align td:nth-child(2),  /* Enrollment ID */
+    #align th:nth-child(6),
+    #align td:nth-child(6),  /* Status */
+    #align th:nth-child(7),
+    #align td:nth-child(7) { /* Action */
+        white-space: nowrap !important;
+    }
+    /* Center align headings */
+    #align thead th {
+        text-align: center !important;
+    }
+}
 </style>
 <div class="main-content">
   {{ Breadcrumbs::render('sailquestionnairelistview') }}

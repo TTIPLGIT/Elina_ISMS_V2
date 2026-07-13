@@ -299,6 +299,49 @@
             font-size: 20px !important;
         }
     }
+
+    /* ==========================================
+       TABLET-ONLY (769px - 1024px) – MODAL IMPROVEMENTS
+       ========================================== */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        /* Modal – wider and better padding */
+        .modal-dialog.modal-xl {
+            max-width: 90% !important;
+            margin: 1.75rem auto !important;
+        }
+
+        .modal-body {
+            padding: 20px !important;
+        }
+
+        /* First row: Enrollment ID, Child ID, Child Name – two columns */
+        .modal-body .row.is-coordinate .col-md-4 {
+            flex: 0 0 50% !important;
+            max-width: 50% !important;
+        }
+
+        /* Second row: IS Co-ordinator-1 and IS Co-ordinator-2 – centered, 45% each */
+        .modal-body .row[style*="justify-content: center;"] .col-md-4 {
+            flex: 0 0 45% !important;
+            max-width: 45% !important;
+        }
+
+        /* Labels and inputs – slightly smaller for tablet */
+        .modal-body .form-group label {
+            font-size: 14px !important;
+        }
+        .modal-body .form-control {
+            font-size: 14px !important;
+            height: 38px !important;
+        }
+
+        /* Buttons – proper spacing */
+        .modal-body .row.text-center .col-md-12 .btn {
+            font-size: 14px !important;
+            padding: 6px 18px !important;
+            margin: 0 4px !important;
+        }
+    }
 </style>
 
 <div class="main-content">

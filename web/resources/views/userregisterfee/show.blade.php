@@ -106,23 +106,56 @@
       font-size: 20px !important;
     }
 
-    /* Adjust the "Attach File" section – file name and view button */
-    .col-md-4 .form-group .btn {
-      display: inline-block !important;
-      margin-top: 4px !important;
-    }
-
-    .col-md-4 .form-group p {
-      margin: 4px 0 !important;
-    }
-
-    /* Form note – full width and centered */
     .form-note {
       width: 100% !important;
       padding: 0 10px !important;
     }
     .control-notes {
       font-size: 14px !important;
+    }
+  }
+
+  /* ==========================================
+     TABLET-ONLY (769px - 1024px) – adjust column widths
+     ========================================== */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    /* For the top section (child details) – make them 2 columns */
+    .col-md-4 {
+      flex: 0 0 50% !important;
+      max-width: 50% !important;
+    }
+
+    /* For the payment details – give more room to Initiated By & Initiated To */
+    .col-md-3 {
+      flex: 0 0 33.333% !important;
+      max-width: 33.333% !important;
+    }
+
+    /* Make Initiated By and Initiated To wider – 35% each */
+    .card .row .col-md-3:nth-child(1),
+    .card .row .col-md-3:nth-child(2) {
+      flex: 0 0 35% !important;
+      max-width: 35% !important;
+    }
+
+    /* Payment Date – narrower (30%) */
+    .card .row .col-md-3:nth-child(3) {
+      flex: 0 0 30% !important;
+      max-width: 30% !important;
+    }
+
+    /* All other columns (Payment Fee, Status, Reference ID, Attach File) – 33.333% */
+    .card .row .col-md-3:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3)) {
+      flex: 0 0 33.333% !important;
+      max-width: 33.333% !important;
+    }
+
+    .form-group label {
+      font-size: 13px !important;
+    }
+    .form-control {
+      font-size: 13px !important;
+      height: 36px !important;
     }
   }
 </style>
@@ -218,7 +251,7 @@
                   </div>
 
                   @if(!empty($row['payment_date']))
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <div class="form-group">
                       <label class="control-label required">Payment Date</label>
                       <div class="inner-addon right-addon">
@@ -228,7 +261,7 @@
                     </div>
                   </div>
                   @else
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <div class="form-group">
                       <label class="control-label required">Payment Date</label>
                       <div class="inner-addon right-addon">
@@ -267,7 +300,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <div class="form-group">
                       <label class="control-label">Attach File</label>
                       <?php if (!empty($row['file_name'])) : ?>
@@ -280,12 +313,6 @@
                     </div>
                   </div>
                 </div>
-
-                <!-- Commented-out notes section – left as is -->
-                <!-- <div class="form-notes">
-                  <label class="control-notes">Notes</label>
-                  <textarea ...></textarea>
-                </div> -->
 
               </div>
             </div>

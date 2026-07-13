@@ -155,19 +155,24 @@
         background-color: #1E4DBA;
         color: #fff;
     }
-
     .md-stepper-horizontal {
-        display: table;
-        width: 100%;
-        margin: 0 auto;
-        background-color: #FFFFFF;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: #fff;
+    overflow-x: auto;
+}
 
-    .md-stepper-horizontal .md-step {
-        display: table-cell;
-        position: relative;
-        padding: 20px;
-    }
+.md-stepper-horizontal .md-step {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 8px;
+    flex: 1;
+}
+
 
     .md-stepper-horizontal .md-step:active {
         border-radius: 15% / 75%;
@@ -267,7 +272,7 @@
     .md-stepper-horizontal .md-step .md-step-bar-left,
     .md-stepper-horizontal .md-step .md-step-bar-right {
         position: absolute;
-        top: 36px;
+        top: 20px;
         height: 20px;
         border-top: 3px solid #DDDDDD;
     }
@@ -291,6 +296,13 @@
     .md-stepper-horizontal .md-step.editable .md-step-circle {
         background: #f05a00;
     }
+    .md-stepper-horizontal .md-step .md-step-bar-left,
+.md-stepper-horizontal .md-step .md-step-bar-right {
+    position: absolute;
+    top: 20px;              /* Center of 30px circle */
+    height: 0;
+    border-top: 3px solid #DDDDDD;
+}
 
     .form__input {
         border: 1px solid #ced4da;
@@ -312,19 +324,18 @@
         border: 1px solid;
     }
 
-    .scrollable,
+    /* .scrollable,
     #scroll {
         -ms-overflow-style: none;
         scrollbar-width: none;
-        /* height: 300px; */
         display: flex;
         flex-direction: column;
         overflow-y: scroll;
-    }
+    } */
 
-    .scrollable::-webkit-scrollbar {
+    /* .scrollable::-webkit-scrollbar {
         display: none;
-    }
+    } */
 
     table {
         text-align: left;
@@ -433,6 +444,23 @@
         height: 22px;
         width: 21px;
     }
+
+  /* @media (max-width: 1024x) {
+    .main-sidebar {
+        position: fixed;
+        top: 0;
+        left: -250px;
+        width: 250px;
+        height: 100vh;
+        z-index: 9999;
+        transition: left 0.3s ease;
+    }
+
+    .main-sidebar.sidebar-open {
+        left: 0;
+    } */
+
+
 </style>
 
 <div class="main-content">
@@ -658,75 +686,7 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
 
-<script>
-    $(document).ready(function() {
 
-        var allpro = <?php echo json_encode($pages); ?>;
-        $('.remove').click(function(e) {
-            $(this).parents('tr').find('textarea').each(function() {
-                if ($(this).val() == '') {
-                    $(this).parents('tr').remove();
-                } else {
-                    Swal.fire({
-                        title: 'Do you want to remove Skill from the report?',
-                        text: 'Click Yes to remove the point. Please note that this action cannot be reversed',
-                        icon: 'question',
-                        showCancelButton: true,
-                        confirmButtonText: 'Yes',
-                        cancelButtonText: 'No',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $(this).parents('tr').remove();
-                        }
-                    });
-                }
-            });
-        });
-
-        $('.remove_a').click(function(e) {
-            $(this).parents('tr').find('textarea').each(function() {
-                if ($(this).val() == '') {
-                    $(this).parents('tr').remove();
-                } else {
-                    Swal.fire({
-                        title: 'Do you want to remove Skill from the report?',
-                        text: 'Click Yes to remove the point. Please note that this action cannot be reversed',
-                        icon: 'question',
-                        showCancelButton: true,
-                        confirmButtonText: 'Yes',
-                        cancelButtonText: 'No',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $(this).parents('tr').remove();
-                        }
-                    });
-                }
-            });
-        });
-
-        $('.remove_b').click(function(e) {
-            $(this).parents('tr').find('textarea').each(function() {
-                if ($(this).val() == '') {
-                    $(this).parents('tr').remove();
-                } else {
-                    Swal.fire({
-                        title: 'Do you want to remove Skill from the report?',
-                        text: 'Click Yes to remove the point. Please note that this action cannot be reversed',
-                        icon: 'question',
-                        showCancelButton: true,
-                        confirmButtonText: 'Yes',
-                        cancelButtonText: 'No',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $(this).parents('tr').remove();
-                        }
-                    });
-                }
-            });
-        });
-
-    });
-</script>
 <script>
     function save(a) {
         if (document.getElementById('enrollment_child_num').value == "") {
@@ -1666,5 +1626,7 @@
     display: none !important;
 }
 }
-</style>
+
+     
+</style> 
 @endsection

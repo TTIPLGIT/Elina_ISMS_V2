@@ -105,16 +105,16 @@
         }
         
         .control-label, .col-form-label, label {
-            font-size: 10px !important;
+            font-size: 12px !important;  /* increased from 10px */
             font-weight: bold !important;
             margin-bottom: 2px !important;
             color: #333 !important;
         }
         
         .form-control {
-            height: 30px !important;
-            font-size: 10px !important;
-            padding: 5px !important;
+            height: 38px !important;      /* increased from 30px */
+            font-size: 14px !important;   /* increased from 10px */
+            padding: 6px !important;
         }
 
         /* Grid Adjustments */
@@ -132,14 +132,14 @@
         }
         
         .form-group.row .col-sm-4 {
-            width: 60% !important; /* Date takes 60% */
+            width: 60% !important;
             max-width: 60% !important;
             flex: 0 0 60% !important;
             padding-right: 5px !important;
         }
         
         .form-group.row .col-sm-2 {
-            width: 40% !important; /* Time takes 40% */
+            width: 40% !important;
             max-width: 40% !important;
             flex: 0 0 40% !important;
         }
@@ -158,10 +158,10 @@
             gap: 5px !important;
         }
         .btn {
-            padding: 4px 0 !important;
-            font-size: 10px !important;
+            padding: 6px 0 !important;    /* increased from 4px */
+            font-size: 12px !important;   /* increased from 10px */
             margin: 0 !important;
-            width: 60px !important; /* Reduced width */
+            width: 60px !important;
             text-align: center !important;
         }
         .back-btn {
@@ -187,7 +187,7 @@
         
         /* Note at bottom */
         .card-body p {
-            font-size: 9px !important;
+            font-size: 11px !important;   /* increased from 9px */
             line-height: 1.2 !important;
         }
     }
@@ -409,9 +409,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
 @include('ovm1.cal')
 <!-- End -->
-
-
-
 
 <script type="text/javascript">
     $(document).ready(function() {

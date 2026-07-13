@@ -63,6 +63,39 @@
       border-color: #f5a623 !important;
       color: #fff !important;
     }
+
+    /* ==== TABLET FIX: Stack modal fields vertically for BOTH cuModal and addModal ==== */
+    @media (max-width: 1024px) {
+      /* Target both cuModal and addModal by their ID prefixes */
+      [id^="cuModal"] .col-md-6,
+      [id^="addModal"] .col-md-6 {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+      [id^="cuModal"] .col-md-12,
+      [id^="addModal"] .col-md-12 {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+      [id^="cuModal"] .card-body,
+      [id^="addModal"] .card-body {
+        padding: 15px !important;
+      }
+      [id^="cuModal"] .form-group,
+      [id^="addModal"] .form-group {
+        margin-bottom: 10px !important;
+      }
+      [id^="cuModal"] .control-label,
+      [id^="addModal"] .control-label {
+        font-size: 13px !important;
+      }
+      /* Also stack the F2F table inside cuModal on tablet if needed */
+      [id^="cuModal"] .table-responsive {
+        overflow-x: auto !important;
+      }
+    }
   </style>
   <style>
     .wrapper {
@@ -531,7 +564,7 @@
                                             @else
                                             <input type="checkbox" onclick="return false;" value="{{$data2['parent_video_upload_id']}}">
                                             @endif
-                                          </td> -->
+                                          </td> */
                                               @if($data2['f2f_flag'] == 1)
                                                 <td> <input type="checkbox" class="Enabled"
                                                     id="approved{{$data2['parent_video_upload_id']}}" name="enabled" value="1" checked

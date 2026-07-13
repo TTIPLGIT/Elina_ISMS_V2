@@ -4,7 +4,6 @@
 <style>
    /* ==========================================
    MOBILE ACCORDION VIEW
-   SAME AS PROFESSIONAL LIST SCREEN
 ========================================== */
 @media (max-width:768px){
 
@@ -60,7 +59,6 @@
         margin:0 !important;
     }
 
-    /* CARD STYLE */
     #align tr{
         display:flex !important;
         flex-direction:column !important;
@@ -261,6 +259,94 @@
         width:90px !important;
         height:24px !important;
         font-size:10px !important;
+    }
+}
+
+/* ==============================================================
+   TABLET-ONLY (769px - 1024px): wrap District, Administration Number & Status
+   ============================================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+    #align {
+        table-layout: auto !important;
+        width: 100% !important;
+    }
+
+    /* Allow District (4th column) header & cells to wrap */
+    #align th:nth-of-type(4),
+    #align td:nth-of-type(4) {
+        white-space: normal !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
+    }
+
+    /* Allow Administration Number (5th column) header & cells to wrap */
+    #align th:nth-of-type(5),
+    #align td:nth-of-type(5) {
+        white-space: normal !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
+    }
+
+    /* Allow Status (6th column) header & cells to wrap */
+    #align th:nth-of-type(6),
+    #align td:nth-of-type(6) {
+        white-space: normal !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
+    }
+
+    /* All other headers single-line */
+    #align th:not(:nth-of-type(4)):not(:nth-of-type(5)):not(:nth-of-type(6)) {
+        white-space: nowrap !important;
+    }
+
+    /* All other cells wrap normally */
+    #align td:not(:nth-of-type(4)):not(:nth-of-type(5)):not(:nth-of-type(6)) {
+        white-space: normal !important;
+        word-break: break-word !important;
+    }
+}
+
+/* ==============================================================
+   DESKTOP (>=1025px): keep most headers single-line,
+   but "Administration Number" wraps as "Administration / Number"
+   ============================================================== */
+@media (min-width: 1025px) {
+    #align {
+        table-layout: auto !important;
+        width: 100% !important;
+    }
+
+    /* All headers: nowrap by default */
+    #align th {
+        white-space: nowrap !important;
+    }
+
+    /* Override: allow Administration Number header to wrap into two lines */
+    #align th:nth-of-type(5) {
+        white-space: normal !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
+        min-width: 100px !important;
+    }
+
+    /* All cells: allow wrapping, but prevent breaking words in the middle */
+    #align td {
+        white-space: normal !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
+    }
+
+    /* S.No and Action: nowrap and min-width */
+    #align th:nth-of-type(1),
+    #align td:nth-of-type(1) {
+        white-space: nowrap !important;
+        min-width: 50px !important;
+    }
+    #align th:nth-of-type(7),
+    #align td:nth-of-type(7) {
+        white-space: nowrap !important;
+        min-width: 80px !important;
     }
 }
 </style>

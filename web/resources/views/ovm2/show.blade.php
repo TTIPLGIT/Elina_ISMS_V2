@@ -24,16 +24,17 @@
   .select2-container--default .select2-selection--multiple .select2-selection__choice{
     color: black !important;
   }
-    /* Mobile Responsive Overrides */
-    @media (max-width: 768px) {
+
+  /* ==========================================
+     MOBILE RESPONSIVE (≤768px)
+     ========================================== */
+  @media (max-width: 768px) {
         .main-content {
             padding: 5px !important;
             margin-top: 60px !important;
             position: relative !important;
             z-index: 1 !important;
         }
-
-
 
         /* Status and Yellow Button Alignment */
         .form-group.row:has(#meeting_status) > .col-md-2 {
@@ -62,8 +63,6 @@
             display: none !important;
         }
 
-
-
         /* Calendar Icon - Centered like Timer Icon */
         .inner-addon i {
             top: 50% !important;
@@ -82,6 +81,142 @@
              padding-bottom: 10px;
         }
     }
+
+  /* ==========================================
+     TABLET-ONLY (769px - 1024px)
+     ========================================== */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    /* Top section – two columns */
+    .is-coordinate .col-md-4 {
+      flex: 0 0 50% !important;
+      max-width: 50% !important;
+      width: 50% !important;
+    }
+
+    /* ====== Invite Details Form – clean alignment ====== */
+    .card .form-group.row {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      margin-bottom: 12px !important;
+    }
+
+    /* Labels – fixed width, left-aligned text */
+    .card .form-group.row label.col-sm-2,
+    .card .form-group.row label.col-form-label,
+    .card .form-group.row .col-form-label {
+      flex: 0 0 25% !important;
+      max-width: 25% !important;
+      width: 25% !important;
+      text-align: left !important;
+      padding-right: 10px !important;
+      white-space: nowrap !important;
+      font-weight: 600 !important;
+    }
+
+    /* Input fields – take remaining width */
+    .card .form-group.row .col-sm-4,
+    .card .form-group.row .col-sm-8,
+    .card .form-group.row .col-sm-2,
+    .card .form-group.row .col-md-2 {
+      flex: 1 1 auto !important;
+      max-width: none !important;
+      width: auto !important;
+      padding-left: 5px !important;
+      padding-right: 5px !important;
+    }
+
+    /* ====== TO + STATUS row – side by side ====== */
+    .card .form-group.row:has(#meeting_to) {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      align-items: center !important;
+    }
+    /* To input – reduced to 55% */
+    .card .form-group.row:has(#meeting_to) > .col-sm-4 {
+      flex: 0 0 55% !important;
+      max-width: 55% !important;
+      width: 55% !important;
+    }
+    /* Status label – 12% */
+    .card .form-group.row:has(#meeting_to) > .col-md-2:has(label) {
+      flex: 0 0 12% !important;
+      max-width: 12% !important;
+      width: 12% !important;
+      text-align: left !important;
+      padding-left: 10px !important;
+    }
+    /* Status input – increased to 22% for proper visibility */
+    .card .form-group.row:has(#meeting_to) > .col-md-2:has(input) {
+      flex: 0 0 22% !important;
+      max-width: 22% !important;
+      width: 22% !important;
+      flex-shrink: 1 !important;
+      min-width: 0 !important;
+      overflow: hidden !important;
+    }
+    .card .form-group.row:has(#meeting_to) > .col-md-2:has(input) input {
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    /* Remove the empty spacer column */
+    .card .form-group.row:has(#meeting_to) > .col-md-2:empty {
+      display: none !important;
+    }
+    /* Override centerid for status label to left-align */
+    .card .form-group.row:has(#meeting_to) .centerid {
+      text-align: left !important;
+    }
+
+    /* CC – select takes 65% */
+    .card .form-group.row:has(#mail_cc) .col-sm-4 {
+      flex: 0 0 65% !important;
+      max-width: 65% !important;
+      width: 65% !important;
+    }
+
+    /* Subject, Location – input 65% */
+    .card .form-group.row:has(#meeting_subject) .col-sm-4,
+    .card .form-group.row:has(#meeting_location) .col-sm-4 {
+      flex: 0 0 65% !important;
+      max-width: 65% !important;
+      width: 65% !important;
+    }
+
+    /* Date + Time row: date 40%, time 35% */
+    .card .form-group.row:has(.meeting_date) .col-sm-4 {
+      flex: 0 0 40% !important;
+      max-width: 40% !important;
+      width: 40% !important;
+    }
+    .card .form-group.row:has(.meeting_date) .col-sm-2:has(input[type="time"]) {
+      flex: 0 0 35% !important;
+      max-width: 35% !important;
+      width: 35% !important;
+    }
+
+    /* File attachment */
+    .card .form-group.row:has(#oldattachment) .col-sm-8 {
+      flex: 0 0 60% !important;
+      max-width: 60% !important;
+      width: 60% !important;
+    }
+
+    /* Ensure the "required" asterisk stays inline */
+    .card .form-group.row label.required {
+      white-space: nowrap !important;
+    }
+    .card .form-group.row label.required::after {
+      content: " *";
+      color: red;
+    }
+
+    /* Description textarea – full width */
+    .card .col-lg-12 {
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+    }
+  }
 </style>
 
 <div class="main-content" style="position:absolute !important; z-index: -2!important; ">
@@ -367,25 +502,5 @@
   };
 </script>
 @include('newenrollement.formmodal')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @endsection

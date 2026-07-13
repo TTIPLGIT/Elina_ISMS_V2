@@ -173,6 +173,88 @@
             margin-top: 8px !important;
         }
     }
+
+    /* ==========================================
+       TABLET-ONLY (769px - 1024px) – optimise column widths
+       ========================================== */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        .table-responsive-wrapper {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch;
+            margin: 0 -5px;
+            padding: 0 5px;
+        }
+
+        #serviceTable {
+            table-layout: fixed !important;   /* enforce column widths */
+            width: 100% !important;
+            font-size: 13px !important;
+            min-width: 100% !important;       /* remove horizontal scroll unless needed */
+        }
+
+        /* Assign widths to each column */
+        #serviceTable th:nth-child(1),
+        #serviceTable td:nth-child(1) {
+            width: 5% !important;   /* SI no */
+        }
+        #serviceTable th:nth-child(2),
+        #serviceTable td:nth-child(2) {
+            width: 40% !important;  /* Service Briefing – wide enough to wrap */
+        }
+        #serviceTable th:nth-child(3),
+        #serviceTable td:nth-child(3) {
+            width: 10% !important;  /* QTY */
+        }
+        #serviceTable th:nth-child(4),
+        #serviceTable td:nth-child(4) {
+            width: 15% !important;  /* Rate (reduced) */
+        }
+        #serviceTable th:nth-child(5),
+        #serviceTable td:nth-child(5) {
+            width: 15% !important;  /* Amount (reduced) */
+        }
+        #serviceTable th:nth-child(6),
+        #serviceTable td:nth-child(6) {
+            width: 15% !important;  /* Action */
+        }
+
+        /* Allow Service Briefing to wrap */
+        #serviceTable td:nth-child(2),
+        #serviceTable th:nth-child(2) {
+            white-space: normal !important;
+            word-break: break-word !important;
+        }
+
+        /* Keep other columns single-line */
+        #serviceTable td:not(:nth-child(2)),
+        #serviceTable th:not(:nth-child(2)) {
+            white-space: nowrap !important;
+        }
+
+        /* Ensure inputs and selects fit within their columns */
+        #serviceTable .form-control {
+            height: 34px !important;
+            font-size: 13px !important;
+            padding: 2px 4px !important;
+            width: 100% !important;
+            min-width: unset !important;       /* override mobile min-width */
+        }
+
+        #serviceTable select.form-control {
+            width: 100% !important;
+            min-width: unset !important;
+        }
+
+        #serviceTable .btn {
+            font-size: 12px !important;
+            padding: 2px 6px !important;
+        }
+
+        /* Add Service button – normal width on tablet */
+        #addServiceButton {
+            width: auto !important;
+        }
+    }
 </style>
 
 <div class="main-content">

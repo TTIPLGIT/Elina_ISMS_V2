@@ -3,6 +3,7 @@
 @section('content')
 
 <style>
+  /* ----- General styles (unchanged) ----- */
   .options-grid {
     display: block;
     margin-top: 8px;
@@ -39,9 +40,30 @@
     opacity: 1 !important;
   }
 
-  /* Mobile Responsive Overrides */
+  /* ----- NEW LAYOUT: Full-height card with sticky buttons ----- */
+  .full-height-card {
+    display: flex;
+    flex-direction: column;
+    height: 75vh;               /* Adjust as needed; use calc(100vh - header) if required */
+    min-height: 400px;
+  }
+
+  .full-height-card .card-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+  }
+
+  .full-height-card .card-footer {
+    border-top: 1px solid rgba(0,0,0,.125);
+    padding: 12px 15px;
+    background: #fff;
+    flex-shrink: 0;
+    text-align: center;
+  }
+
+  /* ----- Mobile responsive overrides (kept, with minor adjustments) ----- */
   @media (max-width: 768px) {
-    /* Input Field Minimal Styling (Mobile Only) */
     .form-control, .form-group textarea, .form-group select {
       background-color: transparent !important;
       border: none !important;
@@ -70,6 +92,7 @@
       padding: 5px !important;
     }
 
+    /* Breadcrumb adjustments (unchanged) */
     #mobile-breadcrumb-wrapper .breadcrumb, 
     #mobile-breadcrumb-wrapper .breadcrumb-custom {
       margin-top: 60px !important;
@@ -95,10 +118,9 @@
     #mobile-breadcrumb-wrapper .breadcrumb .active,
     #mobile-breadcrumb-wrapper .breadcrumb-item {
       font-size: 13px !important;
-      color: #e83e8c !important; /* Pink color */
+      color: #e83e8c !important;
     }
 
-    /* Force hide all custom Elina ISMS chevrons and circular numbers using ID specificity */
     #mobile-breadcrumb-wrapper .breadcrumb *:before,
     #mobile-breadcrumb-wrapper .breadcrumb *:after,
     #mobile-breadcrumb-wrapper .breadcrumb *::before,
@@ -115,7 +137,6 @@
       display: none !important;
     }
 
-    /* Add the simple ">" arrow separator */
     #mobile-breadcrumb-wrapper .breadcrumb li + li::before {
       display: inline-block !important;
       content: " \003E " !important;
@@ -132,9 +153,8 @@
       font-weight: bold !important;
     }
 
-    .card-body {
+    .full-height-card .card-body {
       padding: 10px !important;
-      max-height: 500px !important;
     }
 
     .form-group {
@@ -160,63 +180,66 @@
       font-size: 12px !important;
       margin-bottom: 5px !important;
     }
+
     /* Mobile Breadcrumb Fix */
-.breadcrumb-wrapper {
-    width: 100% !important;
-    overflow: hidden !important;
-}
+    .breadcrumb-wrapper {
+      width: 100% !important;
+      overflow: hidden !important;
+    }
 
-.breadcrumb-wrapper .breadcrumb {
-    margin-top: 60px !important;
-    padding: 0 !important;
-    background: transparent !important;
-    white-space: nowrap !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    flex-wrap: nowrap !important;
-    display: flex !important;
-    align-items: center !important;
-    scrollbar-width: none !important;
-}
+    .breadcrumb-wrapper .breadcrumb {
+      margin-top: 60px !important;
+      padding: 0 !important;
+      background: transparent !important;
+      white-space: nowrap !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      flex-wrap: nowrap !important;
+      display: flex !important;
+      align-items: center !important;
+      scrollbar-width: none !important;
+    }
 
-.breadcrumb-wrapper .breadcrumb::-webkit-scrollbar {
-    display: none !important;
-}
+    .breadcrumb-wrapper .breadcrumb::-webkit-scrollbar {
+      display: none !important;
+    }
 
-.breadcrumb-wrapper .breadcrumb li,
-.breadcrumb-wrapper .breadcrumb a,
-.breadcrumb-wrapper .breadcrumb .active,
-.breadcrumb-wrapper .breadcrumb-item {
-    font-size: 11px !important;
-    white-space: nowrap !important;
-    flex-shrink: 0 !important;
-}
+    .breadcrumb-wrapper .breadcrumb li,
+    .breadcrumb-wrapper .breadcrumb a,
+    .breadcrumb-wrapper .breadcrumb .active,
+    .breadcrumb-wrapper .breadcrumb-item {
+      font-size: 11px !important;
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
+    }
 
-/* Reduce heading size */
-h4 {
-    font-size: 13px !important;
-    margin-top: 8px !important;
-    margin-bottom: 8px !important;
-}
+    h4 {
+      font-size: 13px !important;
+      margin-top: 8px !important;
+      margin-bottom: 8px !important;
+    }
 
-/* Reduce card padding */
-.card-body {
-    padding: 8px !important;
-}
+    .full-height-card {
+      height: 70vh;        /* Slightly shorter on mobile for better fit */
+      min-height: 350px;
+    }
 
-/* Make buttons fit better */
-.btn {
-    padding: 5px 10px !important;
-    font-size: 11px !important;
-}
+    .full-height-card .card-footer {
+      padding: 8px 10px !important;
+    }
+
+    .btn {
+      padding: 5px 10px !important;
+      font-size: 11px !important;
+    }
   }
 </style>
 
 <div class="main-content">
 
- <div class="breadcrumb-wrapper">
+  <div class="breadcrumb-wrapper">
     {{ Breadcrumbs::render('g2form.new' , $child_name) }}
-</div>
+  </div>
 
   {{-- Alerts --}}
   @if (session('success'))
@@ -241,26 +264,25 @@ h4 {
     </div>
 
     <div class="col-12">
-      <div class="card">
+      {{-- Card now uses the flex layout --}}
+      <div class="card full-height-card">
 
         <form action="{{route('g2form.store')}}" method="POST" id="gfrom">
           {{ csrf_field() }}
 
-          <div class="card-body" style="max-height:400px;overflow:auto;">
-
+          {{-- Scrollable body --}}
+          <div class="card-body">
             @foreach($questions as $question)
 
             @php
             $options = [];
             if(isset($question['other_option']) && !empty($question['other_option'])){
               if ($question['field_types_id'] == 5) {
-                // Checkbox: extracted using brackets
                 preg_match_all('/\[(.*?)\]/', $question['other_option'], $matches);
                 if(!empty($matches[1])){
                   $options = array_map('trim', $matches[1]);
                 }
               } else {
-                // Dropdown and Radio: extracted by splitting commas
                 $options = array_filter(array_map('trim', explode(',', $question['other_option'])));
               }
             }
@@ -377,11 +399,10 @@ h4 {
             </div>
 
             @endforeach
-
           </div>
 
-          {{-- BUTTONS --}}
-          <div class="text-center mb-3">
+          {{-- Fixed footer with buttons --}}
+          <div class="card-footer">
             <input type="hidden" id="type" name="type">
             <input type="hidden" name="enrollment_id" value="{{$enrollId}}">
 
@@ -401,7 +422,7 @@ h4 {
   </div>
 </div>
 
-{{-- JS --}}
+{{-- JS (unchanged) --}}
 <script>
   $(document).on('change', '.other-check', function() {
     let input = $(this).closest('.form-group').find('.other-input');

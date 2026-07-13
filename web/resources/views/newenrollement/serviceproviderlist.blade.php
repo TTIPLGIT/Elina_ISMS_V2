@@ -339,6 +339,83 @@
             padding: 2px 4px !important;
         }
     }
+
+    /* ==============================================================
+       TABLET-ONLY (769px - 1024px): text wrapping for specific columns
+       ============================================================== */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        #align {
+            table-layout: auto !important;
+            width: 100% !important;
+        }
+
+        /* Force wrapping for Professionals Name, Type of Service, Charge Per Session, Action */
+        #align td:nth-of-type(2),
+        #align td:nth-of-type(5),
+        #align td:nth-of-type(6),
+        #align td:nth-of-type(7) {
+            white-space: normal !important;
+            word-break: break-word !important;
+            overflow-wrap: break-word !important;
+        }
+
+        /* Ensure all other cells also wrap (optional) */
+        #align td:not(:nth-of-type(2)):not(:nth-of-type(5)):not(:nth-of-type(6)):not(:nth-of-type(7)) {
+            white-space: normal !important;
+            word-break: break-word !important;
+        }
+
+        /* Keep header text single-line */
+        #align th {
+            white-space: nowrap !important;
+        }
+
+        /* Ensure S.No and Action headers stay visible and not squashed */
+        #align th:nth-of-type(1),
+        #align th:nth-of-type(7) {
+            white-space: nowrap !important;
+            min-width: 60px !important;
+        }
+    }
+
+    /* ==============================================================
+       DESKTOP (>=1025px): keep all headers single-line, allow cell wrapping,
+       and give Charge Per Session header enough width
+       ============================================================== */
+    @media (min-width: 1025px) {
+        #align {
+            table-layout: auto !important;
+            width: 100% !important;
+        }
+
+        /* All headers: no wrap */
+        #align th {
+            white-space: nowrap !important;
+        }
+
+        /* S.No and Action: nowrap and min-width */
+        #align th:nth-of-type(1),
+        #align td:nth-of-type(1) {
+            white-space: nowrap !important;
+            min-width: 50px !important;
+        }
+        #align th:nth-of-type(7),
+        #align td:nth-of-type(7) {
+            white-space: nowrap !important;
+            min-width: 80px !important;
+        }
+
+        /* Give enough space for Charge Per Session header to avoid breaking */
+        #align th:nth-of-type(6) {
+            min-width: 150px !important;
+        }
+
+        /* Allow all other cells to wrap (except S.No and Action) */
+        #align td:not(:nth-of-type(1)):not(:nth-of-type(7)) {
+            white-space: normal !important;
+            word-break: break-word !important;
+        }
+    }
 </style>
 
 <div class="main-content">

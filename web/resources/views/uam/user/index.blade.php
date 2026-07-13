@@ -426,18 +426,18 @@
                           <td data-label="Email">{{ $row['email'] }}</td>
                           <td data-label="Action" class="text-center">
                             @if(strpos($screen_permission['permissions'], 'Edit') !== false)
-                              <a class="btn btn-primary btn-sm" href="{{ route('user.edit_permission', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Permission"><i class="fa fa-lock" aria-hidden="true"></i></a>
+                              <a  style='margin:10px' class="btn btn-primary btn-sm" href="{{ route('user.edit_permission', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Permission"><i class="fa fa-lock" aria-hidden="true"></i></a>
                             @endif
                             @if(strpos($screen_permission['permissions'], 'Edit') !== false)
-                              <a class="btn btn-danger btn-sm" href="{{ route('user.edit', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                              <a class="btn btn-success btn-sm" href="{{ route('user.change_password_admin', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Change Password"><i class="fa fa-key" aria-hidden="true"></i></a>
+                              <a style='margin:10px' class="btn btn-danger btn-sm" href="{{ route('user.edit', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                              <a style='margin:10px' class="btn btn-success btn-sm" href="{{ route('user.change_password_admin', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Change Password"><i class="fa fa-key" aria-hidden="true"></i></a>
                             @endif
                             @if(strpos($screen_permission['permissions'], 'Show') !== false)
-                              <a class="btn btn-warning btn-sm" href="{{ route('user.show', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Show"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                              <a style='margin:10px'  class="btn btn-warning btn-sm" href="{{ route('user.show', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Show"><i class="fa fa-eye" aria-hidden="true"></i></a>
                             @endif
                             @if(strpos($screen_permission['permissions'], 'Edit') !== false)
                               <input type="hidden" name="delete_id" id="del_{{ $row['id'] }}" value="{{ route('user.delete', \Crypt::encrypt($row['id'])) }}">
-                              <a class="btn btn-info btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" style="cursor: pointer;" onclick="return myFunction({{ $row['id'] }});"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                              <a  style='margin:10px' class="btn btn-info btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" style="cursor: pointer;" onclick="return myFunction({{ $row['id'] }});"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             @endif
                           </td>
                           <td data-label="Active Status" style="text-align: center;">

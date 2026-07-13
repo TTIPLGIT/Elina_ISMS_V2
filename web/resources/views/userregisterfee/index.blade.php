@@ -320,6 +320,58 @@
         }
     }
 
+    /* ==========================================
+       TABLET-ONLY (769px - 1024px) – full visibility with scrolling
+       ========================================== */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        /* Allow the table to expand horizontally if needed */
+        .table-responsive {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+        }
+
+        #align {
+            table-layout: auto !important;     /* let columns size themselves */
+            width: 100% !important;
+            min-width: 100% !important;
+        }
+
+        /* All headers and cells – wrap at spaces, never break words */
+        #align th,
+        #align td {
+            white-space: normal !important;
+            word-break: normal !important;        /* break only at spaces */
+            overflow-wrap: break-word !important;
+            hyphens: none !important;
+        }
+
+        /* Protect single‑word values (like SUCCESS) from breaking */
+        #align td:nth-child(7) {
+            word-break: keep-all !important;
+        }
+
+        /* Give extra breathing room to key columns */
+        #align th:nth-child(2),
+        #align td:nth-child(2) {
+            min-width: 120px !important;
+        }
+        #align th:nth-child(3),
+        #align td:nth-child(3) {
+            min-width: 130px !important;
+        }
+        #align th:nth-child(4),
+        #align td:nth-child(4) {
+            min-width: 130px !important;
+        }
+
+        /* Action buttons – keep them compact */
+        #align td:nth-child(8) .btn {
+            font-size: 11px !important;
+            padding: 2px 4px !important;
+            margin: 0 1px !important;
+        }
+    }
+
     /* Breadcrumb – keep on one line (desktop fallback) */
     .breadcrumb {
         display: flex !important;

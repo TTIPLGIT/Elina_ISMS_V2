@@ -155,12 +155,14 @@
     display: none;
     /* Hidden by default */
     position: fixed;
-    z-index: 1;
+    z-index: 9999;
+    /* Ensure it's on top */
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    /* overflow: auto; */
+    overflow: auto;
+    /* Enable scrolling if needed */
     background-color: rgb(0, 0, 0);
     background-color: rgba(0, 0, 0, 0.4);
     /* Black with opacity */
@@ -169,12 +171,15 @@
   .modal-content {
     background-color: #fff;
     margin: 5% auto;
-    height: 500px;
     padding: 20px;
     border-radius: 10px;
     width: 60%;
     max-width: 600px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
+    /* Scroll inside modal if content is long */
   }
 
   .close-btn {
@@ -197,8 +202,8 @@
   /* Timeline styles */
   .timeline {
     margin-top: 20px;
-    height: 500px;
-    overflow: scroll;
+    max-height: 70vh;
+    overflow-y: auto;
   }
 
   .timeline-item {
@@ -216,6 +221,33 @@
 
   .timeline-item p {
     margin: 5px 0 0;
+  }
+
+  /* ==============================================================
+     TABLET-ONLY (769px - 1024px) – fix modal centering
+     ============================================================== */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .modal-content {
+      width: 80%;
+      max-width: 500px;
+      margin: 15% auto;                /* increased top margin */
+      max-height: 75vh;
+      overflow-y: auto;
+    }
+
+    .timeline {
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+  }
+
+  /* For very small screens (phones) we keep the existing layout */
+  @media (max-width: 768px) {
+    .modal-content {
+      width: 90%;
+      margin: 20% auto;
+      max-height: 80vh;
+    }
   }
 </style>
 <div class="main-content">

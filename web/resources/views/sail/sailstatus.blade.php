@@ -11,8 +11,58 @@
     -webkit-overflow-scrolling: touch;
 }
 
-@media (max-width: 768px) {
+/* =========================================================================
+   TABLET ADJUSTMENTS (769px – 1024px) – same as other list views
+   ========================================================================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+    #align {
+        table-layout: auto !important;
+        width: 100% !important;
+    }
 
+    #align th,
+    #align td {
+        width: auto !important;
+        max-width: none !important;
+        white-space: nowrap !important;
+        word-wrap: normal !important;
+        overflow-wrap: normal !important;
+    }
+
+    #align th:nth-child(2),
+    #align td:nth-child(2),    /* Child Name */
+    #align th:nth-child(4),
+    #align td:nth-child(4) {   /* Coordinator */
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        word-break: break-word !important;
+        min-width: 100px !important;
+    }
+
+    #align th:nth-child(1),
+    #align td:nth-child(1),    /* Sl.No. */
+    #align th:nth-child(3),
+    #align td:nth-child(3),    /* Enrollment */
+    #align th:nth-child(5),
+    #align td:nth-child(5),    /* Status */
+    #align th:nth-child(6),
+    #align td:nth-child(6) {   /* Action */
+        white-space: nowrap !important;
+    }
+
+    #align th:nth-child(1),
+    #align td:nth-child(1) {
+        width: 50px !important;
+        text-align: center;
+    }
+
+    #align thead th {
+        text-align: center !important;
+    }
+}
+
+@media (max-width: 768px) {
     .main-content,
     .card,
     .card-body,
@@ -109,7 +159,6 @@
         line-height: 1.2 !important;
     }
 
-    /* Sl. No. - absolute positioned left */
     #align td:nth-of-type(1) {
         position: absolute !important;
         left: 15px !important;
@@ -127,7 +176,6 @@
         transform: translateY(0) !important;
     }
 
-    /* Child Name (always visible) */
     #align td:nth-of-type(2) {
         display: block !important;
         font-weight: 600 !important;
@@ -138,7 +186,6 @@
         order: 1 !important;
     }
 
-    /* Status - always visible (replaces Enrollment Number on card) */
     #align td:nth-of-type(5) {
         display: block !important;
         font-size: 13px !important;
@@ -153,14 +200,12 @@
         color: #000 !important;
     }
 
-    /* Hidden fields initially (Enrollment, Coordinator, Action) */
     #align td:nth-of-type(3),
     #align td:nth-of-type(4),
     #align td:nth-of-type(6) {
         display: none !important;
     }
 
-    /* Arrow indicator for expand */
     #align tr::after {
         content: '\f054';
         font-family: 'FontAwesome';
@@ -178,7 +223,6 @@
         top: 35px;
     }
 
-    /* Enrollment Number (expanded) */
     #align tr.expanded-row td:nth-of-type(3) {
         display: block !important;
         margin-top: 8px !important;
@@ -193,7 +237,6 @@
         color: #000 !important;
     }
 
-    /* Coordinator (expanded) */
     #align tr.expanded-row td:nth-of-type(4) {
         display: block !important;
         margin-top: 6px !important;
@@ -208,7 +251,6 @@
         color: #000 !important;
     }
 
-    /* Action Row (expanded) - inline flex */
     #align tr.expanded-row td:nth-of-type(6) {
         display: flex !important;
         align-items: center !important;
@@ -236,7 +278,6 @@
         font-size: 14px !important;
     }
 
-    /* No records row */
     #align td.dataTables_empty {
         display: table-cell !important;
         width: 100% !important;
@@ -260,7 +301,6 @@
         display: none !important;
     }
 
-    /* DataTable controls if any */
     .dataTables_wrapper .row:first-child {
         margin: 0 !important;
     }
@@ -318,7 +358,6 @@
         overflow-x: hidden !important;
     }
 
-    /* Hide table header in modal on mobile */
     .modal-body table thead {
         display: none !important;
     }
@@ -331,7 +370,6 @@
         width: 100% !important;
     }
 
-    /* Card design for audit log */
     .modal-body tbody tr {
         border: 1px solid #dcdcdc !important;
         border-radius: 10px !important;
@@ -350,7 +388,6 @@
         line-height: 1.4 !important;
     }
 
-    /* Labels for audit fields */
     .modal-body tbody td:nth-child(1):before {
         content: "Sl No : ";
         font-weight: 600;
@@ -534,11 +571,12 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+                                                            @php $counter = 1; @endphp
                                                             @foreach($actions as $audit)
                                                                 @if($row['child_id'] == $audit['child_id'])
                                                                 <tr>
-                                                                    <td>{{$loop->iteration}}</td>
-                                                                    <td>{{$audit['audit_action']}}</td>
+                                                                    <td>{{ $counter }}</td>
+                                                                    <td>{{ $audit['audit_action'] }}</td>
                                                                     <td>
                                                                         <script>
                                                                             var dateString = "{{ $audit['action_date_time'] }}";
@@ -559,6 +597,7 @@
                                                                         </script>
                                                                     </td>
                                                                 </tr>
+                                                                @php $counter++; @endphp
                                                                 @endif
                                                             @endforeach
                                                         </tbody>
@@ -605,10 +644,8 @@
         $('#modalviewdiv').html(iframeHtml);
     }
 
-    // Mobile row expand/collapse - only on screens <= 768px, prevent toggling when clicking on action icons/links
     $(document).ready(function() {
         $('#align tbody').on('click', 'tr', function(e) {
-            // If clicked element is inside an action link/button or modal trigger, do not toggle row
             if ($(e.target).closest('a, button, .btn, .fa, .fas').length) {
                 return;
             }
@@ -619,5 +656,5 @@
     });
 </script>
 
-@include('newenrollement.formmodal')  {{-- includes additional modal if needed --}}
+@include('newenrollement.formmodal')
 @endsection

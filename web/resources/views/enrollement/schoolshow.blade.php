@@ -6,7 +6,6 @@
 <style>
     /* MOBILE STYLES - FORCED OVERRIDES */
     @media (max-width: 768px) {
-        /* Force button container to flex row */
         .col-md-12.text-center {
             display: flex !important;
             flex-direction: row !important;
@@ -18,15 +17,13 @@
             padding: 0 !important;
             margin: 0 !important;
         }
-
-        /* Target ALL button types - force equal width, no shadows, center text */
         .col-md-12.text-center .btn,
         .col-md-12.text-center a.btn,
         .col-md-12.text-center .btn-labeled,
         .col-md-12.text-center .btn-info,
         .col-md-12.text-center .back-btn {
             display: inline-flex !important;
-            flex: 1 1 0 !important;  /* EQUAL WIDTH for all buttons */
+            flex: 1 1 0 !important;
             width: auto !important;
             min-width: 0 !important;
             max-width: 100% !important;
@@ -46,10 +43,8 @@
             text-decoration: none !important;
             line-height: normal !important;
             height: auto !important;
-            background: none !important; /* remove any default background */
+            background: none !important;
         }
-
-        /* HIDE ALL ICONS - complete removal, no gray background */
         .col-md-12.text-center .btn i,
         .col-md-12.text-center .btn .btn-label i,
         .col-md-12.text-center .btn span i,
@@ -64,18 +59,14 @@
         .col-md-12.text-center .btn .fa-arrow-right,
         .col-md-12.text-center .btn .fa-times {
             display: none !important;
-            background: transparent !important; /* remove any gray background */
+            background: transparent !important;
         }
-
-        /* Keep text labels only */
         .col-md-12.text-center .btn .btn-label {
             display: inline !important;
             margin-right: 0 !important;
             font-size: 11px !important;
             background: transparent !important;
         }
-
-        /* PREVIOUS & NEXT - transparent background, blue border, blue text (NO GRAY) */
         .col-md-12.text-center .btn-info,
         .col-md-12.text-center a.btn-info,
         .col-md-12.text-center .btn-labeled.btn-info {
@@ -84,8 +75,6 @@
             border-color: #007bff !important;
             color: #007bff !important;
         }
-
-        /* Override inline style attributes that set background/color on btn-info */
         .col-md-12.text-center .btn-info[style],
         .col-md-12.text-center a.btn-info[style],
         .col-md-12.text-center .btn-info[style*="background"],
@@ -96,8 +85,6 @@
             background-color: transparent !important;
             color: #007bff !important;
         }
-
-        /* CANCEL button - PURE RED #FF0000 with white text */
         .col-md-12.text-center .back-btn,
         .col-md-12.text-center a.back-btn {
             background: #FF0000 !important;
@@ -105,14 +92,10 @@
             border-color: #cc0000 !important;
             color: white !important;
         }
-
-        /* Override inline color on cancel */
         .col-md-12.text-center .back-btn[style*="color"],
         .col-md-12.text-center a.back-btn[style*="color"] {
             color: white !important;
         }
-
-        /* Remove any hover/focus shadows and backgrounds */
         .col-md-12.text-center .btn:hover,
         .col-md-12.text-center .btn:focus,
         .col-md-12.text-center .btn:active {
@@ -125,8 +108,6 @@
         .col-md-12.text-center .back-btn:active {
             background: #FF0000 !important;
         }
-
-        /* Fix any overflow issues */
         .col-md-12.text-center {
             overflow-x: auto !important;
             -webkit-overflow-scrolling: touch !important;
@@ -134,124 +115,134 @@
     }
 </style>
 
-<!-- Your existing styles (keep as is) -->
 <style>
     @media (max-width:768px){
-        .main-content{
-            padding:10px !important;
-        }
-        .card{
-            padding:10px !important;
-        }
-        .nav-tabs{
-            width:100% !important;
-            display:flex !important;
-            flex-direction:column !important;
-            border-radius:10px !important;
-        }
-        .nav-tabs .nav-item{
-            width:100% !important;
-            margin-bottom:5px !important;
-        }
-        .nav-tabs .nav-link{
-            font-size:14px !important;
-            text-align:center !important;
-            padding:10px !important;
-        }
-        .row{
-            margin-left:0 !important;
-            margin-right:0 !important;
-        }
-        .col-md-4,
-        .col-md-6,
-        .col-md-12{
-            width:100% !important;
-            max-width:100% !important;
-            flex:0 0 100% !important;
-            padding-left:5px !important;
-            padding-right:5px !important;
-        }
-        .form-group{
-            margin-bottom:12px !important;
-        }
-        .form-control{
-            font-size:13px !important;
-            height:auto !important;
-            min-height:38px !important;
-        }
-        label{
-            font-size:13px !important;
-            font-weight:600 !important;
-        }
-        .infra_options{
-            width:100% !important;
-            margin-bottom:6px !important;
-        }
-        .infra_options label{
-            font-size:13px !important;
-        }
-        .d-flex.flex-wrap{
-            display:block !important;
-        }
-        h4{
-            font-size:18px !important;
-        }
-        h5{
-            font-size:16px !important;
-        }
-        textarea{
-            min-height:100px !important;
-        }
-        #phone_number,
-        #telephone_number{
-            padding-left:80px !important;
-            padding-right:10px !important;
-        }
-        .iti{
-            width:100% !important;
-        }
+        .main-content{ padding:10px !important; }
+        .card{ padding:10px !important; }
+        .nav-tabs{ width:100% !important; display:flex !important; flex-direction:column !important; border-radius:10px !important; }
+        .nav-tabs .nav-item{ width:100% !important; margin-bottom:5px !important; }
+        .nav-tabs .nav-link{ font-size:14px !important; text-align:center !important; padding:10px !important; }
+        .row{ margin-left:0 !important; margin-right:0 !important; }
+        .col-md-4, .col-md-6, .col-md-12{ width:100% !important; max-width:100% !important; flex:0 0 100% !important; padding-left:5px !important; padding-right:5px !important; }
+        .form-group{ margin-bottom:12px !important; }
+        .form-control{ font-size:13px !important; height:auto !important; min-height:38px !important; }
+        label{ font-size:13px !important; font-weight:600 !important; }
+        .infra_options{ width:100% !important; margin-bottom:6px !important; }
+        .infra_options label{ font-size:13px !important; }
+        .d-flex.flex-wrap{ display:block !important; }
+        h4{ font-size:18px !important; }
+        h5{ font-size:16px !important; }
+        textarea{ min-height:100px !important; }
+        #phone_number, #telephone_number{ padding-left:80px !important; padding-right:10px !important; }
+        .iti{ width:100% !important; }
     }
     
-    /* Desktop styles - ensure buttons look normal on desktop */
-    input[type=checkbox] {
-        display: inline-block;
-    }
-    .nav-tabs {
-        background-color: #0068a7 !important;
-        border-radius: 29px !important;
-        padding: 1px !important;
-    }
-    .nav-item.active {
-        background-color: #0e2381 !important;
-        border-radius: 31px !important;
-        height: 100% !important;
-    }
-    .nav-link.active {
-        background-color: #0e2381 !important;
-        border-radius: 31px !important;
-        height: 100% !important;
-    }
-    .nav-justified {
-        display: flex !important;
-        align-items: center !important;
-    }
-    hr {
-        border-top: 1px solid #6c757d !important;
-    }
-    .infra_options {
-        width: calc(100% / 3);
-    }
-    .infra_options .form-group {
-        margin-bottom: 0rem;
-    }
-    .heading {
-        font-weight: bold !important;
-    }
-    .containerpadding {
-        padding: 1rem;
-    }
-    .questionpadding {
-        padding: 5px;
+    input[type=checkbox] { display: inline-block; }
+    .nav-tabs { background-color: #0068a7 !important; border-radius: 29px !important; padding: 1px !important; }
+    .nav-item.active { background-color: #0e2381 !important; border-radius: 31px !important; height: 100% !important; }
+    .nav-link.active { background-color: #0e2381 !important; border-radius: 31px !important; height: 100% !important; }
+    .nav-justified { display: flex !important; align-items: center !important; }
+    hr { border-top: 1px solid #6c757d !important; }
+    .infra_options { width: calc(100% / 3); }
+    .infra_options .form-group { margin-bottom: 0rem; }
+    .heading { font-weight: bold !important; }
+    .containerpadding { padding: 1rem; }
+    .questionpadding { padding: 5px; }
+
+    /* ==============================================================
+       TABLET-ONLY FIX (769px - 1024px) – phone number visibility
+       ============================================================== */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        /* ----- Phone & Telephone inputs: override global padding with !important ----- */
+        #phone_number,
+        #telephone_number {
+            padding-left: 45px !important;      /* reduced to show the number */
+            padding-right: 10px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            height: 40px !important;
+            min-height: 40px !important;
+            line-height: normal !important;
+            font-size: 14px !important;
+            overflow: visible !important;
+            white-space: nowrap !important;
+            text-overflow: clip !important;
+        }
+
+        /* Ensure the intl-tel-input container doesn't clip the number */
+        .iti {
+            width: 100% !important;
+            overflow: visible !important;
+        }
+        .iti__flag-container {
+            overflow: visible !important;
+            padding-left: 0 !important;
+        }
+        .form-group .iti {
+            overflow: visible !important;
+        }
+
+        /* Keep label + asterisk on same line (already fixed) */
+        .form-group label.control-label {
+            display: inline !important;
+            white-space: normal !important;
+            word-break: normal !important;
+            overflow-wrap: break-word !important;
+        }
+        .form-group .error-star,
+        .form-group label + .error-star {
+            display: inline !important;
+            white-space: nowrap !important;
+            margin-left: 2px !important;
+        }
+
+        /* School Policy Tab – two columns */
+        .infra_options {
+            width: calc(100% / 2) !important;
+            padding: 0 5px !important;
+        }
+        .infra_options .form-group {
+            display: flex !important;
+            align-items: center !important;
+            margin-bottom: 6px !important;
+        }
+        .infra_options .form-group input[type="checkbox"] {
+            margin-right: 6px !important;
+            flex-shrink: 0 !important;
+        }
+        .infra_options .form-group label {
+            margin-bottom: 0 !important;
+            font-size: 13px !important;
+            word-break: break-word !important;
+        }
+        .container.containerpadding .infra_options {
+            flex: 0 0 calc(50% - 10px) !important;
+            max-width: calc(50% - 10px) !important;
+            box-sizing: border-box !important;
+        }
+        .container.containerpadding .d-flex.flex-wrap {
+            display: flex !important;
+            flex-wrap: wrap !important;
+        }
+        .container:not(.containerpadding) .infra_options {
+            width: calc(100% / 2) !important;
+        }
+
+        /* General Questions – asterisk stays inline */
+        .col-md-12 .form-group label.control-label.heading {
+            display: inline !important;
+            white-space: normal !important;
+            word-break: normal !important;
+            overflow-wrap: break-word !important;
+        }
+        .col-md-12 .form-group .error-star {
+            display: inline !important;
+            white-space: nowrap !important;
+            margin-left: 2px !important;
+        }
+        .col-md-4, .col-md-6, .col-md-12 {
+            overflow: hidden !important;
+        }
     }
 </style>
 
@@ -464,7 +455,6 @@
         $("#tile-1 .slider").css({ "left": +position.left, "width": width });
         $('#' + (id)).fadeIn();
     }
-    // Validation functions (keep as needed)
     function childName(event) { let value = event.target.value || ''; value = value.replace(/[^a-z A-Z ]/, ''); event.target.value = value; }
     function childfatherName(event) { let value = event.target.value || ''; value = value.replace(/[^a-z A-Z ]/, ''); event.target.value = value; }
     function childmotherName(event) { let value = event.target.value || ''; value = value.replace(/[^a-z A-Z ]/, ''); event.target.value = value; }

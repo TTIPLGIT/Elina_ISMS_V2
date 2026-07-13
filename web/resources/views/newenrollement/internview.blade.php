@@ -51,6 +51,35 @@
     #align1_paginate {
         display: none !important;
     }
+
+    /* ==============================================================
+       TABLET-ONLY: Override desktop table for Android tabs (768px - 1024px)
+       ============================================================== */
+    @media (min-width: 768px) and (max-width: 1024px) {
+        #align1 {
+            table-layout: auto !important;   /* Allow columns to resize */
+            width: 100% !important;
+        }
+
+        /* Force wrapping for Name (col 1) and Contact Number (col 3) */
+        #align1 td:nth-of-type(1),
+        #align1 td:nth-of-type(3) {
+            white-space: normal !important;
+            word-break: break-word !important;
+            overflow-wrap: break-word !important;
+        }
+
+        /* Ensure other cells also wrap if needed (optional) */
+        #align1 td:not(:nth-of-type(1)):not(:nth-of-type(3)) {
+            white-space: normal !important;
+            word-break: break-word !important;
+        }
+
+        /* Keep headers single-line */
+        #align1 th {
+            white-space: nowrap !important;
+        }
+    }
 </style>
 
 <div class="main-content">
