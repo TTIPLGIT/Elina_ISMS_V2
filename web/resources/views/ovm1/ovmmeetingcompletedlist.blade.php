@@ -58,20 +58,19 @@
         table#align tbody td .btn-labeled {
             padding: 0 !important;
             font-size: 10px !important;
-            margin: 2px 2px 2px 0 !important; /* Merge margins to be consistent with other buttons */
+            margin: 2px 2px 2px 0 !important;
             height: 24px !important;
             display: inline-flex !important;
-            align-items: stretch !important; /* Stretch children to fill height */
+            align-items: stretch !important;
             width: auto !important;
             min-width: 60px !important;
             overflow: hidden !important;
             border-radius: 4px !important;
             border: none !important;
-            box-shadow: none !important; /* Remove any shadow */
+            box-shadow: none !important;
             position: relative !important;
         }
         
-        /* Hide the theme-specific gray box artifact */
         table#align tbody td .btn-labeled .btn-label::before,
         table#align tbody td .btn-labeled .btn-label::after {
             display: none !important;
@@ -79,8 +78,8 @@
         }
 
         table#align tbody td .btn-labeled .btn-label {
-            height: auto !important; /* Let stretch handle it */
-            padding: 0 8px !important; /* Force tighter padding */
+            height: auto !important;
+            padding: 0 8px !important;
             background: transparent !important; 
             display: flex !important;
             align-items: center !important;
@@ -332,7 +331,61 @@
             font-size: 14px !important;
         }
     }
-    @media (min-width: 769px) {
+
+    /* ===== TABLET-ONLY (769px - 1024px) – Text Wrapping Fix ===== */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        #align {
+            table-layout: auto !important;   /* allow columns to size based on content */
+            width: 100% !important;
+        }
+
+        #align th, #align td {
+            vertical-align: middle !important;
+            font-size: 13px !important;
+            white-space: normal !important;   /* allow text to wrap */
+            word-break: break-word !important;
+            padding: 8px 10px !important;
+        }
+
+        /* Set reasonable max-widths and allow wrapping */
+        #align th:nth-child(3), #align td:nth-child(3) { /* Child Name */
+            min-width: 120px !important;
+            max-width: 200px !important;
+        }
+        #align th:nth-child(4), #align td:nth-child(4) { /* Enrollment ID */
+            min-width: 100px !important;
+            max-width: 180px !important;
+        }
+        #align th:nth-child(5), #align td:nth-child(5) { /* Status */
+            min-width: 80px !important;
+            max-width: 120px !important;
+        }
+
+        /* Adjust column widths */
+        .is-co-col {
+            width: auto !important;
+        }
+        .status-col {
+            width: auto !important;
+            white-space: normal !important;
+        }
+        .meeting-time-col {
+            width: auto !important;
+            white-space: normal !important;
+        }
+
+        /* Action column – keep buttons compact */
+        #align td:last-child {
+            white-space: nowrap !important;
+        }
+        #align td:last-child .btn {
+            font-size: 12px !important;
+            padding: 4px 8px !important;
+        }
+    }
+
+    /* ===== DESKTOP (min-width: 1025px) – keep as before ===== */
+    @media (min-width: 1025px) {
         #align th, #align td {
             vertical-align: middle !important;
             font-size: 13px !important;
@@ -387,11 +440,6 @@
 
               </div>
 
-
-
-
-
-
               <div class="table-wrapper">
                 <div class="table-responsive">
                   <table class="table table-bordered" id="align">
@@ -401,7 +449,6 @@
                         <th>OVM ID</th>
                         <th>Child Name</th>
                         <th>Enrollment Id</th>
-
                         <th>Status</th>
                         <th>Action</th>
                       </tr>
@@ -525,12 +572,6 @@
                 }
             }
         });
-
-     
-
-    
-        
-     
     });
 </script>
 

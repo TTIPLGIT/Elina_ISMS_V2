@@ -1,10 +1,9 @@
-@extends('layouts.parent')
+@extends(($modules['user_role'] == 'Parent' || $modules['user_role'] == 'Child') ? 'layouts.parent' : 'layouts.adminnav')
 
 @section('content')
 <style>
     input[type=checkbox] {
         display: inline-block;
-
     }
 
     .nav-tabs {
@@ -131,6 +130,72 @@
         transition: border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
         transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
         transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+    }
+
+    /* ===== FIX: increase left padding for phone inputs ===== */
+    #child_contact_phone,
+    #child_alter_phone {
+        padding-left: 110px !important;
+        box-sizing: border-box;
+    }
+
+    /* ===== BUTTON STYLES – consistent size & colors ===== */
+    .btn-labeled {
+        padding: 8px 20px !important;
+        font-size: 14px !important;
+        border-radius: 4px !important;
+        display: inline-block !important;
+        text-align: center !important;
+        vertical-align: middle !important;
+        cursor: pointer !important;
+        margin: 0 4px !important;
+        border: 1px solid transparent !important;
+        transition: all 0.2s !important;
+        line-height: 1.5 !important;
+        min-height: 38px !important;
+    }
+
+    /* Next button – blue */
+    .next-button {
+        background-color: #0000FF !important;
+        border-color: #0068a7 !important;
+        color: #ffffff !important;
+    }
+    .next-button:hover {
+        background-color: #0000FF !important;
+        border-color: #005a8c !important;
+        color: #ffffff !important;
+    }
+
+    /* Back button – gray */
+    .back-button {
+        background-color: #0000FF !important;
+        border-color: #6c757d !important;
+        color: #ffffff !important;
+    }
+    /* .back-button:hover {
+        background-color: #5a6268 !important;
+        border-color: #5a6268 !important;
+        color: #ffffff !important;
+    } */
+
+    /* Cancel button – gray (same as back) */
+    .cancel-button {
+        background-color: #FF0000 !important;
+        border-color: #6c757d !important;
+        color: #ffffff !important;
+    }
+    /* .cancel-button:hover {
+        background-color: #5a6268 !important;
+        border-color: #5a6268 !important;
+        color: #ffffff !important;
+    } */
+
+    /* Override any inline style that might interfere */
+    .btn-labeled.btn-succes {
+        background: green !important;
+        border-color: green !important;
+        color: white !important;
     }
 </style>
 
@@ -314,7 +379,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="control-label" style="font-size: medium;">Contact Phone Number: </label><span class="error-star" style="color:red;">*</span>
-                                                <input class="/*phoneStyle*/ form-control" type="text" id="child_contact_phone" name="child_contact_phone" autocomplete="off" inputmode="numeric" oninput="contactphonenumber(event , 'one')" value="{{ $row['child_contact_phone']}}">
+                                                <input class="form-control" type="text" id="child_contact_phone" name="child_contact_phone" autocomplete="off" inputmode="numeric" oninput="contactphonenumber(event , 'one')" value="{{ $row['child_contact_phone']}}">
                                                 <br><span id='phone_message_one'></span>
                                             </div>
 
@@ -322,7 +387,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="control-label" style="font-size: medium;">Alternative Phone Number: </label>
-                                                <input class="/*phoneStyle*/ form-control default" type="text" id="child_alter_phone" name="child_alter_phone" autocomplete="off" inputmode="numeric" oninput="contactphonenumber(event , 'two')" value="{{ $row['child_alter_phone']}}">
+                                                <input class="form-control default" type="text" id="child_alter_phone" name="child_alter_phone" autocomplete="off" inputmode="numeric" oninput="contactphonenumber(event , 'two')" value="{{ $row['child_alter_phone']}}">
                                                 <br><span id='phone_message_two'></span>
                                             </div>
                                         </div>
@@ -345,13 +410,14 @@
 
                                 <div class="col-md-12 text-center">
                                     @if($row['status'] != 'Submitted')
-                                    <button type="button" onclick="save('saved')" name="status" value="Saved" id="savebutton" class="btn btn-labeled btn-succes" title="Save" style="background: green !important; border-color:green !important; color:white !important">
-                                        <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Save</button>
+                                    <button type="button" onclick="save('saved')" name="status" value="Saved" id="savebutton" class="btn btn-labeled btn-succes" title="Save">
+                                        <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Save
+                                    </button>
                                     @endif
-                                    <a type="button" href="{{ route('newenrollment.index') }}" class="btn btn-labeled responsive-button button-style cancel-button" title="Cancel">
+                                    <a type="button" href="{{ route('newenrollment.index') }}" class="btn btn-labeled cancel-button" title="Cancel">
                                         <i class="fas fa-times"></i><span> Cancel </span>
                                     </a>
-                                    <a type="button" onclick="DoAction('tab2');" class="btn btn-labeled responsive-button next-button button-style" title="Next">
+                                    <a type="button" onclick="DoAction('tab2');" class="btn btn-labeled next-button" title="Next">
                                         <i class="fas fa-arrow-right"></i>
                                         <span> Next </span>
                                     </a>
@@ -421,92 +487,6 @@
                                             </div>
                                         </div>
                                         @endif
-                                        {{-- <div class="col-md-6">
-                                            <div class="form-group">
-
-                                                <label class="control-label" style="font-weight: bold;">Q2.How did you come to know about Elina? </label><span class="error-star" style="color:red;">*</span>
-
-                                                @if($knmabtelina_data !='')
-                                                    @if(in_array("Through Elina's Website",$knmabtelina_data ))
-                                                    <input type="checkbox" id="featured-7" name="how_knowabt_elina[]" value="Through Elina's Website" checked onchange="addval(this)"><label for="featured-7" style="padding: 5px;">Elina Website</label>
-                                                    @else
-                                                    <input type="checkbox" id="featured-7" name="how_knowabt_elina[]" value="Through Elina's Website" onchange="addval(this)"><label for="featured-7" style="padding: 5px;">Elina Website</label>
-                                                    @endif
-
-                                                    <br>
-                                                    @if(in_array('Through Facebook and Social Media',$knmabtelina_data ))
-                                                    <input type="checkbox" id="featured-9" name="how_knowabt_elina[]" value="Through Facebook and Social Media" checked onchange="addval(this)"><label for="featured-9" style="padding: 5px;">Social Media</label>
-                                                    @else
-                                                    <input type="checkbox" id="featured-9" name="how_knowabt_elina[]" value="Through Facebook and Social Media" onchange="addval(this)"><label for="featured-9" style="padding: 5px;">Social Media</label>
-                                                    @endif
-                                                    <br>
-
-                                                    @if(in_array('Through HLC Admission',$knmabtelina_data ))
-                                                    <input type="checkbox" id="featured-8" name="how_knowabt_elina[]" value="Through HLC Admission" checked onchange="addval(this)"><label for="featured-8" style="padding: 5px;">Through HLC</label>
-                                                    @else
-                                                    <input type="checkbox" id="featured-8" name="how_knowabt_elina[]" value="Through HLC Admission" onchange="addval(this)"><label for="featured-8" style="padding: 5px;">Through HLC</label>
-                                                    @endif
-                                                    <br>
-
-                                                    @if(in_array('Through Other School', $knmabtelina_data))
-                                                    <input type="checkbox" id="featured-11" name="how_knowabt_elina[]" value="Through Other School" checked onchange="addval(this)">
-                                                    <label for="featured-11" style="padding: 5px;">Through other schools</label>
-                                                    @else
-                                                    <input type="checkbox" id="featured-11" name="how_knowabt_elina[]" value="Through Other School" onchange="addval(this)">
-                                                    <label for="featured-11" style="padding: 5px;">Through other schools</label>
-                                                    @endif
-                                                    <br>
-
-                                                    @if(in_array('Through Other Parent', $knmabtelina_data))
-                                                    <input type="checkbox" id="featured-12" name="how_knowabt_elina[]" value="Through Other Parent" checked onchange="addval(this)">
-                                                    <label for="featured-12" style="padding: 5px;">Through other parents</label>
-                                                    @else
-                                                    <input type="checkbox" id="featured-12" name="how_knowabt_elina[]" value="Through Other Parent" onchange="addval(this)">
-                                                    <label for="featured-12" style="padding: 5px;">Through other parents</label>
-                                                    @endif
-                                                    <br>
-
-                                                    @if(in_array('From a Friend',$knmabtelina_data))
-                                                    <input type="checkbox" id="featured-5" name="how_knowabt_elina[]" value="From a Friend" checked onchange="addval(this)"><label for="featured-5" style="padding: 5px;">Through friends</label>
-                                                    @else
-                                                    <input type="checkbox" id="featured-5" name="how_knowabt_elina[]" value="From a Friend" onchange="addval(this)"><label for="featured-5" style="padding: 5px;">Through friends</label>
-                                                    @endif
-                                                    <br>
-
-                                                    @if(in_array("Recommended by Child's therapist",$knmabtelina_data ))
-                                                    <input type="checkbox" id="featured-6" name="how_knowabt_elina[]" value="Recommended by Child's therapist" checked Fonchange="addval(this)"><label for="featured-6" style="padding: 5px;">Through my therapists</label>
-                                                    @else
-                                                    <input type="checkbox" id="featured-6" name="how_knowabt_elina[]" value="Recommended by Child's therapist" Fonchange="addval(this)"><label for="featured-6" style="padding: 5px;">Through my therapists</label>
-                                                    @endif
-                                                    <br>
-
-                                                    @if(in_array('others', $knmabtelina_data))
-                                                    <input type="checkbox" id="featured-13" name="how_knowabt_elina[]" value="Others" checked onchange="addval(this)">
-                                                    <label for="featured-13" style="padding: 5px;">Others</label>
-                                                    @else
-                                                    <input type="checkbox" id="featured-13" name="how_knowabt_elina[]" value="Others" onchange="addval(this)">
-                                                    <label for="featured-13" style="padding: 5px;">Others</label>
-                                                    @endif
-                                                    <br>
-                                                    <!--  -->                                                
-                                                    @if(in_array('Through Beyond 8',$knmabtelina_data ))
-                                                    <input type="checkbox" id="featured-10" name="how_knowabt_elina[]" value="Through Beyond 8" checked onchange="addval(this)"><label for="featured-10" style="padding: 5px;">Through Beyond 8</label>
-                                                    @endif
-
-                                                @else
-                                                    <label for="featured-7" style="padding: 5px;display:flex"><input type="checkbox" id="featured-7" name="how_knowabt_elina[]" value="Through Elina's Website" onchange="addval(this)" style="margin-right: 0.3rem!important;">Elina Website</label>
-                                                    <label for="featured-9" style="padding: 5px;display:flex"><input type="checkbox" id="featured-9" name="how_knowabt_elina[]" value="Through Facebook and Social Media" onchange="addval(this)" style="margin-right: 0.3rem!important;">Social Media</label>
-                                                    <label for="featured-8" style="padding: 5px;display:flex"><input type="checkbox" id="featured-8" name="how_knowabt_elina[]" value="Through HLC Admission" onchange="addval(this)" style="margin-right: 0.3rem!important;">Through HLC</label>
-                                                    <label for="featured-11" style="padding: 5px; display:flex"><input type="checkbox" id="featured-11" name="how_knowabt_elina[]" value="Through Other School" onchange="addval(this)" style="margin-right: .3rem!important;">Through other schools</label>
-                                                    <label for="featured-12" style="padding: 5px; display:flex"><input type="checkbox" id="featured-12" name="how_knowabt_elina[]" value="Through Other Parent" onchange="addval(this)" style="margin-right: .3rem!important;">Through other parents</label>
-                                                    <label for="featured-5" style="padding: 5px;display:flex"><input type="checkbox" id="featured-5" name="how_knowabt_elina[]" value="From a Friend" onchange="addval(this)" class="questionpadding" style="margin-right: 0.3rem!important;">Through friends</label>
-                                                    <label for="featured-6" style="padding: 5px;display:flex"><input type="checkbox" id="featured-6" name="how_knowabt_elina[]" value="Recommended by Child's therapist" Fonchange="addval(this)" style="margin-right: 0.3rem!important;">Through my therapists</label>
-                                                    <label for="featured-13" style="padding: 5px; display:flex"><input type="checkbox" id="featured-13" name="how_knowabt_elina[]" value="Others" onchange="addval(this)" style="margin-right: .3rem!important;">Others</label>
-                                                    <!--  -->
-                                                    <!-- <label for="featured-10" style="padding: 5px;display:flex"><input type="checkbox" id="featured-10" name="how_knowabt_elina[]" value="Through Beyond 8" onchange="addval(this)" style="margin-right: 0.3rem!important;">Through Beyond 8</label>                                                 -->
-                                                @endif
-                                            </div>
-                                        </div> --}}
 
                                         @php
                                         // Handle both array (JSON decoded) and single string formats
@@ -547,7 +527,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 text-center">
-                                    <a type="button" class="btn btn-labeled responsive-button button-style back-button" onclick="DoAction('tab1');" title="Back">
+                                    <a type="button" class="btn btn-labeled back-button" onclick="DoAction('tab1');" title="Back">
                                         <i class="fas fa-arrow-left"></i><span> Back </span>
                                     </a>
                                     {{-- @if($row['status'] != 'Submitted')
@@ -555,20 +535,22 @@
                                         <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Submit</a>
                                     @endif --}}
                                     @if($row['status'] != 'Submitted')
-                                    <button type="button" onclick="save('saved')" name="status" value="Saved" id="savebutton" class="btn btn-labeled btn-succes" title="Save" style="background: green !important; border-color:green !important; color:white !important">
-                                        <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Save</button>
+                                    <button type="button" onclick="save('saved')" name="status" value="Saved" id="savebutton" class="btn btn-labeled btn-succes" title="Save">
+                                        <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Save
+                                    </button>
                                     @endif
                                     @if($consent_flag == 0)
-                                    <a type="button" onclick="submit('update')" id="submitbutton" class="btn btn-labeled btn-succes" title="Update" style="background: green !important; border-color:green !important; color:white !important">
-                                        <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Update</a>
+                                    <a type="button" onclick="submit('update')" id="submitbutton" class="btn btn-labeled btn-succes" title="Update">
+                                        <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Update
+                                    </a>
                                     @endif
-                                    <a type="button" href="{{ route('newenrollment.index') }}" class="btn btn-labeled responsive-button button-style cancel-button" title="Cancel">
+                                    <a type="button" href="{{ route('newenrollment.index') }}" class="btn btn-labeled cancel-button" title="Cancel">
                                         <i class="fas fa-times"></i><span> Cancel </span>
                                     </a>
                                     @if($consent_flag == 1)
-                                    <!-- <button class="btn btn-primary" type="reset"><i class="fa fa-undo"></i> Clear</button>&nbsp; -->
-                                    <a type="button" class="btn btn-labeled btn-info" onclick="DoAction('tab3');" title="Next" style="background: #4d94ff !important; border-color:#4d94ff !important; color:white !important">
-                                        <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-right"></i></span>Next</a>
+                                    <a type="button" class="btn btn-labeled next-button" onclick="DoAction('tab3');" title="Next">
+                                        <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-right"></i></span> Next
+                                    </a>
                                     @endif
                                 </div>
                             </section>
@@ -591,13 +573,15 @@
                                 </label>
                             </div>
                             <div class="col-md-12 text-center">
-                                <a type="button" class="btn btn-labeled responsive-button button-style back-button" onclick="DoAction('tab2');" title="Back">
+                                <a type="button" class="btn btn-labeled back-button" onclick="DoAction('tab2');" title="Back">
                                     <i class="fas fa-arrow-left"></i><span> Back </span>
                                 </a>
                                 <a type="button" onclick="submit('Submitted')" id="accept-button" class="btn btn-labeled btn-succes disable-click" title="Submit" style="background: gray !important; color:white !important">
-                                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Submit</a>
+                                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Submit
+                                </a>
                                 <a type="button" onclick="submit('Declined')" id="decline-button" class="btn btn-labeled btn-succes" title="Decline" style="background: red !important; color:white !important">
-                                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Decline </a>
+                                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Decline
+                                </a>
                                 <!-- <button class="btn btn-primary" type="reset" style="height: 32px;"><i class="fa fa-undo"></i> Clear</button>&nbsp; -->
                             </div>
 

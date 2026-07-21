@@ -185,7 +185,17 @@
     </div>
     <div id="executive_report">
         @if(isset($reportURLs['executive_report']) && !empty($reportURLs['executive_report']))
-        <iframe src="{{$reportURLs['executive_report']}}" width="100%" height="600" frameborder="0" id="executive_iframe"></iframe>
+        <!-- Desktop/Android: native iframe PDF viewer -->
+        <div id="executive_iframe_wrap">
+            <iframe src="{{$reportURLs['executive_report']}}" width="100%" height="600" frameborder="0" id="executive_iframe"></iframe>
+        </div>
+        <!-- iOS Safari fallback: show download link (hidden by default, shown by JS) -->
+        <div id="executive_ios_fallback" style="display:none; text-align:center; padding:30px 10px;">
+            <p style="color:#555; margin-bottom:15px;">PDF preview is not supported on this device.<br>Tap the button below to open the report.</p>
+            <a href="{{$reportURLs['executive_report']}}" target="_blank" class="btn btn-labeled" style="background:#036B86;color:#fff;border-color:#036B86;font-weight:600;padding:10px 24px;">
+                <span class="btn-label"><i class="fa fa-file-pdf-o"></i></span> Open Executive Report (PDF)
+            </a>
+        </div>
         @else
         <div class="alert alert-warning">Executive report is not available</div>
         @endif
@@ -193,7 +203,17 @@
 
     <div id="summary_report" style="display: none;">
         @if(isset($reportURLs['summary_report']) && !empty($reportURLs['summary_report']))
-        <iframe src="{{$reportURLs['summary_report']}}" width="100%" height="600" frameborder="0" id="summary_iframe"></iframe>
+        <!-- Desktop/Android: native iframe PDF viewer -->
+        <div id="summary_iframe_wrap">
+            <iframe src="{{$reportURLs['summary_report']}}" width="100%" height="600" frameborder="0" id="summary_iframe"></iframe>
+        </div>
+        <!-- iOS Safari fallback: show download link (hidden by default, shown by JS) -->
+        <div id="summary_ios_fallback" style="display:none; text-align:center; padding:30px 10px;">
+            <p style="color:#555; margin-bottom:15px;">PDF preview is not supported on this device.<br>Tap the button below to open the report.</p>
+            <a href="{{$reportURLs['summary_report']}}" target="_blank" class="btn btn-labeled" style="background:#036B86;color:#fff;border-color:#036B86;font-weight:600;padding:10px 24px;">
+                <span class="btn-label"><i class="fa fa-file-pdf-o"></i></span> Open Detail Report (PDF)
+            </a>
+        </div>
         @else
         <div class="alert alert-warning">Detail report is not available</div>
         @endif
@@ -387,6 +407,25 @@
                 table.style.display = 'none';
             }
         }
+
+        /* ── iOS Safari PDF-in-iframe fix ──────────────────────────────────
+           iOS Safari (WKWebView) cannot render PDF files inside <iframe>.
+           Detect iOS and replace iframes with direct open/download links.
+           This ONLY runs on iOS devices; Desktop and Android are unaffected. */
+        var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) {
+            // Hide iframe wrappers and show the iOS fallback links
+            var execWrap = document.getElementById('executive_iframe_wrap');
+            var execFallback = document.getElementById('executive_ios_fallback');
+            if (execWrap) execWrap.style.display = 'none';
+            if (execFallback) execFallback.style.display = 'block';
+
+            var sumWrap = document.getElementById('summary_iframe_wrap');
+            var sumFallback = document.getElementById('summary_ios_fallback');
+            if (sumWrap) sumWrap.style.display = 'none';
+            if (sumFallback) sumFallback.style.display = 'block';
+        }
+        /* ── end iOS fix ─────────────────────────────────────────────────── */
     });
 </script>
 @endsection

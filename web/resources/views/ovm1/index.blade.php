@@ -666,44 +666,42 @@
                                 </tr>
                               </thead>
                               <tbody>
-
+                                @php $counter = 1; @endphp
                                 @foreach($log as $key => $data)
+                                  @if($row['ovm_meeting_id'] == $data['audit_table_id'])
+                                  <tr>
+                                    <td>{{ $counter++ }}</td>
+                                    <td>{{$data['enrollment_id']}}</td>
+                                    <td>{{$data['child_name']}}</td>
+                                    <td>{{$data['audit_action']}}</td>
+                                    <td>
+                                      <script>
+                                        // Assuming $data['action_date_time'] is in the format "2023-11-09 12:49:12"
+                                        var dateString = "{{ $data['action_date_time'] }}";
 
-                                @if($row['ovm_meeting_id'] == $data['audit_table_id'])
-                                <tr>
-                                  <td>{{$loop->iteration}}</td>
-                                  <td>{{$data['enrollment_id']}}</td>
-                                  <td>{{$data['child_name']}}</td>
-                                  <td>{{$data['audit_action']}}</td>
-                                  <td>
-                                    <script>
-                                      // Assuming $data['action_date_time'] is in the format "2023-11-09 12:49:12"
-                                      var dateString = "{{ $data['action_date_time'] }}";
+                                        // Convert to a format recognized by JavaScript Date
+                                        var formattedDateString = dateString.replace(/-/g, '/') + ' UTC';
+                                        var utcDate = new Date(formattedDateString);
 
-                                      // Convert to a format recognized by JavaScript Date
-                                      var formattedDateString = dateString.replace(/-/g, '/') + ' UTC';
-                                      var utcDate = new Date(formattedDateString);
+                                        // Format the date for IST
+                                        var options = {
+                                          timeZone: 'Asia/Kolkata',
+                                          year: 'numeric',
+                                          month: 'numeric',
+                                          day: 'numeric',
+                                          hour: 'numeric',
+                                          minute: 'numeric',
+                                          second: 'numeric'
+                                        };
+                                        var istDate = new Intl.DateTimeFormat('en-IN', options).format(utcDate);
+                                        istDate = istDate.replace(/\b(?:am|pm)\b/gi, match => match.toUpperCase());
 
-                                      // Format the date for IST
-                                      var options = {
-                                        timeZone: 'Asia/Kolkata',
-                                        year: 'numeric',
-                                        month: 'numeric',
-                                        day: 'numeric',
-                                        hour: 'numeric',
-                                        minute: 'numeric',
-                                        second: 'numeric'
-                                      };
-                                      var istDate = new Intl.DateTimeFormat('en-IN', options).format(utcDate);
-                                      istDate = istDate.replace(/\b(?:am|pm)\b/gi, match => match.toUpperCase());
-
-                                      document.write(istDate);
-                                    </script>
-
-                                  </td>
-                                  <td>{{$data['role_name']}}</td>
-                                </tr>
-                                @endif
+                                        document.write(istDate);
+                                      </script>
+                                    </td>
+                                    <td>{{$data['role_name']}}</td>
+                                  </tr>
+                                  @endif
                                 @endforeach
                               </tbody>
                             </table>

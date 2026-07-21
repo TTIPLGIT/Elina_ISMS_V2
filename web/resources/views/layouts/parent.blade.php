@@ -77,10 +77,22 @@
             border-color: #15B99E !important;
             color: white !important;
         }
-
-        @media only screen and (max-width: 768px) {
-            .mdi-bell-outline:before {
+          .mdi-bell-outline:before {
                 color: black;
+            }
+            .navbar .navbar-menu-wrapper .navbar-nav .nav-item.nav-profile .nav-link .nav-profile-text p {
+                color: black !important;
+            }
+            .navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .dropdown-menu {
+                left: auto !important;
+            }
+
+        @media only screen and (min-width: 991px) {
+            .mdi-bell-outline:before {
+                color: white;
+            }
+            .navbar .navbar-menu-wrapper .navbar-nav .nav-item.nav-profile .nav-link .nav-profile-text p {
+                color: white !important;
             }
         }
 

@@ -47,6 +47,14 @@
       height: 150px !important;
     }
 
+    /* .modal-backdrop.show
+    {
+      display: none !important;
+    } */
+
+    /* #invite{
+      display: none;
+    } */
     .commentslabel {
       font-weight: 800;
       color: #34395e;
@@ -75,37 +83,7 @@
       color: #fff !important;
     }
 
-    /* ===== FULL‑WIDTH MODAL (no left/right spacing) ===== */
-    .modal-fullscreen-margin .modal-dialog {
-      margin: 2rem 0;
-      max-width: 100%;
-      width: 100%;
-    }
-
-    @media (max-width: 576px) {
-      .modal-fullscreen-margin .modal-dialog {
-        margin: 1rem 0;
-      }
-    }
-
-    .modal-fullscreen-margin .modal-content {
-      min-height: 70vh;
-      max-height: calc(100vh - 4rem);
-      overflow: hidden;
-      border-radius: 0;
-    }
-
-    .modal-fullscreen-margin .modal-body {
-      overflow-y: auto;
-      max-height: calc(100vh - 10rem);
-      padding: 1.5rem;
-    }
-
-    .modal-fullscreen-margin .modal-header {
-      border-radius: 0;
-    }
-
-    /* Mobile responsive table (unchanged) */
+    /* Mobile Responsive Table styling */
     @media (max-width: 767px) {
 
       #tableList,
@@ -396,7 +374,7 @@
         @php $cuModaliteration1 = $cuModaliteration1 + 1;
         $extra = 0 @endphp
         <div class="modal fade" id="cuModal{{$row['activity_description_id']}}">
-          <div class="modal-dialog modal-xl modal-fullscreen-margin">
+          <div class="modal-dialog modal-xl">
             <div class="modal-content">
               <div class="main-contents">
                 <section class="section">
@@ -421,39 +399,33 @@
                               <input class="form-control" type="text" value="{{$row['description']}}" readonly>
                             </div>
                           </div>
-
-                          <!-- ===== UPDATED LAYOUT: Video Link on its own row, Comments on its own row ===== -->
-                          <div class="col-12">
-                            <div class="form-group">
-                              <label class="control-label">Video Link</label>
-                              <div class="multi-field-wrapper">
-                                <div class="multi-fields">
-                                  @if($video_link != [])
-                                    @foreach($video_link as $data2)
-                                      @if($row['parent_video_upload_id'] == $data2['parent_video_upload_id'])
-                                        @php $extra = 1 @endphp
-                                        <div class="multi-field" style="display: flex;margin-bottom: 5px;">
-                                          <input class="form-control" type="url" id="video_link{{$row['parent_video_upload_id']}}"
-                                            name="video_link[{{$row['parent_video_upload_id']}}][]" autocomplete="off" required
-                                            value="{{$data2['video_link']}}">
-                                          <button class="remove-field btn btn-danger pull-right" id="remove-f" type='button'>X
-                                          </button>
-                                          &nbsp;
-                                        </div>
-                                      @endif
-                                    @endforeach
-                                  @else
-                                    @php $extra = 1 @endphp
-                                    <div class="multi-field" style="display: flex;margin-bottom: 5px;">
-                                      <input class="form-control" type="url" id="video_link{{$row['parent_video_upload_id']}}"
-                                        name="video_link[{{$row['parent_video_upload_id']}}][]" autocomplete="off" required>
-                                      <button class="remove-field btn btn-danger pull-right" id="remove-f" type='button'>X
-                                      </button>
+                          <div class="col-12" style="display: flex;">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label class="control-label">Video Link</label>
+                                <div class="multi-field-wrapper">
+                                  <div class="multi-fields">
+                                    <!-- <div class="multi-field" style="display: flex;margin-bottom: 5px;">
+                                      <input class="form-control" type="url" id="video_link{{$row['parent_video_upload_id']}}" name="video_link[{{$row['parent_video_upload_id']}}][]" autocomplete="off" required>
+                                      <button class="remove-field btn btn-danger pull-right" id="remove-f" type='button'>X </button>
                                       &nbsp;
-                                    </div>
-                                  @endif
-                                  @if($extra == 0)
-                                    @if(!in_array($vidAll, explode(',', $row['parent_video_upload_id'])))
+                                    </div> -->
+                                    @if($video_link != [])
+                                      @foreach($video_link as $data2)
+                                        @if($row['parent_video_upload_id'] == $data2['parent_video_upload_id'])
+                                          @php $extra = 1 @endphp
+                                          <div class="multi-field" style="display: flex;margin-bottom: 5px;">
+                                            <input class="form-control" type="url" id="video_link{{$row['parent_video_upload_id']}}"
+                                              name="video_link[{{$row['parent_video_upload_id']}}][]" autocomplete="off" required
+                                              value="{{$data2['video_link']}}">
+                                            <button class="remove-field btn btn-danger pull-right" id="remove-f" type='button'>X
+                                            </button>
+                                            &nbsp;
+                                          </div>
+                                        @endif
+                                      @endforeach
+                                    @else
+                                      @php $extra = 1 @endphp
                                       <div class="multi-field" style="display: flex;margin-bottom: 5px;">
                                         <input class="form-control" type="url" id="video_link{{$row['parent_video_upload_id']}}"
                                           name="video_link[{{$row['parent_video_upload_id']}}][]" autocomplete="off" required>
@@ -462,52 +434,63 @@
                                         &nbsp;
                                       </div>
                                     @endif
-                                  @endif
+                                    @if($extra == 0)
+                                      @if(!in_array($vidAll, explode(',', $row['parent_video_upload_id'])))
+                                        <div class="multi-field" style="display: flex;margin-bottom: 5px;">
+                                          <input class="form-control" type="url" id="video_link{{$row['parent_video_upload_id']}}"
+                                            name="video_link[{{$row['parent_video_upload_id']}}][]" autocomplete="off" required>
+                                          <button class="remove-field btn btn-danger pull-right" id="remove-f" type='button'>X
+                                          </button>
+                                          &nbsp;
+                                        </div>
+                                      @endif
+                                    @endif
+                                  </div>
+                                  <button type="button" class="add-field btn btn-success">Add video</button>
                                 </div>
-                                <button type="button" class="add-field btn btn-success">Add video</button>
+                                <div style="color: rgb(246, 15, 15); display: block;margin: 5px 0px 0px 0px;">Google Drive
+                                  Link Only</div>
                               </div>
-                              <div style="color: rgb(246, 15, 15); display: block;margin: 5px 0px 0px 0px;">Google Drive
-                                Link Only</div>
+                            </div>
+                            <input type="hidden" id="activity_description_id"
+                              name="activity_description_id[{{$row['parent_video_upload_id']}}]"
+                              value="{{$row['activity_description_id']}}">
+                            <input type="hidden" id="parent_video_upload_id"
+                              name="parent_video_upload_id[{{$row['parent_video_upload_id']}}]"
+                              value="{{$row['parent_video_upload_id']}}">
+                            <input type="hidden" id="current_status" name="current_status[{{$row['parent_video_upload_id']}}]"
+                              value="{{$row['current_status']}}">
+                            <input type="hidden" id="save_flag" name="save_flag[{{$row['parent_video_upload_id']}}]"
+                              value="{{$row['save_flag']}}">
+
+
+                            @php
+                              $currentComment = "";
+                              if (isset($comments) && is_array($comments)) {
+                                  for ($i = count($comments) - 1; $i >= 0; $i--) {
+                                      $note_data = $comments[$i];
+                                      if ($row['parent_video_upload_id'] == $note_data['parent_video_upload_id'] && 
+                                         (($note_data['active_status'] ?? '') == 'New' || ($note_data['active_status'] ?? '') == 'Saved')) {
+                                          $currentComment = $note_data['comments'];
+                                          break;
+                                      }
+                                  }
+                              }
+                            @endphp
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label class="control-label">Comments</label>
+                                <textarea class="form-control" name="comments[{{$row['parent_video_upload_id']}}]"
+                                  id="comments_{{$row['parent_video_upload_id']}}">{{ $currentComment }}</textarea>
+                              </div>
                             </div>
                           </div>
+                        </div>
 
-                          <!-- Hidden fields (unchanged) -->
-                          <input type="hidden" id="activity_description_id"
-                            name="activity_description_id[{{$row['parent_video_upload_id']}}]"
-                            value="{{$row['activity_description_id']}}">
-                          <input type="hidden" id="parent_video_upload_id"
-                            name="parent_video_upload_id[{{$row['parent_video_upload_id']}}]"
-                            value="{{$row['parent_video_upload_id']}}">
-                          <input type="hidden" id="current_status" name="current_status[{{$row['parent_video_upload_id']}}]"
-                            value="{{$row['current_status']}}">
-                          <input type="hidden" id="save_flag" name="save_flag[{{$row['parent_video_upload_id']}}]"
-                            value="{{$row['save_flag']}}">
-
-                          <!-- Comments row -->
-                          <div class="col-12">
-                            <div class="form-group">
-                              <label class="control-label">Comments</label>
-                              @php
-                                $currentComment = "";
-                                if (isset($comments) && is_array($comments)) {
-                                    for ($i = count($comments) - 1; $i >= 0; $i--) {
-                                        $note_data = $comments[$i];
-                                        if ($row['parent_video_upload_id'] == $note_data['parent_video_upload_id'] && 
-                                           (($note_data['active_status'] ?? '') == 'New' || ($note_data['active_status'] ?? '') == 'Saved')) {
-                                            $currentComment = $note_data['comments'];
-                                            break;
-                                        }
-                                    }
-                                }
-                              @endphp
-                              <textarea class="form-control" name="comments[{{$row['parent_video_upload_id']}}]"
-                                id="comments_{{$row['parent_video_upload_id']}}" rows="4">{{ $currentComment }}</textarea>
-                            </div>
-                          </div>
-
-                        </div> <!-- /card-body -->
 
                         <div class="col-md-12  text-center" style="padding-top: 1rem;">
+
+
                           <!-- Submit All -->
                           <a type="button" onclick="saveBulk('Submit','{{$row['activity_description_id']}}', '{{$row['activity_name']}}')"
                             class="btn btn-labeled btn-submit-orange" title="Submit All">
@@ -530,12 +513,12 @@
                             Save
                           </a>
 
-                          <!-- Back -->
+                          <!-- Back (existing red color stays) -->
                           <a type="button" data-dismiss="modal" class="btn btn-labeled back-button" title="Back">
                             <i class="fas fa-arrow-left"></i> Back
                           </a>
-                        </div>
 
+                        </div>
                         <div class="col-md-12 text-center" style="padding-top: 1rem;">
                           @if ($loop->iteration > 1)
                             <a type="button" class="btn btn-labeled btn-info"
@@ -558,10 +541,7 @@
                             </a>
                           @endif
                         </div>
-
-                      </div> <!-- /row -->
-                    </div> <!-- /section-body -->
-                  </div> <!-- /modal-body -->
+                      </div>
                 </section>
               </div>
             </div>
@@ -835,7 +815,7 @@
 
       <!-- Edit/Resend Modal with Comments from Coordinator (same style as Previous Notes) -->
       <div class="modal fade editModal{{$row['activity_description_id']}}" id="editModal{{$row['parent_video_upload_id']}}">
-        <div class="modal-dialog modal-xl modal-fullscreen-margin">
+        <div class="modal-dialog modal-xl">
           <div class="modal-content">
             <div class="main-contents">
               <section class="section">

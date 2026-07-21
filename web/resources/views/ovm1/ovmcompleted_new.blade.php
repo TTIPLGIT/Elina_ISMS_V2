@@ -110,7 +110,37 @@
         display: none !important;
     }
 
-    /* ========== MOBILE SPECIFIC OVERRIDES ========== */
+    /* ========== MOBILE & TABLET FIX ========== */
+    @media (max-width: 1024px) {
+        .nav {
+            overflow-x: auto !important;
+            overflow-y: hidden;
+            white-space: nowrap;
+            justify-content: flex-start !important;
+            padding: 0 10px;
+            gap: 4px;
+            border-radius: 30px;
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            -webkit-overflow-scrolling: touch;
+        }
+        .nav-item {
+            padding: 12px 16px !important;
+            font-size: 0.8rem !important;
+            margin: 0 4px !important;
+            flex-shrink: 0;
+            display: inline-block;
+        }
+        .nav-indicator {
+            height: 4px;
+            bottom: 0;
+        }
+        /* Ensure indicator stays within the scrollable container */
+        .nav {
+            position: relative;
+        }
+    }
+
     @media (max-width: 768px) {
         /* Reduce container side spacing */
         .main-content {
@@ -355,7 +385,6 @@
                                                 <tr>
                                                     <td width="35%" style="text-align:left !important;height: 200px;">{!! $question['question'] !!}<span class="tooltiptext1">{!! $question['question_description'] !!}</span></td>
                                                     @if(isset($question['readonly']) && $question['readonly'] == 1)
-                                                    {{-- <td style="text-align:left !important;" class="td_{{ $question['assigned_value']}}">{!! $question['prefilled_data'] !!} <input type="hidden" class="{{ $question['assigned_value']}}" name="que[{{$question['question_column_name']}}]"></td> --}}
                                                     <td><textarea class="form-control default instructions_textarea_readonly {{ $question['assigned_value']}}" id="{{$question['question_column_name']}}" name="que[{{$question['question_column_name']}}]" disabled> {!! $question['prefilled_data'] !!}</textarea></td>
                                                     @else
                                                     <td><textarea class="form-control default instructions_textarea {{ $question['assigned_value']}}" id="{{$question['question_column_name']}}" name="que[{{$question['question_column_name']}}]" {{ ($rows[0]['status']=="Submitted") || ($rows[0]['status']=="Completed") && $rolename !='IS Head'? "disabled" : "" }}>{{ $question['prefilled_data']}}</textarea></td>
@@ -410,15 +439,23 @@
             item.removeAttribute('style');
         });
 
-        indicator.style.width = `${el.offsetWidth}px`;
-        indicator.style.left = `${el.offsetLeft}px`;
+        // Get the nav container to compute relative positions
+        const nav = el.closest('.nav');
+        const navRect = nav.getBoundingClientRect();
+        const elRect = el.getBoundingClientRect();
+
+        // Calculate left position relative to the nav
+        const leftPos = elRect.left - navRect.left + nav.scrollLeft;
+        const width = elRect.width;
+
+        indicator.style.width = `${width}px`;
+        indicator.style.left = `${leftPos}px`;
         indicator.style.backgroundColor = el.getAttribute('active-color');
 
         el.classList.add('is-active');
         el.style.color = el.getAttribute('active-color');
 
         var dataid = el.getAttribute('data-id');
-        // console.log(dataid);
         if (dataid == 7) {
             $('#nextButton').hide();
         } else {
@@ -438,24 +475,44 @@
             left: 0,
             behavior: 'smooth'
         });
-        // document.getElementById('scrollSession').scrollIntoView({
-        //     behavior: 'smooth'
-        // });
 
         $('.navcard').hide();
         $('.navcard' + dataid).show();
     }
 
-
+    // Initial setup
     items.forEach((item, index) => {
         item.addEventListener('click', e => {
             handleIndicator(e.target);
         });
-        item.classList.contains('is-active') && handleIndicator(item);
+        // If the item is already active, we set the indicator on load
+        if (item.classList.contains('is-active')) {
+            // We'll call handleIndicator after a small delay to ensure layout is complete
+            setTimeout(() => handleIndicator(item), 100);
+        }
+    });
+
+    // Handle resize to reposition indicator
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            const activeItem = document.querySelector('.nav-item.is-active');
+            if (activeItem) {
+                handleIndicator(activeItem);
+            }
+        }, 200);
+    });
+
+    // Also on load, ensure indicator is set correctly
+    window.addEventListener('load', function() {
+        const activeItem = document.querySelector('.nav-item.is-active');
+        if (activeItem) {
+            handleIndicator(activeItem);
+        }
     });
 
     // Next and Prev
-
     const prevButton = document.getElementById('prevButton');
     const nextButton = document.getElementById('nextButton');
 
@@ -477,20 +534,8 @@
 
     prevButton.addEventListener('click', handlePrevious);
     nextButton.addEventListener('click', handleNext);
-
-    // ...
 </script>
 <script>
-    // $(document).ready(function() {
-    //     var table = $('.myTable').DataTable({
-    //         "pageLength": 5,
-    //         "dom": '<"top"rt<"bottom"ip>',
-    //         "language": {
-    //             "info": ""
-    //         },
-    //         "ordering": false,
-    //     });
-    // });
     $(document).on('click', '.paginate_button:not(.disabled)', function() {
         window.scroll({
             top: 0,
@@ -559,13 +604,6 @@
             }
         });
     });
-
-    // $('#saved').click(function() {
-    //     $("#saved").addClass("disable-click");
-    //     $('.loader').show();
-    //     tabledestroy();
-    //     document.getElementById('ovmisc').submit();
-    // });
 </script>
 <script>
     $(document).ready(function() {

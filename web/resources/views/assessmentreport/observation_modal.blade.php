@@ -14,6 +14,22 @@
         overflow: hidden;
     }
 
+    /* iOS Safari: position:fixed is unreliable inside overflow:hidden parents.
+       On iOS we switch to a full-screen overlay approach. */
+    @supports (-webkit-touch-callout: none) {
+        .popup {
+            position: fixed !important;
+            top: 5% !important;
+            left: 2% !important;
+            right: 2% !important;
+            width: 96% !important;
+            height: 85% !important;
+            max-height: 85vh !important;
+            transform: none !important;
+            overflow: hidden;
+        }
+    }
+
     .popup-header {
         background-color: #f0f0f0;
         padding: 5px;
@@ -33,6 +49,7 @@
     .popup-body {
         height: calc(100% - 30px);
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
         padding: 10px;
         width: 100%;
     }
@@ -185,15 +202,34 @@
         offsetX = e.clientX - popup.offsetLeft;
         offsetY = e.clientY - popup.offsetTop;
         document.body.classList.add('dragging');
-
         document.addEventListener('mousemove', dragPopup);
         document.addEventListener('mouseup', stopDrag);
     });
+
+    /* iOS / touch: add touchstart alongside mousedown */
+    header.addEventListener('touchstart', function(e) {
+        var touch = e.touches[0];
+        isDragging = true;
+        offsetX = touch.clientX - popup.offsetLeft;
+        offsetY = touch.clientY - popup.offsetTop;
+        document.body.classList.add('dragging');
+        document.addEventListener('touchmove', dragPopupTouch, { passive: false });
+        document.addEventListener('touchend', stopDragTouch);
+    }, { passive: true });
 
     function dragPopup(e) {
         if (isDragging) {
             popup.style.left = `${e.clientX - offsetX}px`;
             popup.style.top = `${e.clientY - offsetY}px`;
+        }
+    }
+
+    function dragPopupTouch(e) {
+        if (isDragging) {
+            e.preventDefault(); /* Prevent page scroll while dragging */
+            var touch = e.touches[0];
+            popup.style.left = `${touch.clientX - offsetX}px`;
+            popup.style.top = `${touch.clientY - offsetY}px`;
         }
     }
 
@@ -203,12 +239,26 @@
         document.removeEventListener('mousemove', dragPopup);
     }
 
-    // Resize functionality
+    function stopDragTouch() {
+        isDragging = false;
+        document.body.classList.remove('dragging');
+        document.removeEventListener('touchmove', dragPopupTouch);
+        document.removeEventListener('touchend', stopDragTouch);
+    }
+
+    // Resize functionality (mouse)
     resizeHandle.addEventListener('mousedown', function(e) {
         e.preventDefault();
         window.addEventListener('mousemove', resizePopup);
         window.addEventListener('mouseup', stopResize);
     });
+
+    /* iOS / touch: resize via touch */
+    resizeHandle.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        window.addEventListener('touchmove', resizePopupTouch, { passive: false });
+        window.addEventListener('touchend', stopResizeTouch);
+    }, { passive: false });
 
     function resizePopup(e) {
         const newWidth = e.clientX - popup.getBoundingClientRect().left;
@@ -217,9 +267,23 @@
         popup.style.height = `${newHeight}px`;
     }
 
+    function resizePopupTouch(e) {
+        e.preventDefault();
+        var touch = e.touches[0];
+        const newWidth = touch.clientX - popup.getBoundingClientRect().left;
+        const newHeight = touch.clientY - popup.getBoundingClientRect().top;
+        popup.style.width = `${newWidth}px`;
+        popup.style.height = `${newHeight}px`;
+    }
+
     function stopResize() {
         window.removeEventListener('mousemove', resizePopup);
         window.removeEventListener('mouseup', stopResize);
+    }
+
+    function stopResizeTouch() {
+        window.removeEventListener('touchmove', resizePopupTouch);
+        window.removeEventListener('touchend', stopResizeTouch);
     }
 
     function toggleSelectAll(source) {

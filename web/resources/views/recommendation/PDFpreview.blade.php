@@ -276,7 +276,17 @@
 
         <!-- PDF Viewer -->
         <div class="pdf-viewer-container">
+        <!-- Desktop/Android: native iframe PDF viewer -->
+        <div id="recommendation_iframe_wrap">
             <iframe src="{{ $viewPDF }}" width="100%" height="600" frameborder="0"></iframe>
+        </div>
+        <!-- iOS Safari fallback: show download link (hidden by default, shown by JS) -->
+        <div id="recommendation_ios_fallback" style="display:none; text-align:center; padding:30px 10px;">
+            <p style="color:#555; margin-bottom:15px;">PDF preview is not supported on this device.<br>Tap the button below to open the report.</p>
+            <a href="{{ $viewPDF }}" target="_blank" class="btn btn-labeled" style="background:#036B86;color:#fff;border-color:#036B86;font-weight:600;padding:10px 24px;">
+                <span class="btn-label"><i class="fa fa-file-pdf-o"></i></span> Open Recommendation Report (PDF)
+            </a>
+        </div>
         </div>
 
         <!-- Email Preview Drawer -->
@@ -406,14 +416,23 @@
     });
 </script>
 <script>
-    if (window.history && window.history.pushState) {
-        var currentUrl = window.location.href.split('#')[0];
-        window.history.pushState({ url: currentUrl }, null, currentUrl);
-        window.onpopstate = function(event) {
-            if (event.state && event.state.url === currentUrl) {
-                location.reload();
-            }
-        };
-    }
+        // iOS Safari PDF preview fix (same as assessment report)
+        var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) {
+            var recWrap = document.getElementById('recommendation_iframe_wrap');
+            var recFallback = document.getElementById('recommendation_ios_fallback');
+            if (recWrap) recWrap.style.display = 'none';
+            if (recFallback) recFallback.style.display = 'block';
+        }
+        // Existing code continues
+        if (window.history && window.history.pushState) {
+            var currentUrl = window.location.href.split('#')[0];
+            window.history.pushState({ url: currentUrl }, null, currentUrl);
+            window.onpopstate = function(event) {
+                if (event.state && event.state.url === currentUrl) {
+                    location.reload();
+                }
+            };
+        }
 </script>
 @endsection

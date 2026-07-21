@@ -61,7 +61,110 @@
     }
 
     /* ==========================================
-       MOBILE RESPONSIVE – FORM PAGES
+       SERVICE TABLE – BASE LAYOUT (Desktop)
+       ========================================== */
+    #serviceTable {
+        table-layout: fixed;
+        width: 100%;
+        font-size: 14px;
+    }
+    #serviceTable th,
+    #serviceTable td {
+        padding: 8px 6px;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+    /* Column widths (desktop) */
+    #serviceTable th:nth-child(1),
+    #serviceTable td:nth-child(1) {
+        width: 5%;   /* SI no */
+    }
+    #serviceTable th:nth-child(2),
+    #serviceTable td:nth-child(2) {
+        width: 40%;  /* Service Briefing – large enough to show full text */
+        white-space: normal;        /* allow wrapping if needed */
+        word-break: break-word;
+    }
+    #serviceTable th:nth-child(3),
+    #serviceTable td:nth-child(3) {
+        width: 10%;  /* QTY */
+    }
+    #serviceTable th:nth-child(4),
+    #serviceTable td:nth-child(4) {
+        width: 15%;  /* Rate */
+    }
+    #serviceTable th:nth-child(5),
+    #serviceTable td:nth-child(5) {
+        width: 15%;  /* Amount */
+    }
+    #serviceTable th:nth-child(6),
+    #serviceTable td:nth-child(6) {
+        width: 15%;  /* Action */
+    }
+
+    /* Make select fill the cell and show full text */
+    #serviceTable td:nth-child(2) select {
+        width: 100%;
+        min-width: 140px; /* ensures enough room for average service names */
+        box-sizing: border-box;
+    }
+
+    /* ==========================================
+       TABLET (769px - 1024px)
+       ========================================== */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        .table-responsive-wrapper {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch;
+            margin: 0 -5px;
+            padding: 0 5px;
+        }
+        #serviceTable {
+            min-width: 100% !important;
+        }
+        /* Slightly adjust widths for better fit */
+        #serviceTable th:nth-child(1),
+        #serviceTable td:nth-child(1) {
+            width: 4% !important;
+        }
+        #serviceTable th:nth-child(2),
+        #serviceTable td:nth-child(2) {
+            width: 42% !important;
+        }
+        #serviceTable th:nth-child(3),
+        #serviceTable td:nth-child(3) {
+            width: 10% !important;
+        }
+        #serviceTable th:nth-child(4),
+        #serviceTable td:nth-child(4) {
+            width: 15% !important;
+        }
+        #serviceTable th:nth-child(5),
+        #serviceTable td:nth-child(5) {
+            width: 15% !important;
+        }
+        #serviceTable th:nth-child(6),
+        #serviceTable td:nth-child(6) {
+            width: 14% !important;
+        }
+        /* Allow text wrapping only for Service Briefing */
+        #serviceTable td:nth-child(2) {
+            white-space: normal !important;
+            word-break: break-word !important;
+        }
+        /* Other columns stay nowrap */
+        #serviceTable td:not(:nth-child(2)) {
+            white-space: nowrap !important;
+        }
+        /* Ensure select fills cell */
+        #serviceTable td:nth-child(2) select {
+            width: 100%;
+            min-width: 120px;
+        }
+    }
+
+    /* ==========================================
+       MOBILE (max-width: 768px)
        ========================================== */
     @media (max-width: 768px) {
         .main-content,
@@ -87,7 +190,6 @@
         .form-group {
             margin-bottom: 15px !important;
         }
-
         .form-group label {
             display: block !important;
             width: 100% !important;
@@ -95,19 +197,17 @@
             margin-bottom: 5px !important;
             font-weight: 600 !important;
         }
-
         .form-control,
         .form-control[readonly] {
             width: 100% !important;
             height: 40px !important;
             font-size: 14px !important;
         }
-
         select.form-control {
             height: 40px !important;
         }
 
-        /* BUTTONS – INLINE ON MOBILE */
+        /* BUTTONS – inline on mobile */
         .row.text-center .col-md-12,
         .row .col-lg-12.text-center {
             display: flex !important;
@@ -115,7 +215,6 @@
             justify-content: center !important;
             gap: 6px !important;
         }
-
         .row.text-center .col-md-12 .btn,
         .row .col-lg-12.text-center .btn {
             width: auto !important;
@@ -129,37 +228,78 @@
             font-size: 20px !important;
         }
 
-        /* ==========================================
-           SERVICE TABLE – IMPROVED FOR MOBILE
-           ========================================== */
+        /* SERVICE TABLE – mobile */
         .table-responsive-wrapper {
             overflow-x: auto !important;
             -webkit-overflow-scrolling: touch;
-            margin: 0 -5px; /* small negative margin to align with card padding */
+            margin: 0 -5px;
             padding: 0 5px;
         }
 
         #serviceTable {
-            min-width: 600px !important;  /* ensures all columns are visible when scrolling */
+            min-width: 700px !important;   /* ensures horizontal scroll */
+            table-layout: fixed !important;
             width: 100% !important;
             font-size: 13px !important;
         }
 
+        /* Redistribute widths: reduce SI no, increase Service Briefing */
+        #serviceTable th:nth-child(1),
+        #serviceTable td:nth-child(1) {
+            width: 4% !important;   /* SI no reduced */
+        }
+        #serviceTable th:nth-child(2),
+        #serviceTable td:nth-child(2) {
+            width: 48% !important;  /* Service Briefing gets more space */
+            white-space: normal !important;
+            word-break: break-word !important;
+        }
+        #serviceTable th:nth-child(3),
+        #serviceTable td:nth-child(3) {
+            width: 10% !important;
+        }
+        #serviceTable th:nth-child(4),
+        #serviceTable td:nth-child(4) {
+            width: 14% !important;
+        }
+        #serviceTable th:nth-child(5),
+        #serviceTable td:nth-child(5) {
+            width: 14% !important;
+        }
+        #serviceTable th:nth-child(6),
+        #serviceTable td:nth-child(6) {
+            width: 10% !important;  /* Action reduced */
+        }
+
+        /* Cell padding and font */
         #serviceTable th,
         #serviceTable td {
             padding: 6px 4px !important;
             white-space: nowrap !important;
         }
+        #serviceTable td:nth-child(2) {
+            white-space: normal !important; /* allow wrapping for service briefing cell */
+        }
+        /* Other cells stay nowrap */
+        #serviceTable td:not(:nth-child(2)) {
+            white-space: nowrap !important;
+        }
 
+        /* Form controls inside table */
         #serviceTable .form-control {
             height: 34px !important;
             font-size: 13px !important;
             padding: 2px 4px !important;
             min-width: 50px !important;
         }
-
         #serviceTable select.form-control {
-            min-width: 80px !important;
+            min-width: 100px !important;
+            width: 100% !important;
+        }
+        /* Ensure the select in service briefing is wide enough */
+        #serviceTable td:nth-child(2) select {
+            min-width: 140px !important;
+            width: 100% !important;
         }
 
         #serviceTable .btn {
@@ -171,88 +311,6 @@
         #addServiceButton {
             width: 100% !important;
             margin-top: 8px !important;
-        }
-    }
-
-    /* ==========================================
-       TABLET-ONLY (769px - 1024px) – optimise column widths
-       ========================================== */
-    @media (min-width: 769px) and (max-width: 1024px) {
-        .table-responsive-wrapper {
-            overflow-x: auto !important;
-            -webkit-overflow-scrolling: touch;
-            margin: 0 -5px;
-            padding: 0 5px;
-        }
-
-        #serviceTable {
-            table-layout: fixed !important;   /* enforce column widths */
-            width: 100% !important;
-            font-size: 13px !important;
-            min-width: 100% !important;       /* remove horizontal scroll unless needed */
-        }
-
-        /* Assign widths to each column */
-        #serviceTable th:nth-child(1),
-        #serviceTable td:nth-child(1) {
-            width: 5% !important;   /* SI no */
-        }
-        #serviceTable th:nth-child(2),
-        #serviceTable td:nth-child(2) {
-            width: 40% !important;  /* Service Briefing – wide enough to wrap */
-        }
-        #serviceTable th:nth-child(3),
-        #serviceTable td:nth-child(3) {
-            width: 10% !important;  /* QTY */
-        }
-        #serviceTable th:nth-child(4),
-        #serviceTable td:nth-child(4) {
-            width: 15% !important;  /* Rate (reduced) */
-        }
-        #serviceTable th:nth-child(5),
-        #serviceTable td:nth-child(5) {
-            width: 15% !important;  /* Amount (reduced) */
-        }
-        #serviceTable th:nth-child(6),
-        #serviceTable td:nth-child(6) {
-            width: 15% !important;  /* Action */
-        }
-
-        /* Allow Service Briefing to wrap */
-        #serviceTable td:nth-child(2),
-        #serviceTable th:nth-child(2) {
-            white-space: normal !important;
-            word-break: break-word !important;
-        }
-
-        /* Keep other columns single-line */
-        #serviceTable td:not(:nth-child(2)),
-        #serviceTable th:not(:nth-child(2)) {
-            white-space: nowrap !important;
-        }
-
-        /* Ensure inputs and selects fit within their columns */
-        #serviceTable .form-control {
-            height: 34px !important;
-            font-size: 13px !important;
-            padding: 2px 4px !important;
-            width: 100% !important;
-            min-width: unset !important;       /* override mobile min-width */
-        }
-
-        #serviceTable select.form-control {
-            width: 100% !important;
-            min-width: unset !important;
-        }
-
-        #serviceTable .btn {
-            font-size: 12px !important;
-            padding: 2px 6px !important;
-        }
-
-        /* Add Service button – normal width on tablet */
-        #addServiceButton {
-            width: auto !important;
         }
     }
 </style>
@@ -299,7 +357,7 @@
                                         <table class="table" id="serviceTable">
                                             <thead>
                                                 <tr>
-                                                    <th class="col-1">SI no</th>
+                                                    <th>SI no</th>
                                                     <th>Service Briefing</th>
                                                     <th>QTY</th>
                                                     <th>Rate (in ₹)</th>

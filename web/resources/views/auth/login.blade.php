@@ -96,7 +96,7 @@
 <div class="row image-1" style="width:100%">
     <div class="col-lg-8 col-md-6 col-sm-0">
     </div>
-    <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="col-lg-4 col-md-6 col-sm-12" style="margin-top: 100px !important;padding-bottom:0px !important;">
 
         <div class="container-fluid mt-lg-4" id="gmail" style=" display: none;">
             <div class="row justify-content-start loginformcontainer">

@@ -164,11 +164,16 @@
                                                     <p style="font-size: 15px;font-style: italic;">( Is Coordinator 2 )</p>
                                                     @endif
                                                 </th>
-                                                <th width="15%" style="border: 1px solid black !important;" class="u2_coordinator">{{$rows[1]['name']}}
-                                                    @if($rows[1]['is_coordinator_id'] == $coordinator[0]['is_coordinator1'])
-                                                    <p style="font-size: 15px;font-style: italic;">( Is Coordinator 1 )</p>
-                                                    @elseif($rows[1]['is_coordinator_id'] == $coordinator[0]['is_coordinator2'])
-                                                    <p style="font-size: 15px;font-style: italic;">( Is Coordinator 2 )</p>
+                                                <th width="15%" style="border: 1px solid black !important;" class="u2_coordinator">
+                                                    @if(isset($rows[1]))
+                                                        {{$rows[1]['name']}}
+                                                        @if($rows[1]['is_coordinator_id'] == $coordinator[0]['is_coordinator1'])
+                                                        <p style="font-size: 15px;font-style: italic;">( Is Coordinator 1 )</p>
+                                                        @elseif($rows[1]['is_coordinator_id'] == $coordinator[0]['is_coordinator2'])
+                                                        <p style="font-size: 15px;font-style: italic;">( Is Coordinator 2 )</p>
+                                                        @endif
+                                                    @else
+                                                        <p style="font-size: 13px;font-style: italic;color: #aaa;">( No second coordinator )</p>
                                                     @endif
                                                 </th>
                                             </tr>
@@ -182,7 +187,7 @@
                                                 @else
                                                 <td style="text-align: left !important;border: 1px solid black !important;"></td>
                                                 @endif
-                                                @if($rows[1]['status'] == 'Submitted' || $rows[1]['status'] == 'Completed')
+                                                @if(isset($rows[1]) && ($rows[1]['status'] == 'Submitted' || $rows[1]['status'] == 'Completed'))
                                                 <td style="text-align: left !important;border: 1px solid black !important;" class="u2_{{$value['question_column_name']}}"></td>
                                                 @else
                                                 <td style="text-align: left !important;border: 1px solid black !important;"></td>
@@ -245,7 +250,7 @@
         var feedbacks = fetch.feedback;
 
         var u1 = $('#u1').val();
-        var u2 = $('#u2').val();
+        var u2 = $('#u2').val(); // may be undefined if no second coordinator
 
         // Comprehensive function to check if a value is null or contains null HTML
         function isNullValue(value) {
@@ -283,16 +288,14 @@
             
             if (feedbackID == u1) {
                 $.each(feedback, function(key, value) {
-                    // Clean the value before inserting
                     var cleanedValue = cleanValue(value);
                     var element = $('.u1_' + key);
                     if (element.length) {
                         element.html(cleanedValue);
                     }
                 });
-            } else if (feedbackID == u2) {
+            } else if (u2 && feedbackID == u2) { // only process if u2 exists
                 $.each(feedback, function(key, value) {
-                    // Clean the value before inserting
                     var cleanedValue = cleanValue(value);
                     var element = $('.u2_' + key);
                     if (element.length) {
@@ -306,7 +309,6 @@
         $('td[class^="u1_"], td[class^="u2_"]').each(function() {
             var html = $(this).html();
             if (html) {
-                // Check if the content is just empty HTML tags
                 var trimmed = html.trim();
                 if (trimmed === '<p></p>' || 
                     trimmed === '<p><br></p>' || 

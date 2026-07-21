@@ -1184,7 +1184,7 @@
     }
 
     .dropdown-container {
-      overflow-y: hidden;
+      overflow: visible !important;
     }
 
     .dropdown-container.expanded .dropdown {

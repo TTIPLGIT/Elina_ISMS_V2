@@ -401,7 +401,7 @@
     }
 
     .dropdown-container {
-      overflow-y: hidden;
+      overflow: visible !important;
     }
 
     .dropdown-container.expanded .dropdown {
@@ -600,6 +600,7 @@
       color: white !important;
       font-size: 8px !important;
       padding: 1px 4px !important;
+      z-index:1000 !important;
     }
 
     .table:not(.table-sm) thead th {
@@ -1402,7 +1403,7 @@
         var sessionTimer = <?php echo json_encode(session()->get("sessionTimer")); ?>;
         var userID = <?php echo json_encode(session()->get("userID")); ?>;
 
-        var targetDateTime = new Date(sessionTimer);
+        var targetDateTime = new Date(sessionTimer.replace(' ', 'T'));
         var displayTime = new Date(targetDateTime.getTime() - (5 * 60 * 1000));
         var currentTime = new Date();
         if (currentTime >= displayTime) {

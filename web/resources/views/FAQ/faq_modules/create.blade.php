@@ -125,7 +125,7 @@
                   <div class="col-md-12">
                     <button type="button" class="btn btn-success btn-space" onclick="save()" id="savebutton">Save</button>
                     <button class="btn btn-primary" type="reset"><i class="fa fa-undo"></i> Undo </button>&nbsp;
-                    <a class="btn btn-danger" href="{{ route('uam_modules.index') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>
+                    <a class="btn btn-danger" href="{{ route('faqmodules.index') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>
                   </div>
                 </div>
               </form>

@@ -78,6 +78,24 @@
             margin: 0 !important;
         }
 
+        /* Make TinyMCE full width and larger font */
+        .tox.tox-tinymce {
+            width: 100% !important;
+            margin: 0 !important;
+            min-height: 350px !important;
+        }
+
+        /* Ensure the editor content area has larger font */
+        .tox .tox-edit-area iframe {
+            width: 100% !important;
+        }
+
+        /* Override inline styles for editor content (font size) */
+        .tox .tox-edit-area .mce-content-body {
+            font-size: 14px !important;
+            line-height: 1.6 !important;
+        }
+
         /* Action buttons row - compact and wrap */
         .col-md-12.text-center {
             padding: 6px !important;
@@ -131,10 +149,10 @@
             height: auto !important;
         }
 
-        /* TinyMCE editor container */
-        .tox.tox-tinymce {
+        /* TinyMCE email editor container */
+        .tox.tox-tinymce.email-editor-class {
+            width: 100% !important;
             margin: 0 !important;
-            min-height: 250px !important;
         }
 
         /* Breadcrumb */
@@ -577,7 +595,7 @@
             content_style: "@import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');",
             content_style: "@import url(https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;display=swap);",
             content_style: "@import url(https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&display=swap);",
-            content_style: "@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); @media (max-width: 768px) { body, p, span, li, td, th, div { font-size: 9px !important; line-height: 1.4 !important; overflow-y: auto !important; } h1 { font-size: 14px !important; } h2 { font-size: 12px !important; } h3, h4 { font-size: 10px !important; } img { max-width: 100% !important; height: auto !important; max-height: 350px !important; } table { max-width: 100% !important; table-layout: fixed !important; width: 100% !important; } body { overflow-y: auto !important; } }",
+            content_style: "@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); @media (max-width: 768px) { body, p, span, li, td, th, div { font-size: 14px !important; line-height: 1.6 !important; overflow-y: auto !important; } h1 { font-size: 18px !important; } h2 { font-size: 16px !important; } h3, h4 { font-size: 14px !important; } img { max-width: 100% !important; height: auto !important; max-height: 350px !important; } table { max-width: 100% !important; table-layout: fixed !important; width: 100% !important; } body { overflow-y: auto !important; } }",
             importcss_append: true,
 
             file_picker_callback: function(cb, value, meta) {
@@ -608,7 +626,7 @@
             },
             width: (window.innerWidth <= 768) ? '100%' : '210mm',
             margin: (window.innerWidth <= 768) ? 0 : 85,
-            height: (window.innerWidth <= 768) ? 380 : 520,
+            height: (window.innerWidth <= 768) ? 480 : 520,
             image_caption: true,
             quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
             noneditable_noneditable_class: "mceNonEditable",

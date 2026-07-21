@@ -298,8 +298,7 @@
     }
     .md-stepper-horizontal .md-step .md-step-bar-left,
 .md-stepper-horizontal .md-step .md-step-bar-right {
-    position: absolute;
-    top: 20px;              /* Center of 30px circle */
+    position: absolute;           /* Center of 30px circle */
     height: 0;
     border-top: 3px solid #DDDDDD;
 }
@@ -1281,7 +1280,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="overflow-y: auto; -webkit-overflow-scrolling: touch; max-height: 70vh;">
                 <!-- Add the same class as your other TinyMCE editors -->
                 <textarea id="modalRecommendationEditor" class="meeting_description" style="height: 350px;"></textarea>
             </div>
@@ -1422,12 +1421,21 @@
             tinymce.get('modalRecommendationEditor').setContent('');
         }
         activeRecommendationTextarea = null;
+
+        /* iOS Safari fix: Bootstrap does not properly restore body scroll after modal close.
+           Manually clear overflow so the Create form remains interactive after closing. */
+        var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) {
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+            document.documentElement.style.overflow = '';
+        }
     });
 </script>
 
-<!-- ====================== MOBILE RESPONSIVE CSS (same as edit screen) ====================== -->
 <style>
-@media only screen and (max-width: 768px) {
+/* --- Mobile/tablet overrides (up to 1024px) --- */
+@media only screen and (max-width: 1024px) {
     .main-content {
         padding: 2px !important;
         margin-top: 55px !important;
@@ -1468,33 +1476,91 @@
         -webkit-overflow-scrolling: touch;
         width: 100%;
     }
-    /* Stepper horizontal responsive */
+
+    /* ----- Stepper fix – scrollable, same colors as desktop ----- */
     .md-stepper-horizontal {
         display: flex !important;
         flex-wrap: nowrap !important;
         overflow-x: auto !important;
         -webkit-overflow-scrolling: touch;
-        white-space: nowrap;
-        padding-bottom: 10px;
+        padding: 10px 5px 15px 5px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        position: relative;
+        margin-bottom: 12px;
+        /* ensure the line stretches across the whole container */
+        min-height: 56px;
     }
-    .md-stepper-horizontal .md-step {
-        display: inline-block !important;
-        min-width: 70px;
-        padding: 10px 5px;
-    }
-    .md-stepper-horizontal .md-step .md-step-circle {
-        width: 28px;
-        height: 28px;
-        line-height: 28px;
-        font-size: 14px;
-    }
+
+    /* Hide the individual bar segments */
     .md-stepper-horizontal .md-step .md-step-bar-left,
     .md-stepper-horizontal .md-step .md-step-bar-right {
-        top: 26px;
-        margin-left: 10px;
-        margin-right: 10px;
+        display: none !important;
     }
-    /* Swiper container responsive */
+
+    /* Draw a continuous line behind the circles */
+    .md-stepper-horizontal::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: #ddd;
+        transform: translateY(-50%);
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    /* Each step sits on top of the line, flex‑shrink=0 so they don't shrink */
+    .md-stepper-horizontal .md-step {
+        display: flex !important;
+        flex: 0 0 auto !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-width: 44px !important;   /* enough for the number */
+        padding: 8px 6px !important;
+        position: relative !important;
+        z-index: 1 !important;
+    }
+
+    /* Circle size – slightly smaller, but keeps the number */
+    .md-stepper-horizontal .md-step .md-step-circle {
+        width: 32px !important;
+        height: 32px !important;
+        line-height: 32px !important;
+        font-size: 14px !important;
+        border-radius: 50% !important;
+        background-color: #999999 !important;  /* same as desktop default */
+        color: #fff !important;
+        z-index: 2;
+        position: relative;
+        margin: 0 !important;
+    }
+
+    /* Editable (current) step – same orange as desktop */
+    .md-stepper-horizontal .md-step.editable .md-step-circle {
+        background: #f05a00 !important;  /* desktop orange */
+    }
+
+    /* Done step – same green */
+    .md-stepper-horizontal .md-step.done .md-step-circle {
+        background: #84D768 !important;
+    }
+
+    /* Active step (if needed) – same blue as desktop (optional) */
+    .md-stepper-horizontal .md-step.active .md-step-circle {
+        background: rgb(33, 150, 243) !important;
+    }
+
+    /* Ensure the number text is visible */
+    .md-stepper-horizontal .md-step .md-step-circle span {
+        display: inline-block;
+    }
+
+    /* Swiper container adjustments */
     .swiper-container {
         width: 100% !important;
         border-radius: 20px;
@@ -1512,7 +1578,8 @@
         transform: scale(1.2);
         margin: 0 5px 0 8px;
     }
-    /* Buttons row responsive */
+
+    /* Buttons row */
     .col-md-12.text-center {
         display: flex !important;
         justify-content: center !important;
@@ -1535,7 +1602,8 @@
     .back-btn {
         margin-top: 0 !important;
     }
-    /* Breadcrumbs responsive */
+
+    /* Breadcrumbs */
     .breadcrumb {
         font-size: 12px !important;
         padding: 5px !important;
@@ -1545,20 +1613,23 @@
         white-space: nowrap !important;
         margin-left: 10px !important;
     }
+
     /* Heading */
     h5.align {
         font-size: 16px !important;
         text-align: center !important;
         margin-bottom: 10px !important;
     }
-    /* Tables inside skill includes */
+
+    /* Tables */
     .fixTableHead .table-responsive {
         overflow-x: auto !important;
     }
     .fixTableHead table {
         min-width: 600px;
     }
-    /* TinyMCE editor responsive */
+
+    /* TinyMCE */
     .tox-tinymce {
         width: 100% !important;
         max-width: 100% !important;
@@ -1566,14 +1637,14 @@
     .tox-editor-container {
         width: 100% !important;
     }
-    /* Observation info button */
+
     .btn.observation_info {
         font-size: 12px !important;
         padding: 4px 10px !important;
         margin: 5px 0 !important;
         display: inline-block !important;
     }
-    /* Page8 and page14 tables */
+
     #page8 .table-responsive,
     #page14 .table-responsive {
         overflow-x: auto !important;
@@ -1582,7 +1653,7 @@
     #page14 table {
         min-width: 600px;
     }
-    /* Remove extra spacing */
+
     .mlr-auto {
         margin-left: 0 !important;
         margin-right: 0 !important;
@@ -1602,31 +1673,44 @@
         font-size: 14px !important;
         margin-top: 5px;
     }
-    /* Navigation arrows for swiper */
+
+    /* Swiper arrows hidden on small screens */
     .swiper-button-prev,
     .swiper-button-next {
         display: none !important;
     }
-    /* Show "Next" text and hide arrow on mobile */
-/* Center the Next button text on mobile */
-#Next {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-}
-#Next .btn-label {
-    display: inline-block !important;
-    margin: 0 auto !important;
-    font-size: 11px !important;
-    background-color: transparent !important;
-    padding-left: 30px !important;
-}
-#Next i {
-    display: none !important;
-}
+
+    /* Next button text fix */
+    #Next {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+    #Next .btn-label {
+        display: inline-block !important;
+        margin: 0 auto !important;
+        font-size: 11px !important;
+        background-color: transparent !important;
+        padding-left: 30px !important;
+    }
+    #Next i {
+        display: none !important;
+    }
 }
 
-     
-</style> 
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+    .md-stepper-horizontal .md-step {
+        min-width: 60px !important;
+        padding: 8px 10px !important;
+    }
+    .md-stepper-horizontal .md-step .md-step-circle {
+        width: 36px !important;
+        height: 36px !important;
+        line-height: 36px !important;
+        font-size: 16px !important;
+    }
+}
+</style>
 @endsection

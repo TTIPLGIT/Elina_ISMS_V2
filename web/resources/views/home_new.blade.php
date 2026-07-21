@@ -61,7 +61,9 @@
             overflow: unset !important;
         }
 
-        /* Mobile & tablet font adjust and accordion */
+        /* ================================================================
+           TABLET & MOBILE (max-width: 1024px)
+           ================================================================ */
         @media (max-width: 1024px) {
             .table-responsive {
                 overflow-x: hidden !important;
@@ -74,7 +76,7 @@
                 width: 100% !important;
             }
             
-            /* Mobile Table Accordion UI */
+            /* ---------- SEARCH TABLE (already existing) ---------- */
             .searchResultStudent table, 
             .searchResultStudent thead, 
             .searchResultStudent tbody, 
@@ -87,7 +89,7 @@
             .searchResultStudent thead { display: none !important; }
             .searchResultStudent tbody { background: transparent !important; }
             
-            /* Use #align1b ID to guarantee max specificity over all default table themes */
+            /* Use #align1b ID to guarantee max specificity */
             #align1b tr { 
                 display: flex !important;
                 flex-direction: column !important;
@@ -116,7 +118,6 @@
                 line-height: 1.2 !important;
             }
             
-            /* 1. Sl.No -> Plain text on the left */
             #align1b td:nth-of-type(1) {
                 position: absolute !important;
                 left: 15px !important;
@@ -139,7 +140,6 @@
                 transform: translateY(0) !important;
             }
             
-            /* 3. Child Name */
             #align1b td:nth-of-type(3) {
                 font-weight: bold !important;
                 font-size: 1rem !important;
@@ -151,7 +151,6 @@
                 line-height: 1.2 !important;
             }
             
-            /* 2. Enrollment ID */
             #align1b td:nth-of-type(2) {
                 font-size: 0.85rem !important;
                 color: #34495e !important;
@@ -167,7 +166,6 @@
             #align1b td:nth-of-type(5) { order: 4 !important; display: none !important; }
             #align1b td:nth-of-type(6) { order: 5 !important; display: none !important; }
             
-            /* Chevron icon */
             #align1b tr::after {
                 content: '\f054';
                 font-family: 'FontAwesome';
@@ -185,7 +183,6 @@
                 top: 35px;
             }
             
-            /* Expanded state styles */
             #align1b tr.expanded-row td:nth-of-type(4) {
                 display: flex !important;
                 align-items: center !important;
@@ -210,7 +207,6 @@
             #align1b tr.expanded-row td:nth-of-type(5):before { content: "Mobile: "; font-weight: bold !important; color: #000 !important; display: inline !important; margin-right: 4px !important;}
             #align1b tr.expanded-row td:nth-of-type(6):before { content: "Action: "; font-weight: bold !important; color: #000 !important; display: inline !important; margin-right: 4px !important;}
             
-            /* Action button alignment */
             #align1b tr.expanded-row td:nth-of-type(6) {
                 display: flex !important;
                 align-items: center !important;
@@ -227,7 +223,7 @@
                 display: inline-block !important;
             }
 
-            /* Access History Table Mobile */
+            /* ---------- ACCESS HISTORY (already existing) ---------- */
             #row3 .table-access thead { display: none !important; }
             #row3 .table-access tbody { background: transparent !important; }
 
@@ -239,7 +235,7 @@
                 border-radius: 8px !important;
                 margin-bottom: 8px !important;
                 position: relative !important;
-                padding: 10px 40px 10px 15px !important; /* right padding for chevron */
+                padding: 10px 40px 10px 15px !important;
                 background: #fff !important;
                 box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
                 width: 100% !important;
@@ -256,9 +252,9 @@
                 height: auto !important;
                 min-height: 0 !important;
                 line-height: 1.4 !important;
-                font-size: 0.95rem !important; /* override 7px */
+                font-size: 0.95rem !important;
                 color: #34495e !important;
-                word-break: normal !important; /* override break-all */
+                word-break: normal !important;
             }
             
             #row3 .table-access #align-access td:nth-of-type(1) {
@@ -272,34 +268,33 @@
             #row3 .table-access #align-access td:nth-of-type(2) {
                 font-size: 0.85rem !important;
                 color: #7f8c8d !important;
-                margin-bottom: 0 !important; /* hidden space when collapsed */
+                margin-bottom: 0 !important;
                 width: 100% !important;
             }
             #row3 .table-access #align-access tr.expanded-row td:nth-of-type(2) {
-                margin-bottom: 8px !important; /* add space below designation when expanded */
+                margin-bottom: 8px !important;
             }
             
             #row3 .table-access #align-access td:nth-of-type(3) {
-                display: none !important; /* hide initially */
+                display: none !important;
                 margin-top: 4px !important;
                 width: 100% !important;
             }
             #row3 .table-access #align-access td:nth-of-type(3):before { content: "Login: "; font-weight: bold !important; color: #000 !important; display: inline !important; margin-right: 4px !important;}
             #row3 .table-access #align-access tr.expanded-row td:nth-of-type(3) {
-                display: flex !important; /* show when expanded */
+                display: flex !important;
             }
             
             #row3 .table-access #align-access td:nth-of-type(4) {
-                display: none !important; /* hide initially */
+                display: none !important;
                 margin-top: 4px !important;
                 width: 100% !important;
             }
             #row3 .table-access #align-access td:nth-of-type(4):before { content: "Logout: "; font-weight: bold !important; color: #000 !important; display: inline !important; margin-right: 4px !important;}
             #row3 .table-access #align-access tr.expanded-row td:nth-of-type(4) {
-                display: flex !important; /* show when expanded */
+                display: flex !important;
             }
 
-            /* Chevron for Access History */
             #row3 .table-access #align-access tr::after {
                 content: '\f054';
                 font-family: 'FontAwesome';
@@ -316,7 +311,7 @@
                 top: 35px;
             }
 
-            /* Sail Table Mobile */
+            /* ---------- SAIL TABLE (already existing) ---------- */
             #row3 .table-sail thead { display: none !important; }
             #row3 .table-sail tbody { background: transparent !important; }
 
@@ -328,7 +323,7 @@
                 border-radius: 8px !important;
                 margin-bottom: 8px !important;
                 position: relative !important;
-                padding: 10px 40px 10px 45px !important; /* left padding for S.No, right padding for chevron */
+                padding: 10px 40px 10px 45px !important;
                 background: #fff !important;
                 box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
                 width: 100% !important;
@@ -345,9 +340,9 @@
                 height: auto !important;
                 min-height: 0 !important;
                 line-height: 1.4 !important;
-                font-size: 0.95rem !important; /* override 7px */
+                font-size: 0.95rem !important;
                 color: #34495e !important;
-                word-break: normal !important; /* override break-all */
+                word-break: normal !important;
             }
             
             #row3 .table-sail #align-sail td:nth-of-type(1) {
@@ -380,25 +375,24 @@
             #row3 .table-sail #align-sail td:nth-of-type(3) {
                 font-size: 0.85rem !important;
                 color: #34495e !important;
-                margin-bottom: 0 !important; /* hidden space when collapsed */
+                margin-bottom: 0 !important;
                 width: 100% !important;
             }
             #row3 .table-sail #align-sail td:nth-of-type(3):before { content: "ID: "; font-weight: bold !important; color: #000 !important; }
             #row3 .table-sail #align-sail tr.expanded-row td:nth-of-type(3) {
-                margin-bottom: 8px !important; /* add space below ID when expanded */
+                margin-bottom: 8px !important;
             }
             
             #row3 .table-sail #align-sail td:nth-of-type(4) {
-                display: none !important; /* hide initially */
+                display: none !important;
                 margin-top: 4px !important;
                 width: 100% !important;
             }
             #row3 .table-sail #align-sail td:nth-of-type(4):before { content: "Status: "; font-weight: bold !important; color: #000 !important; display: inline !important; margin-right: 4px !important;}
             #row3 .table-sail #align-sail tr.expanded-row td:nth-of-type(4) {
-                display: flex !important; /* show when expanded */
+                display: flex !important;
             }
 
-            /* Chevron for Sail */
             #row3 .table-sail #align-sail tr::after {
                 content: '\f054';
                 font-family: 'FontAwesome';
@@ -415,7 +409,231 @@
                 top: 35px;
             }
 
-            /* Modal Log Table Mobile styling */
+            /* ================================================================
+               MODAL TABLES (Elina Lead, OVM, SAIL) – now also for tablet
+               ================================================================ */
+            #elina_leads table,
+            #elina_ovm table,
+            #elina_sail table {
+                table-layout: fixed;
+                width: 100% !important;
+                border-collapse: collapse;
+            }
+
+            #elina_leads table thead,
+            #elina_ovm table thead,
+            #elina_sail table thead {
+                display: none !important;
+            }
+
+            #elina_leads table tbody,
+            #elina_ovm table tbody,
+            #elina_sail table tbody {
+                background: transparent !important;
+            }
+
+            #elina_leads table tbody tr,
+            #elina_ovm table tbody tr,
+            #elina_sail table tbody tr {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                border: 1px solid #e0e0e0 !important;
+                border-radius: 8px !important;
+                margin-bottom: 8px !important;
+                position: relative !important;
+                padding: 10px 40px 10px 45px !important; /* left padding for S.No, right for chevron */
+                background: #fff !important;
+                box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+                cursor: pointer;
+                width: 100% !important;
+            }
+
+            #elina_leads table tbody td,
+            #elina_ovm table tbody td,
+            #elina_sail table tbody td {
+                display: block !important;
+                border: none !important;
+                padding: 0 !important;
+                text-align: left !important;
+                white-space: normal !important;
+                width: 100% !important;
+                background: transparent !important;
+                height: auto !important;
+                min-height: 0 !important;
+                line-height: 1.4 !important;
+                font-size: 0.95rem !important;
+                color: #34495e !important;
+                word-break: normal !important;
+            }
+
+            /* First column (Sl.No) – absolute position */
+            #elina_leads table tbody td:nth-of-type(1),
+            #elina_ovm table tbody td:nth-of-type(1),
+            #elina_sail table tbody td:nth-of-type(1) {
+                position: absolute !important;
+                left: 15px !important;
+                top: 50% !important;
+                transform: translateY(-50%) !important;
+                width: 25px !important;
+                font-weight: bold !important;
+                font-size: 1rem !important;
+                color: #2c3e50 !important;
+                background: transparent !important;
+                display: flex !important;
+                align-items: center !important;
+                margin: 0 !important;
+            }
+
+            #elina_leads table tbody tr.expanded-row td:nth-of-type(1),
+            #elina_ovm table tbody tr.expanded-row td:nth-of-type(1),
+            #elina_sail table tbody tr.expanded-row td:nth-of-type(1) {
+                top: 20px !important;
+                transform: translateY(0) !important;
+            }
+
+            /* Second column – main title */
+            #elina_leads table tbody td:nth-of-type(2),
+            #elina_ovm table tbody td:nth-of-type(2),
+            #elina_sail table tbody td:nth-of-type(2) {
+                font-weight: bold !important;
+                font-size: 1rem !important;
+                color: #2c3e50 !important;
+                margin-bottom: 2px !important;
+                width: 100% !important;
+            }
+
+            /* Third column – extra info (shown with label) */
+            #elina_leads table tbody td:nth-of-type(3),
+            #elina_ovm table tbody td:nth-of-type(3),
+            #elina_sail table tbody td:nth-of-type(3) {
+                font-size: 0.85rem !important;
+                color: #34495e !important;
+                margin-bottom: 0 !important;
+                width: 100% !important;
+            }
+            #elina_leads table tbody td:nth-of-type(3):before,
+            #elina_ovm table tbody td:nth-of-type(3):before,
+            #elina_sail table tbody td:nth-of-type(3):before {
+                content: "ID: ";
+                font-weight: bold !important;
+                color: #000 !important;
+            }
+            #elina_leads table tbody tr.expanded-row td:nth-of-type(3),
+            #elina_ovm table tbody tr.expanded-row td:nth-of-type(3),
+            #elina_sail table tbody tr.expanded-row td:nth-of-type(3) {
+                margin-bottom: 8px !important;
+            }
+
+            /* Columns 4, 5, 6 – hidden initially, shown on expansion */
+            #elina_leads table tbody td:nth-of-type(4),
+            #elina_ovm table tbody td:nth-of-type(4),
+            #elina_sail table tbody td:nth-of-type(4),
+            #elina_leads table tbody td:nth-of-type(5),
+            #elina_ovm table tbody td:nth-of-type(5),
+            #elina_sail table tbody td:nth-of-type(5),
+            #elina_leads table tbody td:nth-of-type(6),
+            #elina_ovm table tbody td:nth-of-type(6),
+            #elina_sail table tbody td:nth-of-type(6) {
+                display: none !important;
+                margin-top: 4px !important;
+                width: 100% !important;
+            }
+
+            #elina_leads table tbody td:nth-of-type(4):before,
+            #elina_ovm table tbody td:nth-of-type(4):before,
+            #elina_sail table tbody td:nth-of-type(4):before {
+                content: "Email: ";
+                font-weight: bold !important;
+                color: #000 !important;
+                display: inline !important;
+                margin-right: 4px !important;
+            }
+            #elina_leads table tbody td:nth-of-type(5):before,
+            #elina_ovm table tbody td:nth-of-type(5):before,
+            #elina_sail table tbody td:nth-of-type(5):before {
+                content: "Mobile: ";
+                font-weight: bold !important;
+                color: #000 !important;
+                display: inline !important;
+                margin-right: 4px !important;
+            }
+            #elina_leads table tbody td:nth-of-type(6):before,
+            #elina_ovm table tbody td:nth-of-type(6):before,
+            #elina_sail table tbody td:nth-of-type(6):before {
+                content: "Action: ";
+                font-weight: bold !important;
+                color: #000 !important;
+                display: inline !important;
+                margin-right: 4px !important;
+            }
+
+            #elina_leads table tbody tr.expanded-row td:nth-of-type(4),
+            #elina_ovm table tbody tr.expanded-row td:nth-of-type(4),
+            #elina_sail table tbody tr.expanded-row td:nth-of-type(4),
+            #elina_leads table tbody tr.expanded-row td:nth-of-type(5),
+            #elina_ovm table tbody tr.expanded-row td:nth-of-type(5),
+            #elina_sail table tbody tr.expanded-row td:nth-of-type(5),
+            #elina_leads table tbody tr.expanded-row td:nth-of-type(6),
+            #elina_ovm table tbody tr.expanded-row td:nth-of-type(6),
+            #elina_sail table tbody tr.expanded-row td:nth-of-type(6) {
+                display: flex !important;
+                align-items: center !important;
+            }
+
+            /* Chevron icon for modal rows */
+            #elina_leads table tbody tr::after,
+            #elina_ovm table tbody tr::after,
+            #elina_sail table tbody tr::after {
+                content: '\f054';
+                font-family: 'FontAwesome';
+                position: absolute;
+                right: 20px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #bdc3c7;
+                transition: transform 0.3s;
+                font-size: 1rem;
+            }
+
+            #elina_leads table tbody tr.expanded-row::after,
+            #elina_ovm table tbody tr.expanded-row::after,
+            #elina_sail table tbody tr.expanded-row::after {
+                transform: translateY(-50%) rotate(90deg);
+                top: 35px;
+            }
+
+            /* ---------- PAGINATION inside modals ---------- */
+            .modal .pagination {
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                gap: 4px !important;
+                margin: 10px 0 !important;
+            }
+            .modal .pagination .page-item .page-link {
+                padding: 4px 8px !important;
+                font-size: 0.85rem !important;
+                border-radius: 4px !important;
+            }
+            .modal .pagination .page-item.active .page-link {
+                background-color: #007bff !important;
+                border-color: #007bff !important;
+                color: #fff !important;
+            }
+            .modal .pagination .page-item.disabled .page-link {
+                opacity: 0.5 !important;
+            }
+
+            /* Modal body scroll */
+            .modal-body {
+                max-height: 75vh !important;
+                overflow-y: auto !important;
+            }
+            .modal-body .table-wrapper {
+                overflow-x: auto !important;
+            }
+
+            /* ---------- Log Modal Table (already existing) ---------- */
             #logModal .modal-dialog {
                 margin: 10px !important;
             }
@@ -441,7 +659,7 @@
                 border-radius: 8px !important;
                 margin-bottom: 8px !important;
                 position: relative !important;
-                padding: 10px 15px 10px 45px !important; /* left padding for S.No */
+                padding: 10px 15px 10px 45px !important;
                 background: #fff !important;
                 box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
                 width: 100% !important;
@@ -493,7 +711,7 @@
             }
             #logTable td:nth-of-type(3):before { content: "Action Time: "; font-weight: bold !important; color: #000 !important; }
 
-            /* No Data Found row styling on mobile */
+            /* No Data Found row styling */
             #align1b tr.no-data-row {
                 display: block !important;
                 padding: 20px 15px !important;
@@ -506,7 +724,7 @@
                 min-height: 60px !important;
             }
             #align1b tr.no-data-row::after {
-                display: none !important; /* hide the chevron arrow */
+                display: none !important;
                 content: none !important;
             }
             #align1b tr.no-data-row td {
@@ -523,7 +741,6 @@
                 background: transparent !important;
             }
 
-            /* Reset button styling on mobile */
             #searchReset {
                 width: calc(100% - 30px) !important;
                 float: none !important;
@@ -536,19 +753,17 @@
                 border-radius: 6px !important;
             }
 
-            /* Log modal search bar styling on mobile - Aligned to right end */
             #logModal #search {
                 width: 50% !important;
                 float: right !important;
                 margin: 10px 15px 10px 0px !important;
             }
 
-            /* Global hidden row utility */
             .hidden-row {
                 display: none !important;
             }
 
-            /* ===== Profile card centering on mobile/tablet ===== */
+            /* Profile card centering */
             .profile-card .list-group-item {
                 justify-content: center !important;
                 flex-wrap: wrap !important;
@@ -565,7 +780,6 @@
                 display: inline-block !important;
                 margin: 2px 0 !important;
             }
-            /* Stack the View Profile & Logout links vertically */
             .profile-card .list-group-item:last-child {
                 flex-direction: column !important;
                 align-items: center !important;
@@ -573,17 +787,15 @@
             }
         }
 
-        /* Ensure equal height for Access History and Sail cards on all devices */
+        /* Ensure equal height for Access History and Sail cards */
         #row3 .card {
             height: 100%;
         }
 
-        /* Prevent Last Login timestamp from wrapping */
         .last-login-value {
             white-space: nowrap !important;
         }
 
-        /* Enrollment ISMS Analysis card – match height and prevent scroll */
         .analysis-card {
             height: 100% !important;
             overflow: hidden !important;
@@ -706,8 +918,10 @@
                                                         style="color: white;">View</a>
                                                 </div>
                                             </div>
-                                            <div class="widget-numbers text-white numberfontsize">
-                                                <span>{{ count($rows['sail'] ?? []) }}</span>
+                                            <div class="widget-content-right">
+                                                <div class="widget-numbers text-white numberfontsize">
+                                                    <span>{{ count($rows['sail'] ?? []) }}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1333,8 +1547,11 @@
                     document.getElementById('logout-form').submit();
                 }
 
-                // Handle mobile row expansion logic
+                // ================================================================
+                //  EXPAND / COLLAPSE FOR ALL ACCORDION TABLES (including modals)
+                // ================================================================
                 $(document).ready(function() {
+                    // Click handler for SEARCH table rows
                     $(document).on('click', '.searchResultStudent tr, .table-access tr, .table-sail tr', function() {
                         if($(window).width() <= 1024) {
                             if ($(this).hasClass('expanded-row')) {
@@ -1350,6 +1567,22 @@
                     $(document).on('click', '.searchResultStudent td:nth-of-type(6) a', function(e) {
                         if($(window).width() <= 1024) {
                             e.stopPropagation();
+                        }
+                    });
+
+                    // ===== NEW: Click handlers for MODAL tables =====
+                    // Target rows inside the modal tables (using modal IDs)
+                    $(document).on('click', '#elina_leads table tbody tr, #elina_ovm table tbody tr, #elina_sail table tbody tr', function(e) {
+                        if($(window).width() <= 1024) {
+                            // Prevent collapse when clicking on an action link inside the row
+                            if ($(e.target).closest('a').length) return;
+
+                            if ($(this).hasClass('expanded-row')) {
+                                $(this).removeClass('expanded-row');
+                            } else {
+                                $(this).siblings('tr').removeClass('expanded-row');
+                                $(this).addClass('expanded-row');
+                            }
                         }
                     });
                 });

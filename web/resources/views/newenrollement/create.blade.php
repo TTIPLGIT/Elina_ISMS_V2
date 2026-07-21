@@ -1,4 +1,4 @@
-@extends('layouts.adminnav')
+@extends(($modules['user_role'] == 'Parent' || $modules['user_role'] == 'Child') ? 'layouts.parent' : 'layouts.adminnav')
 
 @section('content')
 <style>
