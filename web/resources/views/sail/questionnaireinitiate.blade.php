@@ -101,19 +101,66 @@
      TABLET-ONLY (769px - 1024px)
      ========================================== */
   @media (min-width: 769px) and (max-width: 1024px) {
-    /* Top section – two columns per row */
+    /* Top section – two columns */
     .is-coordinate .col-md-4 {
       flex: 0 0 50% !important;
       max-width: 50% !important;
       width: 50% !important;
     }
 
-    /* Keep dropdown readable */
+    /* Widen the enrollment dropdown */
     .is-coordinate .col-md-4 select.form-control {
       width: 100% !important;
       overflow: hidden !important;
       text-overflow: ellipsis !important;
       white-space: nowrap !important;
+    }
+
+    /* ====== Questionnaire + Status row – clean alignment ====== */
+    .card .form-group.row:has(#questionnaire_id) {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      align-items: stretch !important;
+    }
+    .card .form-group.row:has(#questionnaire_id) .col-md-6:first-child {
+      flex: 0 0 55% !important;
+      max-width: 55% !important;
+      width: 55% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 2px !important;
+    }
+    .card .form-group.row:has(#questionnaire_id) .col-md-6:first-child label {
+      flex: 0 0 auto !important;
+      white-space: nowrap !important;
+      margin-bottom: 2px !important;
+      font-weight: 600 !important;
+    }
+    .card .form-group.row:has(#questionnaire_id) .col-md-6:first-child select {
+      width: 100% !important;
+    }
+
+    .card .form-group.row:has(#questionnaire_id) .col-md-6:last-child {
+      flex: 0 0 40% !important;
+      max-width: 40% !important;
+      width: 40% !important;
+      margin-left: 5% !important;
+      display: flex !important;
+      flex-direction: column !important;
+    }
+    .card .form-group.row:has(#questionnaire_id) .col-md-6:last-child label {
+      flex: 0 0 auto !important;
+      white-space: nowrap !important;
+      margin-bottom: 2px !important;
+      text-align: left !important;
+      font-weight: 600 !important;
+    }
+    .card .form-group.row:has(#questionnaire_id) .col-md-6:last-child .form-control {
+      width: 100% !important;
+    }
+    /* Remove the <br> after status label if present */
+    .card .form-group.row:has(#questionnaire_id) .col-md-6:last-child br {
+      display: none !important;
     }
   }
 </style>
