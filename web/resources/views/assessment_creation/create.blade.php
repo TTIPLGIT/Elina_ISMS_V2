@@ -5,7 +5,6 @@
 <style>
     input[type=checkbox] {
         display: inline-block;
-
     }
 
     .no-arrow {
@@ -22,14 +21,10 @@
         margin: 0;
     }
 
-    /* body{
-        background-color: white !important;
-    } */
     .nav-tabs {
         background-color: #0068a7 !important;
         border-radius: 29px !important;
         padding: 1px !important;
-
     }
 
     .nav-item.active {
@@ -111,13 +106,115 @@
     .alignment {
         text-align: center;
     }
+
+    /* ============================================================
+       MOBILE RESPONSIVE – screens ≤ 768px
+       ============================================================ */
+    @media (max-width: 768px) {
+
+        /* Reset paddings & margins */
+        .main-content,
+        .card,
+        .card-body,
+        .form-group,
+        .row {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .main-content {
+            padding-top: 0 !important;
+        }
+
+        .breadcrumb {
+            font-size: 11px !important;
+            margin: 60px 10px 10px 10px !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            padding: 6px 10px !important;
+        }
+
+        .breadcrumb li {
+            display: inline !important;
+            white-space: nowrap !important;
+        }
+
+        h4 {
+            font-size: 18px !important;
+        }
+
+        .question {
+            margin-top: 1rem !important;
+            margin-left: 5px !important;
+            margin-right: 5px !important;
+        }
+
+        /* Stack columns vertically */
+        .is-coordinate {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: stretch !important;
+        }
+
+        .is-coordinate .col-md-4 {
+            flex: 0 0 100% !important;
+            max-width: 100% !important;
+            width: 100% !important;
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+            margin-bottom: 10px !important;
+        }
+
+        /* Left-align labels */
+        .form-group label {
+            text-align: left !important;
+            display: block !important;
+            width: 100% !important;
+        }
+
+        /* Inputs full width */
+        .form-control,
+        .form-control[type="text"],
+        select.form-control {
+            font-size: 14px !important;
+            height: auto !important;
+            padding: 8px 10px !important;
+            width: 100% !important;
+        }
+
+        /* ---- Create button – keep original size, just centered ---- */
+        .col-md-12.text-center {
+            text-align: center !important;
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+        }
+
+        .colorbutton {
+            /* Remove full width */
+            width: auto !important;
+            display: inline-block !important;
+            padding: 0.5rem 1rem !important;  /* keep desktop padding */
+            font-size: inherit !important;
+            margin: 0 auto !important;
+            box-shadow: none !important;
+        }
+
+        /* Fix for TinyMCE if used elsewhere */
+        .tox-tinymce {
+            max-width: 100% !important;
+        }
+    }
 </style>
+
 <div class="main-content">
     {{ Breadcrumbs::render('asessmentreportmaster.create') }}
     <div class="section-body mt-0">
         <h4 style="color:darkblue">Report Creation </h4>
-
-
 
         <div class="card question">
             <div class="card-body">
@@ -164,15 +261,11 @@
     </div>
 </div>
 
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/tinymce.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/jquery.tinymce.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
-
-
         tinymce.init({
             selector: 'textarea#meeting_description',
             height: 180,
@@ -185,7 +278,6 @@
                 'removeformat | help',
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         });
-        // event.preventDefault()
     });
 </script>
 
@@ -225,12 +317,9 @@
                 report_type: report_type,
                 report_name: report_name,
                 version: version
-
             },
-
             success: function(data) {
                 window.location.href = "/master/assessment/edit/" + data;
-
             },
             error: function(data) {
                 swal.fire({
@@ -240,7 +329,6 @@
                     confirmButtonColor: '#e73131',
                     confirmButtonText: 'OK',
                 });
-
             }
         });
     }

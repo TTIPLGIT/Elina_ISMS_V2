@@ -1,40 +1,40 @@
 <html>
 
 <head>
-<?php
-    $barlowSemiReg = str_replace('\\', '/', storage_path('fonts/BarlowSemiCondensed-Regular.ttf'));
-    $barlowSemiBold = str_replace('\\', '/', storage_path('fonts/BarlowSemiCondensed-Bold.ttf'));
-    $barlowCondensedReg = str_replace('\\', '/', storage_path('fonts/BarlowCondensed-Regular.ttf'));
-    $barlowCondensedBold = str_replace('\\', '/', storage_path('fonts/BarlowCondensed-Bold.ttf'));
+  <?php
+$barlowSemiReg = str_replace('\\', '/', storage_path('fonts/BarlowSemiCondensed-Regular.ttf'));
+$barlowSemiBold = str_replace('\\', '/', storage_path('fonts/BarlowSemiCondensed-Bold.ttf'));
+$barlowCondensedReg = str_replace('\\', '/', storage_path('fonts/BarlowCondensed-Regular.ttf'));
+$barlowCondensedBold = str_replace('\\', '/', storage_path('fonts/BarlowCondensed-Bold.ttf'));
     ?>
-    <style>
-        @font-face {
-            font-family: 'Barlow Semi Condensed';
-            font-style: normal;
-            font-weight: 400;
-            src: url('{{ $barlowSemiReg }}') format('truetype');
-        }
+  <style>
+    @font-face {
+      font-family: 'Barlow Semi Condensed';
+      font-style: normal;
+      font-weight: 400;
+      src: url('{{ $barlowSemiReg }}') format('truetype');
+    }
 
-        @font-face {
-            font-family: 'Barlow Semi Condensed';
-            font-style: normal;
-            font-weight: 700;
-            src: url('{{ $barlowSemiBold }}') format('truetype');
-        }
+    @font-face {
+      font-family: 'Barlow Semi Condensed';
+      font-style: normal;
+      font-weight: 700;
+      src: url('{{ $barlowSemiBold }}') format('truetype');
+    }
 
-        @font-face {
-            font-family: 'Barlow Condensed';
-            font-style: normal;
-            font-weight: 400;
-            src: url('{{ $barlowCondensedReg }}') format('truetype');
-        }
+    @font-face {
+      font-family: 'Barlow Condensed';
+      font-style: normal;
+      font-weight: 400;
+      src: url('{{ $barlowCondensedReg }}') format('truetype');
+    }
 
-        @font-face {
-            font-family: 'Barlow Condensed';
-            font-style: normal;
-            font-weight: 700;
-            src: url('{{ $barlowCondensedBold }}') format('truetype');
-        }
+    @font-face {
+      font-family: 'Barlow Condensed';
+      font-style: normal;
+      font-weight: 700;
+      src: url('{{ $barlowCondensedBold }}') format('truetype');
+    }
 
     @page {
       margin: 0cm 0cm;
@@ -98,7 +98,7 @@
     }
 
     tr {
-      page-break-inside: avoid;
+      page-break-inside: auto;
       page-break-after: auto;
     }
 
@@ -189,6 +189,56 @@
       page-break-inside: avoid;
     }
 
+    /* ✅ Assessment table: allow rows and cells to flow across pages */
+    table.assessment-table {
+      border-collapse: collapse !important;
+      width: 100%;
+      page-break-inside: auto;
+    }
+
+    table.assessment-table thead {
+      display: table-header-group;
+    }
+
+    table.assessment-table thead tr {
+      page-break-after: avoid;
+    }
+
+    table.assessment-table tbody tr {
+      page-break-inside: auto;
+    }
+
+    table.assessment-table td,
+    table.assessment-table th {
+      border: 1px solid #000 !important;
+      vertical-align: top;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      page-break-inside: auto;
+      overflow: visible;
+    }
+
+    table.assessment-table th {
+      background-color: #ffc70b !important;
+      font-weight: 600 !important;
+      text-align: center !important;
+      color: #141414 !important;
+    }
+
+    /* ✅ Domain heading forces a new page */
+    .domain-start {
+      page-break-before: always !important;
+    }
+
+    /* ✅ Skill heading style */
+    .skill-heading {
+      font-size: 22px;
+      color: blue;
+      font-weight: bold;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
     /* Improve text rendering */
     * {
       -webkit-font-smoothing: antialiased;
@@ -200,22 +250,63 @@
       margin: 4px 0;
       padding: 0;
     }
+
+    /* ── Issue 1: Recommendation / Evidence column alignment ──────────────── */
+    /* Columns 3 (Evidence) and 4 (Recommendation) must be top-left aligned.  */
+    /* These selectors use attribute selectors that survive JS DOM serialisation */
+    td[style*="vertical-align: top"],
+    td[style*="vertical-align:top"] {
+      vertical-align: top !important;
+      text-align: left !important;
+    }
+
+    /* ── Issue 2: Sensory Profiling table — keep header with first row ─────── */
+    /* Wrapper div keeps intro text + table header as one inseparable block.   */
+    .sensory-section-wrapper {
+      page-break-inside: avoid;
+    }
+
+    #sensoryTable thead tr {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+
+    #sensoryTable tbody tr:first-child {
+      page-break-before: avoid;
+      break-before: avoid;
+    }
+
+    #sensoryTable tr {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    #sensoryTable td {
+      vertical-align: top !important;
+      text-align: left !important;
+    }
   </style>
 </head>
 
 <body style="font-family: 'Barlow Semi Condensed', 'Barlow', Arial, sans-serif !important;">
   <div class="flyleaf">
     <header>
-      <img src="C:\Apache24\htdocs\Elina ISMS\v1\web\public\images/report_header-l.png" alt="" style="width: 100%;height:19%" id="img_logo">
+      <img src="C:\Apache24\htdocs\Elina ISMS\v1\web\public\images/report_header-l.png" alt=""
+        style="width: 100%;height:19%" id="img_logo">
     </header>
-    <img src="C:\Apache24\htdocs\Elina ISMS\v1\web\public\images/SAIL.png" alt="" style="display: block;margin-left: 15%;margin-right: auto;width: 70%;height:80%">
+    <img src="C:\Apache24\htdocs\Elina ISMS\v1\web\public\images/SAIL.png" alt=""
+      style="display: block;margin-left: 15%;margin-right: auto;width: 70%;height:80%">
     <br><br>
     <table style="width: 100%;">
       <tbody>
         <tr>
-          <td style="font-weight:bold !important; width: 33%;font-size: 20px;text-align: center;">Date of Birth<br>{{$data['child_dob']}}</td>
-          <td style="font-weight:bold !important; width: 34%;font-size: 20px;text-align: center;">{{$data['child_name']}}</td>
-          <td style="font-weight:bold !important; width: 33%;font-size: 20px;text-align: center;">Date of Reporting<br>{{ date('d M Y', strtotime($data['dor'])) }}</td>
+          <td style="font-weight:bold !important; width: 33%;font-size: 20px;text-align: center;">Date of
+            Birth<br>{{$data['child_dob']}}</td>
+          <td style="font-weight:bold !important; width: 34%;font-size: 20px;text-align: center;">
+            {{$data['child_name']}}
+          </td>
+          <td style="font-weight:bold !important; width: 33%;font-size: 20px;text-align: center;">Date of
+            Reporting<br>{{ date('d M Y', strtotime($data['dor'])) }}</td>
         </tr>
       </tbody>
     </table>
@@ -225,7 +316,8 @@
   </div>
 
   <header>
-    <img src="C:\Apache24\htdocs\Elina ISMS\v1\web\public\images/logo-2.png" alt="" style="width: 190px;float: right;margin: 50px 50px 0 0;" id="img_logo">
+    <img src="C:\Apache24\htdocs\Elina ISMS\v1\web\public\images/logo-2.png" alt=""
+      style="width: 190px;float: right;margin: 50px 50px 0 0;" id="img_logo">
   </header>
 
   <footer>

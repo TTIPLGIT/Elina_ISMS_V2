@@ -380,10 +380,12 @@
         height: 100%;
         text-align: center
     }
-    .wp{
-        width: 64% !important; 
-        padding :1px !important;
+
+    .wp {
+        width: 64% !important;
+        padding: 1px !important;
     }
+
     .scrollable,
     #scrolls {
         -ms-overflow-style: none;
@@ -395,10 +397,158 @@
     }
 </style>
 <style>
-    @media (min-width:320px) {
+    @media (max-width: 767px) {
+        /* Reduce global font size for mobile */
+        html, body, .section-body, .card, .card-header, .card-body, .list-group-item, p, a, h5, h6, label, input, select, button, span, .nav-link, .nav_heading {
+            font-size: 11px !important;
+        }
+
+        /* Remove edge spaces and padding */
+        .main-content {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            padding-top: 100px !important; /* Increased to prevent overlap with header */
+        }
+
+        .section-body {
+            margin: 0 !important;
+            padding: 0 0 50px 0 !important; /* Set side padding to 0 for full width */
+        }
+
         .card {
-            margin: 0px !important;
-            margin-bottom: 10px !important;
+            margin: 0 0 10px 0 !important;
+            border-radius: 0 !important;
+            width: 100% !important;
+        }
+
+        .row {
+            margin-left: 0 !important; /* Reset margin to prevent right-side gap */
+            margin-right: 0 !important;
+        }
+
+        [class*="col-"] {
+            padding-left: 0 !important; /* Reset padding for edge-to-edge */
+            padding-right: 0 !important;
+        }
+
+        /* Force parent containers to stay within viewport */
+        .scrollable, #scrolls, .table-responsive {
+            display: block !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden !important; /* Force no horizontal scroll */
+        }
+
+        .table {
+            width: 100% !important;
+            margin: 0 !important;
+            table-layout: fixed !important; /* Absolute requirement for 100% width fit */
+            border-collapse: collapse !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        .table th, .table td {
+            font-size: 7px !important; /* Balanced font size */
+            padding: 2px 0.5px !important;
+            vertical-align: middle !important;
+            word-break: break-all !important; 
+            white-space: normal !important; 
+            text-align: center !important;
+            min-width: 0 !important; 
+            line-height: 1.1 !important;
+        }
+
+        /* Enrollment Table (6 columns) */
+        .table.custom th:nth-child(1), .table.custom td:nth-child(1) { width: 6% !important; }  
+        .table.custom th:nth-child(2), .table.custom td:nth-child(2) { width: 18% !important; } 
+        .table.custom th:nth-child(3), .table.custom td:nth-child(3) { width: 18% !important; } 
+        .table.custom th:nth-child(4), .table.custom td:nth-child(4) { width: 23% !important; } 
+        .table.custom th:nth-child(5), .table.custom td:nth-child(5) { width: 19% !important; } 
+        .table.custom th:nth-child(6), .table.custom td:nth-child(6) { width: 16% !important; } 
+
+        /* Access History Table (4 columns) - Target by context */
+        #row3 .col-12:first-child .table th:nth-child(1), 
+        #row3 .col-12:first-child .table td:nth-child(1) { width: 20% !important; } /* User Name */
+        #row3 .col-12:first-child .table th:nth-child(2), 
+        #row3 .col-12:first-child .table td:nth-child(2) { width: 20% !important; } /* Designation */
+        #row3 .col-12:first-child .table th:nth-child(3), 
+        #row3 .col-12:first-child .table td:nth-child(3) { width: 30% !important; } /* Equal Login */
+        #row3 .col-12:first-child .table th:nth-child(4), 
+        #row3 .col-12:first-child .table td:nth-child(4) { width: 30% !important; } /* Equal Logout */
+
+        /* Sail Table (4 columns) - Target by context */
+        #row3 .col-12:nth-child(2) .table th:nth-child(1), 
+        #row3 .col-12:nth-child(2) .table td:nth-child(1) { width: 14% !important; } /* Slightly increase S.No */
+        #row3 .col-12:nth-child(2) .table th:nth-child(2), 
+        #row3 .col-12:nth-child(2) .table td:nth-child(2) { width: 28% !important; } 
+        #row3 .col-12:nth-child(2) .table th:nth-child(3), 
+        #row3 .col-12:nth-child(2) .table td:nth-child(3) { width: 28% !important; } 
+        #row3 .col-12:nth-child(2) .table th:nth-child(4), 
+        #row3 .col-12:nth-child(2) .table td:nth-child(4) { width: 30% !important; } 
+
+        .table th {
+            font-weight: bold !important;
+            background-color: #09306e !important;
+            color: white !important;
+            padding: 4px 0.5px !important;
+        }
+
+        /* Search bar and list item optimizations */
+        .wp {
+            width: 65% !important;
+            height: 35px !important; /* Increased to prevent text cutoff */
+            padding: 5px 8px !important;
+            font-size: 11px !important;
+            line-height: normal !important;
+        }
+
+        .list-group-item {
+            padding: 8px 10px !important;
+            display: flex !important;
+            align-items: center !important;
+            min-height: 50px !important;
+        }
+
+        .card-header {
+            padding: 10px !important;
+            font-size: 13px !important;
+        }
+
+        /* Profile and Widget adjustments */
+        .profile-photo-wrapper {
+            width: 50px !important;
+            height: 50px !important;
+            margin-bottom: 5px !important;
+        }
+
+        .profile-box {
+            margin: 5px 0 !important;
+            padding: 10px !important;
+        }
+
+        .widget-content {
+            padding: 0.5rem !important;
+        }
+        
+        .stati {
+            height: auto !important;
+            padding: 0.5em !important;
+        }
+        
+        .stati i {
+            font-size: 2em !important;
+        }
+        
+        .stati div b {
+            font-size: 1.5em !important;
+            margin-left: 10px !important;
+        }
+        
+        .stati div span {
+            font-size: 0.8em !important;
+            margin-left: 10px !important;
         }
     }
 </style>

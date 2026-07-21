@@ -34,39 +34,41 @@
                                             </div>
                                             @if (session('success'))
 
-                                            <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
-                                            <script type="text/javascript">
-                                                window.onload = function() {
-                                                    var message = $('#session_data').val();
-                                                    swal({
-                                                        title: "Success",
-                                                        text: message,
-                                                        type: "success",
-                                                    });
+                                                <input type="hidden" name="session_data" id="session_data"
+                                                    class="session_data" value="{{ session('success') }}">
+                                                <script type="text/javascript">
+                                                    window.onload = function () {
+                                                        var message = $('#session_data').val();
+                                                        swal({
+                                                            title: "Success",
+                                                            text: message,
+                                                            type: "success",
+                                                        });
 
-                                                }
-                                            </script>
+                                                    }
+                                                </script>
                                             @elseif(session('error'))
 
-                                            <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
-                                            <script type="text/javascript">
-                                                window.onload = function() {
-                                                    var message = $('#session_data1').val();
-                                                    swal({
-                                                        title: "Info",
-                                                        text: message,
-                                                        type: "info",
-                                                    });
+                                                <input type="hidden" name="session_data" id="session_data1"
+                                                    class="session_data" value="{{ session('error') }}">
+                                                <script type="text/javascript">
+                                                    window.onload = function () {
+                                                        var message = $('#session_data1').val();
+                                                        swal({
+                                                            title: "Info",
+                                                            text: message,
+                                                            type: "info",
+                                                        });
 
-                                                }
-                                            </script>
+                                                    }
+                                                </script>
                                             @endif
 
 
 
                                             <div class="table-wrapper">
                                                 <div class="table-responsive  p-3">
-                                                    <table class="table table-bordered tableExport" >
+                                                    <table class="table table-bordered tableExport">
                                                         <thead>
                                                             <tr>
                                                                 <th style="width:5px !important">Sl. No.</th>
@@ -85,25 +87,25 @@
                                                             <td></td>
                                                             <td></td>
                                                         </tr> -->
-                                                            @foreach($rows['dropped'] as $key=>$row)
-                                                            <tr>
-                                                                <td>{{ ++$key }}</td>
-                                                                <td>{{ $row['enrollment_id']}} </td>
-                                                                <td>{{ $row['child_name']}} </td>
-                                                                <td>{{ $row['child_contact_email']}} </td>
-                                                                <td>{{ $row['child_contact_phone']}} </td>
-                                                                <td>{{ $row['status']}} </td>
-                                                                <td>{{ $row['elina_assessment_description']}} </td>
-                                                               
+                                                            @foreach($rows['dropped'] as $key => $row)
+                                                                <tr>
+                                                                    <td>{{ ++$key }}</td>
+                                                                    <td>{{ $row['enrollment_id']}} </td>
+                                                                    <td>{{ $row['child_name']}} </td>
+                                                                    <td>{{ $row['child_contact_email']}} </td>
+                                                                    <td>{{ $row['child_contact_phone']}} </td>
+                                                                    <td>{{ $row['status']}} </td>
+                                                                    <td>{{ $row['elina_assessment_description']}} </td>
 
-                                                            </tr>
+
+                                                                </tr>
                                                             @endforeach
-                                                          
 
 
 
 
-                                                         
+
+
                                                         </tbody>
                                                     </table>
                                                 </div>

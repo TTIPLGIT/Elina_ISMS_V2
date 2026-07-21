@@ -36,6 +36,62 @@
   .select2-container--default .select2-selection--multiple .select2-selection__choice {
     color: black !important;
   }
+
+  /* =========================================================================
+     MOBILE RESPONSIVE STYLING - INPERSON MEETING VIEW
+     ========================================================================= */
+  @media (max-width: 768px) {
+      .main-content {
+          padding: 10px !important;
+          margin-top: 60px !important;
+      }
+      .card-body {
+          padding: 15px !important;
+      }
+      /* Stack grid columns */
+      .col-md-3, .col-md-4, .col-sm-2, .col-sm-4, .col-12, .col-md-12, .col-lg-12, .col-md-1, .col-md-2 {
+          width: 100% !important;
+          max-width: 100% !important;
+          flex: 0 0 100% !important;
+          padding-left: 5px !important;
+          padding-right: 5px !important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+      }
+      /* Row display stacked vertically */
+      .form-group.row {
+          display: block !important;
+          margin-bottom: 15px !important;
+      }
+      .col-form-label {
+          padding-top: 0 !important;
+          padding-bottom: 5px !important;
+          font-weight: bold !important;
+          font-size: 13px !important;
+      }
+      /* Alignment fixes */
+      #notesdiv, .col-md-1, .col-md-2 {
+          margin: 10px 0 0 0 !important;
+      }
+      .centerid {
+          text-align: left !important;
+      }
+      /* Select2 */
+      .select2-container {
+          width: 100% !important;
+      }
+      /* Buttons row */
+      .text-center {
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: center !important;
+          gap: 10px !important;
+      }
+      .text-center .btn {
+          width: 100% !important;
+          margin: 5px 0 !important;
+      }
+  }
 </style>
 
 <div class="main-content">

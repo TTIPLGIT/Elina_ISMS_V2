@@ -22,9 +22,6 @@
         margin: 0;
     }
 
-    /* body{
-        background-color: white !important;
-    } */
     .nav-tabs {
         background-color: #0068a7 !important;
         border-radius: 29px !important;
@@ -122,6 +119,149 @@
         background: white;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
+
+    /* ============================================================
+       MOBILE RESPONSIVE – screens ≤ 768px
+       ============================================================ */
+    @media (max-width: 768px) {
+
+        .main-content,
+        .card,
+        .card-body,
+        .form-group,
+        .row {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .main-content {
+            padding-top: 0 !important;
+        }
+
+        .breadcrumb {
+            font-size: 11px !important;
+            margin: 60px 10px 10px 10px !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            padding: 6px 10px !important;
+        }
+        .breadcrumb li {
+            display: inline !important;
+            white-space: nowrap !important;
+        }
+
+        h4 {
+            font-size: 18px !important;
+        }
+
+        .question {
+            margin-top: 1rem !important;
+            margin-left: 5px !important;
+            margin-right: 5px !important;
+        }
+
+        /* Stack fields vertically, but keep label + asterisk inline */
+        .row .col-md-4,
+        .row .col-md-2 {
+            flex: 0 0 100% !important;
+            max-width: 100% !important;
+            width: 100% !important;
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+            margin-bottom: 10px !important;
+        }
+
+        .form-group {
+            text-align: left !important;
+        }
+
+        .form-group label {
+            display: inline-block !important;
+            white-space: nowrap !important;
+            text-align: left !important;
+            width: auto !important;
+        }
+
+        /* Asterisk must stay inline */
+        .error-star {
+            display: inline !important;
+            margin-left: 2px !important;
+        }
+
+        .form-control,
+        .form-control[type="text"],
+        .form-control[type="number"],
+        select.form-control {
+            font-size: 14px !important;
+            height: auto !important;
+            padding: 8px 10px !important;
+            width: 100% !important;
+        }
+
+        /* Page preview – adapt to screen, allow horizontal scroll */
+        .page {
+            width: 100% !important;
+            min-height: auto !important;
+            padding: 10px !important;
+            margin: 5px auto !important;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: none;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .page table {
+            width: 100% !important;
+            min-width: 600px !important;
+        }
+        .page .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* ---- Buttons: keep in one line exactly like desktop ---- */
+        .col-md-12.text-center {
+            display: flex !important;
+            flex-wrap: nowrap !important;   /* no wrapping */
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 6px !important;
+            padding: 10px !important;
+            overflow-x: auto !important;   /* if screen is too narrow, allow scroll */
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .col-md-12.text-center .btn {
+            flex: 0 0 auto !important;
+            white-space: nowrap !important;
+            padding: 6px 12px !important;
+            font-size: 12px !important;
+            height: auto !important;       /* override inline height */
+            margin: 0 !important;
+        }
+
+        .btn .btn-label i,
+        .btn i {
+            font-size: 12px !important;
+        }
+
+        .btn .btn-label {
+            font-size: 12px !important;
+            padding: 0 !important;
+        }
+
+        /* Override any inline height from the buttons */
+        #Previous, #Next, .back-btn {
+            height: auto !important;
+            line-height: 1.4 !important;
+        }
+    }
 </style>
 <div class="main-content">
     {{ Breadcrumbs::render('reports_master.show',$report[0]['reports_id']) }}
@@ -136,14 +276,14 @@
                 <div class="row">
                     <div class="col-md-4 alignment">
                         <div class="form-group">
-                            <label class="control-label">Type</label><span class="error-star" style="color:red;">*</span>
+                            <label class="control-label">Type<span class="error-star" style="color:red;">*</span></label>
                             <input class="form-control" type="text" id="report_type" name="report_type" value="{{$report[0]['report_type']}}" autocomplete="off">
                         </div>
                     </div>
 
                     <div class="col-md-4 alignment">
                         <div class="form-group">
-                            <label class="control-label">Report Name</label><span class="error-star" style="color:red;">*</span>
+                            <label class="control-label">Report Name<span class="error-star" style="color:red;">*</span></label>
                             <input class="form-control" type="text" id="report_name" name="report_name" value="{{$report[0]['report_name']}}" autocomplete="off">
                         </div>
                     </div>
@@ -157,7 +297,7 @@
 
                     <div class="col-md-2 alignment">
                         <div class="form-group">
-                            <label class="control-label">Version</label><span class="error-star" style="color:red;">*</span>
+                            <label class="control-label">Version<span class="error-star" style="color:red;">*</span></label>
                             <input class="form-control" type="text" id="report_version" name="report_version" value="{{$report[0]['version']}}" autocomplete="off">
                         </div>
                     </div>
@@ -179,11 +319,11 @@
 
     </div>
     <div class="col-md-12 text-center" style="padding: 10px;">
-        <a type="button" class="btn btn-labeled btn-info back" id="Previous" title="Previous" style="display:none;height: 35px;background: blue !important; border-color:blue !important; color:white !important">
+        <a type="button" class="btn btn-labeled btn-info back" id="Previous" title="Previous" style="display:none;background: blue !important; border-color:blue !important; color:white !important">
             <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Previous</a>
         <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{ route('asessmentreportmaster.index') }}" style="color:white !important">
             <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back</a>
-        <a type="button" class="btn btn-labeled btn-info next" id="Next" title="Next" style="background: blue !important; border-color:#4d94ff !important; color:white !important;height: 35px;">
+        <a type="button" class="btn btn-labeled btn-info next" id="Next" title="Next" style="background: blue !important; border-color:#4d94ff !important; color:white !important;">
             <span class="btn-label" style="font-size:13px !important;">Next</span> <i class="fa fa-arrow-right"></i></a>
     </div>
 </div>

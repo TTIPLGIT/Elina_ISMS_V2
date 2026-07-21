@@ -85,7 +85,7 @@
                             <img src="{{$rows['users']['profile_image'] }}" alt="" width="100" height="100" style="border-radius:50%;height: 130px;width: 130px;margin: 10px 0px 10px 0px;">
                             @else
 
-                                <img style="margin-top: 10px;" src="images\profile-picture.webp" alt="profile" class="rounded-circle p-1 bg-primary" width="110">
+                                <img style="margin-top: 10px;" src="{{ asset('images/profile-picture.webp') }}" alt="profile" class="rounded-circle p-1 bg-primary" width="110">
                                 <div class="mt-3">
                                     <h4 class="headercolor">Kaviya</h4>
                                     <p class="text-secondary mb-1 headercolor"></p>
@@ -103,15 +103,21 @@
                                 </li> -->
 
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-nowrap">
-                                <h6 style="color:#6b747b; white-space: nowrap;"><i class="fa fa-clock-o" style="font-size:15px; "></i> <span style="white-space: nowrap;">Last Login</span> </h6>
+                                <h6 class="mb-0" style="color:#6b747b; white-space: nowrap;">
+                                    <i class="fa fa-clock mr-2" style="width: 20px; text-align: center;"></i> Last Login
+                                </h6>
                                 <span class="text-secondary">{{$rows['users']['login_time']}}</span>
                             </li>
 
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <a href="#" style="text-align: right; font-weight: bold; color:#6b747b;"><i class="fa fa-user" style="font-size:16px; "></i> View Profile</a>
+                                <a href="#" class="mb-0" style="text-align: right; font-weight: bold; color:#6b747b;">
+                                    <i class="fa fa-user mr-2" style="width: 20px; text-align: center;"></i> View Profile
+                                </a>
                                 <!-- <a href="#" style="text-align: left;">Logout <i class="fa fa-sign-out" style="font-size:16px"></i></a> -->
 
-                                <a style="text-align: left; font-weight: bold; color:#6b747b;" href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout <i class="fa fa-sign-out" style="font-size:15px"></i></a>
+                                <a style="text-align: left; font-weight: bold; color:#6b747b;" href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                    Logout <i class="fa fa-sign-out ml-2"></i>
+                                </a>
                             </li>
 
                         </ul>

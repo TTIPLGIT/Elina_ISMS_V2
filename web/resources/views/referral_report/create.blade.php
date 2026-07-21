@@ -6,22 +6,17 @@
         display: none;
     }
 
-    /* tr:nth-child(odd) {
-        background: #DDE;
-    }
-
-    tr:nth-child(odd) td[rowspan] {
-        background: #FFF;
-    } */
-
     .oddrow td {
         background: red;
     }
 </style>
+
 <div class="main-content">
     {{ Breadcrumbs::render('referralreport.create') }}
+
     <div class="section-body mt-1">
         <h5 class="text-center align" style="color:darkblue">Compilation of Referral Report</h5>
+
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -63,7 +58,6 @@
                 </div>
             </div>
 
-
             <div class="col-12">
                 <form name="edit_form" action="{{ route('referralreport.store')}}" method="POST" id="form_report">
                     {{ csrf_field() }}
@@ -71,7 +65,9 @@
                     <input type="hidden" id="state" name="state">
                     <input type="hidden" id="enrollmentId" name="enrollmentId">
                     <input type="hidden" id="dor" name="dor" value="<?php echo date('Y-m-d'); ?>">
+
                     <textarea class="meeting_description" id="meeting_description" name="meeting_description"></textarea>
+
                     <div id="table">
                         <div class="table-responsive">
                             <table class="table table-bordered card-body" id="recommendation_table">
@@ -114,17 +110,15 @@
                                         </td>
                                     </tr>
                                     @endforeach
-
-                                    <!-- <tr>
-                                    <td colspan="4">
-                                        <input id='add-row' class='btn btn-primary' onclick="addNewRow(event)" type='button' value='Add' />
-                                    </td>
-                                </tr> -->
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="text-center" style="margin-bottom: 5px;"> <input id='add-row' class='btn btn-success' onclick="addNewRow(event)" type='button' value='Add New Recommendation' /> </div>
+
+                    <div class="text-center" style="margin-bottom: 5px;">
+                        <input id='add-row' class='btn btn-success' onclick="addNewRow(event)" type='button' value='Add New Recommendation' />
+                    </div>
+
                     <div class="col-12 scrollable fixTableHead title-padding">
                         <div class="table-responsive">
                             <table class="table table-bordered card-body">
@@ -143,24 +137,22 @@
                     </div>
                 </form>
             </div>
+
             <div class="col-md-12 text-center" style="margin: 15px 0px 0px 0px;">
-                <!-- <a type="button" class="btn btn-labeled btn-info" onclick="PrevTab();" id="Previous" title="Previous" style="display:none;height: 35px;background: blue !important; border-color:blue !important; color:white !important">
-                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Previous</a> -->
                 <a type="button" onclick="save('Submitted')" id="submitbutton" class="btn btn-labeled btn-succes" title="Publish" style="background: orange !important; color:white !important">
-                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Submit</a>
+                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Submit
+                </a>
                 <a type="button" onclick="save('Saved')" id="submitbutton" class="btn btn-labeled btn-succes" title="Save" style="background: green !important; border-color:green !important; color:white !important">
-                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Save</a>
+                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-check"></i></span> Save
+                </a>
                 <a type="button" class="btn btn-labeled back-btn" title="Back" href="{{ route('referralreport.index') }}" style="color:white !important">
-                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back</a>
-                <!-- <a type="button" class="btn btn-labeled btn-info" onclick="NextTab();" id="Next" title="Next" style="background: blue !important; border-color:#4d94ff !important; color:white !important;height: 35px;">
-                    <span class="btn-label" style="font-size:13px !important;">Next</span> <i class="fa fa-arrow-right"></i></a> -->
+                    <span class="btn-label" style="font-size:13px !important;"><i class="fa fa-arrow-left"></i></span> Back
+                </a>
             </div>
         </div>
-
-
     </div>
 </div>
-<!-- <script>$('tr:not(:has(td[rowspan])):even').addClass('oddrow');</script> -->
+
 <script>
     function save(a) {
         if (document.getElementById('enrollment_child_num').value == "") {
@@ -169,7 +161,6 @@
         }
         document.getElementById('state').value = a;
         document.getElementById('form_report').submit();
-
     }
 
     function checkOption(selectElem) {
@@ -181,6 +172,7 @@
         }
     }
 </script>
+
 <script type="text/javascript">
     var page6che = '1';
 
@@ -196,23 +188,13 @@
                     _token: '{{csrf_token()}}'
                 }
             }).done(function(data) {
-                // var category_id = json.parse(data);
-                // console.log(data);
-
                 if (data != '[]') {
-
-                    var optionsdata = "";
                     document.getElementById('child_id').value = data[0].child_id;
                     document.getElementById('child_name').value = data[0].child_name;
                     document.getElementById('enrollmentId').value = data[0].enrollment_id;
-                    // document.getElementById('meeting_to').value = data[0].child_contact_email;
                     document.getElementById('enrollment_id').value = data[0].enrollment_id;
                     document.getElementById('user_id').value = data[0].user_id;
 
-                    // console.log(data)
-                    // var user_id = data[0].user_id;
-                    // $('#a' + user_id).show();
-                    // 
                     $.ajax({
                         url: "{{ url('/sensory/enrollmentlist') }}",
                         type: 'POST',
@@ -221,51 +203,35 @@
                             _token: '{{csrf_token()}}'
                         }
                     }).done(function(data) {
-                        // console.log(data);
                         var sign = data.sign;
                         for (si = 0; si < sign.length; si++) {
                             var sii = si + 1;
                             var sign_content = sign[si].additional_details;
                             tinymce.get('signature_' + sii).setContent(sign_content);
                         }
-                    })
-                    // 
+                    });
                 } else {
-                    document.getElementById('child_name');
                     var ddd = '<option value="child_name">Select Enrollment_child_num</option>';
-                    var demonew = $('#child_name').html(ddd);
+                    $('#child_name').html(ddd);
                 }
-
-
-            })
+            });
         } else {
-            document.getElementById('initiated_by');
             var ddd = '<option value="initiated_by">Select Enrollment_child_num</option>';
-            var demonew = $('#initiated_by').html(ddd);
+            $('#initiated_by').html(ddd);
         }
     };
 </script>
-<script>
-    // var aof = '<select class="form-control default" name="focus_area" id="focus_area" onchange="focus_area()"><option value="">Select Area of focus</option><option value="">Occupational Therapist</option><option value="">Speech Therapist</option><option value="">Special Education</option><option value="">Physical Trainer</option><option value="">Physiotherapy</option><option value="">Yoga Therapist</option></select>';
-    var referral = '<select class="form-control default" name=""><option value="">Select Referral</option></select>';
-    var frequency = '<input class="form-control default" type="text" id="frequency" name="frequency" autocomplete="off">';
-    var referraloptions = '<option value="">Ms. Sukanya - 9876522210</option><option value="">Ms. Sumithra Shailesh - 9876543217</option><option value="">Ms. Ramalakshmi - 9876543233</option><option value="">Ms. Vijayalakshmi - 9876543216 </option><option value="">Mr. Stephen - 9876543211</option><option value="">Ms. Malini - 9876543210 </option>';
 
+<script>
     function focus_area(id) {
-        // alert(id);
         var focus_area = $('#focus_area' + id).val();
         if (focus_area == '0') {
-
             document.getElementById('otherInputfocus_area' + id).style.display = "block";
-
             var selectElement = document.getElementById('referral_users' + id);
             selectElement.innerHTML = '';
-
             $('#referral_users' + id).append('<option value="0">Other</option>');
-            var selectElement = document.getElementById('referral_users' + id);
             selectElement.selectedIndex = '0';
             selectElement.onchange();
-
         } else {
             document.getElementById('otherInputfocus_area' + id).style.display = "none";
             var selectElement = document.querySelector('#referral_users' + id);
@@ -280,9 +246,7 @@
                     _token: '{{csrf_token()}}'
                 }
             }).done(function(data) {
-                // console.log(data);
                 if (data != '[]') {
-                    // name - phone_number
                     var ddd = '';
                     for (var i = 0; i < data.length; i++) {
                         var name = data[i].name;
@@ -292,45 +256,17 @@
                     }
                     ddd += '<option value="0">Other</option>';
                     $('#referral_users' + id).append(ddd);
-                    // console.log('ddd', ddd);
                 } else {
                     var ddd = '<option value="">No Records Found</option>';
                     ddd += '<option value="0">Other</option>';
                     $('#referral_users' + id).append(ddd);
                 }
-            })
+            });
         }
-        // if (focus_area != '' || focus_area != null) {
-        //     $('#referral_users' + id).append(referraloptions);
-        // }
     }
-    // function addRow(e) {
-    //     console.log(e);
-    //     var table = document.getElementById("recommendation_table");
-
-    //     var tableCount = $('#tablebody').find('tr').length;
-    //     var rowSpanCount = $('#recommendation' + e).attr('rowspan');
-    //     $('#recommendation' + e).attr('rowspan', Number(rowSpanCount) + 1);
-    //     if(Number(e) + 1 == 2){
-    //         var row = table.insertRow(Number(e) + 1);
-    //     }else{
-    //         var row = table.insertRow(Number(e) - 1);
-    //     }
-    //     // var row = table.insertRow(-1);
-
-    //     $(row.insertCell(0)).append(aof);
-    //     $(row.insertCell(1)).append(referral);
-
-    //     var tempfrequency = frequency;
-    //     tempfrequency += '<div onclick="addRow('+e+')"><a class="btn addProduct" title="Add" order=""><i class="fa fa-plus-circle" order=""></i></a></div><a class="btn remove" order="" title="Add"><i class="fa fa-times" order=""></i></a>';
-    //     cell3 = row.insertCell(2);
-    //     cell3.style.cssText = "display: flex;align-items: center;";
-    //     $(cell3).append(tempfrequency);
-    // }
 
     $(document).on('click', ".row_div", function() {
         var thisRow = $(this).parent().parent();
-
         var cloneRow = thisRow.clone(true).insertAfter(thisRow).data('is_clone', true);
         $(this).attr("id", "hide");
         $(this).parent().find('.remove').attr('id', 'hide');
@@ -347,14 +283,12 @@
         var order = $(this).attr("order");
         var rowSpanCount = $('#recommendation' + order).attr('rowspan');
         $('#recommendation' + order).attr('rowspan', Number(rowSpanCount) + 1);
-
         var rowCount = $('#recommendation' + order).attr('rowspan');
         var select = cloneRow.find('select[name^="focus_area"]');
         var id = select.attr('id');
         var suffix = id.replace('focus_area', '');
         select.attr('id', id + '_' + rowCount).attr('onchange', 'focus_area("' + suffix + '_' + rowCount + '")');
 
-        // <input class="form-control default" type="text" name="focus_area_other[' + trl + '][]" id="otherInputfocus_area' + trl + '" style="display: none;">
         var inputText = cloneRow.find('input[name^="focus_area_other"]');
         inputText.each(function(index) {
             var newID = $(this).attr('id') + '_' + rowCount;
@@ -376,14 +310,11 @@
     $(document).on('click', ".remove", function() {
         var thisRow = $(this).parent().parent(),
             prevRow = thisRow.prev();
-
         var currentFrequency = thisRow.find('#frequency').val().trim();
 
-        // If the input is empty, remove the row directly
         if (currentFrequency === '') {
             removeRow();
         } else {
-            // If the input is not empty, show a validation prompt
             Swal.fire({
                 title: 'Do you want to remove this frequency from the report?',
                 text: 'Click Yes to remove the frequency point. Please note that this action cannot be reversed',
@@ -393,14 +324,12 @@
                 cancelButtonText: 'No',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // If the user confirms, remove the row
                     removeRow();
                 }
             });
         }
 
         function removeRow() {
-            // The row removal logic
             if (thisRow.data('is_clone')) {
                 while (prevRow.data('is_clone')) {
                     prevRow = prevRow.prev();
@@ -418,14 +347,10 @@
         }
     });
 
-
-
     function addNewRow() {
         var table = document.getElementById("recommendation_table");
         var trl = document.querySelectorAll('.recommendation_row').length + 1;
-
         var rws = table.rows;
-        var rowlength = rws.length;
         var cols = table.rows[0].cells.length;
         var row = table.insertRow(rws.length);
         row.className = 'recommendation_row';
@@ -468,9 +393,9 @@
         }
     }
 </script>
+
 <script>
     $(document).ready(function() {
-
         tinymce.init({
             selector: '.meeting_description',
             height: 200,
@@ -492,15 +417,12 @@
             content_style: "@import url(https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&display=swap);",
             content_style: "@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');",
             importcss_append: true,
-
             file_picker_callback: function(cb, value, meta) {
                 var input = document.createElement('input');
                 input.setAttribute('type', 'file');
                 input.setAttribute('accept', 'image/*');
-
                 input.onchange = function() {
                     var file = this.files[0];
-
                     var reader = new FileReader();
                     reader.onload = function() {
                         var id = 'blobid' + (new Date()).getTime();
@@ -508,15 +430,10 @@
                         var base64 = reader.result.split(',')[1];
                         var blobInfo = blobCache.create(id, file, base64);
                         blobCache.add(blobInfo);
-
-                        /* call the callback and populate the Title field with the file name */
-                        cb(blobInfo.blobUri(), {
-                            title: file.name
-                        });
+                        cb(blobInfo.blobUri(), { title: file.name });
                     };
                     reader.readAsDataURL(file);
                 };
-
                 input.click();
             },
             image_caption: true,
@@ -525,12 +442,13 @@
             toolbar_mode: 'sliding',
             contextmenu: "link image imagetools table",
         });
+
         tinymce.init({
             selector: '.tinymce-textarea',
             height: 200,
             branding: false,
             plugins: 'importcss',
-            autosave_ask_before_unload: false, //Set True to for confirmation on unload
+            autosave_ask_before_unload: false,
             toolbar: '',
             font_formats: "Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Barlow=Barlow, sans-serif; Barlow Condensed=Barlow Condensed, sans-serif; Barlow Semi Condensed=Barlow Semi Condensed, sans-serif; Plain Barlow Black=Barlow Black, sans-serif; Plain Barlow Bold=Barlow Bold, sans-serif; Plain Barlow Light=Barlow Light, sans-serif; Plain Barlow Medium=Barlow Medium, sans-serif; Plain Barlow Thin=Barlow Thin, sans-serif; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Oswald=oswald; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats",
             content_style: "@import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');",
@@ -539,21 +457,124 @@
             content_style: "@import url(https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&display=swap);",
             content_style: "@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');",
             content_style: 'body {font-family :Barlow Condensed, sans-serif; font-size:14px }',
-
         });
     });
-</script>
-<script>
+
     function checkCharCount(textarea) {
         var maxChar = 1000;
-
         if (textarea.value.length >= maxChar) {
             textarea.value = textarea.value.substring(0, maxChar);
             textarea.removeEventListener("input", checkCharCount);
         }
-
         var remainingChars = maxChar - textarea.value.length;
         console.log("Remaining characters: " + remainingChars);
     }
 </script>
+
+<!-- ====================== MOBILE RESPONSIVE CSS (same as edit screen) ====================== -->
+<style>
+@media only screen and (max-width: 768px) {
+    .main-content {
+        padding: 2px !important;
+        margin-top: 55px !important;
+        overflow-x: hidden !important;
+    }
+    .section-body {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .card,
+    .card-body {
+        padding: 6px !important;
+        margin: 0 !important;
+    }
+    .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    [class*="col-"] {
+        padding-left: 4px !important;
+        padding-right: 4px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+    .form-control,
+    textarea,
+    select {
+        width: 100% !important;
+        font-size: 13px !important;
+        min-height: 38px;
+    }
+    textarea {
+        word-break: break-word;
+    }
+    .table-responsive {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+    #recommendation_table {
+        min-width: 900px;
+    }
+    #recommendation_table textarea,
+    #recommendation_table select,
+    #recommendation_table input {
+        min-width: 140px;
+    }
+    .tox,
+    .tox-tinymce {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    .fixTableHead table {
+        min-width: 600px;
+    }
+    .fixTableHead .table-responsive {
+        overflow-x: auto !important;
+    }
+    h5.align {
+        font-size: 16px !important;
+        text-align: center !important;
+        margin-bottom: 10px !important;
+    }
+    .col-md-12.text-center {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 5px !important;
+        flex-wrap: nowrap !important;
+    }
+    .col-md-12.text-center .btn {
+        width: auto !important;
+        min-width: 90px !important;
+        padding: 6px 10px !important;
+        font-size: 12px !important;
+        margin: 0 !important;
+        white-space: nowrap !important;
+    }
+    .col-md-12.text-center .btn-label {
+        display: none !important;
+    }
+    .back-btn {
+        margin-top: 0 !important;
+    }
+    .breadcrumb {
+        font-size: 12px !important;
+        padding: 5px !important;
+        margin-bottom: 8px !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        margin-left: 10px !important;
+    }
+    .row_div .btn,
+    .remove {
+        padding: 4px 6px !important;
+    }
+    input[type="date"] {
+        width: 100% !important;
+    }
+}
+</style>
 @endsection

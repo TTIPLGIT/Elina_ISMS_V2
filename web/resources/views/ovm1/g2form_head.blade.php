@@ -3,6 +3,7 @@
 @section('content')
 
 <style>
+  /* ----- General styles (unchanged) ----- */
   .options-grid {
     display: block;
     margin-top: 8px;
@@ -38,11 +39,207 @@
   .option-item input:disabled {
     opacity: 1 !important;
   }
+
+  /* ----- NEW LAYOUT: Full-height card with sticky buttons ----- */
+  .full-height-card {
+    display: flex;
+    flex-direction: column;
+    height: 75vh;               /* Adjust as needed; use calc(100vh - header) if required */
+    min-height: 400px;
+  }
+
+  .full-height-card .card-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+  }
+
+  .full-height-card .card-footer {
+    border-top: 1px solid rgba(0,0,0,.125);
+    padding: 12px 15px;
+    background: #fff;
+    flex-shrink: 0;
+    text-align: center;
+  }
+
+  /* ----- Mobile responsive overrides (kept, with minor adjustments) ----- */
+  @media (max-width: 768px) {
+    .form-control, .form-group textarea, .form-group select {
+      background-color: transparent !important;
+      border: none !important;
+      border-bottom: 1px solid #ced4da !important;
+      border-radius: 0 !important;
+      padding: 8px 0 !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      color: #1a1a1a !important;
+      font-family: 'Barlow Semi Condensed', sans-serif !important;
+      box-shadow: none !important;
+      min-height: auto !important;
+    }
+
+    .form-control:focus {
+      border-bottom: 2px solid #007bff !important;
+      background-color: transparent !important;
+    }
+
+    .form-control[readonly], .form-control:disabled {
+      background-color: transparent !important;
+      border-bottom: 1px dashed #ccc !important;
+    }
+
+    .main-content {
+      padding: 5px !important;
+    }
+
+    /* Breadcrumb adjustments (unchanged) */
+    #mobile-breadcrumb-wrapper .breadcrumb, 
+    #mobile-breadcrumb-wrapper .breadcrumb-custom {
+      margin-top: 60px !important;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+    }
+
+    #mobile-breadcrumb-wrapper .breadcrumb * {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    #mobile-breadcrumb-wrapper .breadcrumb li, 
+    #mobile-breadcrumb-wrapper .breadcrumb a, 
+    #mobile-breadcrumb-wrapper .breadcrumb .active,
+    #mobile-breadcrumb-wrapper .breadcrumb-item {
+      font-size: 13px !important;
+      color: #e83e8c !important;
+    }
+
+    #mobile-breadcrumb-wrapper .breadcrumb *:before,
+    #mobile-breadcrumb-wrapper .breadcrumb *:after,
+    #mobile-breadcrumb-wrapper .breadcrumb *::before,
+    #mobile-breadcrumb-wrapper .breadcrumb *::after {
+      display: none !important;
+      content: none !important;
+      background: transparent !important;
+      border: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    #mobile-breadcrumb-wrapper .breadcrumb span {
+      display: none !important;
+    }
+
+    #mobile-breadcrumb-wrapper .breadcrumb li + li::before {
+      display: inline-block !important;
+      content: " \003E " !important;
+      color: #adb5bd !important;
+      padding: 0 8px !important;
+      font-weight: normal !important;
+      position: static !important;
+    }
+
+    h4 {
+      font-size: 14px !important;
+      margin-top: 10px !important;
+      margin-bottom: 10px !important;
+      font-weight: bold !important;
+    }
+
+    .full-height-card .card-body {
+      padding: 10px !important;
+    }
+
+    .form-group {
+      margin-bottom: 12px !important;
+    }
+
+    .form-group label {
+      font-size: 13px !important;
+      font-weight: bold !important;
+    }
+
+    .form-group p {
+      font-size: 11px !important;
+      margin-bottom: 8px !important;
+    }
+
+    .option-item label {
+      font-size: 12px !important;
+    }
+
+    .btn {
+      padding: 6px 12px !important;
+      font-size: 12px !important;
+      margin-bottom: 5px !important;
+    }
+
+    /* Mobile Breadcrumb Fix */
+    .breadcrumb-wrapper {
+      width: 100% !important;
+      overflow: hidden !important;
+    }
+
+    .breadcrumb-wrapper .breadcrumb {
+      margin-top: 60px !important;
+      padding: 0 !important;
+      background: transparent !important;
+      white-space: nowrap !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      flex-wrap: nowrap !important;
+      display: flex !important;
+      align-items: center !important;
+      scrollbar-width: none !important;
+    }
+
+    .breadcrumb-wrapper .breadcrumb::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    .breadcrumb-wrapper .breadcrumb li,
+    .breadcrumb-wrapper .breadcrumb a,
+    .breadcrumb-wrapper .breadcrumb .active,
+    .breadcrumb-wrapper .breadcrumb-item {
+      font-size: 11px !important;
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
+    }
+
+    h4 {
+      font-size: 13px !important;
+      margin-top: 8px !important;
+      margin-bottom: 8px !important;
+    }
+
+    .full-height-card {
+      height: 70vh;        /* Slightly shorter on mobile for better fit */
+      min-height: 350px;
+    }
+
+    .full-height-card .card-footer {
+      padding: 8px 10px !important;
+    }
+
+    .btn {
+      padding: 5px 10px !important;
+      font-size: 11px !important;
+    }
+  }
 </style>
 
 <div class="main-content">
 
-  {{ Breadcrumbs::render('g2form.new' , $child_name) }}
+  <div class="breadcrumb-wrapper">
+    {{ Breadcrumbs::render('g2form.new' , $child_name) }}
+  </div>
 
   {{-- Alerts --}}
   @if (session('success'))
@@ -67,26 +264,25 @@
     </div>
 
     <div class="col-12">
-      <div class="card">
+      {{-- Card now uses the flex layout --}}
+      <div class="card full-height-card">
 
         <form action="{{route('g2form.store')}}" method="POST" id="gfrom">
           {{ csrf_field() }}
 
-          <div class="card-body" style="max-height:400px;overflow:auto;">
-
+          {{-- Scrollable body --}}
+          <div class="card-body">
             @foreach($questions as $question)
 
             @php
             $options = [];
             if(isset($question['other_option']) && !empty($question['other_option'])){
               if ($question['field_types_id'] == 5) {
-                // Checkbox: extracted using brackets
                 preg_match_all('/\[(.*?)\]/', $question['other_option'], $matches);
                 if(!empty($matches[1])){
                   $options = array_map('trim', $matches[1]);
                 }
               } else {
-                // Dropdown and Radio: extracted by splitting commas
                 $options = array_filter(array_map('trim', explode(',', $question['other_option'])));
               }
             }
@@ -203,11 +399,10 @@
             </div>
 
             @endforeach
-
           </div>
 
-          {{-- BUTTONS --}}
-          <div class="text-center mb-3">
+          {{-- Fixed footer with buttons --}}
+          <div class="card-footer">
             <input type="hidden" id="type" name="type">
             <input type="hidden" name="enrollment_id" value="{{$enrollId}}">
 
@@ -227,7 +422,7 @@
   </div>
 </div>
 
-{{-- JS --}}
+{{-- JS (unchanged) --}}
 <script>
   $(document).on('change', '.other-check', function() {
     let input = $(this).closest('.form-group').find('.other-input');

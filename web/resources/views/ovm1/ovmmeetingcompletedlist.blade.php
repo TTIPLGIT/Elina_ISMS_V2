@@ -1,10 +1,407 @@
-@extends('layouts.adminnav')
+﻿@extends('layouts.adminnav')
 
 @section('content')
 <style>
+    @media (max-width: 768px) {
+        /* Global Mobile scaling */
+        .main-content {
+            padding: 2px !important;
+            margin-top: 55px !important;
+            overflow-x: hidden !important;
+        }
 
+        /* Breadcrumbs - Cleaned & Left Aligned */
+        .breadcrumb {
+            padding: 2px 5px !important;
+            margin: 5px 0 5px 15px !important;
+            width: 85% !important;
+            height: auto !important;
+            min-height: 25px !important;
+            font-size: 8px !important;
+            background-color: transparent !important;
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            overflow: hidden !important;
+            border: none !important;
+            box-shadow: none !important;
+            justify-content: flex-start !important;
+            align-items: center !important;
+            white-space: nowrap !important;
+        }
+        
+        .breadcrumb li span, 
+        .breadcrumb .number,
+        .breadcrumb-item::before {
+            width: 14px !important;
+            height: 14px !important;
+            line-height: 14px !important;
+            font-size: 8px !important;
+            margin-right: 4px !important;
+        }
 
+        .breadcrumb-item, .breadcrumb-item a {
+            font-size: 8px !important;
+            display: flex !important;
+            align-items: center !important;
+        }
 
+        /* Heading */
+        h4 {
+            font-size: 14px !important;
+            margin: 10px 0 !important;
+            font-weight: bold !important;
+            color: darkblue !important;
+            text-align: center !important;
+        }
+
+        /* Create Button Optimization - Root Cause Fix */
+        table#align tbody td .btn-labeled {
+            padding: 0 !important;
+            font-size: 10px !important;
+            margin: 2px 2px 2px 0 !important;
+            height: 24px !important;
+            display: inline-flex !important;
+            align-items: stretch !important;
+            width: auto !important;
+            min-width: 60px !important;
+            overflow: hidden !important;
+            border-radius: 4px !important;
+            border: none !important;
+            box-shadow: none !important;
+            position: relative !important;
+        }
+        
+        table#align tbody td .btn-labeled .btn-label::before,
+        table#align tbody td .btn-labeled .btn-label::after {
+            display: none !important;
+            content: none !important;
+        }
+
+        table#align tbody td .btn-labeled .btn-label {
+            height: auto !important;
+            padding: 0 8px !important;
+            background: transparent !important; 
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin: 0 !important;
+            font-size: 10px !important;
+            position: relative !important;
+            left: 0 !important;
+            top: 0 !important;
+        }
+
+        table#align tbody td .btn-labeled span:not(.btn-label) {
+            font-size: 10px !important;
+            padding: 0 10px !important;
+            font-weight: bold !important;
+            margin: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        /* DataTables Controls - Bold 9px */
+        div.dataTables_wrapper div.dataTables_length {
+            float: left !important;
+            width: 48% !important;
+            font-size: 9px !important;
+            font-weight: bold !important;
+            margin-bottom: 5px !important;
+            text-align: left !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+        
+        div.dataTables_wrapper div.dataTables_filter {
+            float: right !important;
+            width: 50% !important;
+            font-size: 9px !important;
+            font-weight: bold !important;
+            margin-bottom: 5px !important;
+            text-align: right !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-end !important;
+        }
+
+        /* Export Buttons (PDF, Excel, etc.) - Standardized to Screenshot 1 */
+        div.dataTables_wrapper div.dt-buttons {
+            float: none !important;
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            justify-content: center !important;
+            margin-bottom: 10px !important;
+            gap: 4px !important;
+            width: 100% !important;
+        }
+        div.dataTables_wrapper div.dt-buttons .btn {
+            padding: 4px 6px !important;
+            font-size: 10px !important;
+            min-width: 40px !important;
+            width: auto !important;
+            height: auto !important;
+            border-radius: 4px !important;
+            font-weight: bold !important;
+            display: inline-block !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_length select {
+            height: 32px !important;
+            width: 75px !important;
+            font-size: 11px !important;
+            margin: 0 5px !important;
+            padding: 2px 5px !important;
+        }
+        
+        div.dataTables_wrapper div.dataTables_filter input {
+            height: 30px !important;
+            width: 100px !important;
+            font-size: 11px !important;
+            margin-left: 5px !important;
+            border-radius: 4px !important;
+            border: 1px solid #ccc !important;
+        }
+
+        /* Table - Mobile Accordion UI */
+        .table-responsive {
+            overflow-x: hidden !important;
+            overflow-y: auto !important;
+            max-height: 80vh;
+            width: 100% !important;
+            padding-bottom: 10px !important;
+            display: block !important;
+            clear: both !important;
+        }
+
+        .table-responsive table {
+            font-size: 12px;
+            min-width: 100% !important;
+            width: 100% !important;
+        }
+
+        .table-responsive thead { display: none !important; }
+        .table-responsive tbody { background: transparent !important; }
+
+        #align tr {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: stretch !important;
+            border: 1px solid #e0e0e0 !important; 
+            border-radius: 8px !important;
+            margin-bottom: 8px !important;
+            position: relative !important;
+            padding: 10px 15px 10px 45px !important;
+            background: #fff !important;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+            cursor: pointer;
+            width: 100% !important;
+        }
+
+        #align td {
+            display: block !important;
+            border: none !important;
+            padding: 0 !important;
+            text-align: left !important;
+            white-space: normal !important;
+            width: 100% !important;
+            background: transparent !important;
+            height: auto !important;
+            min-height: 0 !important;
+            line-height: 1.2 !important;
+        }
+
+        /* 1. S.No -> Plain text on the left */
+        #align td:nth-of-type(1) {
+            position: absolute !important;
+            left: 15px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            width: 25px !important;
+            background: transparent !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            font-weight: bold !important;
+            font-size: 1rem !important;
+            color: #2c3e50 !important;
+            transition: top 0.3s, transform 0.3s;
+            margin: 0 !important;
+        }
+
+        #align tr.expanded-row td:nth-of-type(1) {
+            top: 20px !important;
+            transform: translateY(0) !important;
+        }
+
+        /* 2. OVM ID - hidden on mobile */
+        #align td:nth-of-type(2) { display: none !important; }
+
+        /* 3. Child Name */
+        #align td:nth-of-type(3) {
+            font-weight: bold !important;
+            font-size: 1rem !important;
+            color: #2c3e50 !important;
+            margin-bottom: 2px !important;
+            margin-top: 0 !important;
+            padding-right: 25px !important;
+            order: 1 !important;
+            line-height: 1.2 !important;
+        }
+
+        /* 4. Enrollment Id */
+        #align td:nth-of-type(4) {
+            font-size: 0.85rem !important;
+            color: #34495e !important;
+            margin-bottom: 0 !important;
+            margin-top: 0 !important;
+            order: 2 !important;
+            line-height: 1.2 !important;
+        }
+        #align td:nth-of-type(4):before { content: "Child ID: "; font-weight: bold !important; color: #000 !important; }
+
+        /* Hidden columns by default */
+        #align td:nth-of-type(5) { order: 3 !important; display: none !important; }
+        #align td:nth-of-type(6) { order: 4 !important; display: none !important; }
+
+        /* Chevron icon */
+        #align tr::after {
+            content: '\f054';
+            font-family: 'FontAwesome';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #bdc3c7;
+            transition: transform 0.3s;
+            font-size: 1rem;
+        }
+        
+        #align tr.expanded-row::after {
+            transform: translateY(-50%) rotate(90deg);
+            top: 35px;
+        }
+
+        /* Expanded state styles */
+        #align tr.expanded-row td:nth-of-type(5) {
+            display: flex !important;
+            align-items: center !important;
+            margin-top: 8px !important;
+            padding-top: 0 !important;
+            border-top: none !important;
+            font-size: 0.95rem !important;
+            color: #34495e !important;
+        }
+        
+        #align tr.expanded-row td:nth-of-type(5):before { content: "Status: "; font-weight: bold !important; color: #000 !important; display: inline !important; margin-right: 4px !important;}
+        
+        /* Action button alignment */
+        #align tr.expanded-row td:nth-of-type(6) {
+            display: flex !important;
+            align-items: center !important;
+            margin-top: 8px !important;
+            padding-top: 0 !important;
+            border-top: none !important;
+            font-size: 0.95rem !important;
+            color: #34495e !important;
+            flex-wrap: wrap !important;
+        }
+        #align tr.expanded-row td:nth-of-type(6):before { content: "Action: "; font-weight: bold !important; color: #000 !important; display: inline !important; margin-right: 4px !important;}
+        
+        #align tr.expanded-row td:nth-of-type(6) a.btn, 
+        #align tr.expanded-row td:nth-of-type(6) button.btn {
+            padding: 4px 8px !important;
+            background: #FFA426 !important;
+            border-radius: 4px !important;
+            display: inline-block !important;
+            margin: 2px !important;
+        }
+
+        /* Pagination sizing */
+        div.dataTables_wrapper div.dataTables_paginate ul.pagination li.paginate_button a {
+            padding: 3px 6px !important;
+            font-size: 8px !important;
+        }
+        div.dataTables_wrapper div.dataTables_info {
+            font-size: 10px !important;
+            margin-bottom: 5px !important;
+        }
+
+        /* Action Icons */
+        .btn-link i {
+            font-size: 14px !important;
+        }
+    }
+
+    /* ===== TABLET-ONLY (769px - 1024px) – Text Wrapping Fix ===== */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        #align {
+            table-layout: auto !important;   /* allow columns to size based on content */
+            width: 100% !important;
+        }
+
+        #align th, #align td {
+            vertical-align: middle !important;
+            font-size: 13px !important;
+            white-space: normal !important;   /* allow text to wrap */
+            word-break: break-word !important;
+            padding: 8px 10px !important;
+        }
+
+        /* Set reasonable max-widths and allow wrapping */
+        #align th:nth-child(3), #align td:nth-child(3) { /* Child Name */
+            min-width: 120px !important;
+            max-width: 200px !important;
+        }
+        #align th:nth-child(4), #align td:nth-child(4) { /* Enrollment ID */
+            min-width: 100px !important;
+            max-width: 180px !important;
+        }
+        #align th:nth-child(5), #align td:nth-child(5) { /* Status */
+            min-width: 80px !important;
+            max-width: 120px !important;
+        }
+
+        /* Adjust column widths */
+        .is-co-col {
+            width: auto !important;
+        }
+        .status-col {
+            width: auto !important;
+            white-space: normal !important;
+        }
+        .meeting-time-col {
+            width: auto !important;
+            white-space: normal !important;
+        }
+
+        /* Action column – keep buttons compact */
+        #align td:last-child {
+            white-space: nowrap !important;
+        }
+        #align td:last-child .btn {
+            font-size: 12px !important;
+            padding: 4px 8px !important;
+        }
+    }
+
+    /* ===== DESKTOP (min-width: 1025px) – keep as before ===== */
+    @media (min-width: 1025px) {
+        #align th, #align td {
+            vertical-align: middle !important;
+            font-size: 13px !important;
+        }
+        .is-co-col {
+            width: 15% !important;
+        }
+        .status-col {
+            width: 10% !important;
+            white-space: nowrap !important;
+        }
+        .meeting-time-col {
+            width: 15% !important;
+            white-space: nowrap !important;
+        }
+    }
 </style>
 <div class="main-content">
   <section class="section">
@@ -43,11 +440,6 @@
 
               </div>
 
-
-
-
-
-
               <div class="table-wrapper">
                 <div class="table-responsive">
                   <table class="table table-bordered" id="align">
@@ -57,7 +449,6 @@
                         <th>OVM ID</th>
                         <th>Child Name</th>
                         <th>Enrollment Id</th>
-
                         <th>Status</th>
                         <th>Action</th>
                       </tr>
@@ -152,5 +543,37 @@
 
   }
 </script>
+
+<style>
+    /* Improved Action Buttons in Mobile View */
+    @media (max-width: 768px) {
+        #align tr.expanded-row td a.btn, #align tr.expanded-row td a.btn-link, #align tr.expanded-row td a[title], .table-responsive tr.expanded-row td a.btn, .table-responsive tr.expanded-row td a.btn-link, .table-responsive tr.expanded-row td button, #align1 tr.expanded-row td a.btn-link, #align1 tr.expanded-row td a.btn {
+            padding: 6px 14px !important;
+            background: #d10a50 !important;
+            border: 1px solid #ddd !important;
+            border-radius: 6px !important;
+            display: inline-block !important;
+            margin-right: 6px !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+            font-size: 14px !important;
+        }
+    }
+</style>
+<script>
+    $(document).ready(function() {
+        // Mobile row expansion logic
+        $(document).on('click', '.table-responsive tr, #align tbody tr, #align1 tbody tr', function() {
+            if($(window).width() <= 768) {
+                if ($(this).hasClass('expanded-row')) {
+                    $(this).removeClass('expanded-row');
+                } else {
+                    $(this).siblings('tr').removeClass('expanded-row');
+                    $(this).addClass('expanded-row');
+                }
+            }
+        });
+    });
+</script>
+
 
 @endsection

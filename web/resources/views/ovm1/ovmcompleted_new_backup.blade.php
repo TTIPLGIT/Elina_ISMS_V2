@@ -110,140 +110,9 @@
         display: none !important;
     }
 
-    /* ========== MOBILE & TABLET FIX ========== */
-    @media (max-width: 1024px) {
+    @media (max-width: 580px) {
         .nav {
-            overflow-x: auto !important;
-            overflow-y: hidden;
-            white-space: nowrap;
-            justify-content: flex-start !important;
-            padding: 0 10px;
-            gap: 4px;
-            border-radius: 30px;
-            display: flex !important;
-            flex-wrap: nowrap !important;
-            -webkit-overflow-scrolling: touch;
-        }
-        .nav-item {
-            padding: 12px 16px !important;
-            font-size: 0.8rem !important;
-            margin: 0 4px !important;
-            flex-shrink: 0;
-            display: inline-block;
-        }
-        .nav-indicator {
-            height: 4px;
-            bottom: 0;
-        }
-        /* Ensure indicator stays within the scrollable container */
-        .nav {
-            position: relative;
-        }
-    }
-
-    @media (max-width: 768px) {
-        /* Reduce container side spacing */
-        .main-content {
-            padding-left: 8px !important;
-            padding-right: 8px !important;
-        }
-
-        /* Force white background on all containers */
-        .card, .card-body, .card-header, .section-body, .main-content {
-            background-color: #ffffff !important;
-        }
-        .card {
-            box-shadow: none !important;
-            border: 1px solid #eee !important;
-        }
-
-        /* Breadcrumb – compact and scrollable */
-        .breadcrumb-wrapper {
-            overflow-x: auto;
-            white-space: nowrap;
-            margin-bottom: 10px;
-        }
-        .breadcrumb {
-            background: transparent !important;
-            padding: 5px 0 !important;
-            font-size: 11px;
-            display: flex;
-            flex-wrap: nowrap;
-        }
-        .breadcrumb-item, .breadcrumb-item a {
-            font-size: 11px;
-            white-space: nowrap;
-        }
-        .breadcrumb-item + .breadcrumb-item::before {
-            padding: 0 4px;
-        }
-
-        /* Nav bar – horizontal scroll, all items in one line */
-        .nav {
-            background-color: #fff !important;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05) !important;
-            overflow-x: auto !important;
-            overflow-y: hidden;
-            white-space: nowrap;
-            justify-content: flex-start !important;
-            padding: 0 5px;
-            gap: 2px;
-            border-radius: 30px;
-            display: flex !important;
-            flex-wrap: nowrap !important;
-        }
-        .nav-item {
-            padding: 8px 12px !important;
-            font-size: 0.75rem !important;
-            margin: 0 2px !important;
-            flex-shrink: 0;
-            display: inline-block;
-        }
-        .nav-indicator {
-            height: 3px;
-        }
-
-        /* Search input field – reduced size */
-        .navcard .form-control#searchInput,
-        .navcard .card-body > input[type="text"] {
-            width: auto !important;
-            max-width: 180px !important;
-            float: right !important;
-            font-size: 0.7rem !important;
-            padding: 4px 8px !important;
-            margin-bottom: 10px;
-        }
-
-        /* Basic details card – compact */
-        .card-body .row {
-            margin-left: 0 !important;
-            margin-right: 0 !important;
-        }
-        .form-group {
-            margin-bottom: 0.5rem;
-        }
-        .form-group label {
-            font-size: 0.7rem;
-            margin-bottom: 2px;
-        }
-        .form-control {
-            padding: 4px 6px;
-            font-size: 0.75rem;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .nav-item {
-            padding: 6px 10px !important;
-            font-size: 0.7rem !important;
-        }
-        .breadcrumb-item, .breadcrumb-item a {
-            font-size: 10px;
-        }
-        .navcard .form-control#searchInput,
-        .navcard .card-body > input[type="text"] {
-            max-width: 150px !important;
-            font-size: 0.65rem !important;
+            overflow: auto;
         }
     }
 </style>
@@ -284,26 +153,36 @@
                                         <input class="form-control enrollment_id" name="enrollment_id" placeholder="Enrollment ID" value="{{ $rows[0]['enrollment_id']}}" readonly>
                                         <input type="hidden" class="form-control" name="editusername" placeholder="editusername" value="{{$editusername}}" readonly>
                                         <input type="hidden" class="form-control" name="report_id" placeholder="editusername" id="report_id" value="{{$rows[0]['ovm_isc_report_id']}}" readonly>
+
+
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">OVM Meeting ID</label>
                                         <input class="form-control" type="text" id="ovm_meeting_unique" name="ovm_meeting_unique" value="{{ $rows[0]['ovm_meeting_unique']}}" placeholder="OVM1 Meeting" autocomplete="off" readonly>
+
                                     </div>
                                 </div>
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Child ID</label>
                                         <input class="form-control" type="text" id="child_id" name="child_id" value="{{ $rows[0]['child_id']}}" placeholder="OVM1 Meeting" autocomplete="off" readonly>
+
                                     </div>
                                 </div>
+
+
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Child Name</label>
                                         <input class="form-control" type="text" id="child_name" name="child_name" value="{{ $rows[0]['child_name']}}" placeholder="Enter Name" autocomplete="off" readonly>
                                     </div>
                                 </div>
+
+
                                 @if( $rows[0]['video_link1']!= '')
                                 <div class="col-md-3">
                                     <div class="form-group">
@@ -312,10 +191,19 @@
                                             <input class="form-control" readonly type="url" id="video_link" name="video_link" autocomplete="off" value="{{$rows[0]['video_link1']}}">
                                             <a class="btn btn-link" title="show" target="_blank" href="{{$rows[0]['video_link1']}}"><i class="fas fa-eye" style="color:green"></i></a>
                                         </div>
+                                        {{-- <input class="form-control"  readonly type="url" id="video_link" name="video_link" autocomplete="off" value="Video Not Available"> --}}
+
                                     </div>
                                 </div>
                                 @endif
+
+
+
+
+
                                 <input type="hidden" id="g2form_filled" name="g2form_filled">
+
+
                             </div>
                         </div>
                     </div>
@@ -385,6 +273,7 @@
                                                 <tr>
                                                     <td width="35%" style="text-align:left !important;height: 200px;">{!! $question['question'] !!}<span class="tooltiptext1">{!! $question['question_description'] !!}</span></td>
                                                     @if(isset($question['readonly']) && $question['readonly'] == 1)
+                                                    {{-- <td style="text-align:left !important;" class="td_{{ $question['assigned_value']}}">{!! $question['prefilled_data'] !!} <input type="hidden" class="{{ $question['assigned_value']}}" name="que[{{$question['question_column_name']}}]"></td> --}}
                                                     <td><textarea class="form-control default instructions_textarea_readonly {{ $question['assigned_value']}}" id="{{$question['question_column_name']}}" name="que[{{$question['question_column_name']}}]" disabled> {!! $question['prefilled_data'] !!}</textarea></td>
                                                     @else
                                                     <td><textarea class="form-control default instructions_textarea {{ $question['assigned_value']}}" id="{{$question['question_column_name']}}" name="que[{{$question['question_column_name']}}]" {{ ($rows[0]['status']=="Submitted") || ($rows[0]['status']=="Completed") && $rolename !='IS Head'? "disabled" : "" }}>{{ $question['prefilled_data']}}</textarea></td>
@@ -439,23 +328,15 @@
             item.removeAttribute('style');
         });
 
-        // Get the nav container to compute relative positions
-        const nav = el.closest('.nav');
-        const navRect = nav.getBoundingClientRect();
-        const elRect = el.getBoundingClientRect();
-
-        // Calculate left position relative to the nav
-        const leftPos = elRect.left - navRect.left + nav.scrollLeft;
-        const width = elRect.width;
-
-        indicator.style.width = `${width}px`;
-        indicator.style.left = `${leftPos}px`;
+        indicator.style.width = `${el.offsetWidth}px`;
+        indicator.style.left = `${el.offsetLeft}px`;
         indicator.style.backgroundColor = el.getAttribute('active-color');
 
         el.classList.add('is-active');
         el.style.color = el.getAttribute('active-color');
 
         var dataid = el.getAttribute('data-id');
+        // console.log(dataid);
         if (dataid == 7) {
             $('#nextButton').hide();
         } else {
@@ -475,44 +356,24 @@
             left: 0,
             behavior: 'smooth'
         });
+        // document.getElementById('scrollSession').scrollIntoView({
+        //     behavior: 'smooth'
+        // });
 
         $('.navcard').hide();
         $('.navcard' + dataid).show();
     }
 
-    // Initial setup
+
     items.forEach((item, index) => {
         item.addEventListener('click', e => {
             handleIndicator(e.target);
         });
-        // If the item is already active, we set the indicator on load
-        if (item.classList.contains('is-active')) {
-            // We'll call handleIndicator after a small delay to ensure layout is complete
-            setTimeout(() => handleIndicator(item), 100);
-        }
-    });
-
-    // Handle resize to reposition indicator
-    let resizeTimer;
-    window.addEventListener('resize', function() {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function() {
-            const activeItem = document.querySelector('.nav-item.is-active');
-            if (activeItem) {
-                handleIndicator(activeItem);
-            }
-        }, 200);
-    });
-
-    // Also on load, ensure indicator is set correctly
-    window.addEventListener('load', function() {
-        const activeItem = document.querySelector('.nav-item.is-active');
-        if (activeItem) {
-            handleIndicator(activeItem);
-        }
+        item.classList.contains('is-active') && handleIndicator(item);
     });
 
     // Next and Prev
+
     const prevButton = document.getElementById('prevButton');
     const nextButton = document.getElementById('nextButton');
 
@@ -534,8 +395,20 @@
 
     prevButton.addEventListener('click', handlePrevious);
     nextButton.addEventListener('click', handleNext);
+
+    // ...
 </script>
 <script>
+    // $(document).ready(function() {
+    //     var table = $('.myTable').DataTable({
+    //         "pageLength": 5,
+    //         "dom": '<"top"rt<"bottom"ip>',
+    //         "language": {
+    //             "info": ""
+    //         },
+    //         "ordering": false,
+    //     });
+    // });
     $(document).on('click', '.paginate_button:not(.disabled)', function() {
         window.scroll({
             top: 0,
@@ -604,6 +477,13 @@
             }
         });
     });
+
+    // $('#saved').click(function() {
+    //     $("#saved").addClass("disable-click");
+    //     $('.loader').show();
+    //     tabledestroy();
+    //     document.getElementById('ovmisc').submit();
+    // });
 </script>
 <script>
     $(document).ready(function() {
@@ -687,6 +567,26 @@
             });
         }
 
+        // ================== FETCHDATA ==================
+        var fetchdatas = <?php echo json_encode($fetchdata); ?>;
+        if (fetchdatas && fetchdatas.length > 0) {
+            $.each(fetchdatas[0], function(key, value) {
+                var cleaned = formatJsonArray(cleanValue(value));
+                cleaned = correctPronounCase(cleaned, childGender);
+                $('#' + key).val(cleaned);
+            });
+        }
+
+        // ================== FETCHDATA1 ==================
+        var fetchdatas1 = <?php echo json_encode($fetchdata1); ?>;
+        if (fetchdatas1 && fetchdatas1.length > 0) {
+            $.each(fetchdatas1[0], function(key, value) {
+                var cleaned = formatJsonArray(cleanValue(value));
+                cleaned = correctPronounCase(cleaned, childGender);
+                $('#note_' + key).val(cleaned);
+            });
+        }
+
         // ================== MAIN FIX (MULTIPLE COORDINATORS) ==================
         var fetchdata2 = <?php echo json_encode($fetchdata2); ?>;
 
@@ -757,26 +657,6 @@
 
         } else {
             $('#g2form_filled').val(0);
-        }
-
-        // ================== FETCHDATA ==================
-        var fetchdatas = <?php echo json_encode($fetchdata); ?>;
-        if (fetchdatas && fetchdatas.length > 0) {
-            $.each(fetchdatas[0], function(key, value) {
-                var cleaned = formatJsonArray(cleanValue(value));
-                cleaned = correctPronounCase(cleaned, childGender);
-                $('#' + key).val(cleaned);
-            });
-        }
-
-        // ================== FETCHDATA1 ==================
-        var fetchdatas1 = <?php echo json_encode($fetchdata1); ?>;
-        if (fetchdatas1 && fetchdatas1.length > 0) {
-            $.each(fetchdatas1[0], function(key, value) {
-                var cleaned = formatJsonArray(cleanValue(value));
-                cleaned = correctPronounCase(cleaned, childGender);
-                $('#note_' + key).val(cleaned);
-            });
         }
 
         $('.f_name').val($enrollment_details.child_name);

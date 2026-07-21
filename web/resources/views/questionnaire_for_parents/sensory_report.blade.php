@@ -16,6 +16,32 @@
     #img_logo {
         margin: 25px 150px 0 0;
     }
+
+    /* Mobile Responsive Overrides */
+    @media (max-width: 768px) {
+        .main-content {
+            padding: 10px !important;
+            margin-top: 60px !important;
+        }
+        .container, #entirePage {
+            padding: 15px !important;
+            box-shadow: none !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+        }
+        .table-responsive-report {
+            width: 100% !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            margin: 15px 0 !important;
+        }
+        .table-responsive-report table {
+            width: 100% !important;
+            min-width: 600px !important;
+            table-layout: auto !important;
+        }
+    }
 </style>
 <style>
     .container {
@@ -103,6 +129,7 @@
         <h4 style="text-align: center;">Sensory Quadrant Report</h4>
             <div class="tinymce-body">
                 <div style="font-size:16px">{{$head}}</div>
+                <div class="table-responsive-report">
                 <table pagebreak="after">
                     <tbody>
                         <tr>
@@ -156,10 +183,12 @@
                         </tr>
                     </tbody>
                 </table>
+                </div>
                 <div style="font-size:16px">{{$footer}}</div>
             </div>
             <p style="page-break-after: always;"></p>
             <p style="padding: 10px 0 0 0;font-weight:bold;text-align:center">Sensory Quadrant With Rating</p>
+            <div class="table-responsive-report">
                 <table style="margin: 0;">
                     <thead>
                         <tr>
@@ -211,6 +240,7 @@
                         @endforeach
                     </tfoot>
                 </table>
+            </div>
                 <div style="padding-top: 4px;">
                     <p style="line-height: 1pt;">CS - Cumulative Score</p>
                     <p>IS - Individual Score</p>

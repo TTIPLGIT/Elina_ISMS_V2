@@ -251,6 +251,262 @@
         background-color: blue;
 
     }
+
+    /* Mobile Responsive Overrides */
+    @media (max-width: 768px) {
+        .main-container-fixed {
+            position: relative !important;
+            z-index: 1 !important;
+            padding: 5px !important;
+        }
+        
+        .section-body {
+            padding: 0 !important;
+        }
+
+        /* Top Row Fix (Back & Title) */
+        .row:has(#actionButton) {
+            display: flex !important;
+            align-items: center !important;
+            margin: 0 !important;
+            padding-top: 10px !important;
+        }
+
+        #actionButton {
+            height: 22px !important;
+            font-size: 9px !important;
+            padding: 0 8px !important;
+            width: auto !important;
+            min-width: 45px !important;
+            background-color: #ffb822 !important;
+            color: black !important;
+            margin: 0 10px 0 10px !important; /* Added left margin */
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        h4 {
+            font-size: 11px !important;
+            font-weight: bold !important;
+            margin: 0 !important;
+            flex-grow: 1 !important;
+            text-align: center !important;
+        }
+
+        /* Standardizing Prev/Next font to match Heading (11px) */
+        .label_switch1, .label_switch2, .next, .previous {
+            font-size: 11px !important;
+            font-weight: bold !important;
+            color: black !important;
+            margin: 0 !important;
+        }
+
+        /* Reverting Navigation to previous responsive state */
+        .fc-header-toolbar {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            margin-bottom: 5px !important;
+            gap: 5px !important;
+        }
+
+        .fc-center h2 {
+            font-size: 14px !important;
+            color: darkorchid !important;
+            margin: 0 !important;
+        }
+
+        .fc-right {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 5px !important;
+        }
+
+        .fc-button {
+            width: 22px !important; /* Reduced size */
+            height: 22px !important;
+            padding: 0 !important;
+            font-size: 10px !important;
+            border-radius: 50% !important;
+            background-color: darkorchid !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin-bottom: 2px !important;
+        }
+        .fc-right, .fc-left {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            width: auto !important;
+            visibility: visible !important;
+            flex-shrink: 0 !important; /* Prevent shrinking icons */
+        }
+        .fc-center {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            flex-grow: 1 !important;
+            min-width: 0 !important;
+        }
+        .fc-header-toolbar {
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            padding: 0 10px !important; /* Balanced 10px padding on both sides */
+            margin-bottom: 10px !important;
+            flex-wrap: nowrap !important;
+        }
+        .main_div {
+            display: none !important;
+        }
+        .nav-group {
+            display: flex !important;
+            flex-direction: column !important; /* Back to icon above text */
+            align-items: center !important;
+        }
+        .fc-button {
+            width: 28px !important;
+            height: 28px !important;
+            padding: 0 !important;
+            font-size: 12px !important;
+            border-radius: 50% !important;
+            background-color: darkorchid !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin-bottom: 2px !important;
+        }
+        .label_switch1, .label_switch2 {
+            font-size: 10px !important;
+            font-weight: bold !important;
+            color: black !important;
+            margin: 0 !important;
+        }
+        .fc-center h2 {
+            font-size: 14px !important;
+            color: darkorchid !important;
+            margin: 0 !important;
+        }
+        .fc-today-button {
+            display: none !important;
+        }
+
+        /* Date & Day Headers - White */
+        .fc-view > table thead th {
+            background-color: #1f90bf !important;
+            color: white !important;
+            padding: 4px !important;
+            font-size: 10px !important;
+        }
+        
+        .fc-day-number {
+            font-size: 10px !important;
+            color: white !important;
+            font-weight: bold !important;
+        }
+
+        /* Event Text - No Word Splitting */
+        .fc-event, .fc-title, .fc-time {
+            color: black !important;
+            font-size: 8px !important;
+        }
+
+        .fc-content {
+            padding: 2px !important;
+            white-space: nowrap !important; /* Stay on one line */
+            overflow: hidden !important;
+            text-overflow: ellipsis !important; /* Add ... if too long */
+            word-break: normal !important;
+            line-height: 1.1 !important;
+        }
+
+        /* Modal Header - Absolute Alignment */
+        .modal-header {
+            background-color: #004085 !important;
+            color: white !important;
+            padding: 10px 15px !important;
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            width: 100% !important;
+        }
+        .modal-title {
+            font-size: 14px !important;
+            color: white !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            text-align: left !important;
+            flex-grow: 1 !important;
+            white-space: nowrap !important;
+        }
+        .modal-header .close {
+            color: white !important;
+            opacity: 1 !important;
+            margin: 0 !important;
+            padding: 0 0 0 10px !important;
+            font-size: 24px !important;
+            line-height: 1 !important;
+            flex-shrink: 0 !important;
+            float: none !important;
+        }
+        .table#align1 thead th, .table thead th {
+            background-color: #004085 !important;
+            color: white !important;
+            font-size: 8px !important;
+            padding: 4px !important;
+        }
+        .table#align1 tbody td, .table tbody td {
+            background-color: #e3f2fd !important;
+            color: black !important;
+            font-size: 8px !important;
+            padding: 4px !important;
+            border: 1px solid #dee2e6 !important;
+            white-space: nowrap !important; /* Don't split names or data */
+            word-break: normal !important;
+        }
+
+        /* Restore previous spacing */
+        .d-flex.flex-row.align-items-center {
+            position: relative !important;
+            top: 0 !important;
+            margin: 5px 0 5px 10px !important;
+            font-size: 10px !important;
+            gap: 5px !important;
+        }
+        .fc-center h2 {
+            font-size: 16px !important;
+            color: darkorchid !important;
+            margin: 5px 0 !important;
+            text-align: center !important;
+        }
+        .switch {
+            width: 40px !important;
+            height: 20px !important;
+        }
+        .slider:before {
+            height: 14px !important;
+            width: 14px !important;
+            left: 3px !important;
+            bottom: 3px !important;
+        }
+
+        /* Force table to fit */
+        .fc-scroller {
+            height: auto !important;
+            overflow: visible !important;
+        }
+        
+        div[style*="z-index: -2"] {
+            position: relative !important;
+            z-index: 1 !important;
+            margin-top: 0 !important;
+        }
+    }
 </style>
 
 <div class="" style="position:absolute !important; z-index: -2!important; ">
@@ -506,33 +762,36 @@
 </script>
 <script>
     window.onload = function() {
-        const container = document.querySelector('.fc-right');
-        const previous = document.createElement('label');
-        const next = document.createElement('label');
-        const time = document.querySelectorAll('.fc-time');
-        //alert(time);
-        time.textContent = '';
-        next.classList.add('next');
-        // next.classList.add('btn');
-        // next.classList.add('btn-next');
-        next.classList.add('label_switch1');
+        const leftContainer = document.querySelector('.fc-left');
+        const rightContainer = document.querySelector('.fc-right');
+        const prevBtn = document.querySelector('.fc-prev-button');
+        const nextBtn = document.querySelector('.fc-next-button');
+        
+        const prevGroup = document.createElement('div');
+        prevGroup.classList.add('nav-group');
+        const prevLabel = document.createElement('label');
+        prevLabel.classList.add('label_switch2');
+        prevLabel.textContent = 'Prev';
+        
+        const nextGroup = document.createElement('div');
+        nextGroup.classList.add('nav-group');
+        const nextLabel = document.createElement('label');
+        nextLabel.classList.add('label_switch1');
+        nextLabel.textContent = 'Next';
 
-
-        previous.classList.add('previous');
-        // previous.classList.add('btn');
-        // previous.classList.add('btn-previous');
-        previous.classList.add('label_switch2');
-
-        previous.textContent = 'Prev';
-        next.textContent = 'Next';
-        const main_div = document.createElement('div');
-        main_div.classList.add('main_div');
-        // main_div.classList.add('mt-1');
-
-        container.append(main_div);
-        const container2 = document.querySelector('.main_div');
-        container2.append(previous);
-        container2.append(next);
+        if(prevBtn && nextBtn) {
+            // Move Prev to Left
+            prevGroup.appendChild(prevBtn);
+            prevGroup.appendChild(prevLabel);
+            leftContainer.innerHTML = '';
+            leftContainer.appendChild(prevGroup);
+            
+            // Move Next to Right
+            nextGroup.appendChild(nextBtn);
+            nextGroup.appendChild(nextLabel);
+            rightContainer.innerHTML = '';
+            rightContainer.appendChild(nextGroup);
+        }
     }
 </script>
 <style>

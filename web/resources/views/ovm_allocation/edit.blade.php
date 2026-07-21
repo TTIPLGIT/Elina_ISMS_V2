@@ -41,6 +41,154 @@
         justify-content: center;
         margin: 0 5px;
     }
+
+    /* Mobile Responsive Overrides */
+    @media (max-width: 768px) {
+        .main-content {
+            padding: 5px !important;
+            margin-top: 60px !important;
+            position: relative !important;
+            z-index: 1 !important;
+        }
+
+        /* Breadcrumbs - Single Line */
+        .breadcrumb {
+            padding: 2px 5px !important;
+            margin: 10px 0 10px 15px !important;
+            width: 85% !important;
+            height: auto !important;
+            min-height: 30px !important;
+            font-size: 8px !important;
+            background-color: transparent !important;
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            overflow: hidden !important;
+            border: none !important;
+            box-shadow: none !important;
+            justify-content: flex-start !important;
+            align-items: center !important;
+            white-space: nowrap !important;
+        }
+        
+        .breadcrumb li span, 
+        .breadcrumb .number,
+        .breadcrumb-item::before {
+            width: 16px !important;
+            height: 16px !important;
+            line-height: 16px !important;
+            font-size: 8px !important;
+            margin-right: 3px !important;
+        }
+
+        .breadcrumb-item, .breadcrumb-item a {
+            font-size: 8px !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        /* Titles */
+        h5.text-center {
+            font-size: 14px !important;
+            margin-top: 10px !important;
+            font-weight: bold !important;
+            color: darkblue !important;
+        }
+
+        /* Form Controls */
+        .card {
+            margin: 5px 0 !important;
+        }
+        .card-body {
+            padding: 10px !important;
+        }
+        
+        .form-group {
+            margin-bottom: 8px !important;
+        }
+        
+        .control-label, .col-form-label, label {
+            font-size: 10px !important;
+            font-weight: bold !important;
+            margin-bottom: 2px !important;
+            color: #333 !important;
+        }
+        
+        .form-control {
+            height: 30px !important;
+            font-size: 10px !important;
+            padding: 5px !important;
+        }
+
+        /* Grid Adjustments */
+        .col-md-4, .col-sm-2, .col-sm-4 {
+            width: 100% !important;
+            max-width: 100% !important;
+            flex: 0 0 100% !important;
+        }
+
+        /* Date/Time Pickers side-by-side */
+        .form-group.row {
+            margin-bottom: 5px !important;
+            display: flex !important;
+            flex-wrap: wrap !important;
+        }
+        
+        .form-group.row .col-sm-4 {
+            width: 60% !important; /* Date takes 60% */
+            max-width: 60% !important;
+            flex: 0 0 60% !important;
+            padding-right: 5px !important;
+        }
+        
+        .form-group.row .col-sm-2 {
+            width: 40% !important; /* Time takes 40% */
+            max-width: 40% !important;
+            flex: 0 0 40% !important;
+        }
+
+        .form-group.row label.col-sm-2 {
+            width: 100% !important;
+            max-width: 100% !important;
+            flex: 0 0 100% !important;
+            display: block !important;
+        }
+
+        /* Action Buttons - Uniform Size */
+        .row.text-center .col-md-12 {
+            display: flex !important;
+            justify-content: center !important;
+            gap: 5px !important;
+        }
+        .action-btn {
+            padding: 4px 0 !important;
+            font-size: 10px !important;
+            margin: 0 !important;
+            width: 80px !important;
+            min-width: 80px !important; /* Force smaller size */
+            height: 28px !important;
+            text-align: center !important;
+        }
+        .back-btn .btn-label {
+            margin-right: 5px !important;
+            padding: 0 !important;
+            background: transparent !important;
+        }
+
+        /* Calendar Icon - Centered like Timer Icon */
+        .inner-addon i {
+            top: 50% !important;
+            right: 10px !important;
+            transform: translateY(-50%) !important;
+            font-size: 14px !important;
+            margin-top: 0 !important;
+        }
+        
+        /* Note/Textarea info */
+        textarea.form-control {
+            font-size: 10px !important;
+            height: auto !important;
+        }
+    }
 </style>
 
 
@@ -527,6 +675,7 @@
 </script>
 <script>
     $(document).ready(function() {
+        let editorFontSize = window.innerWidth <= 768 ? '10px' : '14px';
         tinymce.init({
             selector: 'textarea#meeting_description',
             height: 180,
@@ -536,7 +685,7 @@
                 'bold italic backcolor | alignleft aligncenter ' +
                 'alignright alignjustify | bullist numlist outdent indent | ' +
                 'removeformat | help',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:' + editorFontSize + ' }',
             setup: function(editor) {
                 editor.on('init', function() {
                     updateEditorContent(editor); // Call the function initially

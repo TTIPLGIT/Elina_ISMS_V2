@@ -2,7 +2,71 @@
 
 @section('content')
 
-<!--  -->
+<style>
+    /* ---- Mobile‐only overrides ---- */
+    @media (max-width: 768px) {
+
+        .main-content,
+        .row,
+        .col-lg-12,
+        .col-md-12,
+        .tile,
+        .tile-body,
+        .form-group {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            overflow-x: hidden !important;
+            max-width: 100% !important;
+        }
+
+        .tile {
+            padding: 10px !important;
+        }
+
+        .tile-title {
+            font-size: 18px !important;
+        }
+
+        /* Make TinyMCE container full width */
+        .tox-tinymce {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        .tox .tox-editor-container {
+            width: 100% !important;
+        }
+
+        /* ---- Buttons: side by side on mobile ---- */
+        .text-center .col-md-12 {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+
+        .text-center .btn {
+            flex: 0 0 auto !important;
+            width: auto !important;
+            min-width: 100px !important;
+            margin: 0 !important;
+            font-size: 14px !important;
+            padding: 8px 16px !important;
+            display: inline-block !important;
+        }
+
+        /* Remove extra spacing from the form row */
+        .row.text-center {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+    }
+</style>
+
 <div class="main-content">
     <div class="row justify-content-center">
         <div class="col-lg-12 col-md-12">
@@ -16,28 +80,20 @@
                     <form class="form-horizontal" name="publish" method="POST" action="{{ route('privacy.publish') }}">
                         @csrf
                         <div class="row">
-
                             <div class="col-md-12">
-                                <!-- <label class="control-label">{{ __('Text') }}</label> -->
                                 <textarea id="basic-example" name="policy_content" class="policy_content">
                                 {{ $rows[0]['policy_content'] }}
                                 </textarea>
                             </div>
-
-
-
                         </div>
 
                         <input class="form-control" type="hidden" id="id" name="id" placeholder="Enter Module Name" value="{{ $rows[0]['id'] }}">
 
-                        <div class="row text-center">
+                        <div class="row text-center mt-4">
                             <div class="col-md-12">
                                 <a class="btn btn-success" href="{{ route('video_creation.index') }}">
                                     <i class="fa fa-check"></i> Publish
-
-
-
-                                </a>&nbsp;
+                                </a>
                                 @if($rows[0]['id']==2)
                                 <a class="btn btn-danger" href="{{ route('activity_initiate.index') }}">
                                     <i class="fa fa-times" aria-hidden="true"></i> Cancel
@@ -47,8 +103,6 @@
                                     <i class="fa fa-times" aria-hidden="true"></i> Cancel
                                 </a>
                                 @endif
-
-
                             </div>
                         </div>
                     </form>
@@ -82,31 +136,17 @@
                 input.setAttribute('type', 'file');
                 input.setAttribute('accept', 'image/*');
 
-                /*
-                  Note: In modern browsers input[type="file"] is functional without
-                  even adding it to the DOM, but that might not be the case in some older
-                  or quirky browsers like IE, so you might want to add it to the DOM
-                  just in case, and visually hide it. And do not forget do remove it
-                  once you do not need it anymore.
-                */
-
                 input.onchange = function() {
                     var file = this.files[0];
 
                     var reader = new FileReader();
                     reader.onload = function() {
-                        /*
-                          Note: Now we need to register the blob in TinyMCEs image blob
-                          registry. In the next release this part hopefully won't be
-                          necessary, as we are looking to handle it internally.
-                        */
                         var id = 'blobid' + (new Date()).getTime();
                         var blobCache = tinymce.activeEditor.editorUpload.blobCache;
                         var base64 = reader.result.split(',')[1];
                         var blobInfo = blobCache.create(id, file, base64);
                         blobCache.add(blobInfo);
 
-                        /* call the callback and populate the Title field with the file name */
                         cb(blobInfo.blobUri(), {
                             title: file.name
                         });
@@ -120,7 +160,7 @@
             templates: [{
                     title: 'New Table',
                     description: 'creates a new table',
-                    content: '<div class="mceTmpl"><table width="98%%"  border="0" cellspacing="0" cellpadding="0"><tr><th scope="col"> </th><th scope="col"> </th></tr><tr><td> </td><td> </td></tr></table></div>'
+                    content: '<div class="mceTmpl"><table width="98%%"  border="0" cellspacing="0" cellpadding="0"><tr><th scope="col"> </th><th scope="col"> </th><tr><td> </td><td> </td></tr></table></div>'
                 },
                 {
                     title: 'Starting my story',
@@ -145,4 +185,5 @@
 
     });
 </script>
+
 @endsection

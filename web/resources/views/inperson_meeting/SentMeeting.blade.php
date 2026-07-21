@@ -36,6 +36,151 @@
   .select2-container--default .select2-selection--multiple .select2-selection__choice {
     color: black !important;
   }
+
+  /* =========================================================================
+     MOBILE RESPONSIVE STYLING - INPERSON MEETING EDIT (SentMeeting)
+     ========================================================================= */
+  @media (max-width: 768px) {
+      .main-content {
+          padding: 10px !important;
+          margin-top: 60px !important;
+      }
+      .card-body {
+          padding: 15px !important;
+      }
+      /* Stack grid columns */
+      .col-md-3, .col-md-4, .col-sm-2, .col-sm-4, .col-12, .col-md-12, .col-lg-12, .col-md-1, .col-md-2 {
+          width: 100% !important;
+          max-width: 100% !important;
+          flex: 0 0 100% !important;
+          padding-left: 5px !important;
+          padding-right: 5px !important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+      }
+      /* Row display stacked vertically */
+      .form-group.row {
+          display: block !important;
+          margin-bottom: 15px !important;
+      }
+      .col-form-label {
+          padding-top: 0 !important;
+          padding-bottom: 5px !important;
+          font-weight: bold !important;
+          font-size: 13px !important;
+      }
+      /* Alignment fixes */
+      #notesdiv, .col-md-1, .col-md-2 {
+          margin: 10px 0 0 0 !important;
+      }
+      .centerid {
+          text-align: left !important;
+      }
+      /* Select2 */
+      .select2-container {
+          width: 100% !important;
+      }
+      /* Buttons row */
+      .text-center {
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: center !important;
+          gap: 10px !important;
+      }
+      .text-center .btn, .text-center button {
+          width: 100% !important;
+          margin: 5px 0 !important;
+      }
+      
+      /* Modal fixes */
+      .modal-dialog {
+          max-width: 95% !important;
+          margin: 10px auto !important;
+      }
+      .modal-content {
+          background-color: #fff !important;
+          color: #000 !important;
+      }
+      .modal-body {
+          max-height: 70vh;
+          overflow-y: auto !important;
+          padding: 10px !important;
+      }
+
+      /* Modal Table -> Card layout */
+      .table-responsive {
+          overflow-x: hidden !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
+          padding: 5px !important;
+      }
+
+      .table-responsive table {
+          width: 100% !important;
+          box-sizing: border-box !important;
+      }
+
+      .table-wrapper table thead {
+          display: none !important;
+      }
+
+      .table-wrapper table,
+      .table-wrapper tbody,
+      .table-wrapper tr,
+      .table-wrapper td {
+          display: block !important;
+          width: 100% !important;
+          box-sizing: border-box !important;
+      }
+
+      .table-wrapper tbody tr {
+          border: 1px solid #e0e0e0 !important;
+          border-radius: 8px !important;
+          margin: 8px 0 !important;
+          padding: 10px 12px !important;
+          background: #fff !important;
+          box-shadow: 0 1px 4px rgba(0,0,0,0.07) !important;
+          position: relative !important;
+          box-sizing: border-box !important;
+      }
+
+      .table-wrapper tbody td {
+          border: none !important;
+          padding: 4px 0 !important;
+          text-align: left !important;
+          font-size: 12px !important;
+          line-height: 1.4 !important;
+          box-sizing: border-box !important;
+          word-break: break-word !important;
+          overflow-wrap: anywhere !important;
+          white-space: normal !important;
+      }
+
+      /* Column labels for Attendee Status Table */
+      .table-wrapper tbody td:nth-child(1)::before {
+          content: "Sl. No.: ";
+          font-weight: 600;
+          color: #000;
+      }
+
+      .table-wrapper tbody td:nth-child(2)::before {
+          content: "Attendee: ";
+          font-weight: 600;
+          color: #000;
+      }
+
+      .table-wrapper tbody td:nth-child(3)::before {
+          content: "Status: ";
+          font-weight: 600;
+          color: #000;
+      }
+
+      .table-wrapper tbody td:nth-child(4)::before {
+          content: "Notes: ";
+          font-weight: 600;
+          color: #000;
+      }
+  }
 </style>
 
 <div class="main-content">

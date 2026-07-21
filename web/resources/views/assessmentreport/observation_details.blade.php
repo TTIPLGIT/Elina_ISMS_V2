@@ -9,7 +9,7 @@
                 </button>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body" style="overflow-y: auto; -webkit-overflow-scrolling: touch; max-height: 70vh;">
                 <p id="copyText"> </p>
             </div>
 
@@ -46,4 +46,17 @@
       setTimeout(() => toast.classList.add("d-none"), 2000);
     }
   }
+
+  /* iOS Safari fix: Bootstrap does not properly restore body scroll after modal hide.
+     Detect iOS and manually restore overflow after every modal close. */
+  (function() {
+    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (isIOS) {
+      $(document).on('hidden.bs.modal', '#xlModal', function() {
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+        document.documentElement.style.overflow = '';
+      });
+    }
+  })();
 </script>

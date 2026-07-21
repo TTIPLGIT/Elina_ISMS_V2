@@ -47,9 +47,124 @@
       height: 150px !important;
     }
 
-    /* #invite{
+    td .action-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap;
+}
+
+ @media (max-width: 768px) {
+    .breadcrumb {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .breadcrumb::-webkit-scrollbar {
         display: none;
-      } */
+    }
+
+    .breadcrumb-item {
+        white-space: nowrap !important;
+    }
+    @media (max-width: 768px) {
+
+    /* Remove container spacing */
+    .main-content {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .section-body {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 10px!important;
+        margin-right: 10px !important;
+    }
+
+    /* Remove Bootstrap row spacing */
+    .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Remove column spacing */
+    .col-12,
+    .col-md-4,
+    .col-md-12 {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* Card should touch screen edges */
+    .card-body {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+
+    /* Table section */
+    .table-wrapper,
+    .table-responsive {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+        margin-left: 10px !important;
+        margin-right: 10px !important;
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+}
+@media (max-width: 768px) {
+
+    /* Filter labels in same row */
+    .row.mb-3 .col-md-4 {
+        width: 50% !important;
+        max-width: 50% !important;
+        flex: 0 0 50% !important;
+        margin-bottom: 10px;
+    }
+
+    .row.mb-3 label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .row.mb-3 select {
+        width: 100% !important;
+    }
+}
+@media (max-width: 768px) {
+
+    .row.mb-3 {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 8px; /* Space between dropdowns */
+    }
+
+    .row.mb-3 .col-md-4 {
+        flex: 1;
+        max-width: none !important;
+        width: auto !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .row.mb-3 label {
+        display: block;
+        margin-bottom: 5px;
+    }
+}
+}
   </style>
 
   <div class="main-content" style="min-height:'60px'">
@@ -87,7 +202,7 @@
     @endif
 
     <div class="section-body">
-      <h5 class="text-center" style="color:darkblue">F2F Observation Notes</h5>
+      <h5 class="text-center" style="color:darkblue">F2F Observation Note</h5>
 
 
       <div class="col-12">
@@ -171,33 +286,49 @@
                         <td>{{$row['activity_name']}}</td>
                         <td>{{$row['description']}}</td>
                         <!-- <td>
-                                  <input class="form-control" type="text" id="observation_result{{$row['parent_video_upload_id']}}" name="observation_result[{{$row['parent_video_upload_id']}}]" value="{{$row['comments']}}" autocomplete="off">
-                                </td> -->
+                                        <input class="form-control" type="text" id="observation_result{{$row['parent_video_upload_id']}}" name="observation_result[{{$row['parent_video_upload_id']}}]" value="{{$row['comments']}}" autocomplete="off">
+                                      </td> -->
                         <td>
                           {{ $row['f2f_flag'] == 2 ? 'Saved' : (isset($row['f2f_flag']) && ($row['comments']) != '' ? 'Completed' : 'Initiated') }}
                         </td>
-                        <td>
-                          @if($row['f2f_flag'] == 2)
-                            <a class="" title="Edit" id="edit" data-activity-id="{{$row['activity_id']}}"
-                              data-description-id="{{$row['activity_description_id']}}"
-                              onclick="openInitateModal(this.dataset.activityId, this.dataset.descriptionId)"
-                              style="padding-top: 6px;"><i class="fas fa-pencil-alt" style="color: blue !important"></i></a>
-                          @else
-                            <a class="" title="Edit" id="edit" data-parent-video-id="{{$row['parent_video_upload_id']}}"
-                              onclick="fetch_update(this.dataset.parentVideoId,'edit')" data-toggle="modal"
-                              data-target="#editModal2" style="padding-top: 6px;"><i class="fas fa-pencil-alt"
-                                style="color: blue !important"></i></a>
-                          @endif
-                          <!-- openInitateModal -->
-                          <a class="btn btn-link" id="show" data-parent-video-id="{{$row['parent_video_upload_id']}}"
-                            onclick="fetch_update(this.dataset.parentVideoId,'show')" data-toggle="modal"
-                            data-target="#showModal2" style="padding-top: 6px;" title="show"><i class="fas fa-eye"
-                              style="color:green"></i></a>
-                          <button type="submit" title="Delete" data-parent-video-id="{{$row['parent_video_upload_id']}}"
-                            onclick="delete1(this.dataset.parentVideoId)" class="btn btn-link"><i class="far fa-trash-alt"
-                              style="color:red"></i></button>
-                          <!-- <button onclick='removeRow(this)' class='btn btn-danger'>Remove</button> -->
-                        </td>
+                      <td>
+    <div style="display:flex; align-items:center; gap:12px; white-space:nowrap;">
+
+        @if($row['f2f_flag'] == 2)
+            <a title="Edit"
+               data-activity-id="{{$row['activity_id']}}"
+               data-description-id="{{$row['activity_description_id']}}"
+               onclick="openInitateModal(this.dataset.activityId, this.dataset.descriptionId)">
+                <i class="fas fa-pencil-alt" style="color:blue !important;"></i>
+            </a>
+        @else
+            <a title="Edit"
+               data-parent-video-id="{{$row['parent_video_upload_id']}}"
+               onclick="fetch_update(this.dataset.parentVideoId,'edit')"
+               data-toggle="modal"
+               data-target="#editModal2">
+                <i class="fas fa-pencil-alt" style="color:blue !important;"></i>
+            </a>
+        @endif
+
+        <a title="Show"
+           data-parent-video-id="{{$row['parent_video_upload_id']}}"
+           onclick="fetch_update(this.dataset.parentVideoId,'show')"
+           data-toggle="modal"
+           data-target="#showModal2">
+            <i class="fas fa-eye" style="color:green;"></i>
+        </a>
+
+        <button type="button"
+                title="Delete"
+                data-parent-video-id="{{$row['parent_video_upload_id']}}"
+                onclick="delete1(this.dataset.parentVideoId)"
+                style="border:none; background:none; padding:0;">
+            <i class="far fa-trash-alt" style="color:red;"></i>
+        </button>
+
+    </div>
+</td>
                       </tr>
                     @endif
                   @endforeach
@@ -241,8 +372,8 @@
                       </select>
 
                       <!-- <small class="ml-2 mt-2 text-muted">
-                          Note: Only initiated activities will be listed here.
-                        </small> -->
+                            Note: Only initiated activities will be listed here.
+                          </small> -->
                     </div>
                   </div>
                   <input type="hidden" id="description_name" name="description_name">

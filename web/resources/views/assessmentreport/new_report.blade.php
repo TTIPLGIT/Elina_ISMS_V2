@@ -155,19 +155,24 @@
         background-color: #1E4DBA;
         color: #fff;
     }
-
     .md-stepper-horizontal {
-        display: table;
-        width: 100%;
-        margin: 0 auto;
-        background-color: #FFFFFF;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: #fff;
+    overflow-x: auto;
+}
 
-    .md-stepper-horizontal .md-step {
-        display: table-cell;
-        position: relative;
-        padding: 20px;
-    }
+.md-stepper-horizontal .md-step {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 8px;
+    flex: 1;
+}
+
 
     .md-stepper-horizontal .md-step:active {
         border-radius: 15% / 75%;
@@ -267,7 +272,7 @@
     .md-stepper-horizontal .md-step .md-step-bar-left,
     .md-stepper-horizontal .md-step .md-step-bar-right {
         position: absolute;
-        top: 36px;
+        top: 20px;
         height: 20px;
         border-top: 3px solid #DDDDDD;
     }
@@ -291,6 +296,12 @@
     .md-stepper-horizontal .md-step.editable .md-step-circle {
         background: #f05a00;
     }
+    .md-stepper-horizontal .md-step .md-step-bar-left,
+.md-stepper-horizontal .md-step .md-step-bar-right {
+    position: absolute;           /* Center of 30px circle */
+    height: 0;
+    border-top: 3px solid #DDDDDD;
+}
 
     .form__input {
         border: 1px solid #ced4da;
@@ -312,19 +323,18 @@
         border: 1px solid;
     }
 
-    .scrollable,
+    /* .scrollable,
     #scroll {
         -ms-overflow-style: none;
         scrollbar-width: none;
-        /* height: 300px; */
         display: flex;
         flex-direction: column;
         overflow-y: scroll;
-    }
+    } */
 
-    .scrollable::-webkit-scrollbar {
+    /* .scrollable::-webkit-scrollbar {
         display: none;
-    }
+    } */
 
     table {
         text-align: left;
@@ -433,6 +443,23 @@
         height: 22px;
         width: 21px;
     }
+
+  /* @media (max-width: 1024x) {
+    .main-sidebar {
+        position: fixed;
+        top: 0;
+        left: -250px;
+        width: 250px;
+        height: 100vh;
+        z-index: 9999;
+        transition: left 0.3s ease;
+    }
+
+    .main-sidebar.sidebar-open {
+        left: 0;
+    } */
+
+
 </style>
 
 <div class="main-content">
@@ -658,75 +685,7 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
 
-<script>
-    $(document).ready(function() {
 
-        var allpro = <?php echo json_encode($pages); ?>;
-        $('.remove').click(function(e) {
-            $(this).parents('tr').find('textarea').each(function() {
-                if ($(this).val() == '') {
-                    $(this).parents('tr').remove();
-                } else {
-                    Swal.fire({
-                        title: 'Do you want to remove Skill from the report?',
-                        text: 'Click Yes to remove the point. Please note that this action cannot be reversed',
-                        icon: 'question',
-                        showCancelButton: true,
-                        confirmButtonText: 'Yes',
-                        cancelButtonText: 'No',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $(this).parents('tr').remove();
-                        }
-                    });
-                }
-            });
-        });
-
-        $('.remove_a').click(function(e) {
-            $(this).parents('tr').find('textarea').each(function() {
-                if ($(this).val() == '') {
-                    $(this).parents('tr').remove();
-                } else {
-                    Swal.fire({
-                        title: 'Do you want to remove Skill from the report?',
-                        text: 'Click Yes to remove the point. Please note that this action cannot be reversed',
-                        icon: 'question',
-                        showCancelButton: true,
-                        confirmButtonText: 'Yes',
-                        cancelButtonText: 'No',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $(this).parents('tr').remove();
-                        }
-                    });
-                }
-            });
-        });
-
-        $('.remove_b').click(function(e) {
-            $(this).parents('tr').find('textarea').each(function() {
-                if ($(this).val() == '') {
-                    $(this).parents('tr').remove();
-                } else {
-                    Swal.fire({
-                        title: 'Do you want to remove Skill from the report?',
-                        text: 'Click Yes to remove the point. Please note that this action cannot be reversed',
-                        icon: 'question',
-                        showCancelButton: true,
-                        confirmButtonText: 'Yes',
-                        cancelButtonText: 'No',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $(this).parents('tr').remove();
-                        }
-                    });
-                }
-            });
-        });
-
-    });
-</script>
 <script>
     function save(a) {
         if (document.getElementById('enrollment_child_num').value == "") {
@@ -1321,7 +1280,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="overflow-y: auto; -webkit-overflow-scrolling: touch; max-height: 70vh;">
                 <!-- Add the same class as your other TinyMCE editors -->
                 <textarea id="modalRecommendationEditor" class="meeting_description" style="height: 350px;"></textarea>
             </div>
@@ -1462,6 +1421,296 @@
             tinymce.get('modalRecommendationEditor').setContent('');
         }
         activeRecommendationTextarea = null;
+
+        /* iOS Safari fix: Bootstrap does not properly restore body scroll after modal close.
+           Manually clear overflow so the Create form remains interactive after closing. */
+        var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) {
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+            document.documentElement.style.overflow = '';
+        }
     });
 </script>
+
+<style>
+/* --- Mobile/tablet overrides (up to 1024px) --- */
+@media only screen and (max-width: 1024px) {
+    .main-content {
+        padding: 2px !important;
+        margin-top: 55px !important;
+        overflow-x: hidden !important;
+    }
+    .section-body {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .card,
+    .card-body {
+        padding: 6px !important;
+        margin: 0 !important;
+    }
+    .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    [class*="col-"] {
+        padding-left: 4px !important;
+        padding-right: 4px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+    .form-control,
+    textarea,
+    select {
+        width: 100% !important;
+        font-size: 13px !important;
+        min-height: 38px;
+    }
+    textarea {
+        word-break: break-word;
+    }
+    .table-responsive {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+
+    /* ----- Stepper fix – scrollable, same colors as desktop ----- */
+    .md-stepper-horizontal {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        padding: 10px 5px 15px 5px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        position: relative;
+        margin-bottom: 12px;
+        /* ensure the line stretches across the whole container */
+        min-height: 56px;
+    }
+
+    /* Hide the individual bar segments */
+    .md-stepper-horizontal .md-step .md-step-bar-left,
+    .md-stepper-horizontal .md-step .md-step-bar-right {
+        display: none !important;
+    }
+
+    /* Draw a continuous line behind the circles */
+    .md-stepper-horizontal::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: #ddd;
+        transform: translateY(-50%);
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    /* Each step sits on top of the line, flex‑shrink=0 so they don't shrink */
+    .md-stepper-horizontal .md-step {
+        display: flex !important;
+        flex: 0 0 auto !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-width: 44px !important;   /* enough for the number */
+        padding: 8px 6px !important;
+        position: relative !important;
+        z-index: 1 !important;
+    }
+
+    /* Circle size – slightly smaller, but keeps the number */
+    .md-stepper-horizontal .md-step .md-step-circle {
+        width: 32px !important;
+        height: 32px !important;
+        line-height: 32px !important;
+        font-size: 14px !important;
+        border-radius: 50% !important;
+        background-color: #999999 !important;  /* same as desktop default */
+        color: #fff !important;
+        z-index: 2;
+        position: relative;
+        margin: 0 !important;
+    }
+
+    /* Editable (current) step – same orange as desktop */
+    .md-stepper-horizontal .md-step.editable .md-step-circle {
+        background: #f05a00 !important;  /* desktop orange */
+    }
+
+    /* Done step – same green */
+    .md-stepper-horizontal .md-step.done .md-step-circle {
+        background: #84D768 !important;
+    }
+
+    /* Active step (if needed) – same blue as desktop (optional) */
+    .md-stepper-horizontal .md-step.active .md-step-circle {
+        background: rgb(33, 150, 243) !important;
+    }
+
+    /* Ensure the number text is visible */
+    .md-stepper-horizontal .md-step .md-step-circle span {
+        display: inline-block;
+    }
+
+    /* Swiper container adjustments */
+    .swiper-container {
+        width: 100% !important;
+        border-radius: 20px;
+    }
+    .swiper-slide {
+        font-size: 12px !important;
+        padding: 4px 8px !important;
+        white-space: nowrap;
+    }
+    .tab button {
+        padding: 4px 12px !important;
+        font-size: 12px !important;
+    }
+    input[type=checkbox] {
+        transform: scale(1.2);
+        margin: 0 5px 0 8px;
+    }
+
+    /* Buttons row */
+    .col-md-12.text-center {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 5px !important;
+        flex-wrap: nowrap !important;
+        padding: 0 5px !important;
+    }
+    .col-md-12.text-center .btn {
+        width: auto !important;
+        min-width: 65px !important;
+        padding: 6px 8px !important;
+        font-size: 11px !important;
+        margin: 0 !important;
+        white-space: nowrap !important;
+    }
+    .col-md-12.text-center .btn-label {
+        display: none !important;
+    }
+    .back-btn {
+        margin-top: 0 !important;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumb {
+        font-size: 12px !important;
+        padding: 5px !important;
+        margin-bottom: 8px !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        margin-left: 10px !important;
+    }
+
+    /* Heading */
+    h5.align {
+        font-size: 16px !important;
+        text-align: center !important;
+        margin-bottom: 10px !important;
+    }
+
+    /* Tables */
+    .fixTableHead .table-responsive {
+        overflow-x: auto !important;
+    }
+    .fixTableHead table {
+        min-width: 600px;
+    }
+
+    /* TinyMCE */
+    .tox-tinymce {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    .tox-editor-container {
+        width: 100% !important;
+    }
+
+    .btn.observation_info {
+        font-size: 12px !important;
+        padding: 4px 10px !important;
+        margin: 5px 0 !important;
+        display: inline-block !important;
+    }
+
+    #page8 .table-responsive,
+    #page14 .table-responsive {
+        overflow-x: auto !important;
+    }
+    #page8 table,
+    #page14 table {
+        min-width: 600px;
+    }
+
+    .mlr-auto {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 0 5px !important;
+    }
+    .scroll-break-div {
+        margin: 0 !important;
+    }
+    #r1 .col-12 {
+        padding: 0 5px !important;
+    }
+    .form-group {
+        margin-bottom: 8px !important;
+    }
+    .form-group .control-label,
+    .form-group>label {
+        font-size: 14px !important;
+        margin-top: 5px;
+    }
+
+    /* Swiper arrows hidden on small screens */
+    .swiper-button-prev,
+    .swiper-button-next {
+        display: none !important;
+    }
+
+    /* Next button text fix */
+    #Next {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+    #Next .btn-label {
+        display: inline-block !important;
+        margin: 0 auto !important;
+        font-size: 11px !important;
+        background-color: transparent !important;
+        padding-left: 30px !important;
+    }
+    #Next i {
+        display: none !important;
+    }
+}
+
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+    .md-stepper-horizontal .md-step {
+        min-width: 60px !important;
+        padding: 8px 10px !important;
+    }
+    .md-stepper-horizontal .md-step .md-step-circle {
+        width: 36px !important;
+        height: 36px !important;
+        line-height: 36px !important;
+        font-size: 16px !important;
+    }
+}
+</style>
 @endsection

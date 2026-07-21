@@ -26,11 +26,175 @@
     border-bottom: solid 1px #ddd;
     font-weight: bold;
   }
+
+  /* =========================================================================
+     MOBILE RESPONSIVE STYLING - CARD VIEW (like Assessment Report)
+     ========================================================================= */
+  @media (max-width: 768px) {
+    .main-content, .card, .card-body, .table-wrapper, .table-responsive {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    .row, .col-12, .col-lg-12 {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+    .table-responsive {
+        overflow-x: hidden !important;
+        overflow-y: visible !important;
+        max-height: none !important;
+    }
+    .table-responsive table {
+        font-size: 12px;
+        min-width: 100% !important;
+        width: 100% !important;
+    }
+    .table-responsive table, .table-responsive thead, .table-responsive tbody, .table-responsive th, .table-responsive td {
+        display: block !important;
+        width: 100% !important;
+    }
+    .table-responsive thead {
+        display: none !important;
+    }
+    .table-responsive tbody {
+        background: transparent !important;
+    }
+    #align {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+    #align tr {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        border: 1px solid #e0e0e0 !important;
+        border-radius: 8px !important;
+        margin: 8px 5px !important;
+        position: relative !important;
+        padding: 10px 15px 10px 45px !important;
+        background: #fff !important;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+        cursor: pointer;
+        width: calc(100% - 10px) !important;
+    }
+    #align td {
+        display: block !important;
+        border: none !important;
+        padding: 0 !important;
+        text-align: left !important;
+        white-space: normal !important;
+        width: 100% !important;
+        background: transparent !important;
+        height: auto !important;
+        min-height: 0 !important;
+        line-height: 1.2 !important;
+    }
+    /* Sl. No. (Col 1) */
+    #align td:nth-of-type(1) {
+        position: absolute !important;
+        left: 15px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        width: 25px !important;
+        display: flex !important;
+        font-weight: bold !important;
+        font-size: 13px !important;
+        color: #2c3e50 !important;
+    }
+    #align tr.expanded-row td:nth-of-type(1) {
+        top: 20px !important;
+        transform: translateY(0) !important;
+    }
+    /* Module Name (Col 2) */
+    #align td:nth-of-type(2) {
+        display: block !important;
+        font-weight: 600 !important;
+        font-size: 16px !important;
+        color: #2c3e50 !important;
+        margin-bottom: 4px !important;
+        padding-right: 25px !important;
+        order: 1 !important;
+    }
+    /* Question (Col 3) */
+    #align td:nth-of-type(3) {
+        display: block !important;
+        font-size: 13px !important;
+        color: #34495e !important;
+        margin-bottom: 10px !important;
+        order: 2 !important;
+    }
+    #align td:nth-of-type(3):before {
+        content: "Q: ";
+        font-weight: 600 !important;
+        color: #000 !important;
+    }
+    /* Action (Col 4) - hidden initially */
+    #align td:nth-of-type(4) {
+        display: none !important;
+    }
+    /* Arrow */
+    #align tr::after {
+        content: '\f054';
+        font-family: 'FontAwesome';
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #bdc3c7;
+        transition: transform 0.3s;
+        font-size: 12px;
+    }
+    #align tr.expanded-row::after {
+        transform: translateY(-50%) rotate(90deg);
+        top: 35px;
+    }
+    /* Action (Col 4) - shown when expanded */
+    #align tr.expanded-row td:nth-of-type(4) {
+        display: flex !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+        margin-top: 10px !important;
+        order: 3 !important;
+        white-space: normal !important;
+    }
+    #align tr.expanded-row td:nth-of-type(4)::before {
+        content: "Action:";
+        font-weight: 600 !important;
+        color: #000 !important;
+        margin-right: 6px !important;
+        flex-shrink: 0 !important;
+        width: 100% !important;
+        margin-bottom: 5px !important;
+    }
+    /* Action buttons - adjust for mobile */
+    #align tr.expanded-row td:nth-of-type(4) a,
+    #align tr.expanded-row td:nth-of-type(4) button {
+        display: inline-block !important;
+        margin-bottom: 5px !important;
+        padding: 5px 10px !important;
+        font-size: 12px !important;
+    }
+
+    /* DataTable controls (if any) */
+    .dataTables_wrapper .row:first-child { margin: 0 !important; }
+    .dataTables_wrapper .dataTables_length { float: left !important; margin-left: 8px !important; }
+    .dataTables_wrapper .dataTables_filter { float: right !important; padding-right: 8px !important; }
+    .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_paginate { font-size: 10px !important; }
+    .dataTables_wrapper .dataTables_length select { font-size: 11px !important; height: 32px !important; width: 60px !important; }
+    .dataTables_wrapper .dataTables_filter input { width: 90px !important; height: 24px !important; font-size: 10px !important; }
+  }
+
+  /* === HEADING CENTERED ON ALL SCREENS === */
+  h4 {
+    text-align: center !important;
+    color: darkblue !important;
+  }
 </style>
+
 <div class="main-content">
-
-
-
 
 {{ Breadcrumbs::render('FAQ_questions.index')}}
   <section class="section">
@@ -54,9 +218,8 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-lg-12 text-center">
-                  <h4 style="color:darkblue;">Manage FAQ Questions List</h4>
+                  <h4>Manage FAQ Questions List</h4>
                 </div>
-
               </div>
               @if (session('success'))
 
@@ -87,8 +250,6 @@
                 }
               </script>
               @endif
-
-              
 
               <div class="table-wrapper">
                 <div class="table-responsive">
@@ -142,28 +303,9 @@
        </div>
      </div>
 
-
    </section>
 
-
-
-
-
-
- </div>
-
-
-
-
-
-
-
-
-
-
-
 </div>
-
 
 <script>
   function myFunction(id) {
@@ -195,12 +337,20 @@
                 }
                 
             });
-           
-    
-
   }
-  
-</script>
 
+  // Mobile row toggle (expand/collapse) – only on small screens
+  $(document).ready(function() {
+    $('#align tbody').on('click', 'tr', function(e) {
+      // Do not toggle if click is on a link, button, or form element
+      if ($(e.target).closest('a, button, input, form').length) {
+        return;
+      }
+      if ($(window).width() <= 768) {
+        $(this).toggleClass('expanded-row');
+      }
+    });
+  });
+</script>
 
 @endsection

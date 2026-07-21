@@ -20,11 +20,7 @@
     }
 
     .custom-month-input {
-        /* Ensure the background is transparent */
         background-color: transparent;
-        /* padding-right: 30px; */
-        /* Add padding for arrow buttons */
-        /* Adjust the width to your design */
         font-size: 16px !important;
         font-weight: 700;
     }
@@ -39,7 +35,6 @@
         width: 100%;
         text-align: center;
         cursor: pointer;
-
         pointer-events: auto;
     }
 
@@ -47,6 +42,8 @@
         position: relative;
         display: flex;
         gap: 19px;
+        align-items: center;
+        justify-content: center;
     }
 
     .month {
@@ -90,12 +87,10 @@
 
     tr:nth-child(odd) {
         background-color: #dddddd;
-        /* Light grey color for odd rows */
     }
 
     tr:nth-child(even) {
         background-color: #aaaaaa;
-        /* Dark grey color for even rows */
     }
 
     .orange-text {
@@ -112,6 +107,207 @@
 
     textarea.form-control {
         height: 88px !important;
+    }
+
+    /* Breadcrumb – keep on one line */
+    .breadcrumb {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        -webkit-overflow-scrolling: touch;
+        padding: 8px 15px;
+        margin-bottom: 10px;
+    }
+    .breadcrumb-item + .breadcrumb-item {
+        padding-left: 0.5rem;
+    }
+    .breadcrumb-item + .breadcrumb-item::before {
+        content: "/";
+        padding-right: 0.5rem;
+    }
+
+    /* Header row – remove gray line and keep button left */
+    #weekDetails table tr:first-child td {
+        border: none !important;
+        background: #160b44 !important;
+        color: #ffffff;
+        padding: 8px 10px !important;
+    }
+
+    .week-header-row {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        flex-wrap: wrap !important;
+    }
+    .week-header-row .week-label {
+        font-weight: 600;
+        font-size: 15px;
+        flex: 1 1 auto;
+    }
+    .week-header-row .btn {
+        flex: 0 0 auto;
+        padding: 4px 12px;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    /* ==========================================
+       MOBILE RESPONSIVE
+       ========================================== */
+    @media (max-width: 768px) {
+        .main-content,
+        .card,
+        .card-body,
+        .section-body {
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+        }
+
+        .row {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        [class*="col-"] {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+            flex: 0 0 100% !important;
+            max-width: 100% !important;
+        }
+
+        .form-group {
+            margin-bottom: 15px !important;
+        }
+
+        .form-group label {
+            display: block !important;
+            width: 100% !important;
+            text-align: left !important;
+            margin-bottom: 5px !important;
+            font-weight: 600 !important;
+        }
+
+        .form-control,
+        .form-control[readonly] {
+            width: 100% !important;
+            height: 40px !important;
+            font-size: 14px !important;
+        }
+
+        select.form-control {
+            height: 40px !important;
+        }
+
+        /* Month + Week pickers – stack vertically (month first, week second) */
+        .input-container {
+            flex-direction: column !important;
+            gap: 10px !important;
+            width: 100% !important;
+            align-items: stretch !important;
+        }
+
+        .input-container .form-control {
+            width: 100% !important;
+        }
+
+        /* Week details – make table horizontally scrollable */
+        #weekDetails > div[style*="overflow-y: auto;"] {
+            overflow-x: auto !important;
+            max-height: none !important;
+            padding-bottom: 10px;
+        }
+
+        #weekDetails table {
+            min-width: 500px !important;
+            width: 100% !important;
+            font-size: 13px !important;
+        }
+
+        #weekDetails table td,
+        #weekDetails table th {
+            white-space: nowrap !important;
+            padding: 6px 4px !important;
+        }
+
+        /* Tooltip icons and counts – adjust font */
+        #weekDetails table td span {
+            font-size: 13px !important;
+        }
+
+        /* Legend – inline (colour + text on same line, items side by side) */
+        .legend-container {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            align-items: center !important;
+            gap: 4px 15px !important;
+            padding: 6px 0 !important;
+        }
+        .legend-container .legend-item {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 4px !important;
+            white-space: nowrap !important;
+        }
+        .legend-container .legend-item i {
+            display: inline-block !important;
+            margin: 0 !important;
+        }
+        .legend-container .legend-item b {
+            display: inline !important;
+            font-weight: 600 !important;
+            font-size: 13px !important;
+        }
+
+        /* Week header – keep button left and label next to it */
+        .week-header-row {
+            gap: 8px !important;
+        }
+        .week-header-row .week-label {
+            font-size: 13px !important;
+        }
+        .week-header-row .btn {
+            font-size: 12px !important;
+            padding: 3px 10px !important;
+        }
+
+        /* Modal – full width on mobile */
+        .modal-dialog.modal-xl {
+            max-width: 95% !important;
+            margin: 1.75rem auto !important;
+        }
+
+        .modal-body {
+            padding: 10px !important;
+        }
+
+        /* Modal buttons – inline */
+        .modal-body .row.text-center .col-md-12 {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            gap: 6px !important;
+        }
+
+        .modal-body .row.text-center .col-md-12 .btn {
+            width: auto !important;
+            margin: 2px !important;
+            padding: 6px 12px !important;
+            font-size: 14px !important;
+            white-space: nowrap !important;
+        }
+
+        /* Heading */
+        h5 {
+            font-size: 20px !important;
+        }
+
+        /* Textarea – adjust for mobile */
+        textarea.form-control {
+            height: auto !important;
+            min-height: 80px !important;
+        }
     }
 </style>
 
@@ -144,24 +340,15 @@
                         <div class="form-group">
                             <div class="input-container">
                                 <input type='month' class="form-control custom-month-input col-md-4" id='month' name="month" title="Monthly Allocation" placeholder="Select a month" value="{{$rows[0]['month']}}" readonly><br>
-                                <!-- <div class="custom-month-placeholder" id="placeholder">Select a Month</div> -->
-
                                 <select id="weekDropdown" class="form-control weekDropdown col-md-8" name="weekDropdown">
-                                    <option value=""  selected>Select a week</option>
+                                    <option value="" selected>Select a week</option>
                                 </select>
                                 <input type="hidden" name="week_hidden" id="week_hidden" value="{{$rows[0]['week']}}">
-
-                                <!-- <div class="arrow-container">
-                                    <div class="arrow up" id="prevMonth"><i class="fa fa-caret-up" aria-hidden="true"></i></div>
-                                    <div class="arrow down" id="nextMonth"><i class="fa fa-caret-down" aria-hidden="true"></i></div>
-                                </div> -->
                             </div>
                         </div>
-
                     </div>
                     <input type="hidden" name="" id="cor1_hidden" class="cordinator cor1" value="{{$rows[0]['is_coordinator1']}}">
                     <input type="hidden" name="" id="cor2_hidden" class="cordinator cor2" value="{{$rows[0]['is_coordinator2']}}">
-
 
                     <div id="weekDetails" class="week-details">
                         <!-- Week details will be displayed here -->
@@ -169,12 +356,21 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <div> <i class="fa fa-circle orange-text" aria-hidden="true"></i><b>-less than and equal to 2,</b>
-                                <i class="fa fa-circle green-text" aria-hidden="true"></i><b>-greater than 2 and less than equal to 4,</b>
-                                <i class="fa fa-circle red-text" aria-hidden="true"></i><b>-greater than 4.</b>
+                            <div class="legend-container">
+                                <span class="legend-item">
+                                    <i class="fa fa-circle orange-text" aria-hidden="true"></i>
+                                    <b>- less than and equal to 2,</b>
+                                </span>
+                                <span class="legend-item">
+                                    <i class="fa fa-circle green-text" aria-hidden="true"></i>
+                                    <b>- greater than 2 and less than equal to 4,</b>
+                                </span>
+                                <span class="legend-item">
+                                    <i class="fa fa-circle red-text" aria-hidden="true"></i>
+                                    <b>- greater than 4.</b>
+                                </span>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -186,9 +382,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <form method="POST" action="{{ route('coordinator.cancellation_store') }}" id="update_form" enctype="multipart/form-data">
-
                 <div class="main-contents">
-
                     <section class="section">
                         <div class="modal-header bg-primary" style=" background-color: rgb(0 103 172) !important;">
                             <h4 class="modal-title">IS-Coordinator Cancellation</h4>
@@ -207,11 +401,9 @@
                                                 <div class="row is-coordinate">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-
                                                             <label class="control-label">Enrollment ID<span class="error-star" style="color:red;">*</span></label>
                                                             <input class="form-control" type="text" id="enrollment_child_num" name="enrollment_child_num" value="{{$rows[0]['enrollment_child_num']}}" required autocomplete="off" readonly>
                                                             <input type="hidden" id="enrollment_id" name="enrollment_id" autocomplete="off" value="{{$rows[0]['enrollment_id']}}" readonly>
-
                                                         </div>
                                                     </div>
                                                     <input type="hidden" id="user_id" name="user_id">
@@ -227,7 +419,6 @@
                                                             <input class="form-control readonly" type="text" id="child_name" name="child_name" value="{{$rows[0]['child_name']}}" maxlength="20" value="" placeholder="Enter Name" autocomplete="off" readonly>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                                 <div class="row" style="display: flex;justify-content: center;">
                                                     <div class="col-md-4">
@@ -235,32 +426,24 @@
                                                             <label class="control-label">IS Co-ordinator-1<span class="error-star" style="color:red;">*</span></label>
                                                             <div style="display: flex;">
                                                                 <input type="hidden" id="coordinator1_id" name="coordinator1_id" autocomplete="off" value="{{$rows[0]['is_coordinator1']}}" readonly>
-
                                                                 <input class="form-control readonly" type="text" id="is_coordinator1" name="is_coordinator1" class="is_coordinator1" value="{{$rows[0]['is_coordinator1_name']}}" autocomplete="off">
-
                                                             </div>
-
                                                         </div>
                                                     </div>
-
                                                     <div class="col-md-4">
                                                         <div class="form-group ">
                                                             <label class="control-label">IS Co-ordinator-2<span class="error-star" style="color:red;">*</span></label>
                                                             <div style="display: flex;">
                                                                 <input type="hidden" id="coordinator2_id" name="coordinator2_id" autocomplete="off" value="{{$rows[0]['is_coordinator2']}}" readonly>
-
                                                                 <input class="form-control readonly" type="text" id="is_coordinator2" name="is_coordinator2" value="{{$rows[0]['is_coordinator2_name']}}" autocomplete="off">
-
-
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-lg-12" style="margin: 20px 0px 0px 0px;">
                                                         <div class="form-group">
-                                                            <label class="form-label">Special Instruction(if Any)<span class="error-star" style="color:red;">*</span></label>
+                                                            <label class="form-label">Special Instruction (if Any)<span class="error-star" style="color:red;">*</span></label>
                                                             <textarea class="form-control" id="description" name="description"></textarea>
                                                         </div>
                                                     </div>
@@ -268,7 +451,6 @@
                                                 <div class="row text-center">
                                                     <div class="col-md-12">
                                                         <button class="btn btn-success" type="button" onclick="validateAndAllocate('saved')" id="savebutton"><i class="fa fa-check"></i>Submit</button>&nbsp;
-                                                        <!-- <button class="btn btn-primary" type="reset" onclick="mycheckfunction()"><i class="fa fa-undo"></i> Undo</button>&nbsp; -->
                                                         <a class="btn btn-danger" href=""><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>&nbsp;
                                                     </div>
                                                 </div>
@@ -276,9 +458,7 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
                     </section>
                 </div>
@@ -303,15 +483,15 @@
             daysInMonth = new Date(selectedMonth.getFullYear(), selectedMonth.getMonth() + 1, 0).getDate();
             generateWeekDropdown();
         });
-// Set the minimum month to the current month and year
-const currentMonth = new Date().toISOString().slice(0, 7);
-    monthInput.min = currentMonth;
+        // Set the minimum month to the current month and year
+        const currentMonth = new Date().toISOString().slice(0, 7);
+        monthInput.min = currentMonth;
         weekDropdown.addEventListener('change', function() {
             const selectedWeek = weekDropdown.value;
             const startDate = new Date(selectedMonth.getFullYear(), selectedMonth.getMonth(), (selectedWeek - 1) * 7 + 1);
             const endDate = new Date(selectedMonth.getFullYear(), selectedMonth.getMonth(), Math.min(selectedWeek * 7, daysInMonth));
             const weekLabel = `Week ${selectedWeek}: ${startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })} - ${endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}`;
-            getWeekTable(weekLabel); // Call the getWeekTable function with the weekLabel
+            getWeekTable(weekLabel);
         });
 
         function generateWeekDropdown() {
@@ -332,21 +512,18 @@ const currentMonth = new Date().toISOString().slice(0, 7);
             }
 
             weekDropdown.disabled = true;
-
         }
 
         function getWeekTable(weekLabel) {
-            // Initialize an empty table
+            // Build the table header with button on the left
             let tableHTML = `
         <div style="max-height: 220px; overflow-y: auto;">
             <table style="width: 100%;">
                 <tr>
-                    <td colspan="3" style="background: #160b44; color: #ffffff;">
-                        <div class="col-md-12" style="display: flex;align-items: center;">
-                            <span class="col-md-10">${weekLabel}</span>
-                            <span class="col-md-2">
-                                <a type="button" id="allocationButton" class="btn btn-success text-white" onclick="validateAndAllocate1('Saved')" name="type" value="Saved">Allocation<i class="fa fa-plus" aria-hidden="true" style="padding-left: 5px;"></i></a>
-                            </span>
+                    <td colspan="3" style="background: #160b44; color: #ffffff; border: none !important; padding: 8px 10px !important;">
+                        <div class="week-header-row">
+                            <a type="button" id="allocationButton" class="btn btn-success text-white" onclick="validateAndAllocate1('Saved')" name="type" value="Saved">Allocation<i class="fa fa-plus" aria-hidden="true" style="padding-left: 5px;"></i></a>
+                            <span class="week-label">${weekLabel}</span>
                         </div>
                     </td>
                 </tr>                  
@@ -359,47 +536,30 @@ const currentMonth = new Date().toISOString().slice(0, 7);
 
             // Make an AJAX request to fetch IS Coordinator names
             $.ajax({
-                url: '/coordinator_allocation', // Replace with the actual endpoint URL
+                url: '/coordinator_allocation',
                 type: 'GET',
                 data: {
                     _token: '{{ csrf_token() }}',
                     is_ajax: "yes"
                 },
                 success: function(data) {
-                    // Iterate through the retrieved data and add rows to the table
-
                     data.forEach(function(row, index) {
-                        console.log(row.sail_inprogress_count);
-                        // Initialize an empty string for the tooltip title
                         let tooltipContent = "";
-
-                        // Loop through the array to construct the tooltip title
                         row.sail_inprogress_count.forEach(function(item, index) {
-                            // Add each enrollment record as a separate row without HTML tags
                             tooltipContent += `${index + 1})${item.enrollment_id} (${item.child_name}) - ${item.current_status}\n`;
                         });
                         const dataName = row.name;
-                        // const cor1Value = document.getElementById('cor1_hidden').value;
-                        // const cor2Value = document.getElementById('cor2_hidden').value;
 
-                        // Get all checkboxes with the class "checkbox_btn"
                         const checkboxes = document.querySelectorAll('.cordinator');
-
-                        // Iterate through checkboxes
-                        exist = 0;
+                        let exist = 0;
                         checkboxes.forEach(function(checkbox) {
-                            console.log(checkbox.classList);
-                            const id = checkbox.value;
-
-                            if (id == row.id) {
+                            if (checkbox.value == row.id) {
                                 exist = 1;
                             }
-
-
                         });
 
                         var is_checked = exist == 1 ? "checked" : "";
-                        const dataCount = is_checked ? (index + 1) : ''; // Set data-count to 1 and 2 for checked rows
+                        const dataCount = is_checked ? (index + 1) : '';
 
                         tableHTML += `
                     <tr>
@@ -408,32 +568,25 @@ const currentMonth = new Date().toISOString().slice(0, 7);
                                 <input ${is_checked}  data-count="${dataCount}" class="form-check-input checkbox_btn" type="checkbox" value="${row.id}" id="checkbox${row.id}" data-name="${dataName}" disabled>${row.name}
                             </div>
                         </td>
-                        <td style="font-weight:700;">${row.ovm2_completion_count}
-                        </td>
+                        <td style="font-weight:700;">${row.ovm2_completion_count}</td>
                         <td style="font-weight:700;">
-    <span data-toggle="tooltip" data-placement="top" id="sail_inprogress${row.id}"  title="${tooltipContent}"  class="">
-        ${row.sail_inprogress_count.length}
-        <a href="#" class="text-inherit mr-3 fa fa-circle ${getRowColorClass(row.sail_inprogress_count.length)}"></a>
-    </span>
-</td>
+                            <span data-toggle="tooltip" data-placement="top" id="sail_inprogress${row.id}"  title="${tooltipContent}"  class="">
+                                ${row.sail_inprogress_count.length}
+                                <a href="#" class="text-inherit mr-3 fa fa-circle ${getRowColorClass(row.sail_inprogress_count.length)}"></a>
+                            </span>
+                        </td>
                     </tr>
-                    
                 `;
                     });
 
-                    // Close the table HTML
                     tableHTML += '</table></div>';
-
-                    // Update the weekDetails element with the generated table
                     weekDetails.innerHTML = tableHTML;
-
                 },
                 error: function(error) {
                     console.error('Error fetching IS Coordinator names: ' + error);
                 }
             });
         }
-
 
         function triggerChange() {
             const event = new Event('change', {
@@ -453,26 +606,20 @@ const currentMonth = new Date().toISOString().slice(0, 7);
         triggerChange();
         $('#weekDropdown').val($('#week_hidden').val());
         triggerChange2();
-
-
     });
+
     let counter = 1;
     // Event listener for checkbox changes
     document.addEventListener('click', function(e) {
-
         if (e.target.classList.contains('checkbox_btn')) {
-            // alert('efefef');
-            // alert(e.target.checked);
             const coordinatorId = e.target.value;
             const coordinatorName = e.target.getAttribute('data-name');
             const selectedMonth = document.getElementById('month').value;
             const selectedWeek = document.getElementById('weekDropdown').value;
             if (e.target.checked) {
-                // alert('feef');
-
                 if (document.getElementById('is_coordinator1').value == "") {
                     document.querySelector('#is_coordinator1').value = coordinatorName;
-                    document.getElementById('coordinator1_id').value = coordinatorId; // Set the coordinator2_id
+                    document.getElementById('coordinator1_id').value = coordinatorId;
                     document.getElementById('selected_month').value = selectedMonth;
                     document.getElementById('selected_week').value = selectedWeek;
                     e.target.setAttribute('data-count', counter++);
@@ -481,7 +628,6 @@ const currentMonth = new Date().toISOString().slice(0, 7);
                     document.getElementById('coordinator2_id').value = coordinatorId;
                     document.getElementById('selected_month').value = selectedMonth;
                     document.getElementById('selected_week').value = selectedWeek;
-                    // Add the count as an attribute to the checkbox
                     e.target.setAttribute('data-count', counter++);
                 }
             } else {
@@ -496,92 +642,42 @@ const currentMonth = new Date().toISOString().slice(0, 7);
                     document.getElementById('selected_week').value = '';
                     counter = 1;
                 }
-                // Remove the data-count attribute when unchecked
                 e.target.removeAttribute('data-count');
             }
         }
     });
 
-
-
-
-
-    // Allocation button click event
-    const allocationButton = document.getElementById('allocationButton');
-
-    allocationButton.addEventListener('click', function() {
-        // Check if at least two coordinators are selected
-        const isCoordinator1 = document.getElementById('is_coordinator1').value;
-        const isCoordinator2 = document.getElementById('is_coordinator2').value;
-
-        if (isCoordinator1 !== "" && isCoordinator2 !== "") {
-            // Show the modal
-            $('#addModal').modal('show');
-        } else {
-           // alert('Please select at least two coordinators for allocation.');
+    // Allocation button click event (to open modal)
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('#allocationButton')) {
+            const isCoordinator1 = document.getElementById('is_coordinator1').value;
+            const isCoordinator2 = document.getElementById('is_coordinator2').value;
+            if (isCoordinator1 !== "" && isCoordinator2 !== "") {
+                $('#addModal').modal('show');
+            } else {
+                swal.fire("Please select at least two IS-Coordinators", "", "info");
+            }
         }
     });
 
-
     function getRowColorClass(count) {
-        if (count <= 2) {
-            return 'orange-text';
-        } else if (count > 2 && count <= 4) {
-            return 'green-text';
-        } else {
-            return 'red-text';
-        }
+        if (count <= 2) return 'orange-text';
+        else if (count > 2 && count <= 4) return 'green-text';
+        else return 'red-text';
     }
-
-    // Find the element with the data-toggle="tooltip" attribute that you want to update
-    const elementToUpdate = document.querySelector('#sail_inprogress'); // Replace with the actual ID or selector of your element
-
-    // Check if the element exists
-    if (elementToUpdate) {
-        // Update the title attribute to change the tooltip content
-        elementToUpdate.setAttribute('title', 'New Tooltip Content');
-
-        // Destroy the old Bootstrap Tooltip instance and create a new one with the updated title
-        const oldTooltipInstance = bootstrap.Tooltip.getInstance(elementToUpdate);
-        if (oldTooltipInstance) {
-            oldTooltipInstance.dispose(); // Destroy the old tooltip
-        }
-
-        // Create a new Bootstrap Tooltip instance with the updated title
-        const newTooltipInstance = new bootstrap.Tooltip(elementToUpdate);
-
-        // Show the updated tooltip
-        newTooltipInstance.show();
-    }
-
 
     function validateAndAllocate1(allocationType) {
         const checkboxes = document.querySelectorAll('.form-check-input:checked');
-        console.log(checkboxes);
-        // Check if any checkboxes are selected
         if (checkboxes.length === 0) {
             swal.fire("You can Only Select 2 IS-Coordinator's for a OVM allocation", "", "error");
             return false;
         }
         const selectedCoordinators = [];
-        // Collect the selected IS-Coordinators' names
         checkboxes.forEach(checkbox => {
-            const span = checkbox;
-
-            if (span) {
-
-                const coordinatorName = span.textContent.trim();
-                selectedCoordinators.push(coordinatorName);
-            }
-
+            const coordinatorName = checkbox.textContent.trim();
+            selectedCoordinators.push(coordinatorName);
         });
-
-        const checkedCount = selectedCoordinators.length;
-
-        if (checkedCount == 2) {
-            const isCoordinatorInput1 = document.getElementById('is_coordinator1');
-            const isCoordinatorInput2 = document.getElementById('is_coordinator2');
-
+        if (selectedCoordinators.length == 2) {
             $('#addModal').modal('show');
         } else {
             swal.fire("You can Only Select 2 IS-Coordinator's for a OVM allocation", "", "error");
@@ -589,10 +685,7 @@ const currentMonth = new Date().toISOString().slice(0, 7);
         }
     }
 
-    // Rest of your code
     $(document).ready(function() {
-
-
         $("input[type='month']").on("change", function() {
             const selectedDate = $(this).val();
             if (selectedDate === "") {
@@ -602,8 +695,6 @@ const currentMonth = new Date().toISOString().slice(0, 7);
                 $(this).removeAttr("placeholder");
             }
         });
-
-        // Trigger initial change event to handle any pre-selected value
         $("input[type='month']").trigger("change");
     });
 
@@ -611,84 +702,22 @@ const currentMonth = new Date().toISOString().slice(0, 7);
         let value = event.target.value || '';
         value = value.replace(/[^a-z A-Z ]/, '', );
         event.target.value = value;
-
     }
 </script>
-
-
-
-<!-- <script>
-    const myModal = document.querySelectorAll('.modalreset');
-
-    for (const myModals of myModal) {
-
-        myModals.addEventListener('hidden.bs.modal', function() {
-
-            const form = this.querySelector('.reset');
-
-            form.reset();
-        });
-
-    }
-    $(document).ready(function() {
-        $(document).on('hidden.bs.modal', function() {
-            // const form = this.querySelector('.reset');
-
-            // form.reset();
-            const form_count = document.querySelectorAll('form.reset');
-            for (let index = 0; index < form_count.length; index++) {
-                $('.reset')[index].reset();
-
-            }
-
-        })
-
-    })
-    $(document).ready(function() {
-        $("input[type='month']").on("change", function() {
-            const selectedDate = $(this).val();
-            if (selectedDate === "") {
-                $(this).css("color", "#aaa");
-            } else {
-                $(this).css("color", "black");
-                $(this).removeAttr("placeholder");
-            }
-        });
-
-        // Trigger initial change event to handle any pre-selected value
-        $("input[type='month']").trigger("change");
-    });
-</script> -->
-<script>
-
-</script>
-
-
 
 <script>
     const monthInput = document.getElementById('month');
-
-    // Disable keyboard input by capturing the keydown event and preventing default
-    monthInput.addEventListener('keydown', function(event) {
-        event.preventDefault();
-    });
-
-    // Disable mouse wheel events to prevent changing the month with the wheel
-    monthInput.addEventListener('wheel', function(event) {
-        event.preventDefault();
-    });
+    monthInput.addEventListener('keydown', function(event) { event.preventDefault(); });
+    monthInput.addEventListener('wheel', function(event) { event.preventDefault(); });
 </script>
-
 
 <script>
     window.onload = function() {
         let url = new URL(window.location.href)
         let message = url.searchParams.get("message6");
         if (message != null) {
-
             window.history.pushState("object or string", "Title", "/coordinator/list/view");
         }
-
     };
 </script>
 
@@ -696,25 +725,23 @@ const currentMonth = new Date().toISOString().slice(0, 7);
     function showSuccessAlert() {
         Swal.fire({
             title: "Success",
-            text: "IS-Coordinator Allocated Successfully",
+            text: "IS-Coordinator Cancelled Successfully",
             icon: "success",
         });
     }
 
     function validateAndAllocate(allocationType) {
-
         if (allocationType == "saved") {
             var enrollment_child_num = $("#enrollment_child_num").val();
-            var description =$("#description").val();
+            var description = $("#description").val();
             if (enrollment_child_num == '') {
                 swal.fire("Please Select Enrollment ID", "", "error");
                 return false;
-            } 
+            }
             if (description == '') {
                 swal.fire("Please Enter the Special Instruction", "", "error");
                 return false;
-            } 
-            else {
+            } else {
                 $('#savebutton').prop('disabled', true);
                 Swal.fire({
                     title: `Do you want to Cancel the IS-Coordinator for child of ${$('#child_name').val()}?`,
@@ -731,54 +758,21 @@ const currentMonth = new Date().toISOString().slice(0, 7);
                     width: '550px',
                 }).then((result) => {
                     if (result.value) {
-                        // Simulating a success response with a delay
                         document.getElementById('update_form').submit();
-
                     }
                 });
-
-
             }
         }
-        // if (allocationType == "saved") {
-        //     Swal.fire({
-        //         title: "Do you want to Allocate the IS-Coordinator for the child of Naz Naz?",
-        //         text: "Please click 'Yes' to proceed for the Allocation",
-        //         icon: "warning",
-        //         customClass: 'swalalerttext',
-        //         showCancelButton: true,
-        //         confirmButtonColor: '#3085d6',
-        //         confirmButtonText: "Yes",
-        //         cancelButtonText: "No",
-        //         closeOnConfirm: false,
-        //         closeOnCancel: true,
-        //         showLoaderOnConfirm: true,
-        //         width: '550px',
-        //     }).then((result) => {
-        //         if (result.value) {
-        //             // Simulating a success response with a delay
-        //             setTimeout(() => {
-        //                 // showSuccessAlert();
-        //                 // Redirect with a message parameter
-        //                 const message6 = "Valuer List Approved Successfully";
-        //                 location.replace(`/coordinator/list/view/?message6="${message6}"`);
-        //             }, 1000);
-        //         }
-        //     });
-        // }
     }
 
     window.onload = function() {
         let url = new URL(window.location.href);
         let message6 = url.searchParams.get("message6");
-
         if (message6 != null) {
-            // Remove the parameter from the URL after showing the success message
             window.history.pushState({}, document.title, "/coordinator/list/view");
             showSuccessAlert();
         }
     };
 </script>
-
 
 @endsection

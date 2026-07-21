@@ -1,10 +1,9 @@
-@extends('layouts.parent')
+@extends(($modules['user_role'] == 'Parent' || $modules['user_role'] == 'Child') ? 'layouts.parent' : 'layouts.adminnav')
 
 @section('content')
 <style>
     input[type=checkbox] {
         display: inline-block;
-
     }
 
     .no-arrow {
@@ -21,14 +20,10 @@
         margin: 0;
     }
 
-    /* body{
-        background-color: white !important;
-    } */
     .nav-tabs {
         background-color: #0068a7 !important;
         border-radius: 29px !important;
         padding: 1px !important;
-
     }
 
     .nav-item.active {
@@ -60,6 +55,13 @@
         border-color: #bec4d0 !important;
         box-shadow: 2px 2px 4px rgb(0 0 0 / 15%);
         border-style: outset;
+    }
+
+    /* ===== FIX: increase left padding for phone inputs (same as edit page) ===== */
+    #child_contact_phone,
+    #child_alter_phone {
+        padding-left: 110px !important;
+        box-sizing: border-box;
     }
 </style>
 
@@ -131,7 +133,7 @@
                             <section class="section">
                                 <div class="section-body mt-1">
                                     <hr>
-                                    <h5 style="font-weight: bold; display:flex;   width: fit-content; padding: -13px;margin-top: -18px;margin-left: auto;margin-right: auto;padding: 5px;background-color: white;">Child Enrollment Details</h5>
+                                    <h5 style="font-weight: bold; display:flex;   width: fit-content; padding: -13px;margin-top: -18px;margin-left: auto;margin-right: auto;padding: 5px;background-color: white; position: relative; z-index: 1;">Child Enrollment Details</h5>
 
                                     <div class="row">
                                         <input type="hidden" id="selected_id" name="selected_id" value="">
@@ -180,7 +182,7 @@
                                     </div>
 
                                     <hr>
-                                    <h5 style="font-weight: bold; display:flex;   width: fit-content; padding: -13px;margin-top: -18px;margin-left: auto;margin-right: auto;padding: 5px;background-color: white;">Contact Details</h5>
+                                    <h5 style="font-weight: bold; display:flex;   width: fit-content; padding: -13px;margin-top: -18px;margin-left: auto;margin-right: auto;padding: 5px;background-color: white; position: relative; z-index: 1;">Contact Details</h5>
 
 
                                     <div class="row">
@@ -343,73 +345,6 @@
                                             </div>
                                         </div>
                                         @endif
-
-
-                                        {{-- <div class="col-md-6">
-                                            <div class="form-group">
-
-                                                <label class="control-label" style="font-weight: bold;">Q2.How did you come to know about Elina? </label><span class="error-star" style="color:red;">*</span>
-
-                                                <br>
-                                                @if($knmabtelina_data !='')
-                                                @if(in_array('From a Friend',$knmabtelina_data))
-                                                <input type="checkbox" id="featured-5" name="how_knowabt_elina[]" value="From a Friend" checked onchange="addval(this)" onclick="return false"><label for="featured-5" style="padding: 5px;">From a Friend</label>
-                                                @else
-                                                <input type="checkbox" id="featured-5" name="how_knowabt_elina[]" value="From a Friend" onchange="addval(this)" disabled=""><label for="featured-5" style="padding: 5px;">From a Friend</label>
-                                                @endif
-                                                <br>
-                                                @if(in_array("Recommended by Child's therapist",$knmabtelina_data ))
-                                                <input type="checkbox" id="featured-6" name="how_knowabt_elina[]" value="Recommended by Child's therapist" checked Fonchange="addval(this)" onclick="return false"><label for="featured-6" style="padding: 5px;">Recommended by Child's therapist</label>
-                                                @else
-                                                <input type="checkbox" id="featured-6" name="how_knowabt_elina[]" value="Recommended by Child's therapist" Fonchange="addval(this)" disabled=""><label for="featured-6" style="padding: 5px;">Recommended by Child's therapist</label>
-                                                @endif
-                                                <br>
-                                                @if(in_array("Through Elina's Website",$knmabtelina_data ))
-                                                <input type="checkbox" id="featured-7" name="how_knowabt_elina[]" value="Through Elina's Website" checked onchange="addval(this)" onclick="return false"><label for="featured-7" style="padding: 5px;">Through Elina Website</label>
-                                                @else
-                                                <input type="checkbox" id="featured-7" name="how_knowabt_elina[]" value="Through Elina's Website" onchange="addval(this)" disabled=""><label for="featured-7" style="padding: 5px;">Through Elina Website</label>
-                                                @endif
-                                                <br>
-                                                @if(in_array('Through HLC Admission',$knmabtelina_data ))
-                                                <input type="checkbox" id="featured-8" name="how_knowabt_elina[]" value="Through HLC Admission" checked onchange="addval(this)" onclick="return false"><label for="featured-8" style="padding: 5px;">Through HLC Admission</label>
-                                                @else
-                                                <input type="checkbox" id="featured-8" name="how_knowabt_elina[]" value="Through HLC Admission" onchange="addval(this)" disabled=""><label for="featured-8" style="padding: 5px;">Through HLC Admission</label>
-                                                @endif
-                                                <br>
-
-                                                @if(in_array('Through Facebook and Social Media',$knmabtelina_data ))
-                                                <input type="checkbox" id="featured-9" name="how_knowabt_elina[]" value="Through Facebook and Social Media" checked onchange="addval(this)" onclick="return false"><label for="featured-9" style="padding: 5px;">Through Facebook and Social Media</label>
-                                                @else
-                                                <input type="checkbox" id="featured-9" name="how_knowabt_elina[]" value="Through Facebook and Social Media" onchange="addval(this)" disabled=""><label for="featured-9" style="padding: 5px;">Through Facebook and Social Media</label>
-                                                @endif
-                                                <br>
-                                                @if(in_array('Through Beyond 8',$knmabtelina_data ))
-                                                <input type="checkbox" id="featured-10" name="how_knowabt_elina[]" value="Through Beyond 8" checked onchange="addval(this)" onclick="return false"><label for="featured-10" style="padding: 5px;">Through Beyond 8</label>
-                                                @else
-                                                <input type="checkbox" id="featured-10" name="how_knowabt_elina[]" value="Through Beyond 8" onchange="addval(this)" disabled><label for="featured-10" style="padding: 5px;">Through Beyond 8</label>
-                                                @endif
-
-                                                @else
-
-
-
-
-                                                <label for="featured-5" style="padding: 5px;display:flex"><input type="checkbox" id="featured-5" name="how_knowabt_elina[]" value="From a Friend" onchange="addval(this)" class="questionpadding" style="margin-right: 0.3rem!important;">From a Friend</label>
-
-                                                <label for="featured-6" style="padding: 5px;display:flex"><input type="checkbox" id="featured-6" name="how_knowabt_elina[]" value="Recommended by Child's therapist" Fonchange="addval(this)" style="margin-right: 0.3rem!important;">Recommended by Child's therapist</label>
-
-                                                <label for="featured-7" style="padding: 5px;display:flex"><input type="checkbox" id="featured-7" name="how_knowabt_elina[]" value="Through Elina's Website" onchange="addval(this)" style="margin-right: 0.3rem!important;">Through Elina's Website</label>
-
-                                                <label for="featured-8" style="padding: 5px;display:flex"><input type="checkbox" id="featured-8" name="how_knowabt_elina[]" value="Through HLC Admission" onchange="addval(this)" style="margin-right: 0.3rem!important;">Through HLC Admission</label>
-
-                                                <label for="featured-9" style="padding: 5px;display:flex"><input type="checkbox" id="featured-9" name="how_knowabt_elina[]" value="Through Facebook and Social Media" onchange="addval(this)" style="margin-right: 0.3rem!important;">Through Facebook and Social Media</label>
-
-                                                <label for="featured-10" style="padding: 5px;display:flex"><input type="checkbox" id="featured-10" name="how_knowabt_elina[]" value="Through Beyond 8" onchange="addval(this)" style="margin-right: 0.3rem!important;">Through Beyond 8</label>
-
-                                                @endif
-
-                                            </div>
-                                        </div> --}}
 
 
                                         @php
@@ -601,9 +536,8 @@
 
     function childName(event) {
         let value = event.target.value || '';
-        value = value.replace(/[^a-z A-Z ]/, '', );
+        value = value.replace(/[^a-zA-Z0-9\s\(\)\-\.\,\']/g, '');
         event.target.value = value;
-
     }
 
     function childfatherName(event) {

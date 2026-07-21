@@ -36,6 +36,168 @@
   .select2-container--default .select2-selection--multiple .select2-selection__choice {
     color: black !important;
   }
+
+    /* Mobile Optimized Layout */
+    @media (max-width: 768px) {
+    .main-content {
+      padding: 10px !important;
+      padding-top: 80px !important;
+    }
+    .breadcrumb, .breadcrumb-item {
+      font-size: 9px !important;
+    }
+    h5.text-center {
+      font-size: 15px !important;
+    }
+    .control-label, label {
+      font-size: 10px !important;
+    }
+    .centerid {
+      text-align: left !important;
+      width: auto !important;
+    }
+    .form-control {
+      font-size: 10px !important;
+      height: 32px !important;
+      box-shadow: none !important;
+    }
+
+    /* Requested UI Layout for Location & Date/Time */
+    .custom-row-stacked {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      margin-bottom: 20px !important;
+    }
+    .custom-row-stacked label {
+      flex: 0 0 100% !important;
+      width: 100% !important;
+      display: block !important;
+      margin-bottom: 8px !important;
+      font-weight: 700 !important;
+      font-size: 16px !important;
+      color: #34395e !important;
+      text-align: left !important;
+    }
+    .custom-row-stacked .col-sm-4, 
+    .custom-row-stacked .col-sm-2 {
+      flex: 0 0 48% !important;
+      max-width: 48% !important;
+      padding: 0 !important;
+    }
+    /* If it's a single input like Location, make it full width on mobile */
+    .custom-row-stacked .col-sm-4:only-of-type {
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+    }
+    /* Side-by-side gap */
+    .custom-row-stacked .col-sm-4:not(:only-of-type) {
+      margin-right: 4% !important;
+    }
+    .custom-row-stacked .form-control {
+      width: 100% !important;
+      height: 42px !important;
+      border-radius: 8px !important;
+      border: 1px solid #ced4da !important;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+      background-color: #fff !important;
+      padding: 10px !important;
+    }
+
+    /* Requested UI Layout for Location & Date/Time */
+    .datetime-row {
+      display: grid !important;
+      grid-template-columns: 58% 38% !important;
+      gap: 4% !important;
+      margin-bottom: 25px !important;
+      width: 100% !important;
+    }
+    .datetime-row label {
+      grid-column: 1 / span 2 !important;
+      display: block !important;
+      margin-bottom: 8px !important;
+      font-weight: 700 !important;
+      font-size: 16px !important;
+      color: #34395e !important;
+      text-align: left !important;
+    }
+    .datetime-row label.required::after {
+      content: " *" !important;
+      color: red !important;
+    }
+    .datetime-row .col-sm-4, 
+    .datetime-row .col-sm-2 {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    /* If it's a single input like Location, make it full width */
+    .datetime-row:not(:has(.col-sm-2)) {
+      grid-template-columns: 100% !important;
+    }
+    .datetime-row:not(:has(.col-sm-2)) .col-sm-4 {
+      grid-column: 1 / span 2 !important;
+    }
+
+    .datetime-row .form-control {
+      width: 100% !important;
+      height: 44px !important;
+      border-radius: 8px !important;
+      border: 1px solid #ced4da !important;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+      background-color: #fff !important;
+      padding: 10px 15px !important;
+      font-size: 12px !important;
+    }
+
+    /* Yellow Button Centering */
+    .col-md-1:has(.btn-primary[title="Attendee Status"]) {
+      margin: 10px 0 !important;
+      display: flex !important;
+      justify-content: center !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      flex: 0 0 100% !important;
+    }
+
+    /* Action Buttons Uniform Sizing */
+    .row.text-center .col-md-12 {
+      display: flex !important;
+      justify-content: center !important;
+      gap: 5px !important;
+      padding: 10px 5px !important;
+    }
+    .row.text-center .btn {
+      flex: 1 1 auto !important;
+      min-width: 80px !important;
+      padding: 6px 2px !important;
+      font-size: 10px !important;
+      height: 34px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-shadow: none !important;
+      border-radius: 4px !important;
+    }
+    /* Respect inline display:none */
+    .row.text-center .btn[style*="display:none"],
+    .row.text-center .btn[style*="display: none"] {
+      display: none !important;
+    }
+    .back-btn {
+      background-color: #ff0000 !important;
+    }
+    .back-btn .btn-label {
+      display: none !important;
+    }
+    
+    table.table, .table th, .table td {
+      font-size: 9px !important;
+    }
+    .card-body {
+      padding: 12px !important;
+    }
+  }
 </style>
 
 <div class="main-content">
@@ -235,14 +397,14 @@
                 </div>
 
 
-                <div class="form-group row">
+                <div class="form-group row datetime-row">
                   <label class="col-sm-2 col-form-label required">Location</label>
                   <div class="col-sm-4">
                     <input class="form-control" type="text" readonly id="meeting_location" name="meeting_location" value="{{ $row['meeting_location']}}" placeholder="Enter Location" required autocomplete="off">
                   </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row datetime-row">
                   <label class="col-sm-2 col-form-label required">Start Date and Time</label>
                   <div class="col-sm-4">
                     <div class="inner-addon right-addon">
@@ -256,7 +418,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row datetime-row">
                   <label class="col-sm-2 col-form-label required">End Date and Time</label>
                   <div class="col-sm-4">
                     <div class="inner-addon right-addon">

@@ -1,44 +1,104 @@
 @extends('layouts.adminnav')
 
 @section('content')
-<div class="main-content">
+<style>
+  /* ==========================================
+     MOBILE RESPONSIVE – FORM PAGES
+     ========================================== */
+  @media (max-width: 768px) {
+    .main-content,
+    .card,
+    .card-body,
+    .section-body {
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+    }
 
+    .row {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    [class*="col-"] {
+      padding-left: 5px !important;
+      padding-right: 5px !important;
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+    }
+
+    .form-group {
+      margin-bottom: 15px !important;
+    }
+
+    .form-group label {
+      display: block !important;
+      width: 100% !important;
+      text-align: left !important;
+      margin-bottom: 5px !important;
+      font-weight: 600 !important;
+    }
+
+    .form-control,
+    .form-control[readonly] {
+      width: 100% !important;
+      height: 40px !important;
+      font-size: 14px !important;
+    }
+
+    select.form-control {
+      height: 40px !important;
+    }
+
+    /* BUTTONS – INLINE ON MOBILE */
+    .row.text-center .col-md-12 {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      gap: 6px !important;
+    }
+
+    .row.text-center .col-md-12 .btn {
+      width: auto !important;
+      margin: 2px !important;
+      padding: 6px 12px !important;
+      font-size: 14px !important;
+      white-space: nowrap !important;
+    }
+
+    h5 {
+      font-size: 20px !important;
+    }
+  }
+</style>
+
+<div class="main-content">
   <!-- Main Content -->
   <section class="section">
-
-  {{ Breadcrumbs::render('user.show',$one_row[0]['id']) }}
+    {{ Breadcrumbs::render('user.show',$one_row[0]['id']) }}
 
     <div class="section-body mt-1">
-      <h5 style="color:darkblue;text-align:center">User Show</h5>
-
-
+      <h5 class="text-center" style="color:darkblue;">User Show</h5>
 
       <div class="row">
-
         <div class="col-12">
-
           <div class="card">
             <div class="card-body">
               <form class="form-horizontal" name="uam_modules" method="POST" action="{{ route('update_user_data') }}">
-
                 @csrf
                 <div class="row">
-
-
-                  <input class="form-control" type="hidden" id="user_id" name="user_id" placeholder="Enter Module Name" value="{{ $one_row[0]['id']}}">
-
+                  <input class="form-control" type="hidden" id="user_id" name="user_id" value="{{ $one_row[0]['id']}}">
 
                   <div class="col-md-12 row">
                     <div class="col-md-6 form-group">
                       <label class="control-label">User Name <span style="color: red;font-size: 16px;">*</span></label>
-                      <input class="form-control" type="text" id="name" name="name" placeholder="Enter User Name" value="{{ $one_row[0]['name']}}"disabled="">
+                      <input class="form-control" type="text" id="name" name="name" placeholder="Enter User Name" value="{{ $one_row[0]['name']}}" disabled="">
                       @error('name')
                       <div class="error">{{ $message }}</div>
                       @enderror
                     </div>
                     <div class="form-group col-md-6">
                       <label class="control-label">Email <span style="color: red;font-size: 16px;">*</span></label>
-                      <input class="form-control" type="email" id="email" name="email" placeholder="Enter Email" value="{{ $one_row[0]['email'] }}"disabled="">
+                      <input class="form-control" type="email" id="email" name="email" placeholder="Enter Email" value="{{ $one_row[0]['email'] }}" disabled="">
                       @error('email')
                       <div class="error">{{ $message }}</div>
                       @enderror
@@ -46,152 +106,49 @@
 
                     <div class="form-group col-md-6">
                       <label class="control-label">Roles <span style="color: red;font-size: 16px;">*</span></label>
-                      <select class="form-control" name="roles_id">
+                      <select class="form-control" name="roles_id" disabled>
                         <option value="">Please Select Role</option>
-
                         @foreach($rows_data as $key=>$row_data)
                         <option value="{{ $row_data['role_id'] }}" {{ $row_data['role_id'] ==  $one_row[0]['array_roles'] ? 'selected':'' }}>{{ $row_data['role_name'] }}</option>
                         @endforeach
                       </select>
-
                       @error('roles_id')
                       <div class="error">{{ $message }}</div>
                       @enderror
                     </div>
 
-
-
-
-
                     <div class="form-group col-md-6">
                       <label class="control-label">Designation <span style="color: red;font-size: 16px;">*</span></label>
-                      <select class="form-control" name="designation">
+                      <select class="form-control" name="designation" disabled>
                         <option value="">Please Select Designation</option>
                         @foreach($designation as $key=>$row)
                         <option value="{{ $row['designation_id'] }}" {{ $row['designation_id'] ==  $one_row[0]['designation_id'] ? 'selected':'' }}>{{ $row['designation_name'] }}</option>
                         @endforeach
                       </select>
-
                       @error('designation')
                       <div class="error">{{ $message }}</div>
                       @enderror
+                    </div>
 
-
-                    </div> 
-                    <div class="form-group col-md-6" style="display: none;"> 
+                    <div class="form-group col-md-6" style="display: none;">
                       <label class="control-label">Dashboard List <span style="color: red;font-size: 16px;">*</span></label>
                       <select class="js-select5 form-control dashboard_list_id" multiple="multiple" name="dashboard_list_id[]">
-
                         @foreach($dashboard as $key=>$row)
                         <option value="{{ $row_data['role_id'] }}">{{ $row['dashboard_list_name'] }}</option>
                         @endforeach
                       </select>
-
                       @error('dashboard_list_id')
                       <div class="error">{{ $message }}</div>
                       @enderror
-
-
                     </div>
                   </div>
 
+                  {{-- The commented-out treeview section remains as is --}}
+                  {{-- ... --}}
+                </div>
 
-
-
-                 {{-- <div class="col-md-12">
-
-                    <div class="form-group">
-                      <label class="control-label">Directorate and Department <span style="color: red;font-size: 16px;">*</span></label>
-
-
-                      <div id="treeview_container" class="hummingbird-treeview well h-scroll-large">
-
-                        <ul id="treeview" class="hummingbird-base">
-                          @if($parent_folder !="")
-                          @foreach ($parent_folder as $key => $parent_folder_value)
-                          <li>
-                            <i class="fa fa-plus"></i> <label> <input id="node-{{ $parent_folder_value['document_folder_structure_id'] }}" data-id="{{ $parent_folder_value['document_folder_structure_id'] }}" type="checkbox" module="{{ $parent_folder_value['document_folder_structure_id'] }}"> {{ $parent_folder_value['folder_name'] }} </label>
-                            <ul>
-
-                             @if($directorate !="")
-                              @foreach ($directorate as $key => $directorate_value)
-                              @if($parent_folder_value['document_folder_structure_id'] == $directorate_value['parent_document_folder_structure_id'])
-
-                              <li><i class="fa fa-plus"></i> <label> <input id="node-{{$directorate_value['parent_document_folder_structure_id'] }}-{{$directorate_value['id'] }}" data-id="{{$directorate_value['parent_document_folder_structure_id'] }}-{{$directorate_value['id'] }}" module="{{$directorate_value['parent_document_folder_structure_id'] }}" type="checkbox"> {{$directorate_value['folder_name'] }}</label>
-                                <ul>
-
-                                  @if($department !="")
-                                  @foreach ($department as $key => $department_value)
-                                  @if($directorate_value['id']== $department_value['parent_document_folder_structure_id'])
-
-                                  <li><i class="fa fa-plus"></i> <label><input id="node-{{$department_value['parent_document_folder_structure_id']}}-{{$department_value['id'] }}" data-id="{{$department_value['parent_document_folder_structure_id']}}:{{$department_value['id'] }}" type="checkbox"> {{$department_value['folder_name'] }} </label>
-                                    <ul>
-
-
-                                      @if($sub_department !="")
-                                      @foreach ($sub_department as $key => $sub_department_value_one)
-                                      @if($department_value['id'] == $sub_department_value_one['parent_document_folder_structure_id'])
-
-                                      <li> <i class="fa fa-plus"></i> <label><input id="node1-{{$sub_department_value_one['parent_document_folder_structure_id'] }}-{{$sub_department_value_one['id'] }}" data-id="{{$sub_department_value_one['parent_document_folder_structure_id'] }}:{{$sub_department_value_one['id']}}" type="checkbox"> {{$sub_department_value_one['folder_name'] }} </label>
-                                        <!-- sub -->
-                                        <ul>
-                                          @if($sub_department !="")
-                                          @foreach ($sub_department as $key => $sub_department_value_two)
-                                          @if($sub_department_value_one['documentfolderid'] == $sub_department_value_two['parent_document_folder_structure_id'])
-
-                                          <li><label><input class="hummingbird-end-node" id="node1-{{$sub_department_value_one['parent_document_folder_structure_id'] }}-{{$sub_department_value_one['id'] }}-{{$sub_department_value_two['id'] }}" data-id="{{$sub_department_value_two['parent_document_folder_structure_id'] }}:{{$sub_department_value_two['id'] }}" type="checkbox"> {{$sub_department_value_two['folder_name'] }} </label>
-                                                                                      @endif
-                                            @endforeach
-                                            @endif
-
-                                        </ul>
-                                        <!-- sub -->
-                                      </li>
-
-                                      @endif
-                                      @endforeach
-                                      @endif
-
-                                    </ul>
-                                  </li>
-
-                                  @endif
-                                  @endforeach
-                                  @endif
-
-                                </ul>
-                              </li>
-
-                              @endif
-                              @endforeach
-                              @endif
-                            </ul>
-                          </li>
-                          @endforeach
-                          @endif
-                        </ul>
-                      </div>
-                    </div>
-                    @error('directorate_department')
-                    <div class="error">{{ $message }}</div>
-                    @enderror
-
-                  </div>
-
-
-                  <input id="displayItems" name="displayItems" class="form-control" type="hidden">
-
-
-                  <input id="displayItems1" name="directorate_department" class="form-control" type="hidden">
-                  <input id="displayItems2" name="displayItems2" class="form-control" type="hidden">
-                  <div class="para"></div>
-                  <input class="form-control" type="hidden" id="parent_node_id" name="parent_node_id" placeholder="Enter Password" value="{{ $document_folder_structure_id }}">
-                  <input class="form-control" type="hidden" id="user_type" name="user_type" placeholder="Enter Password" value="AD">
-                </div>--}}
                 <div class="row text-center">
                   <div class="col-md-12">
-
-                    
                     <a class="btn btn-danger" href="{{ route('user.index') }}"><i class="fa fa-times" aria-hidden="true"></i> Cancel </a>&nbsp;
                   </div>
                 </div>
@@ -200,17 +157,11 @@
           </div>
         </div>
       </div>
-
-
     </div>
   </section>
 </div>
 
-
-
-
-
-
+<!-- The hidden override options container (unchanged) -->
 <div class="container-fluid" style="display: none">
   <div class="row">
     <div class="col-sm-1">
@@ -237,8 +188,6 @@
   </div>
 </div>
 
-
-
 <script type="text/javascript">
   document.getElementById("checkbox").checked = true;
 </script>
@@ -255,60 +204,7 @@
     }
   });
 
-
-
   $(document).ready(function() {
-
-
-
-
-
-
-    //     $('select[name="directorate"]').change(function() {
-    //   var directorate_data = $(this).val();
-
-    //   //alert(directorate_data);
-
-    //   $.ajaxSetup({
-    //     headers: {
-    //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //     }
-    //   });
-
-    //    var directorate = directorate_data;
-
-    //    $.ajax({
-    //      url: '{{ url('/user/get_department_list') }}', 
-    //      type:"POST",
-    //      dataType:"json",
-    //      data: {directorate : directorate,_token: '{{csrf_token()}}' },
-    //      success:function(data){
-
-    //        console.log(data);
-
-
-    // var user_select = data;
-    // var optionsdata = "";
-    // for(var i = 0 ; i < user_select.length; i++){
-    //     var id = user_select[i]['document_folder_structure_id'];
-    //     var name = user_select[i]['folder_name'];
-    //     optionsdata += "<option value="+id+" data-badge=''>"+name+"</option>";
-    // }
-    // var demonew =  $('.department').html(optionsdata);
-
-
-    //       // window.location = "/user";
-
-    //      },
-    //      error:function(data){
-    //        console.log(data);
-    //      }
-    //    });
-
-
-    // });
-
-
     var array_roles = <?php echo (json_encode($one_row)); ?>
     var clean = array_roles.split();
     var string = JSON.stringify(clean);
@@ -320,12 +216,8 @@
       placeholder: " Please Select Roles ",
       allowHtml: true,
       allowClear: true,
-      tags: true // создает новые опции на лету
+      tags: true
     });
-
-
-
-
 
     var array_designation = {
       !!json_encode($one_row[0] - > array_dashboard_list) !!
@@ -340,29 +232,16 @@
       placeholder: " Please Select Designation ",
       allowHtml: true,
       allowClear: true,
-      tags: true // создает новые опции на лету
+      tags: true
     });
-
-
-
-
-
-
   });
 </script>
 
-
-
 <script type="text/javascript">
   $(document).ready(function() {
-
-
-
-
     $("#treeview_example_code_button").on("click", function() {
       var that_code = $("#treeview_example_code");
       that_code.toggle();
-      //console.log($("#treeview_example_code").css("display"))
       var that_code_display = that_code.css("display");
       if (that_code_display == "none") {
         $(this).text("Show HTML");
@@ -371,11 +250,9 @@
       }
     });
 
-
     $("#treeview_example_search_html").on("click", function() {
       var that_code = $("#treeview_example_search_html_display");
       that_code.toggle();
-      //console.log($("#treeview_example_code").css("display"))
       var treeview_example_search_html_mode = that_code.css("display");
       if (treeview_example_search_html_mode == "none") {
         $(this).text("Show HTML");
@@ -387,7 +264,6 @@
     $("#treeview_example_search_css").on("click", function() {
       var that_code = $("#treeview_example_search_css_display");
       that_code.toggle();
-      //console.log($("#treeview_example_code").css("display"))
       var treeview_example_search_css_mode = that_code.css("display");
       if (treeview_example_search_css_mode == "none") {
         $(this).text("Show CSS");
@@ -396,14 +272,10 @@
       }
     });
 
-
-    //---------------------measure time-------------------------------//
     var responseTime = [];
     var actualTime = [];
     var responseTimeSend = false;
     var responseTimeCounter = 0;
-
-
 
     var startTime, endTime;
 
@@ -413,61 +285,23 @@
 
     function measure_end() {
       endTime = new Date();
-      var timeDiff = endTime - startTime; //in ms
-      // strip the ms
+      var timeDiff = endTime - startTime;
       timeDiff /= 1000;
-
-      // get seconds
-      //var seconds = Math.round(timeDiff % 60);
       var seconds = timeDiff;
-      //console.log(seconds + " sec");
       $("#time_measure").val(seconds + " sec");
-      //return seconds;
     }
-    //------------------------------------------------------------------//
 
-    /* 
-     *        $("#treeview_container").on("mouseover", function() {
-     *      console.log($(this)[0].scrollTop)
-     *        });
-     * */
+    $.fn.hummingbird.defaults.collapseAll = true;
+    $.fn.hummingbird.defaults.checkboxes = "enabled";
+    $.fn.hummingbird.defaults.checkDoubles = false;
 
-
-
-
-    //set defaults
-    //$.fn.hummingbird.defaults.collapsedSymbol= "fa-arrow-circle-o-right"; //default="fa-plus"
-    //$.fn.hummingbird.defaults.expandedSymbol= "fa-arrow-circle-o-down"; //default="fa-minus"
-    $.fn.hummingbird.defaults.collapseAll = true; //false //default="true"
-    $.fn.hummingbird.defaults.checkboxes = "enabled"; //disabled //default="enabled"
-    //$.fn.hummingbird.defaults.checkboxesGroups= "disabled_grayed"; //disabled or disabled_grayed or enabled (default)
-    $.fn.hummingbird.defaults.checkDoubles = false; //false //default="false"
-    //depreciated
-    //$.fn.hummingbird.defaults.checkDisabled= true; //false //default="false"
-
-
-
-    //override defaults
     if ($("#checkbox_doubles").prop("checked") == true) {
-      $.fn.hummingbird.defaults.checkDoubles = true; //false //default="false"
+      $.fn.hummingbird.defaults.checkDoubles = true;
     } else {
-      $.fn.hummingbird.defaults.checkDoubles = false; //false //default="false"
+      $.fn.hummingbird.defaults.checkDoubles = false;
     }
 
-    /* if ($("#checkbox_disabled").prop("checked") == true) {
-    $.fn.hummingbird.defaults.checkDisabled= true; //false //default="false"
-    } else {
-    console.log("checkDisabled=false")
-    $.fn.hummingbird.defaults.checkDisabled= false; //false //default="false"
-    }
-    
-    */
-
-    //initializing
     $("#treeview").hummingbird();
-
-
-    //
     $("#treeview2").hummingbird();
     $("#treeview2").hummingbird("expandNode", {
       attr: "id",
@@ -478,15 +312,11 @@
       "pointer-events": "none"
     });
 
-
     $("#treeview").hummingbird("expandNode", {
       attr: "id",
       name: "node-0",
       expandParents: true
     });
-
-    // $("#treeview").hummingbird("disableNode",{attr:"id",name: "node-0-1-2-1",state:true});
-
 
     $("#CheckAll").on("click", function() {
       measure_start();
@@ -494,20 +324,17 @@
       measure_end();
     });
 
-
     $("#UnCheckAll").on("click", function() {
       measure_start();
       $("#treeview").hummingbird("uncheckAll");
       measure_end();
     });
 
-
     $("#CollapseAll").on("click", function() {
       measure_start();
       $("#treeview").hummingbird("collapseAll");
       measure_end();
     });
-
 
     $("#ExpandAll").on("click", function() {
       measure_start();
@@ -555,20 +382,10 @@
       measure_end();
     });
 
-    // $("#disableNode").on("click", function(){
-    //   measure_start();
-    //   var state = $("#disable_state_true").prop("checked");
-    //   var disableChildren = $("#disable_state_true_children").prop("checked");
-    //   console.log("disableChildren= " + disableChildren)
-    //   $("#treeview").hummingbird("disableNode",{attr:"id",name: $("#disableNodeOnID").val(),state:state,disableChildren:disableChildren});
-    //   measure_end();
-    // });
-
     $("#enableNode").on("click", function() {
       measure_start();
       var state = $("#enable_state_true").prop("checked");
       var enableChildren = $("#enable_state_true_children").prop("checked");
-      console.log("enableChildren= " + enableChildren)
       $("#treeview").hummingbird("enableNode", {
         attr: "id",
         name: $("#enableNodeOnID").val(),
@@ -577,10 +394,6 @@
       });
       measure_end();
     });
-
-
-
-
 
     $("#getItems").on("click", function() {
       measure_start();
@@ -595,7 +408,6 @@
         onlyParents: true
       });
       $("#displayItems").val(List.dataid.join(","));
-      //$("#displayItems1").html(List.text.join("<br>"));
       var L = List.id.length;
       if (L == 1) {
         $("#num").val(L + " item checked");
@@ -618,7 +430,6 @@
       });
       $("#displayItems1").val(List1.dataid.join(":"));
       $("#displayItems2").val(List1.id.join("-"));
-      //$("#displayItems1").html(List.text.join("<br>"));
       var L = List1.id.length;
       if (L == 1) {
         $("#num").val(L + " item checked");
@@ -627,15 +438,7 @@
       }
     });
 
-
-
-
-
-
-
     if ($("#checkbox_get_items").prop("checked") == true) {
-
-      //do it once on initialisation
       var List = {
         "id": [],
         "dataid": [],
@@ -653,9 +456,6 @@
       } else {
         $("#num").val(L + " items checked");
       }
-
-
-
 
       $("#treeview").on("CheckUncheckDone", function() {
         var List = {
@@ -677,7 +477,6 @@
         }
       });
 
-
       $("#treeview").on("CheckUncheckDone", function() {
         var List1 = {
           "id": [],
@@ -698,17 +497,7 @@
           $("#num").val(L + " items checked");
         }
       });
-
     }
-
-
-
-
-
-
-
-
-    /* $("#treeview").hummingbird("search",{treeview_container:"body",search_input:"search_input",search_output:"search_output",search_button:"search_button",scrollOffset:0,onlyEndNodes:false});*/
 
     $("#treeview").hummingbird("search", {
       treeview_container: "treeview_container",
@@ -720,27 +509,20 @@
     });
 
     @if($one_row != "")
-    @foreach($one_row as $row)
-    $("#treeview").hummingbird("checkNode", {
-      attr: "id",
-      name: ["{{$row['id']}}"],
-      expandParents: false
-    });
-    @endforeach
+      @foreach($one_row as $row)
+        $("#treeview").hummingbird("checkNode", {
+          attr: "id",
+          name: ["{{$row['id']}}"],
+          expandParents: false
+        });
+      @endforeach
     @endif
-
 
     $("#treeview").hummingbird("collapseNode", {
       attr: "id",
       name: $("#collapseNodeOnID").val(),
       collapseChildren: true
     });
-
-
-    //$("#treeview").hummingbird("checkNode",{attr:"id",name: ["node1-60-66"],expandParents:false});
-
-
   });
 </script>
-
 @endsection

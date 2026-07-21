@@ -261,7 +261,8 @@ class EnrollementController extends BaseController
                 foreach ($arrFolder as $key => $value) {
                     $storagePath .= '/' . $value;
                     if (!File::exists($storagePath)) {
-                        File::makeDirectory($storagePath);
+                        // File::makeDirectory($storagePath);
+                        File::makeDirectory($storagePath, 0755, true);
                     }
                 }
             }

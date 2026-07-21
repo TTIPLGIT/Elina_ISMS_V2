@@ -30,6 +30,287 @@
   .select2-container--default .select2-selection--multiple .select2-selection__choice {
     color: black !important;
   }
+
+  /* Mobile Font Reduction Only */
+  /* Mobile Optimized Layout */
+  @media (max-width: 768px) {
+    .main-content {
+      padding: 10px !important;
+      padding-top: 80px !important;
+    }
+    .breadcrumb, .breadcrumb-item {
+      font-size: 9px !important;
+    }
+    h5.text-center {
+      font-size: 15px !important;
+    }
+    .control-label, label {
+      font-size: 10px !important;
+    }
+    .centerid {
+      text-align: left !important;
+      width: auto !important;
+    }
+    .form-control {
+      font-size: 10px !important;
+      height: 32px !important;
+      box-shadow: none !important;
+    }
+
+    /* Requested UI Layout for Location & Date/Time */
+    .datetime-row {
+      display: grid !important;
+      grid-template-columns: 58% 38% !important;
+      gap: 4% !important;
+      margin-bottom: 25px !important;
+      width: 100% !important;
+    }
+    .datetime-row label {
+      grid-column: 1 / span 2 !important;
+      display: block !important;
+      margin-bottom: 8px !important;
+      font-weight: 700 !important;
+      font-size: 16px !important;
+      color: #34395e !important;
+      text-align: left !important;
+    }
+    .datetime-row label.required::after {
+      content: " *" !important;
+      color: red !important;
+    }
+    .datetime-row .col-sm-4, 
+    .datetime-row .col-sm-2 {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    /* If it's a single input like Location, make it full width */
+    .datetime-row:not(:has(.col-sm-2)) {
+      grid-template-columns: 100% !important;
+    }
+    .datetime-row:not(:has(.col-sm-2)) .col-sm-4 {
+      grid-column: 1 / span 2 !important;
+    }
+
+    .datetime-row .form-control {
+      width: 100% !important;
+      height: 44px !important;
+      border-radius: 8px !important;
+      border: 1px solid #ced4da !important;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+      background-color: #fff !important;
+      padding: 10px 15px !important;
+      font-size: 12px !important;
+    }
+
+    /* Yellow Button Centering */
+    .col-md-1:has(.btn-primary[title="Attendee Status"]) {
+      margin: 10px 0 !important;
+      display: flex !important;
+      justify-content: center !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      flex: 0 0 100% !important;
+    }
+
+    /* Action Buttons Uniform Sizing */
+    .row.text-center .col-md-12 {
+      display: flex !important;
+      justify-content: center !important;
+      gap: 5px !important;
+      padding: 10px 5px !important;
+    }
+    .row.text-center .btn {
+      flex: 1 1 auto !important;
+      min-width: 80px !important;
+      padding: 6px 2px !important;
+      font-size: 10px !important;
+      height: 34px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-shadow: none !important;
+      border-radius: 4px !important;
+    }
+    /* Respect inline display:none */
+    .row.text-center .btn[style*="display:none"],
+    .row.text-center .btn[style*="display: none"] {
+      display: none !important;
+    }
+    .back-btn {
+      background-color: #ff0000 !important;
+    }
+    .back-btn .btn-label {
+      display: none !important;
+    }
+    
+    table.table, .table th, .table td {
+      font-size: 9px !important;
+    }
+    .card-body {
+      padding: 12px !important;
+    }
+  }
+
+  /* ==========================================
+     TABLET-ONLY (769px - 1024px)
+     ========================================== */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    /* Top section – two columns */
+    .is-coordinate .col-md-3 {
+      flex: 0 0 50% !important;
+      max-width: 50% !important;
+      width: 50% !important;
+    }
+    .is-coordinate .col-md-4 {
+      flex: 0 0 50% !important;
+      max-width: 50% !important;
+      width: 50% !important;
+    }
+
+    /* ====== Invite Details Form – clean alignment ====== */
+    .card .form-group.row {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      margin-bottom: 12px !important;
+    }
+
+    /* Labels – fixed width, left-aligned text */
+    .card .form-group.row label.col-sm-2,
+    .card .form-group.row label.col-form-label,
+    .card .form-group.row .col-form-label {
+      flex: 0 0 25% !important;
+      max-width: 25% !important;
+      width: 25% !important;
+      text-align: left !important;
+      padding-right: 10px !important;
+      white-space: nowrap !important;
+      font-weight: 600 !important;
+    }
+
+    /* Input fields – take remaining width */
+    .card .form-group.row .col-sm-4,
+    .card .form-group.row .col-sm-8,
+    .card .form-group.row .col-sm-2,
+    .card .form-group.row .col-md-2 {
+      flex: 1 1 auto !important;
+      max-width: none !important;
+      width: auto !important;
+      padding-left: 5px !important;
+      padding-right: 5px !important;
+    }
+
+    /* ====== TO + STATUS row – side by side ====== */
+    .card .form-group.row:has(#meeting_to) {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      align-items: center !important;
+    }
+    /* To input – 55% */
+    .card .form-group.row:has(#meeting_to) > .col-sm-4 {
+      flex: 0 0 55% !important;
+      max-width: 55% !important;
+      width: 55% !important;
+    }
+    /* Status label – 12% */
+    .card .form-group.row:has(#meeting_to) > .col-md-2:has(label) {
+      flex: 0 0 12% !important;
+      max-width: 12% !important;
+      width: 12% !important;
+      text-align: left !important;
+      padding-left: 10px !important;
+    }
+    /* Status input – 22% */
+    .card .form-group.row:has(#meeting_to) > .col-md-2:has(select) {
+      flex: 0 0 22% !important;
+      max-width: 22% !important;
+      width: 22% !important;
+      flex-shrink: 1 !important;
+      min-width: 0 !important;
+      overflow: hidden !important;
+    }
+    .card .form-group.row:has(#meeting_to) > .col-md-2:has(select) select {
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    /* Notes column – adjust if shown */
+    .card .form-group.row:has(#meeting_to) > .col-md-3:has(textarea) {
+      flex: 0 0 30% !important;
+      max-width: 30% !important;
+      width: 30% !important;
+    }
+    /* Attendee Status button – inline */
+    .card .form-group.row:has(#meeting_to) > .col-md-1 {
+      flex: 0 0 8% !important;
+      max-width: 8% !important;
+      width: 8% !important;
+      margin-left: 0 !important;
+    }
+    /* Remove the empty spacer column if present */
+    .card .form-group.row:has(#meeting_to) > .col-md-2:empty {
+      display: none !important;
+    }
+    /* Override centerid for status label to left-align */
+    .card .form-group.row:has(#meeting_to) .centerid {
+      text-align: left !important;
+    }
+
+    /* CC – select takes 65% */
+    .card .form-group.row:has(#mail_cc) .col-sm-4 {
+      flex: 0 0 65% !important;
+      max-width: 65% !important;
+      width: 65% !important;
+    }
+
+    /* Subject, Location – input 65% */
+    .card .form-group.row:has(#meeting_subject) .col-sm-4,
+    .card .form-group.row:has(#meeting_location) .col-sm-4 {
+      flex: 0 0 65% !important;
+      max-width: 65% !important;
+      width: 65% !important;
+    }
+
+    /* Date + Time row: date 40%, time 35% */
+    .card .form-group.row:has(.meeting_date) .col-sm-4 {
+      flex: 0 0 40% !important;
+      max-width: 40% !important;
+      width: 40% !important;
+    }
+    .card .form-group.row:has(.meeting_date) .col-sm-2:has(input[type="time"]) {
+      flex: 0 0 35% !important;
+      max-width: 35% !important;
+      width: 35% !important;
+    }
+
+    /* File attachment – if present */
+    .card .form-group.row:has(#oldattachment) .col-sm-2 {
+      flex: 0 0 20% !important;
+      max-width: 20% !important;
+      width: 20% !important;
+    }
+    .card .form-group.row:has(#oldattachment) .col-sm-8 {
+      flex: 0 0 60% !important;
+      max-width: 60% !important;
+      width: 60% !important;
+    }
+
+    /* Ensure the "required" asterisk stays inline */
+    .card .form-group.row label.required {
+      white-space: nowrap !important;
+    }
+    .card .form-group.row label.required::after {
+      content: " *";
+      color: red;
+    }
+
+    /* Description textarea – full width */
+    .card .col-lg-12 {
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+    }
+  }
 </style>
 
 <div class="main-content">
@@ -255,14 +536,14 @@
                 </div>
 
                 <input type="hidden" id="type" name="type">
-                <div class="form-group row">
+                <div class="form-group row datetime-row">
                   <label class="col-sm-2 col-form-label">Location</label>
                   <div class="col-sm-4">
                     <input class="form-control" type="text" id="meeting_location" name="meeting_location" readonly value="{{ $row['meeting_location']}}" placeholder="Enter Location" required autocomplete="off">
                   </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row datetime-row">
                   <label class="col-sm-2 col-form-label">Start Date and Time</label>
                   <div class="col-sm-4">
                     <div class="inner-addon right-addon">
@@ -280,7 +561,7 @@
 
 
 
-                <div class="form-group row">
+                <div class="form-group row datetime-row">
                   <label class="col-sm-2 col-form-label">End Date and Time</label>
                   <div class="col-sm-4">
                     <div class="inner-addon right-addon">
@@ -733,6 +1014,9 @@
       confirmButtonColor: '#3085d6',
       confirmButtonText: "Yes",
       cancelButtonText: "No",
+      closeOnConfirm: false,
+      closeOnCancel: true,
+      showLoaderOnConfirm: true,
       width: '550px',
     }).then((result) => {
       if (result.value) {

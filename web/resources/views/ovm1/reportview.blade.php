@@ -155,6 +155,97 @@
     #tableExport1 tr:nth-child(odd) {
         background-color: initial;
     }
+
+    /* ===== MOBILE RESPONSIVE OVERRIDES ===== */
+    @media (max-width: 768px) {
+        .main-content {
+            padding: 8px !important;
+            margin-top: 55px !important;
+            overflow-x: hidden !important;
+        }
+
+        h5.text-center {
+            font-size: 13px !important;
+            margin: 8px 0 !important;
+        }
+
+        /* Reset the desktop 2-column float layout for mobile - stack vertically */
+        tr {
+            display: block !important;
+            float: none !important;
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        th {
+            width: 100% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            font-size: 10px !important;
+            padding: 5px 6px !important;
+        }
+
+        td {
+            display: block !important;
+            width: 100% !important;
+            font-size: 10px !important;
+            padding: 5px 6px !important;
+            word-break: break-word !important;
+        }
+
+        thead {
+            font-size: 10px !important;
+        }
+
+        #align td, #align th,
+        #tableExport td, #tableExport th,
+        #tableExport1 td, #tableExport1 th,
+        #alignreport td, #alignreport th,
+        #align2 td, #align2 th,
+        #align3 td, #align3 th,
+        #align4 td, #align4 th {
+            font-size: 10px !important;
+            padding: 5px 6px !important;
+        }
+
+        /* Make table full width on mobile */
+        .table-responsive {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            width: 100% !important;
+        }
+
+        .table {
+            display: table !important;
+            width: 100% !important;
+            font-size: 10px !important;
+        }
+
+        /* Compact "Report Preview" button */
+        .btn-labeled {
+            font-size: 10px !important;
+            padding: 4px 8px !important;
+            height: auto !important;
+        }
+
+        /* Fix the close button alignment */
+        div[style*="margin: 0 0 0 565px"] {
+            margin: 10px 0 0 0 !important;
+            text-align: center !important;
+        }
+
+        /* Breadcrumb compact */
+        .breadcrumb {
+            font-size: 10px !important;
+            padding: 4px 8px !important;
+        }
+
+        /* Card body padding reduction */
+        .card-body {
+            padding: 8px !important;
+        }
+    }
 </style>
 
 <div class="main-content">

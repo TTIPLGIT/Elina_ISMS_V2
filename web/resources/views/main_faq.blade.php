@@ -63,7 +63,6 @@
     }
 
     h1 {
-      float: left !important;
       font-weight: 300 !important;
       text-decoration: underline !important;
       font: 20px Arial, sans-serif !important;
@@ -226,6 +225,235 @@
     }
 
     /* Removed .collapsible:after rule to eliminate the trailing plus/minus symbol */
+
+    /* ===== FAQ Header Desktop Styles ===== */
+    .faq-header {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+    }
+
+    .faq-logo-wrap {
+      flex: 0 0 auto;
+    }
+
+    .faq-logo-img {
+      height: 70px;
+      width: auto;
+      display: block;
+    }
+
+    .faq-title-wrap {
+      flex: 1 1 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-left: 20px;
+    }
+
+    .faq-title-text {
+      color: #fff !important;
+      font-size: 36px !important;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    /* ===== FAQ Navbar Desktop Styles ===== */
+    .faq-nav {
+      border: 2px solid #602e9e !important;
+      display: flex;
+      align-items: center;
+      padding: 0;
+    }
+
+    .faq-banner {
+      flex: 0 0 30%;
+      max-width: 30%;
+    }
+
+    .faq-banner img {
+      width: 100%;
+      display: block;
+      margin-left: -15px;
+    }
+
+    .faq-search-wrap {
+      flex: 1 1 auto;
+      padding: 10px 15px;
+    }
+
+    .faq-search-wrap h2 b {
+      font-size: 29px;
+    }
+
+    .faq-login-wrap {
+      flex: 0 0 auto;
+      padding: 10px 20px;
+      text-align: right;
+    }
+
+    .faq-login-btn {
+      font: 18px Arial, sans-serif !important;
+      padding: 10px 20px !important;
+      background-color: #ffc002 !important;
+      color: black !important;
+      border-radius: 25px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    /* ===== Mobile Responsive Styles ===== */
+    @media (max-width: 991.98px) {
+      .faq-title-text {
+        font-size: 24px !important;
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      /* Header */
+      .faq-header {
+        min-height: 65px;
+        padding: 10px 15px !important;
+        justify-content: flex-start !important;
+      }
+
+      .faq-logo-img {
+        height: 42px;
+      }
+
+      .faq-title-wrap {
+        justify-content: flex-start;
+        padding-left: 12px;
+      }
+
+      .faq-title-text {
+        font-size: 15px !important;
+        text-align: left !important;
+      }
+
+      /* Hide FAQ banner image on mobile */
+      .faq-banner {
+        display: none !important;
+      }
+
+      /* Navbar */
+      .faq-nav {
+        flex-direction: column !important;
+        padding: 12px 10px !important;
+        gap: 8px;
+        border: none !important;
+        border-bottom: 3px solid #602e9e !important;
+      }
+
+      .faq-search-wrap {
+        width: 100%;
+        padding: 5px 0;
+      }
+
+      .faq-search-wrap h2 {
+        margin-bottom: 5px !important;
+      }
+
+      .faq-search-wrap h2 b {
+        font-size: 16px !important;
+      }
+
+      .faq-login-wrap {
+        width: 100%;
+        text-align: center;
+        padding: 5px 0;
+      }
+
+      .faq-login-btn {
+        width: 100%;
+        text-align: center;
+        border-radius: 8px;
+        padding: 10px 15px !important;
+        font-size: 15px !important;
+      }
+
+      /* FAQ Content - Full Width */
+      .main-content {
+        padding: 0 !important;
+      }
+
+      .main-content .container.con,
+      .container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 8px !important;
+        margin: 0 !important;
+      }
+
+      .main-content .card {
+        margin-top: 10px !important;
+        margin-bottom: 60px !important;
+        border-radius: 0 !important;
+        border-left: none !important;
+        border-right: none !important;
+      }
+
+      .main-content .card-body {
+        padding: 8px 5px !important;
+      }
+
+      h1 {
+        font-size: 15px !important;
+        padding: 8px 5px !important;
+      }
+
+      .collapsible {
+        padding: 14px 10px !important;
+        font-size: 14px !important;
+      }
+
+      #name {
+        font-size: 15px !important;
+      }
+
+      .content {
+        padding: 10px 8px !important;
+      }
+
+      #question {
+        font-size: 14px !important;
+      }
+
+      #answer {
+        font-size: 13px !important;
+        padding: 0px 10px !important;
+      }
+
+      #q_faq {
+        padding: 0px 8px !important;
+      }
+
+      #a_faq {
+        padding: 0px 10px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .faq-logo-img {
+        height: 35px;
+      }
+
+      .faq-title-text {
+        font-size: 13px !important;
+      }
+
+      .faq-search-wrap h2 b {
+        font-size: 14px !important;
+      }
+
+      #name {
+        font-size: 14px !important;
+      }
+
+      h1 {
+        font-size: 13px !important;
+      }
+    }
   </style>
   <script disable-devtool-auto="">
     // ... (the disable devtool script remains exactly as it was) ...
@@ -233,25 +461,33 @@
 </head>
 
 <body>
-  <!-- header, nav, and content same as before, no changes needed -->
-  <div class="header row" style="display:flex; align-items:center">
-    <div class="col-md-1"><a href="{{route('login')}}"><img class="" style="width: 200% !important; display: block; margin: 15px; text-align: center; align-items: center; padding: 0;" src="{{asset('assets/images/elina-logo-2.png')}}"></a></div>
-    <div class="col-md-11" style="justify-content: center; display: flex; align-items: center;">
-      <h2 style="color:#FFF;font-size: 40px!important"> ELINA-Intervention Service Management System</h2>
+  <!-- Responsive Header -->
+  <div class="header faq-header">
+    <div class="faq-logo-wrap">
+      <a href="{{route('login')}}">
+        <img class="faq-logo-img" src="{{asset('assets/images/elina-logo-2.png')}}" alt="ELINA Logo">
+      </a>
+    </div>
+    <div class="faq-title-wrap">
+      <h2 class="faq-title-text">ELINA-Intervention Service Management System</h2>
     </div>
   </div>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border: 2px solid #602e9e !important;">
-    <div class="col-md-4"><img class="" style="width: 100%; margin-top: -10px; margin-bottom: -10px; margin-left: -35px;" src="{{ asset('images/faq.png') }}"></div>
-    <div class="col-lg-4">
-      <h2><b style="font-size: 29px;">What do you need help with ?</b></h2>
+
+  <!-- Responsive Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light faq-nav">
+    <div class="faq-banner">
+      <img src="{{ asset('images/faq.png') }}" alt="FAQ Banner">
+    </div>
+    <div class="faq-search-wrap">
+      <h2><b>What do you need help with ?</b></h2>
       <div class="input-group">
         <input type="search" class="form-control rounded" id="module_name" name="module_name" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-        <button type="button" onclick="searchIt()" style="background: #ffc002 !important; color:black !important;font-weight: bold;" class="btn btn-primary"><i class="fa fa-fw  fa-search"></i></button>
+        <button type="button" onclick="searchIt()" style="background: #ffc002 !important; color:black !important;font-weight: bold;" class="btn btn-primary"><i class="fa fa-fw fa-search"></i></button>
         <button type="button" id="refresh" onclick="location.reload();" style="color:black !important;font-weight: bold;display:none" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
       </div>
     </div>
-    <div class="col-lg-4">
-      <a type="button" href="{{route('login')}}" style="float:right !important; font: 18px Arial, sans-serif!important; padding:10px !important; background-color:#ffc002 !important; color: black !important; border-radius:25px;" class="btn-primary" title="Register / Login"><b>LOGIN</b></a>
+    <div class="faq-login-wrap">
+      <a href="{{route('login')}}" class="faq-login-btn" title="Register / Login"><b>LOGIN</b></a>
     </div>
   </nav>
 
@@ -264,8 +500,8 @@
         <div class="card-body">
           <fieldset>
             <div class="row">
-              <h1><b><u>Frequently Asked Questions on ISMS</u></b></h1>
               <div class="col-lg-12">
+              <h1><b><u>Frequently Asked Questions on ISMS</u></b></h1>
                 <div id="faq_id">
                   @foreach($one_row as $data)
                     <button type="button" class="collapsible">

@@ -1,6 +1,100 @@
 @extends('layouts.adminnav')
 
 @section('content')
+<style>
+    /* ========== MOBILE RESPONSIVE STYLES (only for screens ≤ 768px) ========== */
+    @media (max-width: 768px) {
+        .main-content {
+            padding: 5px !important;
+            margin-top: 60px !important;
+        }
+
+        .section-body {
+            padding: 0 5px !important;
+        }
+
+        h5 {
+            font-size: 16px !important;
+            margin-top: 10px !important;
+            font-weight: bold !important;
+            text-align: center !important;
+        }
+
+        .card {
+            margin: 5px 0 !important;
+            border-radius: 6px !important;
+        }
+
+        .card-body {
+            padding: 12px !important;
+        }
+
+        .form-group {
+            margin-bottom: 12px !important;
+        }
+
+        .control-label,
+        label {
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            margin-bottom: 4px !important;
+        }
+
+        .form-control {
+            height: 36px !important;
+            font-size: 13px !important;
+            padding: 6px 10px !important;
+        }
+
+        textarea.form-control {
+            height: 80px !important;
+            font-size: 13px !important;
+            padding: 6px 10px !important;
+        }
+
+        .col-md-6 {
+            width: 100% !important;
+            max-width: 100% !important;
+            flex: 0 0 100% !important;
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+        }
+
+        .row {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .row .col-md-12 {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+        }
+
+        /* === BUTTON: keep it centered and inline === */
+        .btn {
+            display: inline-block !important;
+            width: auto !important;
+            min-width: 80px !important;
+            padding: 6px 16px !important;
+            font-size: 12px !important;
+            margin: 4px 6px !important;
+            border-radius: 4px !important;
+            white-space: nowrap !important;
+        }
+
+        .text-center {
+            padding: 0 5px !important;
+            text-align: center !important;
+        }
+    }
+
+    /* === HEADING CENTERED ON ALL SCREENS === */
+    h5 {
+        text-align: center !important;
+        color: darkblue !important;
+    }
+</style>
+
 <div class="row">
   <div class="main-content">
 
@@ -10,7 +104,7 @@
     {{ Breadcrumbs::render('FAQ_questions.show',$rows[0]['id']) }}
 
       <div class="section-body mt-1">
-        <h5 style="color:darkblue"> FAQ Module Show</h5>
+        <h5> FAQ Module Show</h5>
         <div class="row">
 
           <div class="col-12">

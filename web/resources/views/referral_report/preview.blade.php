@@ -355,4 +355,37 @@
     }
 </script>
 
+<style>
+@media (max-width: 768px) {
+    body, .main-content {
+        overflow-x: hidden !important;
+    }
+    table, .table-responsive {
+        display: block !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+    .form-group, .form-control, .select2-container, .tox-tinymce {
+        width: 100% !important;
+    }
+    .card-body, .section-body {
+        padding: 10px !important;
+    }
+    .row {
+        display: flex;
+        flex-direction: column;
+    }
+    .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    .page {
+        width: 100% !important;
+        padding: 10px !important;
+        margin: 0 auto !important;
+    }
+}
+</style>
+
 @endsection

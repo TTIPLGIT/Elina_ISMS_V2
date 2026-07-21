@@ -30,34 +30,339 @@
   .userrolecontainer {
     display: inline-block !important;
   }
+
+  /* ==========================================
+     MOBILE RESPONSIVE – CARD STYLE
+     ========================================== */
+  @media (max-width: 768px) {
+
+    .main-content,
+    .card,
+    .card-body,
+    .table-wrapper,
+    .table-responsive {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    .row,
+    .col-12,
+    .col-lg-12 {
+      padding-left: 5px !important;
+      padding-right: 5px !important;
+    }
+
+    .main-content {
+      padding-top: 0 !important;
+    }
+
+    .breadcrumb {
+      font-size: 11px !important;
+      margin-bottom: 10px !important;
+      margin-top: 60px !important;
+      margin-left: 10px !important;
+    }
+
+    .card {
+      margin-top: 0 !important;
+    }
+
+    .table-responsive {
+      overflow-x: hidden !important;
+      overflow-y: visible !important;
+      max-height: none !important;
+    }
+
+    .table-responsive table {
+      font-size: 12px;
+      min-width: 100% !important;
+      width: 100% !important;
+    }
+
+    #align thead {
+      display: none !important;
+    }
+
+    #align,
+    #align tbody,
+    #align tr,
+    #align td {
+      display: block !important;
+      width: 100% !important;
+    }
+
+    #align tbody {
+      background: transparent !important;
+    }
+
+    #align tr {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      border: 1px solid #e0e0e0 !important;
+      border-radius: 8px !important;
+      margin: 8px 5px !important;
+      position: relative !important;
+      padding: 10px 15px 10px 45px !important;
+      background: #fff !important;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+      cursor: pointer;
+      width: calc(100% - 10px) !important;
+    }
+
+    #align td {
+      display: block !important;
+      border: none !important;
+      padding: 0 !important;
+      text-align: left !important;
+      white-space: normal !important;
+      width: 100% !important;
+      background: transparent !important;
+      height: auto !important;
+      min-height: 0 !important;
+      line-height: 1.2 !important;
+    }
+
+    /* Sl. No. – floating badge */
+    #align td:nth-of-type(1) {
+      position: absolute !important;
+      left: 15px !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      width: 25px !important;
+      display: flex !important;
+      font-weight: bold !important;
+      font-size: 13px !important;
+      color: #2c3e50 !important;
+    }
+
+    #align tr.expanded-row td:nth-of-type(1) {
+      top: 20px !important;
+      transform: translateY(0) !important;
+    }
+
+    /* Name – primary field (2nd column) */
+    #align td:nth-of-type(2) {
+      display: block !important;
+      font-weight: 600 !important;
+      font-size: 16px !important;
+      color: #2c3e50 !important;
+      margin-bottom: 4px !important;
+      padding-right: 25px !important;
+      order: 1 !important;
+    }
+
+    /* Role – hidden initially (3rd column) */
+    #align td:nth-of-type(3) {
+      display: none !important;
+    }
+
+    /* Email – hidden initially (4th column) */
+    #align td:nth-of-type(4) {
+      display: none !important;
+    }
+
+    /* Action – hidden initially (5th column) */
+    #align td:nth-of-type(5) {
+      display: none !important;
+    }
+
+    /* Active Status – hidden initially (6th column) */
+    #align td:nth-of-type(6) {
+      display: none !important;
+    }
+
+    /* Arrow indicator */
+    #align tr::after {
+      content: '\f054';
+      font-family: 'FontAwesome';
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #bdc3c7;
+      transition: transform 0.3s;
+      font-size: 12px;
+    }
+
+    #align tr.expanded-row::after {
+      transform: translateY(-50%) rotate(90deg);
+      top: 35px;
+    }
+
+    /* Expanded fields */
+    #align tr.expanded-row td:nth-of-type(3) { /* Role */
+      display: block !important;
+      margin-top: 8px !important;
+      font-size: 12px !important;
+      color: #34495e !important;
+      order: 2 !important;
+    }
+    #align tr.expanded-row td:nth-of-type(3):before {
+      content: "Role: ";
+      font-weight: 600 !important;
+      color: #000 !important;
+    }
+
+    #align tr.expanded-row td:nth-of-type(4) { /* Email */
+      display: block !important;
+      margin-top: 6px !important;
+      font-size: 12px !important;
+      color: #34495e !important;
+      order: 3 !important;
+    }
+    #align tr.expanded-row td:nth-of-type(4):before {
+      content: "Email: ";
+      font-weight: 600 !important;
+      color: #000 !important;
+    }
+
+    #align tr.expanded-row td:nth-of-type(5) { /* Action */
+      display: flex !important;
+      align-items: center !important;
+      flex-wrap: wrap !important;
+      gap: 6px !important;
+      margin-top: 6px !important;
+      order: 4 !important;
+    }
+    #align tr.expanded-row td:nth-of-type(5):before {
+      content: "Action: ";
+      font-weight: 600 !important;
+      color: #000 !important;
+      margin-right: 6px !important;
+      flex-shrink: 0 !important;
+    }
+
+    /* Action buttons – uniform size and spacing */
+    #align tr.expanded-row td:nth-of-type(5) .btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 30px !important;
+      height: 30px !important;
+      padding: 0 !important;
+      font-size: 14px !important;
+      margin: 0 !important;
+      border-radius: 4px !important;
+    }
+
+    #align tr.expanded-row td:nth-of-type(6) { /* Active Status */
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      margin-top: 6px !important;
+      order: 5 !important;
+    }
+    #align tr.expanded-row td:nth-of-type(6):before {
+      content: "Active Status: ";
+      font-weight: 600 !important;
+      color: #000 !important;
+      flex-shrink: 0 !important;
+    }
+
+    /* Toggle switch – keep inline and properly aligned */
+    #align tr.expanded-row td:nth-of-type(6) .switch {
+      display: inline-flex !important;
+      align-items: center !important;
+      transform: scale(0.85);
+      transform-origin: left center;
+    }
+
+    /* No records message */
+    #align td.dataTables_empty {
+      display: table-cell !important;
+      width: 100% !important;
+      text-align: center !important;
+      white-space: nowrap !important;
+      padding: 15px !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      color: #666 !important;
+    }
+
+    #align tr:has(td.dataTables_empty) {
+      display: table-row !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      background: transparent !important;
+    }
+
+    #align tr:has(td.dataTables_empty)::after {
+      display: none !important;
+    }
+
+    /* DataTable controls (if any) */
+    .dataTables_wrapper .row:first-child {
+      margin: 0 !important;
+    }
+    .dataTables_wrapper .dataTables_length {
+      float: left !important;
+      margin-left: 8px !important;
+    }
+    .dataTables_wrapper .dataTables_filter {
+      float: right !important;
+      padding-right: 8px !important;
+    }
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter,
+    .dataTables_wrapper .dataTables_info,
+    .dataTables_wrapper .dataTables_paginate {
+      font-size: 10px !important;
+    }
+    .dataTables_wrapper .dataTables_length select {
+      font-size: 11px !important;
+      height: 32px !important;
+      width: 60px !important;
+    }
+    .dataTables_wrapper .dataTables_filter input {
+      width: 90px !important;
+      height: 24px !important;
+      font-size: 10px !important;
+    }
+
+    .card-body h4 {
+      font-size: 18px !important;
+    }
+
+    /* Top bar – Create button stays left, not full width */
+    .d-flex.flex-row.justify-content-between {
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      gap: 6px !important;
+    }
+    .d-flex.flex-row.justify-content-between .btn {
+      width: auto !important;
+      margin: 0 !important;
+    }
+    .userrolecontainer {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 5px !important;
+      align-items: center !important;
+    }
+    .userrolecontainer .btn {
+      width: auto !important;
+    }
+  }
 </style>
+
 <div class="main-content">
-
-
-
-
-
   <section class="section">
-
-  {{ Breadcrumbs::render('user.index') }}
+    {{ Breadcrumbs::render('user.index') }}
 
     <div class="section-body mt-2">
-
-
-
       <div class="d-flex flex-row justify-content-between px-3">
-        <a type="button" style="margin: 0 0px 5px 0px;" class="btn btn-success" href="{{ route('user.create') }}">Create</a>
+        @if(strpos($screen_permission['permissions'], 'Create') !== false)
+          <a type="button" style="margin: 0 0px 5px 0px;" class="btn btn-success" href="{{ route('user.create') }}">Create</a>
+        @endif
         <div class="userrolecontainer">
           @if(strpos($screen_permission['permissions'], 'Create') !== false)
-          <!-- <a href="{{ route('user.project_roles_list') }}" class="btn btn-warning">Project Role list</a> -->
-
-          <!-- <a href="{{ route('user.reset_token_expire_method') }}" class="btn btn-danger">Reset Password Exprire</a> -->
-
-          <!-- <a href="{{ route('user.bulk_upload') }}" class="btn btn-success">Bulk Creation</a> -->
+            <!-- Additional buttons if needed -->
           @endif
         </div>
-
-
       </div>
       <style>
         .section {
@@ -65,52 +370,39 @@
         }
       </style>
 
-
-
       <div class="row">
-
         <div class="col-12">
-
           <div class="card">
-
             <div class="card-body">
               <div class="row">
-                <!-- <div class="col-lg-12 text-center">
-                  <h4 style="color:darkblue;">Folder List</h4>
-                </div> -->
-
+                <!-- Optional heading (hidden) -->
               </div>
+
               @if (session('success'))
-
-              <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
-              <script type="text/javascript">
-                window.onload = function() {
-                  var message = $('#session_data').val();
-                  swal({
-                    title: "Success",
-                    text: message,
-                    type: "success",
-                  });
-
-                }
-              </script>
+                <input type="hidden" name="session_data" id="session_data" class="session_data" value="{{ session('success') }}">
+                <script type="text/javascript">
+                  window.onload = function() {
+                    var message = $('#session_data').val();
+                    swal({
+                      title: "Success",
+                      text: message,
+                      type: "success",
+                    });
+                  }
+                </script>
               @elseif(session('error'))
-
-              <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
-              <script type="text/javascript">
-                window.onload = function() {
-                  var message = $('#session_data1').val();
-                  swal({
-                    title: "Info",
-                    text: message,
-                    type: "info",
-                  });
-
-                }
-              </script>
+                <input type="hidden" name="session_data" id="session_data1" class="session_data" value="{{ session('error') }}">
+                <script type="text/javascript">
+                  window.onload = function() {
+                    var message = $('#session_data1').val();
+                    swal({
+                      title: "Info",
+                      text: message,
+                      type: "info",
+                    });
+                  }
+                </script>
               @endif
-
-
 
               <div class="table-wrapper">
                 <div class="table-responsive">
@@ -127,44 +419,35 @@
                     </thead>
                     <tbody>
                       @foreach($rows as $key=>$row)
-                      <tr>
-                        <td>{{ ++$key }}</td>
-                        <td>{{$row['name'] }}</td>
-                        <td>{{$row['role_name']}}</td>
-                        <td>{{ $row['email'] }}</td>
-                        <td class="text-center">
-
-                         @if(strpos($screen_permission['permissions'], 'Edit') !== false)
-                          <a class="btn btn-primary" href="{{ route('user.edit_permission', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Permission"><i class="fa fa-lock" aria-hidden="true"></i><span></span></a>
-                          @endif
-
-                          @if(strpos($screen_permission['permissions'], 'Edit') !== false)
-                          <a class="btn btn-danger" href="{{ route('user.edit', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fa fa-edit" aria-hidden="true"></i><span></span></a>
-                          <a class="btn btn-success" href="{{ route('user.change_password_admin', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Change Password"><i class="fa fa-key" aria-hidden="true"></i><span></span></a>
-
-                          @endif
-
-                          @if(strpos($screen_permission['permissions'], 'Show') !== false)
-                          <a class="btn btn-warning" href="{{ route('user.show', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Show"><i class="fa fa-eye" aria-hidden="true"></i><span></span></a>
-                          @endif
-                          @if(strpos($screen_permission['permissions'], 'Edit') !== false)
-                          <input type="hidden" name="delete_id" id="<?php echo $row['id']; ?>" value="{{ route('user.delete', \Crypt::encrypt($row['id'])) }}">
-                          <a class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" style="cursor: pointer;" onclick="return myFunction(<?php echo $row['id']; ?>);"><i class="fa fa-trash" aria-hidden="true"></i><span></span></a>
-                          @endif
-
-
-                        </td>
-                        <td style="text-align: center;">
-
-                          <label class="switch " data-bs-toggle="tooltip" data-bs-placement="top" title="Enable / Disable">
-                            <input type="hidden" name="toggle_id" value="{{$row['id']}}">
-
-                            <input type="checkbox" class="toggle_status" onclick="functiontoggle('{{$row['id']}}')" id="is_active{{$row['id']}}" name="is_active" @if($row['active_flag']=='0' ) checked @endif>
-                            <span class="slider round"></span>
-                          </label>
-
-                        </td>
-                      </tr>
+                        <tr>
+                          <td data-label="Sl. No.">{{ ++$key }}</td>
+                          <td data-label="Name">{{ $row['name'] }}</td>
+                          <td data-label="Role">{{ $row['role_name'] }}</td>
+                          <td data-label="Email">{{ $row['email'] }}</td>
+                          <td data-label="Action" class="text-center">
+                            @if(strpos($screen_permission['permissions'], 'Edit') !== false)
+                              <a  style='margin:10px' class="btn btn-primary btn-sm" href="{{ route('user.edit_permission', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Permission"><i class="fa fa-lock" aria-hidden="true"></i></a>
+                            @endif
+                            @if(strpos($screen_permission['permissions'], 'Edit') !== false)
+                              <a style='margin:10px' class="btn btn-danger btn-sm" href="{{ route('user.edit', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                              <a style='margin:10px' class="btn btn-success btn-sm" href="{{ route('user.change_password_admin', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Change Password"><i class="fa fa-key" aria-hidden="true"></i></a>
+                            @endif
+                            @if(strpos($screen_permission['permissions'], 'Show') !== false)
+                              <a style='margin:10px'  class="btn btn-warning btn-sm" href="{{ route('user.show', \Crypt::encrypt($row['id'])) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Show"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                            @endif
+                            @if(strpos($screen_permission['permissions'], 'Edit') !== false)
+                              <input type="hidden" name="delete_id" id="del_{{ $row['id'] }}" value="{{ route('user.delete', \Crypt::encrypt($row['id'])) }}">
+                              <a  style='margin:10px' class="btn btn-info btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" style="cursor: pointer;" onclick="return myFunction({{ $row['id'] }});"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            @endif
+                          </td>
+                          <td data-label="Active Status" style="text-align: center;">
+                            <label class="switch" data-bs-toggle="tooltip" data-bs-placement="top" title="Enable / Disable">
+                              <input type="hidden" name="toggle_id" value="{{ $row['id'] }}">
+                              <input type="checkbox" class="toggle_status" onclick="functiontoggle('{{ $row['id'] }}')" id="is_active{{ $row['id'] }}" name="is_active" @if($row['active_flag'] == '0') checked @endif>
+                              <span class="slider round"></span>
+                            </label>
+                          </td>
+                        </tr>
                       @endforeach
                     </tbody>
                   </table>
@@ -177,12 +460,10 @@
     </div>
   </section>
 </div>
-</div>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
   function myFunction(id) {
-
     swal({
       title: "Confirmation For Delete ?",
       text: "Are You Sure to delete this data",
@@ -194,15 +475,12 @@
       dangerMode: true,
     }).then(function(isConfirm) {
       if (isConfirm) {
-        var url = $('#' + id).val();
-        //alert(url);
+        var url = $('#del_' + id).val();
         window.location.href = url;
       }
     });
-
   }
-</script>
-<script type="text/javascript">
+
   $.ajaxSetup({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -210,19 +488,12 @@
   });
 
   function functiontoggle(id) {
-    // alert(id);
     if ($('#is_active' + id).prop('checked')) {
       var is_active = '0';
     } else {
       var is_active = '1';
     }
-
-
     var f_id = id;
-
-
-
-
 
     $.ajax({
       url: "{{ route('user.update_toggle') }}",
@@ -236,29 +507,35 @@
         alert('Something is wrong');
       },
       success: function(data) {
-
         var data_convert = $.parseJSON(data);
-
-        console.log(data_convert.Data);
         if (data_convert.Data == 1) {
           swal({
             title: "Success",
             text: "User Deactivated",
             type: "success"
-          }, );
+          });
         } else {
           swal({
             title: "Success",
             text: "User Activated",
             type: "success"
-          }, );
+          });
         }
-
       }
-
-
     });
   }
-</script>
 
+  // Toggle expand/collapse on mobile (same as other indices)
+  $(document).ready(function() {
+    $('#align tbody').on('click', 'tr', function(e) {
+      // Ignore clicks inside action buttons, links, toggle switches, etc.
+      if ($(e.target).closest('a, button, input, .btn, .switch, .slider').length) {
+        return;
+      }
+      if ($(window).width() <= 768) {
+        $(this).toggleClass('expanded-row');
+      }
+    });
+  });
+</script>
 @endsection
