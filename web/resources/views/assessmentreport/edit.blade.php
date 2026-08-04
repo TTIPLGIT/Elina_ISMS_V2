@@ -2089,52 +2089,52 @@
     });
 </script>
 <script>
-    $(window).on('load', function() {
-        var id = @json($id);
+    // // $(window).on('load', function() {
+    // //     var id = @json($id);
 
-        Swal.fire({
-            title: 'Success',
-            text: "",
-            icon: 'success',
-            showCancelButton: false,
-            confirmButtonText: 'Okay!',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                localStorage.setItem('reportPreviewGenerate', 'false');
-                const url = `${window.location.origin}/assessment-report-save/${id}`;
-                const features = 'width=1,height=1,left=9999,top=9999,noopener,noreferrer';
-                const newWindow = window.open(url, '_blank', features);
+    // //     Swal.fire({
+    // //         title: 'Success',
+    // //         text: "",
+    // //         icon: 'success',
+    // //         showCancelButton: false,
+    // //         confirmButtonText: 'Okay!',
+    // //     }).then((result) => {
+    // //         if (result.isConfirmed) {
+    // //             localStorage.setItem('reportPreviewGenerate', 'false');
+    // //             const url = `${window.location.origin}/assessment-report-save/${id}`;
+    // //             const features = 'width=1,height=1,left=9999,top=9999,noopener,noreferrer';
+    // //             const newWindow = window.open(url, '_blank', features);
 
-                if (newWindow) {
-                    newWindow.blur();
-                    window.focus();
-                }
-            }
-        });
-    });
+    // //             if (newWindow) {
+    // //                 newWindow.blur();
+    // //                 window.focus();
+    // //             }
+    // //         }
+    // //     });
+    // // });
 
-    const checkInterval = setInterval(() => {
-        const previewFlag = localStorage.getItem('reportPreviewGenerate');
+    // const checkInterval = setInterval(() => {
+    //     const previewFlag = localStorage.getItem('reportPreviewGenerate');
 
-        if (previewFlag === 'true') {
-            console.log('Report preview generation flag is true. Starting next process...');
-            clearInterval(checkInterval);
-            localStorage.setItem('reportPreviewGenerate', 'false');
-            Swal.fire({
-                toast: true,
-                position: 'top-end',
-                icon: 'success',
-                title: 'Report Preview is Ready now.',
-                showConfirmButton: false,
-                timer: 2000,
-                timerProgressBar: true
-            });
+    //     if (previewFlag === 'true') {
+    //         console.log('Report preview generation flag is true. Starting next process...');
+    //         clearInterval(checkInterval);
+    //         localStorage.setItem('reportPreviewGenerate', 'false');
+    //         Swal.fire({
+    //             toast: true,
+    //             position: 'top-end',
+    //             icon: 'success',
+    //             title: 'Report Preview is Ready now.',
+    //             showConfirmButton: false,
+    //             timer: 2000,
+    //             timerProgressBar: true
+    //         });
 
-            var c_report = @json($c_report);
-            // console.log(c_report);
-            updateIframeAndShow(c_report);
-        }
-    }, 10000);
+    //         var c_report = @json($c_report);
+    //         // console.log(c_report);
+    //         updateIframeAndShow(c_report);
+    //     }
+    // }, 10000);
 
     function updateIframeAndShow(reportName) {
         const iframe = document.getElementById('pdfViewerPIP');
@@ -2267,4 +2267,207 @@
         activeRecommendationTextarea = null;
     });
 </script>
+
+<!-- ====================== MOBILE RESPONSIVE CSS (copied from create screen) ====================== -->
+<style>
+@media only screen and (max-width: 768px) {
+    .main-content {
+        padding: 2px !important;
+        margin-top: 55px !important;
+        overflow-x: hidden !important;
+    }
+    .section-body {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .card,
+    .card-body {
+        padding: 6px !important;
+        margin: 0 !important;
+    }
+    .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    [class*="col-"] {
+        padding-left: 4px !important;
+        padding-right: 4px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+    .form-control,
+    textarea,
+    select {
+        width: 100% !important;
+        font-size: 13px !important;
+        min-height: 38px;
+    }
+    textarea {
+        word-break: break-word;
+    }
+    .table-responsive {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+    /* Stepper horizontal responsive */
+    .md-stepper-horizontal {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        padding-bottom: 10px;
+    }
+    .md-stepper-horizontal .md-step {
+        display: inline-block !important;
+        min-width: 70px;
+        padding: 10px 5px;
+    }
+    .md-stepper-horizontal .md-step .md-step-circle {
+        width: 28px;
+        height: 28px;
+        line-height: 28px;
+        font-size: 14px;
+    }
+    .md-stepper-horizontal .md-step .md-step-bar-left,
+    .md-stepper-horizontal .md-step .md-step-bar-right {
+        top: 26px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    /* Swiper container responsive */
+    .swiper-container {
+        width: 100% !important;
+        border-radius: 20px;
+    }
+    .swiper-slide {
+        font-size: 12px !important;
+        padding: 4px 8px !important;
+        white-space: nowrap;
+    }
+    .tab button {
+        padding: 4px 12px !important;
+        font-size: 12px !important;
+    }
+    input[type=checkbox] {
+        transform: scale(1.2);
+        margin: 0 5px 0 8px;
+    }
+    /* Buttons row responsive */
+    .col-md-12.text-center {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 5px !important;
+        flex-wrap: nowrap !important;
+        padding: 0 5px !important;
+    }
+    .col-md-12.text-center .btn {
+        width: auto !important;
+        min-width: 65px !important;
+        padding: 6px 8px !important;
+        font-size: 11px !important;
+        margin: 0 !important;
+        white-space: nowrap !important;
+    }
+    .col-md-12.text-center .btn-label {
+        display: none !important;
+    }
+    .back-btn {
+        margin-top: 0 !important;
+    }
+    /* Breadcrumbs responsive */
+    .breadcrumb {
+        font-size: 12px !important;
+        padding: 5px !important;
+        margin-bottom: 8px !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        margin-left: 10px !important;
+    }
+    /* Heading */
+    h5.align {
+        font-size: 16px !important;
+        text-align: center !important;
+        margin-bottom: 10px !important;
+    }
+    /* Tables inside skill includes */
+    .fixTableHead .table-responsive {
+        overflow-x: auto !important;
+    }
+    .fixTableHead table {
+        min-width: 600px;
+    }
+    /* TinyMCE editor responsive */
+    .tox-tinymce {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    .tox-editor-container {
+        width: 100% !important;
+    }
+    /* Observation info button */
+    .btn.observation_info {
+        font-size: 12px !important;
+        padding: 4px 10px !important;
+        margin: 5px 0 !important;
+        display: inline-block !important;
+    }
+    /* Page8 and page14 tables */
+    #page8 .table-responsive,
+    #page14 .table-responsive {
+        overflow-x: auto !important;
+    }
+    #page8 table,
+    #page14 table {
+        min-width: 600px;
+    }
+    /* Remove extra spacing */
+    .mlr-auto {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 0 5px !important;
+    }
+    .scroll-break-div {
+        margin: 0 !important;
+    }
+    #r1 .col-12 {
+        padding: 0 5px !important;
+    }
+    .form-group {
+        margin-bottom: 8px !important;
+    }
+    .form-group .control-label,
+    .form-group>label {
+        font-size: 14px !important;
+        margin-top: 5px;
+    }
+    /* Navigation arrows for swiper */
+    .swiper-button-prev,
+    .swiper-button-next {
+        display: none !important;
+    }
+    /* Show "Next" text and hide arrow on mobile */
+    #Next {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+    #Next .btn-label {
+        display: inline-block !important;
+        margin: 0 auto !important;
+        font-size: 11px !important;
+        background-color: transparent !important;
+        padding-left: 30px !important;
+    }
+    #Next i {
+        display: none !important;
+    }
+}
+</style>
+
 @endsection

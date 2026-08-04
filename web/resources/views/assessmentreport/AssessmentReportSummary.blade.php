@@ -131,8 +131,6 @@
     table {
       table-layout: fixed !important;
       width: 100% !important;
-      border-collapse: collapse !important;
-      border-bottom: 1px solid #0e0e0e !important;
     }
 
     th {
@@ -235,6 +233,17 @@
     th {
       font-weight: 600 !important;
       background-color: #f2f2f2 !important;
+    }
+
+    /* FIX: force the same typography on content nested inside a cell (e.g. rich-text
+       Evidence/Recommendation HTML coming from the editor), since font rules on
+       td/th alone do not override a child element's own inline style attribute. */
+    td *,
+    th * {
+      font-family: 'Barlow Semi Condensed', sans-serif !important;
+      font-size: 14px !important;
+      line-height: 18px !important;
+      letter-spacing: 0.3px !important;
     }
 
     /* Default continuation row styling */
@@ -410,7 +419,6 @@
 </head>
 
 <body style="font-family: 'Barlow Semi Condensed', sans-serif !important;">
-  <div class='loader'></div>
   <div id="report2">
     <p style="text-align: justify;font-family: 'Barlow Semi Condensed', sans-serif !important;font-size:14pt">Our functional assessment is based on the developmental domains and is designed to understand a child&rsquo;s profile and potential. While observing a child, many important facets of a child's development are revealed simultaneously and factors that may be impeding the child's overall performance are also identified. Developmental assessment observes how your child grows and changes over time and whether your child meets the typical developmental milestones in all the domains of development.</p>
     <table style="font-family: 'Barlow Semi Condensed', sans-serif !important;border-collapse: collapse; width: 100%; border: 1px solid rgb(0, 0, 0); margin-left: auto; margin-right: auto;" border="1">
@@ -549,7 +557,7 @@
                   @else
                   <th width="20%" style="padding:4px !important;background-color:#ffc70b !important;font-weight:bold !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">{{$page['tab_name']}}</th>
                   @endif
-                  <th width="15%" style="padding:4px !important;background-color:#ffc70b !important;font-weight:bold !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
+                  <th width="15%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
                     Observation</th>
                   <th width="35%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
                     Evidence</th>
@@ -607,10 +615,10 @@
                 <tr>
                   <td width="20%" style="background: white;border: 1px solid #0e0e0e !important;padding:4px !important;"> @foreach($activitys as $activity) @if($activity['skill_type'] == 2) @if($page['assessment_skill'] == $activity['performance_area_id']) @if( $detail['activity_name'] == $activity['activity_id'] ) <p>{{$activity['activity_name']}}</p> @endif @endif @endif @endforeach </td>
                   <td width="15%" style="background: white;border: 1px solid #0e0e0e !important;padding:4px !important;"> @foreach($observations as $observation) @if( $detail['observation_name'] == $observation['observation_id'] ) <p>{{$observation['observation_name']}}</p> @endif @endforeach </td>
-                  <td width="35%" style="white-space: pre-line;font-family: 'Barlow Semi Condensed', sans-serif !important;padding:4px !important;align-items: center !important;background: white !important;border: 1px solid #0e0e0e !important;"> {{$detail['evidence']}} </td>
+                  <td width="35%" style="white-space: pre-line;font-family: 'Barlow Semi Condensed', sans-serif !important;padding:4px !important;align-items: center !important;background: white !important;border: 1px solid #0e0e0e !important;"> {!! $detail['evidence'] !!} </td>
 
                   <td width="30%" style="white-space: pre-line;align-items: center;background: white;border: 1px solid #0e0e0e !important;font-family: 'Barlow Semi Condensed', sans-serif !important;padding:4px !important;">
-                    {{$detail['recommendation']}}
+                    {!! $detail['recommendation'] !!}
                   </td>
 
                 </tr>
@@ -626,33 +634,14 @@
         <p style="page-break-after: always"></p>
 
         @elseif($perskills['performance_area_id'] == $page['assessment_skill'] && $perskills['skill_type'] == 3 && !in_array($perskills['skill_id'] , explode(',',$report['switch'])))
-        <!--  -->
-        <div id="table{{$page['page']}}">
-          <div class="table-responsive" style="font-family: 'Barlow Semi Condensed', sans-serif !important;">
-            <table class="table table-bordered card-body" style="width: 100%;border-spacing: 0px;border-collapse: collapse;">
-              <thead>
-                <tr>
-                  @if($perskills['skill_name'] != null || $perskills['skill_name'] != '')
-                  <th width="20%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
-                    {{$perskills['skill_name']}}
-                  </th>
-                  @else
-                  <th width="20%" style="padding:4px !important;background-color:#ffc70b !important;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;">
-                    {{$page['tab_name']}}
-                  </th>
-                  @endif
-                  <th width="15%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
-                    Observation</th>
-                  <th width="35%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
-                    Evidence</th>
-                  <th width="30%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
-                    Recommendation
-                  </th>
-                </tr>
-              </thead>
-            </table>
-          </div>
-        </div>
+        <!-- NOTE: the standalone header-only table (thead with no tbody) that used
+             to render here has been removed. It was orphaned from the subskill
+             tables below it (its own separate <table>, with nothing forcing it to
+             stay on the same page as the data that followed), which could leave it
+             alone on a near-empty page and then show a second, unrelated header
+             directly after it on the next page. Its column titles are now the
+             second header row inside each subskill table's own <thead> below, so
+             header and data always travel together as a single table. -->
 
         @php $j= array() ; @endphp
         @foreach($subskill as $sskill)
@@ -678,6 +667,24 @@
                   {{$sskill['skill_name']}}
                 </th>
               </tr>
+              <tr>
+                @if($perskills['skill_name'] != null || $perskills['skill_name'] != '')
+                <th width="20%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
+                  {{$perskills['skill_name']}}
+                </th>
+                @else
+                <th width="20%" style="padding:4px !important;background-color:#ffc70b !important;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;">
+                  {{$page['tab_name']}}
+                </th>
+                @endif
+                <th width="15%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
+                  Observation</th>
+                <th width="35%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
+                  Evidence</th>
+                <th width="30%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
+                  Recommendation
+                </th>
+              </tr>
             </thead>
             <tbody id="tablebody_b{{$sskill['skill_id']}}">
               @foreach($details3 as $detail)
@@ -694,10 +701,10 @@
               <tr class="firstrow">
                 <td width="20%" style="background: white;border: 1px solid #0e0e0e !important;padding:4px !important;"> @foreach($activitys as $activity) @if( $detail['activity_name'] == $activity['activity_id'] ) @php $f = 1; @endphp <p>{{$activity['activity_name']}}</p> @endif @endforeach </td>
                 <td width="15%" style="background: white;border: 1px solid #0e0e0e !important;padding:4px !important;"> @foreach($observations as $observation) @if( $detail['observation_name'] == $observation['observation_id'] ) <p>{{$observation['observation_name']}}</p> @endif @endforeach </td>
-                <td width="35%" style="white-space: pre-line;font-family: 'Barlow Semi Condensed', sans-serif !important;padding:4px !important;align-items: center;background: white;border: 1px solid #0e0e0e !important;">{{$detail['evidence'] }}</td>
+                <td width="35%" style="white-space: pre-line;font-family: 'Barlow Semi Condensed', sans-serif !important;padding:4px !important;align-items: center;background: white;border: 1px solid #0e0e0e !important;">{!! $detail['evidence'] !!}</td>
 
                 <td width="30%" style="white-space: pre-line;font-family: 'Barlow Semi Condensed', sans-serif !important;padding:4px !important;align-items: center;background: white;border: 1px solid #0e0e0e !important;">
-                  {{$detail['recommendation']}}
+                  {!! $detail['recommendation'] !!}
                 </td>
 
               </tr>
@@ -735,8 +742,24 @@
         </div>
         <!-- <img style="display: block;margin-right: auto;margin-left: 25%;width: 50%;height:70%" src="{{asset('images/Self regulation continuum.png')}}" width="550" height="900px"> -->
         <div class="col-12 scrollable fixTableHead title-padding" id="page8" style="margin-top: 5px;">
-          <div class="table-responsive">
-            <table class="table table-bordered card-body" style="width: 100%; border-spacing: 0; border-collapse: collapse;">
+          @php
+          $sensoryQuadrants = [
+          1 => 'Seeks out and is attracted to a stimulating sensory environment',
+          2 => 'Distressed by a stimulating sensory environment and attempts to leave the environment',
+          3 => 'Sensitivity to stimuli, distractibility, discomfort with sensory stimuli',
+          4 => 'Missing stimuli, responding slowly'
+          ];
+          @endphp
+
+          {{-- Each quadrant gets its own table (own thead + a single row) instead of
+               all 4 rows sharing one table. This guarantees the yellow header always
+               stays attached to its row: if a row doesn't fit in the remaining space
+               on a page, the whole header+row pair moves to the next page together
+               (via the existing "tbody tr:first-child { page-break-before: avoid }"
+               rule), instead of the row landing on the next page with no header. --}}
+          @foreach($sensoryQuadrants as $index => $label)
+          <div class="table-responsive sensory-quadrant-block" style="page-break-inside: avoid; break-inside: avoid;">
+            <table class="table table-bordered card-body sensory-quadrant-table" style="width: 100%; border-spacing: 0; border-collapse: collapse; page-break-inside: avoid !important; break-inside: avoid !important; margin-bottom: 0;">
               <thead>
                 <tr>
                   <th width="30%" style="border: 1px solid #040404 !important; background-color: #ffc70b; color: #141414; text-align: center;">
@@ -751,16 +774,6 @@
                 </tr>
               </thead>
               <tbody>
-                @php
-                $sensoryQuadrants = [
-                1 => 'Seeks out and is attracted to a stimulating sensory environment',
-                2 => 'Distressed by a stimulating sensory environment and attempts to leave the environment',
-                3 => 'Sensitivity to stimuli, distractibility, discomfort with sensory stimuli',
-                4 => 'Missing stimuli, responding slowly'
-                ];
-                @endphp
-
-                @foreach($sensoryQuadrants as $index => $label)
                 <tr>
                   <td style="border: 1px solid #040404 !important; background-color: white;">
                     {{ $label }}
@@ -772,10 +785,10 @@
                     {!! $data['sensory_recommendation'][$index] !!}
                   </td>
                 </tr>
-                @endforeach
               </tbody>
             </table>
           </div>
+          @endforeach
         </div>
         <!-- <p style="page-break-after: always"></p> -->
         <!-- End Sensory -->
@@ -808,7 +821,7 @@
   </form>
 </body>
 <script>
-  const BARLOW_FONT_URL = 'https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&display=swap';
+  const BARLOW_FONT_URL ='https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&display=swap';
   document.addEventListener("DOMContentLoaded", function() {
     const LINE_HEIGHT = 18;
     const MAX_LINES = 18;
@@ -873,62 +886,158 @@
       return height;
     }
 
+    // Rich-text Evidence/Recommendation content (saved from the editor) can carry
+    // its own inline font-family/font-size on nested tags (<p>, <span>, etc). A
+    // style rule on the parent <td> does not override an element's own inline
+    // style, so this walks every descendant of a cell and forces the report's
+    // typography with setProperty(..., 'important') - guaranteed to win over
+    // any inline style the editor content brought with it.
+    function enforceCellTypography(cell) {
+      if (!cell) return;
+      cell.querySelectorAll('*').forEach(el => {
+        el.style.setProperty('font-family', FONT_FAMILY, 'important');
+        el.style.setProperty('font-size', FONT_SIZE, 'important');
+        el.style.setProperty('line-height', LINE_HEIGHT + 'px', 'important');
+        el.style.setProperty('letter-spacing', '0.3px', 'important');
+      });
+    }
+
+    // Removes a text node from a cloned tree, then cleans up any ancestor
+    // element that is left with no visible content as a result (so we don't
+    // leave behind empty <p></p>/<span></span> wrappers).
+    function removeNodeAndEmptyAncestors(textNode, root) {
+      let el = textNode.parentNode;
+      if (textNode.parentNode) textNode.parentNode.removeChild(textNode);
+      while (el && el !== root && el.parentNode) {
+        if (!el.textContent || el.textContent.trim() === '') {
+          const parent = el.parentNode;
+          parent.removeChild(el);
+          el = parent;
+        } else {
+          break;
+        }
+      }
+    }
+
+    // HTML-preserving version of the old plain-text splitter. Instead of
+    // flattening the cell's rich content to textContent (which threw away
+    // every <b>/<i>/<span style="color:..."> etc. coming from the editor),
+    // this walks the actual DOM tree of text nodes and cuts THAT - so both
+    // the visible half and the overflow half keep their original tags and
+    // inline styling.
     function splitContentByHeight(html, width, maxHeight) {
       if (!html || html.trim() === '') {
         return ['', ''];
       }
 
-      const temp = document.createElement("div");
-      temp.innerHTML = html;
-      const originalText = temp.textContent || temp.innerText;
-      const cleanedText = originalText.replace(/\s+/g, ' ').trim();
-      if (!cleanedText) return ['', ''];
+      if (measureHeight(html, width) <= maxHeight) {
+        return [html, ''];
+      }
 
-      const words = cleanedText.split(' ');
-      let visibleText = '';
-      let overflowText = '';
+      const source = document.createElement('div');
+      source.innerHTML = html;
 
-      const tester = document.createElement("div");
-      tester.style.cssText = `
-        visibility: hidden;
-        position: absolute;
-        width: ${width}px;
-        line-height: ${LINE_HEIGHT}px;
-        font-family: ${FONT_FAMILY};
-        font-size: ${FONT_SIZE};
-        font-weight: 400;
-        padding: 4px;
-        box-sizing: border-box;
-        letter-spacing: 0.3px;
-        white-space: pre-line;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-      `;
-      document.body.appendChild(tester);
+      const collectTextNodes = (root) => {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+        const nodes = [];
+        let n;
+        while ((n = walker.nextNode())) {
+          if (n.textContent && n.textContent.length) nodes.push(n);
+        }
+        return nodes;
+      };
 
-      for (let i = 0; i < words.length; i++) {
-        const testText = visibleText ? visibleText + ' ' + words[i] : words[i];
-        tester.textContent = testText;
+      const sourceTextNodes = collectTextNodes(source);
+      if (sourceTextNodes.length === 0) {
+        return [html, ''];
+      }
 
-        if (tester.offsetHeight <= maxHeight) {
-          visibleText = testText;
+      const nodeLengths = sourceTextNodes.map(n => n.textContent.length);
+      const totalChars = nodeLengths.reduce((a, b) => a + b, 0);
+      if (totalChars === 0) return [html, ''];
+
+      const offsetToNodeChar = (offset) => {
+        let remaining = offset;
+        for (let i = 0; i < nodeLengths.length; i++) {
+          if (remaining <= nodeLengths[i]) return [i, remaining];
+          remaining -= nodeLengths[i];
+        }
+        return [nodeLengths.length - 1, nodeLengths[nodeLengths.length - 1]];
+      };
+
+      // Builds [visibleHtml, remainderHtml] for a cut at the given
+      // (text node index, char index within that node), operating on fresh
+      // clones so the original `source` tree is never mutated.
+      const buildSplit = (cutNodeIndex, cutCharIndex) => {
+        const visibleClone = source.cloneNode(true);
+        const visibleNodes = collectTextNodes(visibleClone);
+        for (let i = visibleNodes.length - 1; i >= 0; i--) {
+          if (i > cutNodeIndex) {
+            removeNodeAndEmptyAncestors(visibleNodes[i], visibleClone);
+          } else if (i === cutNodeIndex) {
+            visibleNodes[i].textContent = visibleNodes[i].textContent.slice(0, cutCharIndex);
+            if (!visibleNodes[i].textContent) removeNodeAndEmptyAncestors(visibleNodes[i], visibleClone);
+          }
+        }
+
+        const remainderClone = source.cloneNode(true);
+        const remainderNodes = collectTextNodes(remainderClone);
+        for (let i = 0; i < remainderNodes.length; i++) {
+          if (i < cutNodeIndex) {
+            removeNodeAndEmptyAncestors(remainderNodes[i], remainderClone);
+          } else if (i === cutNodeIndex) {
+            remainderNodes[i].textContent = remainderNodes[i].textContent.slice(cutCharIndex);
+            if (!remainderNodes[i].textContent) removeNodeAndEmptyAncestors(remainderNodes[i], remainderClone);
+          }
+        }
+
+        return [visibleClone.innerHTML, remainderClone.innerHTML];
+      };
+
+      // Binary search the largest character offset whose visible half still
+      // fits within maxHeight (measured with the real HTML, so tags/styling
+      // are accounted for exactly as they'll render).
+      let low = 0, high = totalChars, best = 0;
+      while (low <= high) {
+        const mid = Math.floor((low + high) / 2);
+        const [nIdx, cIdx] = offsetToNodeChar(mid);
+        const [visibleHtml] = buildSplit(nIdx, cIdx);
+        if (measureHeight(visibleHtml, width) <= maxHeight) {
+          best = mid;
+          low = mid + 1;
         } else {
-          overflowText = words.slice(i).join(' ');
-          break;
+          high = mid - 1;
         }
       }
 
-      document.body.removeChild(tester);
-
-      if (!overflowText) {
-        return [cleanedText, ''];
-      }
-      if (!visibleText && words.length > 0) {
-        visibleText = words[0];
-        overflowText = words.slice(1).join(' ');
+      if (best <= 0) {
+        // Nothing at all fits (maxHeight smaller than a single character) -
+        // still force at least a small chunk through so we make progress.
+        best = Math.max(1, Math.floor(totalChars * 0.05));
       }
 
-      return [visibleText, overflowText];
+      let [finalNodeIdx, finalCharIdx] = offsetToNodeChar(best);
+
+      // Avoid cutting mid-word: snap back to the nearest preceding
+      // whitespace in that text node, if one exists within a reasonable
+      // distance, so words aren't broken across the page split.
+      const cutNodeText = sourceTextNodes[finalNodeIdx].textContent;
+      const lastSpace = cutNodeText.lastIndexOf(' ', finalCharIdx);
+      if (lastSpace > 0 && finalCharIdx - lastSpace < 40) {
+        finalCharIdx = lastSpace;
+      }
+
+      const [visibleHtml, remainderHtml] = buildSplit(finalNodeIdx, finalCharIdx);
+
+      if (!remainderHtml || !remainderHtml.trim()) {
+        return [html, ''];
+      }
+      if (!visibleHtml || !visibleHtml.trim()) {
+        // Guarantee forward progress even in a pathological case.
+        return buildSplit(finalNodeIdx, Math.min(finalCharIdx + 1, nodeLengths[finalNodeIdx]));
+      }
+
+      return [visibleHtml, remainderHtml];
     }
     if (!isFontLoaded()) {
       const fontLink = document.createElement('link');
@@ -979,6 +1088,12 @@
           const bodyRows = tbody.querySelectorAll("tr");
           bodyRows.forEach(row => {
             const cells = row.querySelectorAll("td");
+            // NOTE: made column-count aware so this also works correctly for the
+            // 3-column Sensory table (Quadrant / Evidence / Recommendations),
+            // not just the 4-column Activity/Observation/Evidence/Recommendation
+            // tables. Behavior for existing 4-column tables is unchanged.
+            const colCount = cells.length;
+            const evidenceIdx = colCount - 2;
             cells.forEach((td, index) => {
               td.style.fontFamily = FONT_FAMILY;
               td.style.fontSize = FONT_SIZE;
@@ -992,7 +1107,7 @@
               td.style.boxSizing = "border-box";
 
 
-              if (index === 0 || index === 1) {
+              if (colCount >= 3 && index < evidenceIdx) {
                 td.style.textAlign = "center";
                 td.style.verticalAlign = "middle";
               } else {
@@ -1005,61 +1120,49 @@
                 else if (index === 2) td.style.width = "35%";
                 else if (index === 3) td.style.width = "30%";
               }
+
+              enforceCellTypography(td);
             });
           });
         }
       });
-      const MAX_HEIGHT = 14 * LINE_HEIGHT;
 
       document.querySelectorAll("table").forEach((table, tableIndex) => {
         const tbody = table.querySelector("tbody");
         if (!tbody) return;
 
-        const thead = table.querySelector("thead");
-        if (thead) {
-          thead.querySelectorAll("th, td").forEach(cell => {
-            cell.style.border = "1px solid #0e0e0e";
-          });
-        }
 
         const rows = Array.from(tbody.querySelectorAll("tr"));
-        let preMergedRows = [];
-        let lastMainRow = null;
-
-        rows.forEach(row => {
-          if (row.closest('thead') || row.children.length < 4) {
-            preMergedRows.push(row);
-            lastMainRow = null;
-            return;
-          }
-
-          if (lastMainRow && 
-              row.cells[0].innerText.trim() === lastMainRow.cells[0].innerText.trim() && 
-              row.cells[1].innerText.trim() === lastMainRow.cells[1].innerText.trim() &&
-              row.cells[0].innerText.trim() !== "") {
-            
-            lastMainRow.cells[2].innerHTML += "<br>" + row.cells[2].innerHTML;
-            lastMainRow.cells[3].innerHTML += "<br>" + row.cells[3].innerHTML;
-          } else {
-            preMergedRows.push(row);
-            lastMainRow = row;
-          }
-        });
-
         let processedRows = [];
 
-        preMergedRows.forEach((row, rowIndex) => {
-          if (row.closest('thead') || row.children.length < 4) {
+        rows.forEach((row, rowIndex) => {
+          const colCount = row.children.length;
+
+          // Need at least 3 columns: 1+ label column(s) + Evidence + Recommendation.
+          // This now also covers the 3-column Sensory table (Quadrant / Evidence /
+          // Recommendation), not just the 4-column Activity / Observation / Evidence /
+          // Recommendation tables. Rows with < 3 columns (e.g. a plain 2-column table)
+          // are still left untouched, same as before.
+          if (row.closest('thead') || colCount < 3) {
             processedRows.push(row);
             return;
           }
 
           const cells = Array.from(row.children);
+
+          // The last two columns are always treated as the splittable "Evidence"
+          // and "Recommendation" content. Everything before them is a static label
+          // that repeats on every continuation row (Activity+Observation for the
+          // 4-column tables, just Quadrant for the 3-column Sensory table).
+          const evidenceIdx = colCount - 2;
+          const recommendationIdx = colCount - 1;
+          const labelIdxs = [];
+          for (let i = 0; i < evidenceIdx; i++) labelIdxs.push(i);
+
           const originalContent = {
-            activity: cells[0].innerHTML,
-            observation: cells[1].innerHTML,
-            evidence: cells[2].innerHTML,
-            recommendation: cells[3].innerHTML
+            labels: labelIdxs.map(i => cells[i].innerHTML),
+            evidence: cells[evidenceIdx].innerHTML,
+            recommendation: cells[recommendationIdx].innerHTML
           };
 
           const getCellWidth = (cell) => {
@@ -1067,8 +1170,9 @@
             return parseInt(computedStyle.width) || cell.offsetWidth || FALLBACK_WIDTH;
           };
 
-          const evidenceWidth = getCellWidth(cells[2]);
-          const recommendationWidth = getCellWidth(cells[3]);
+          const evidenceWidth = getCellWidth(cells[evidenceIdx]);
+          const recommendationWidth = getCellWidth(cells[recommendationIdx]);
+
           const effectiveEvidenceWidth = Math.max(evidenceWidth - 12, 50);
           const effectiveRecommendationWidth = Math.max(recommendationWidth - 12, 50);
 
@@ -1085,58 +1189,94 @@
 
           const evidenceSplits = needsEvidenceSplit ?
             splitContentByHeight(originalContent.evidence, effectiveEvidenceWidth, MAX_HEIGHT) : [originalContent.evidence, ''];
+
           const recommendationSplits = needsRecommendationSplit ?
             splitContentByHeight(originalContent.recommendation, effectiveRecommendationWidth, MAX_HEIGHT) : [originalContent.recommendation, ''];
 
-          cells[2].innerHTML = evidenceSplits[0] || '';
-          cells[3].innerHTML = recommendationSplits[0] || '';
+          cells[evidenceIdx].innerHTML = evidenceSplits[0] ? evidenceSplits[0] : '';
+          cells[recommendationIdx].innerHTML = recommendationSplits[0] ? recommendationSplits[0] : '';
+
           processedRows.push(row);
 
           let evidenceRemaining = evidenceSplits[1];
           let recommendationRemaining = recommendationSplits[1];
           let continuationCount = 0;
+          let isFirstContinuationRow = true;
 
+          // NOTE: we intentionally do NOT fabricate a manual header row here.
+          // The <thead> on this table already has
+          // `display: table-header-group !important` (see the stylesheet,
+          // including the @media print block), which makes the renderer
+          // repeat the REAL header automatically on every page the table
+          // spans. Building a second, hand-rolled header row here duplicated
+          // that real header - and rendered broken for colspan-based headers
+          // (skill_type 2 and 3 tables only have a single <th colspan="4">,
+          // so the old `columnTitles` array only ever had one entry - the
+          // other fabricated header cells came out blank). Forcing only the
+          // *first* continuation row onto a fresh page is enough; the native
+          // thead takes care of showing the header there.
           while (evidenceRemaining || recommendationRemaining) {
             const newRow = document.createElement("tr");
-            newRow.className = "continuation-row";
+            newRow.className = isFirstContinuationRow ? "continuation-row new-page-header" : "continuation-row";
+            if (isFirstContinuationRow) {
+              newRow.style.cssText =
+                "page-break-before: always !important; break-before: page !important; " +
+                "page-break-inside: avoid !important; break-inside: avoid !important;";
+            }
+            isFirstContinuationRow = false;
 
-            for (let i = 0; i < 4; i++) {
+            for (let i = 0; i < colCount; i++) {
               const newCell = document.createElement("td");
               newCell.style.border = "1px solid #0e0e0e";
               newCell.style.padding = "4px";
               newCell.style.boxSizing = "border-box";
               newCell.style.fontFamily = FONT_FAMILY;
               newCell.style.fontSize = FONT_SIZE;
+              newCell.style.fontWeight = "400";
+              newCell.style.letterSpacing = "0.3px";
               newCell.style.lineHeight = LINE_HEIGHT + "px";
               newCell.style.whiteSpace = "pre-line";
               newCell.style.wordWrap = "break-word";
               newCell.style.overflowWrap = "break-word";
 
-              if (i === 0 || i === 1) {
+              const originalWidth = getCellWidth(cells[i]) + "px";
+              newCell.style.width = originalWidth;
+
+              if (labelIdxs.includes(i)) {
+                // Label column(s): center-aligned, repeated as-is on every continuation row.
                 newCell.style.textAlign = "center";
                 newCell.style.verticalAlign = "middle";
-                newCell.innerHTML = ""; 
-              } else {
+                newCell.innerHTML = originalContent.labels[i] || '';
+                newCell.style.backgroundColor = "#ffffff";
+              } else if (i === evidenceIdx) {
                 newCell.style.verticalAlign = "top";
-                if (i === 2) {
-                  const [nextPart, remaining] = splitContentByHeight(evidenceRemaining, effectiveEvidenceWidth, MAX_HEIGHT);
+                if (evidenceRemaining) {
+                  const [nextPart, remaining] = splitContentByHeight(
+                    evidenceRemaining,
+                    effectiveEvidenceWidth,
+                    MAX_HEIGHT
+                  );
                   newCell.innerHTML = nextPart || '';
                   evidenceRemaining = remaining;
                 } else {
-                  const [nextPart, remaining] = splitContentByHeight(recommendationRemaining, effectiveRecommendationWidth, MAX_HEIGHT);
+                  newCell.innerHTML = '';
+                }
+              } else if (i === recommendationIdx) {
+                newCell.style.verticalAlign = "top";
+                if (recommendationRemaining) {
+                  const [nextPart, remaining] = splitContentByHeight(
+                    recommendationRemaining,
+                    effectiveRecommendationWidth,
+                    MAX_HEIGHT
+                  );
                   newCell.innerHTML = nextPart || '';
                   recommendationRemaining = remaining;
+                } else {
+                  newCell.innerHTML = '';
                 }
               }
 
-              newCell.style.borderTop = "none";
-              if (processedRows.length > 0) {
-                const prevRow = processedRows[processedRows.length - 1];
-                if (prevRow.cells[i]) {
-                  prevRow.cells[i].style.borderBottom = "none";
-                }
-              }
-
+              enforceCellTypography(newCell);
               newRow.appendChild(newCell);
             }
 
@@ -1149,8 +1289,8 @@
         });
 
         tbody.innerHTML = '';
-        processedRows.forEach(row => {
-          tbody.appendChild(row);
+        processedRows.forEach(processedRow => {
+          tbody.appendChild(processedRow);
         });
       });
 
@@ -1170,5 +1310,4 @@
     }
   });
 </script>
-
 </html>
