@@ -2,121 +2,10 @@
 
 <head>
   <?php
-$barlowSemiReg = str_replace('\\', '/', storage_path('fonts/BarlowSemiCondensed-Regular.ttf'));
-$barlowSemiBold = str_replace('\\', '/', storage_path('fonts/BarlowSemiCondensed-Bold.ttf'));
-$barlowCondensedReg = str_replace('\\', '/', storage_path('fonts/BarlowCondensed-Regular.ttf'));
-$barlowCondensedBold = str_replace('\\', '/', storage_path('fonts/BarlowCondensed-Bold.ttf'));
-
-/**
- * Clean TinyMCE HTML for PDF rendering.
- * - Keeps inline style="" so alignment (justify, bold etc.) is preserved in Dompdf.
- * - Only strips class="" and data-* attributes which are not useful in PDF.
- * - Using {!! cleanHtml() !!} ensures HTML is rendered (not shown as raw tags).
- */
-if (!function_exists('cleanHtml')) {
-  function cleanHtml($html)
-  {
-    if (empty($html))
-      return '';
-    // Strip class="" attributes (not needed in PDF)
-    $html = preg_replace('/\s*class\s*=\s*(["\']).*?\1/is', '', $html);
-    // Strip data-* attributes (not needed in PDF)
-    $html = preg_replace('/\s*data-[a-z\-]+\s*=\s*(["\']).*?\1/is', '', $html);
-    return $html;
-  }
-}
-if (!function_exists('formatRecommendation')) {
-
-    function formatRecommendation($html)
-    {
-        if (empty($html)) {
-            return '';
-        }
-
-        $html = cleanHtml($html);
-
-        $dom = new DOMDocument();
-
-        libxml_use_internal_errors(true);
-        $dom->loadHTML('<?xml encoding="utf-8" ?>' . $html,
-            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        libxml_clear_errors();
-
-        $xpath = new DOMXPath($dom);
-
-        // Apply styles to all <p> tags
-        foreach ($xpath->query('//p') as $node) {
-            $style = $node->getAttribute('style');
-
-            $style .= ';margin:0;padding:0;text-align:left;vertical-align:top;';
-
-            $node->setAttribute('style', $style);
-        }
-
-        // Apply styles to div
-        foreach ($xpath->query('//div') as $node) {
-            $style = $node->getAttribute('style');
-
-            $style .= ';margin:0;padding:0;text-align:left;vertical-align:top;';
-
-            $node->setAttribute('style', $style);
-        }
-
-        // Apply styles to table
-        foreach ($xpath->query('//table') as $node) {
-            $style = $node->getAttribute('style');
-
-            $style .= ';width:100%;border-collapse:collapse;';
-
-            $node->setAttribute('style', $style);
-        }
-
-        // Apply styles to td/th
-        foreach ($xpath->query('//td|//th') as $node) {
-            $style = $node->getAttribute('style');
-
-            $style .= ';vertical-align:top;text-align:left;padding:4px;';
-
-            $node->setAttribute('style', $style);
-        }
-
-        return $dom->saveHTML();
-    }
-}
-
-if (!function_exists('mergeDetails')) {
-  function mergeDetails($arr, $checkCheSkill = false)
-  {
-    if (!is_array($arr))
-      return $arr;
-    $merged = [];
-    foreach ($arr as $detail) {
-      $count = count($merged);
-      if (
-        $count > 0 &&
-        $detail['performance_area_id'] == $merged[$count - 1]['performance_area_id'] &&
-        (!$checkCheSkill || (isset($detail['cheSkill']) && isset($merged[$count - 1]['cheSkill']) && $detail['cheSkill'] == $merged[$count - 1]['cheSkill'])) &&
-        $detail['activity_name'] == $merged[$count - 1]['activity_name'] &&
-        $detail['observation_name'] == $merged[$count - 1]['observation_name']
-      ) {
-
-        if (!empty($detail['evidence'])) {
-          $merged[$count - 1]['evidence'] .= '<br>' . $detail['evidence'];
-        }
-        if (!empty($detail['recommendation'])) {
-          $merged[$count - 1]['recommendation'] .= '<br>' . $detail['recommendation'];
-        }
-      } else {
-        $merged[] = $detail;
-      }
-    }
-    return $merged;
-  }
-}
-
-$details = mergeDetails($details ?? []);
-$details2 = mergeDetails($details2 ?? [], true);
-$details3 = mergeDetails($details3 ?? []);
+  $barlowSemiReg = str_replace('\\', '/', storage_path('fonts/BarlowSemiCondensed-Regular.ttf'));
+  $barlowSemiBold = str_replace('\\', '/', storage_path('fonts/BarlowSemiCondensed-Bold.ttf'));
+  $barlowCondensedReg = str_replace('\\', '/', storage_path('fonts/BarlowCondensed-Regular.ttf'));
+  $barlowCondensedBold = str_replace('\\', '/', storage_path('fonts/BarlowCondensed-Bold.ttf'));
   ?>
   <style>
     @font-face {
@@ -346,28 +235,21 @@ $details3 = mergeDetails($details3 ?? []);
       background-color: #f2f2f2 !important;
     }
 
+    /* FIX: force the same typography on content nested inside a cell (e.g. rich-text
+       Evidence/Recommendation HTML coming from the editor), since font rules on
+       td/th alone do not override a child element's own inline style attribute. */
+    td *,
+    th * {
+      font-family: 'Barlow Semi Condensed', sans-serif !important;
+      font-size: 14px !important;
+      line-height: 18px !important;
+      letter-spacing: 0.3px !important;
+    }
+
     /* Default continuation row styling */
     .continuation-row td:first-child,
     .continuation-row td:nth-child(2) {
       background-color: #f9f9f9 !important;
-    }
-
-    #sensoryTable {
-      page-break-inside: auto;
-    }
-
-    #sensoryTable thead {
-      display: table-header-group;
-    }
-
-    #sensoryTable tr {
-      page-break-inside: avoid;
-    }
-
-    #sensoryTable td {
-      vertical-align: top;
-      white-space: pre-line;
-      word-break: break-word;
     }
 
     /* New page header rows should have white background */
@@ -470,10 +352,6 @@ $details3 = mergeDetails($details3 ?? []);
     .table-bordered tbody tr:first-child td p[style*="font-weight: bold"] {
       font-weight: 600 !important;
     }
-
-    .page-break {
-      page-break-before: always;
-    }
   </style>
   <style>
     @media print {
@@ -541,17 +419,9 @@ $details3 = mergeDetails($details3 ?? []);
 </head>
 
 <body style="font-family: 'Barlow Semi Condensed', sans-serif !important;">
-  <div class='loader'></div>
   <div id="report2">
-    <p style="text-align: justify;font-family: 'Barlow Semi Condensed', sans-serif !important;font-size:14pt">Our
-      functional assessment is based on the developmental domains and is designed to understand a child&rsquo;s profile
-      and potential. While observing a child, many important facets of a child's development are revealed simultaneously
-      and factors that may be impeding the child's overall performance are also identified. Developmental assessment
-      observes how your child grows and changes over time and whether your child meets the typical developmental
-      milestones in all the domains of development.</p>
-    <table
-      style="font-family: 'Barlow Semi Condensed', sans-serif !important;border-collapse: collapse; width: 100%; border: 1px solid rgb(0, 0, 0); margin-left: auto; margin-right: auto;"
-      border="1">
+    <p style="text-align: justify;font-family: 'Barlow Semi Condensed', sans-serif !important;font-size:14pt">Our functional assessment is based on the developmental domains and is designed to understand a child&rsquo;s profile and potential. While observing a child, many important facets of a child's development are revealed simultaneously and factors that may be impeding the child's overall performance are also identified. Developmental assessment observes how your child grows and changes over time and whether your child meets the typical developmental milestones in all the domains of development.</p>
+    <table style="font-family: 'Barlow Semi Condensed', sans-serif !important;border-collapse: collapse; width: 100%; border: 1px solid rgb(0, 0, 0); margin-left: auto; margin-right: auto;" border="1">
       <colgroup>
         <col style="width: 5.02125%;">
         <col style="width: 44.9787%;">
@@ -559,120 +429,55 @@ $details3 = mergeDetails($details3 ?? []);
       </colgroup>
       <tbody>
         <tr>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;background-color: cornflowerblue;border-width: 1px; border-color: rgb(0, 0, 0);">
-            &nbsp;</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;background-color: cornflowerblue;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Domains</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;background-color: cornflowerblue;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Description</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;background-color: cornflowerblue;border-width: 1px; border-color: rgb(0, 0, 0);">&nbsp;</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;background-color: cornflowerblue;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">Domains</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;background-color: cornflowerblue;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">Description</td>
         </tr>
         <tr>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center;border-width: 1px; border-color: rgb(0, 0, 0);">
-            I</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Physical</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;border-width: 1px; border-color: rgb(0, 0, 0);">
-            The physical domain covers the development of physical changes, which includes growing in size and strength,
-            also includes body image, health and nutrition.</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center;border-width: 1px; border-color: rgb(0, 0, 0);">I</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">Physical</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;border-width: 1px; border-color: rgb(0, 0, 0);">The physical domain covers the development of physical changes, which includes growing in size and strength, also includes body image, health and nutrition.</td>
         </tr>
         <tr>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center;border-width: 1px; border-color: rgb(0, 0, 0);">
-            II</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Motor</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;border-width: 1px; border-color: rgb(0, 0, 0);">
-            Refers to elements related to gross motor, fine motor and bilateral coordination.</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center;border-width: 1px; border-color: rgb(0, 0, 0);">II</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">Motor</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;border-width: 1px; border-color: rgb(0, 0, 0);">Refers to elements related to gross motor, fine motor and bilateral coordination.</td>
         </tr>
         <tr>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center;border-width: 1px; border-color: rgb(0, 0, 0);">
-            III</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Sensory</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;border-width: 1px; border-color: rgb(0, 0, 0);">
-            Assess children's sensory processing patterns with the Sensory Profile, adapted from the &nbsp;Pearsons
-            Tools. This helps to understand a child's sensory processing patterns in everyday situations and profile the
-            sensory system's effect on functional performance.&nbsp;</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center;border-width: 1px; border-color: rgb(0, 0, 0);">III</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">Sensory</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;border-width: 1px; border-color: rgb(0, 0, 0);">Assess children's sensory processing patterns with the Sensory Profile, adapted from the &nbsp;Pearsons Tools. This helps to understand a child's sensory processing patterns in everyday situations and profile the sensory system's effect on functional performance.&nbsp;</td>
         </tr>
         <tr>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center;border-width: 1px; border-color: rgb(0, 0, 0);">
-            IV</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Cognition</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;border-width: 1px; border-color: rgb(0, 0, 0);">
-            The cognitive domain includes intellectual development and creativity.</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center;border-width: 1px; border-color: rgb(0, 0, 0);">IV</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">Cognition</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;border-width: 1px; border-color: rgb(0, 0, 0);">The cognitive domain includes intellectual development and creativity.</td>
         </tr>
         <tr>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center;border-width: 1px; border-color: rgb(0, 0, 0);">
-            V</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Social &amp; Emotional</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;border-width: 1px; border-color: rgb(0, 0, 0);">
-            The social-emotional domain includes a child's growing understanding and control of their emotions and
-            participation in varied social domains.</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center;border-width: 1px; border-color: rgb(0, 0, 0);">V</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">Social &amp; Emotional</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;border-width: 1px; border-color: rgb(0, 0, 0);">The social-emotional domain includes a child's growing understanding and control of their emotions and participation in varied social domains.</td>
         </tr>
         <tr>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center;border-width: 1px; border-color: rgb(0, 0, 0);">
-            VI</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Speech and Communication</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;border-width: 1px; border-color: rgb(0, 0, 0);">
-            Addresses the skills of listening and speaking. Understanding receptive and expressive communication.&nbsp;
-          </td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center;border-width: 1px; border-color: rgb(0, 0, 0);">VI</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">Speech and Communication</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;border-width: 1px; border-color: rgb(0, 0, 0);">Addresses the skills of listening and speaking. Understanding receptive and expressive communication.&nbsp;</td>
         </tr>
         <tr>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center;border-width: 1px; border-color: rgb(0, 0, 0);">
-            VII</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Play</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;border-width: 1px; border-color: rgb(0, 0, 0);">
-            The observation and assessment of play, physical play and social skills through play.</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center;border-width: 1px; border-color: rgb(0, 0, 0);">VII</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">Play</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;border-width: 1px; border-color: rgb(0, 0, 0);">The observation and assessment of play, physical play and social skills through play.</td>
         </tr>
         <tr>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center;border-width: 1px; border-color: rgb(0, 0, 0);">
-            VIII</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">
-            ADLs</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;border-width: 1px; border-color: rgb(0, 0, 0);">
-            The activities of daily living are those skills required to manage one's basic physical needs, including
-            personal hygiene or grooming, dressing, toileting, transferring and eating.</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center;border-width: 1px; border-color: rgb(0, 0, 0);">VIII</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">ADLs</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;border-width: 1px; border-color: rgb(0, 0, 0);">The activities of daily living are those skills required to manage one's basic physical needs, including personal hygiene or grooming, dressing, toileting, transferring and eating.</td>
         </tr>
       </tbody>
     </table>
-    <div class="page-break"></div>
-    <p
-      style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: justify;">
-      Within each of these domains, there are a variety of skill set areas that can further define specific areas of
-      child development and learning.</p>
-    <table
-      style="border-collapse: collapse; width: 99.9757%; height: 254.583px; border: 1px solid rgb(0, 0, 0); margin-left: auto; margin-right: auto;"
-      border="1">
+    <p style="page-break-after: always"></p>
+    <p style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align: justify;">Within each of these domains, there are a variety of skill set areas that can further define specific areas of child development and learning.</p>
+    <table style="border-collapse: collapse; width: 99.9757%; height: 254.583px; border: 1px solid rgb(0, 0, 0); margin-left: auto; margin-right: auto;" border="1">
       <colgroup>
         <col style="width: 15.7933%;">
         <col style="width: 13.8923%;">
@@ -683,347 +488,245 @@ $details3 = mergeDetails($details3 ?? []);
       </colgroup>
       <tbody>
         <tr style="height: 19.5833px;">
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;background-color: cornflowerblue;height: 19.5833px; text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Needs major support</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;background-color: cornflowerblue;height: 19.5833px; text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Emerging</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;background-color: cornflowerblue;height: 19.5833px; text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Developing</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;background-color: cornflowerblue;height: 19.5833px; text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Meeting</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;background-color: cornflowerblue;height: 19.5833px; text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Exceeds expectation</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;background-color: cornflowerblue;height: 19.5833px; text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Unable to observe clearly</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;background-color: cornflowerblue;height: 19.5833px; text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">Needs major support</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;background-color: cornflowerblue;height: 19.5833px; text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">Emerging</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;background-color: cornflowerblue;height: 19.5833px; text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">Developing</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;background-color: cornflowerblue;height: 19.5833px; text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">Meeting</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;background-color: cornflowerblue;height: 19.5833px; text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">Exceeds expectation</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;background-color: cornflowerblue;height: 19.5833px; text-align: center; border-width: 1px; border-color: rgb(0, 0, 0);">Unable to observe clearly</td>
         </tr>
         <tr style="height: 39.1667px;">
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Child refuses to recognise/attempt the skill</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            The child has been taught this skill</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Able to revisit previous knowledge or skill</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Showing a strong evidence of deep understanding</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Demonstrates an exceptional level of performance</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            No / limited scope for observation</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">Child refuses to recognise/attempt the skill</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">The child has been taught this skill</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">Able to revisit previous knowledge or skill</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">Showing a strong evidence of deep understanding</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">Demonstrates an exceptional level of performance</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">No / limited scope for observation</td>
         </tr>
         <tr style="height: 58.75px;">
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            The child does not meet even the minimum expectations in results</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Been given opportunities to develop</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Been given opportunities to practise the skills</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Able to apply the skill without prompting</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Consistent&nbsp;</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Activity video is too short to get an understanding</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">The child does not meet even the minimum expectations in results</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">Been given opportunities to develop</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">Been given opportunities to practise the skills</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">Able to apply the skill without prompting</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">Consistent&nbsp;</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">Activity video is too short to get an understanding</td>
         </tr>
         <tr style="height: 58.75px;">
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Significant improvement is needed in the skills area</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Being supported by an adult&nbsp;</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Shows an increasing understanding</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Consistently be able to apply independently</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Exceptional mastery</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            The video is edited or support being given outside the area of video</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">Significant improvement is needed in the skills area</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">Being supported by an adult&nbsp;</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">Shows an increasing understanding</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">Consistently be able to apply independently</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">Exceptional mastery</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 58.75px; border-width: 1px; border-color: rgb(0, 0, 0);">The video is edited or support being given outside the area of video</td>
         </tr>
         <tr style="height: 39.1667px;">
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            &nbsp;</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Is at the early stages of acquisition of this skill</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Frequently is able to apply independently</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            &nbsp;</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Able to extend to higher level concepts using the skill being assessed for</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            &nbsp;</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">&nbsp;</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">Is at the early stages of acquisition of this skill</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">Frequently is able to apply independently</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">&nbsp;</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">Able to extend to higher level concepts using the skill being assessed for</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">&nbsp;</td>
         </tr>
         <tr style="height: 39.1667px;">
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            &nbsp;</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Occasionally is able to apply the skill independently</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            Comprehends the skill but is unable to fully complete the skill</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            &nbsp;</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            &nbsp;</td>
-          <td
-            style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">
-            &nbsp;</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">&nbsp;</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">Occasionally is able to apply the skill independently</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">Comprehends the skill but is unable to fully complete the skill</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">&nbsp;</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">&nbsp;</td>
+          <td style="font-size:14pt;padding:4px;font-family: 'Barlow Semi Condensed', sans-serif !important;height: 39.1667px; border-width: 1px; border-color: rgb(0, 0, 0);">&nbsp;</td>
         </tr>
       </tbody>
     </table>
-    <div class="page-break"></div>
+    <p style="page-break-after: always"></p>
     <div class="content view2">
       <div class="page">
         @foreach($pages as $page)
-          @if($page['page'] != 15)
-            @if($page['enable_flag'] == 0)
-              @if($page['assessment_skill'] != null && $page['enable_flag'] != 1)
-                <p
-                  style="font-size: 22px;color:blue;font-weight:bold;font-family: 'Barlow Semi Condensed', sans-serif !important;">
-                  {{$page['tab_name']}}
-                </p>
-                @foreach($perskill as $perskills)
-                  @if($perskills['performance_area_id'] == $page['assessment_skill'] && $perskills['skill_type'] == 1)
-                    <div id="table{{$page['page']}}">
-                      <div class="table-responsive" style="font-family: 'Barlow Semi Condensed', sans-serif !important;">
-                        <table class="table table-bordered card-body"
-                          style="width: 100%;border-spacing: 0px;border-collapse: collapse;">
-                          <thead>
-                            <tr>
-                              @if($perskills['skill_name'] != null || $perskills['skill_name'] != '')
-                                <th width="20%"
-                                  style="padding:4px !important;background-color:#ffc70b !important;font-weight:bold !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
-                                  {{$perskills['skill_name']}}
-                                </th>
-                              @else
-                                <th width="20%"
-                                  style="padding:4px !important;background-color:#ffc70b !important;font-weight:bold !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
-                                  {{$page['tab_name']}}
-                                </th>
-                              @endif
-                              <th width="15%"
-                                style="padding:4px !important;background-color:#ffc70b !important;font-weight:bold !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
-                                Observation</th>
-                              <th width="35%"
-                                style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
-                                Evidence</th>
-                              <th width="30%"
-                                style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
-                                Recommendation</th>
-                            </tr>
-                          </thead>
-                          @php
-                            $detailsCollection = collect($details);
-                            $rowCount = $detailsCollection->filter(function ($detail) use ($page, $verifiedActivities) {
-                              return $page['assessment_skill'] == $detail['performance_area_id']
-                                && !in_array($detail['activity_name'], $verifiedActivities);
-                            })->count();
-                            $recommendationPrinted = false;
-                          @endphp
-                          <tbody id="tablebody{{$page['page']}}">
-                            @foreach($details as $detail)
-                              @if($page['assessment_skill'] == $detail['performance_area_id'])
-                                @if(!in_array($detail['activity_name'], $verifiedActivities))
-                                  <tr>
-                                    <td width="20%"
-                                      style="white-space: pre-line;background: white;border: 1px solid #0e0e0e !important;padding:4px !important;">
-                                      @foreach($activitys as $activity)
-                                      @if($page['assessment_skill'] == $activity['performance_area_id'] && $activity['skill_id'] == $perskills['skill_id']) @if($activity['skill_type'] == 1) @if($detail['activity_name'] == $activity['activity_id']) <p>{{$activity['activity_name']}}</p> @endif @endif @endif @endforeach</td>
-                                    <td width="15%" style="background: white;border: 1px solid #0e0e0e !important;padding:4px !important;">@foreach($observations as $observation) @if($detail['observation_name'] == $observation['observation_id']) <p>{{$observation['observation_name']}}</p> @endif @endforeach </td>
-                                    <td width="35%" style="white-space: pre-line;vertical-align: top;background: white;border: 1px solid #0e0e0e !important;font-family: 'Barlow Semi Condensed', sans-serif !important;padding:4px !important;">{!! cleanHtml($detail['evidence']) !!}</td>
-                                    <td width="30%" style="white-space: pre-line;vertical-align: top;background: white;border: 1px solid #0e0e0e !important;font-family: 'Barlow Semi Condensed', sans-serif !important;padding:4px !important;">
-                                     {!! formatRecommendation($detail['recommendation']) !!}
-                                    </td>
-                                  </tr>
-                                @endif
-                              @endif
-                            @endforeach
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                    @if($rowCount > 0)
-                      <div class="page-break"></div>  
-                    @endif
-
-                  @elseif($perskills['performance_area_id'] == $page['assessment_skill'] && $perskills['skill_type'] == 2 && !in_array($perskills['skill_id'], explode(',', $report['switch'])))
-                    <div class="myTableheader{{$page['page']}}" id="table_a{{$page['page']}}">
-                      <div class="table-responsive" style="font-family: 'Barlow Semi Condensed', sans-serif !important;">
-                        @php
-                          $detailsCollection = collect($details2);
-                          $filteredDetails = $detailsCollection->filter(function ($detail) use ($page, $perskills, $verifiedActivities) {
-                            return $page['assessment_skill'] == $detail['performance_area_id']
-                              && $detail['cheSkill'] == $perskills['skill_id']
-                              && !in_array($detail['activity_name'], $verifiedActivities);
-                          });
-                          $rowCount = $filteredDetails->count();
-                          $recommendationPrinted = false;
-                        @endphp
-                        <table class="table table-bordered card-body myTable{{$page['page']}}" style="width: 100%;border-spacing: 0px;border-collapse: collapse;">
-                          <thead>
-                            <tr>
-                              <th colspan="4" style="background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;color: #141414;text-align: left;border: 1px solid #040404 !important;border-collapse: collapse !important;">
-                                {{$perskills['skill_name']}}
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody id="tablebody_a{{$page['page']}}">
-                            @foreach($details2 as $detail)
-                              @if($page['assessment_skill'] == $detail['performance_area_id'] && $detail['cheSkill'] == $perskills['skill_id'])
-                                @if(!in_array($detail['activity_name'], $verifiedActivities))
-                                  <tr>
-                                    <td width="20%" style="background: white;border: 1px solid #0e0e0e !important;padding:4px !important;"> @foreach($activitys as $activity) @if($activity['skill_type'] == 2) @if($page['assessment_skill'] == $activity['performance_area_id']) @if($detail['activity_name'] == $activity['activity_id']) <p>{{$activity['activity_name']}}</p> @endif @endif @endif @endforeach </td>
-                                    <td width="15%" style="background: white;border: 1px solid #0e0e0e !important;padding:4px !important;"> @foreach($observations as $observation) @if($detail['observation_name'] == $observation['observation_id']) <p>{{$observation['observation_name']}}</p> @endif @endforeach </td>
-                                    <td width="35%" style="white-space: pre-line;vertical-align: top;font-family: 'Barlow Semi Condensed', sans-serif !important;padding:4px !important;background: white !important;border: 1px solid #0e0e0e !important;">{!! cleanHtml($detail['evidence']) !!}</td>
-
-                                    <td width="30%" style="white-space: pre-line;vertical-align: top;background: white;border: 1px solid #0e0e0e !important;font-family: 'Barlow Semi Condensed', sans-serif !important;padding:4px !important;">
-                                      {!! formatRecommendation($detail['recommendation']) !!}
-                                    </td>
-
-                                  </tr>
-                                @endif
-                              @endif
-                            @endforeach
-
-
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                    @if($rowCount > 0)
-                      <div class="page-break"></div>
-                    @endif
-
-                  @elseif($perskills['performance_area_id'] == $page['assessment_skill'] && $perskills['skill_type'] == 3 && !in_array($perskills['skill_id'], explode(',', $report['switch'])))
-                    <!--  -->
-                    <div id="table{{$page['page']}}">
-                      <div class="table-responsive" style="font-family: 'Barlow Semi Condensed', sans-serif !important;">
-                        <table class="table table-bordered card-body" style="width: 100%;border-spacing: 0px;border-collapse: collapse;">
-                          <thead>
-                            <tr>
-                              @if($perskills['skill_name'] != null || $perskills['skill_name'] != '')
-                                <th width="20%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
-                                  {{$perskills['skill_name']}}
-                                </th>
-                              @else
-                                <th width="20%" style="padding:4px !important;background-color:#ffc70b !important;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;">
-                                  {{$page['tab_name']}}
-                                </th>
-                              @endif
-                              <th width="15%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
-                                Observation</th>
-                              <th width="35%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
-                                Evidence</th>
-                              <th width="30%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
-                                Recommendation 
-                              </th>
-                            </tr>
-                          </thead>
-                        </table>
-                      </div>
-                    </div>
-
-                    @php $j = array(); @endphp
-                    @foreach($subskill as $sskill)
-                      @if($page['assessment_skill'] == $sskill['performance_area_id'] && $sskill['primary_skill_id'] == $perskills['skill_id'] && !in_array($sskill['skill_id'], explode(',', $report['switch2'])))
-                        @foreach($details3 as $detail)
-                          @if($detail['performance_area_id'] == $sskill['performance_area_id'])
-                            @php $fid = $detail['activity_name'] @endphp
-                            @if(!in_array($fid, $j))
-                              @php
-                                $f = 0;
-                                array_push($j, $detail['activity_name']);
-                                $recommendationPrinted = false;
-                                $recommendationCount = collect($details3)->filter(function ($d) use ($sskill, $activitys) {
-                                  return $d['performance_area_id'] == $sskill['performance_area_id'] &&
-                                    in_array($d['activity_name'], collect($activitys)->where('sub_skill', $sskill['skill_id'])->pluck('activity_id')->toArray());
-                                })->count();
-                              @endphp
-                              <div class="table-responsive" id="table_b{{$sskill['skill_id']}}" style="font-family: 'Barlow Semi Condensed', sans-serif !important;">
-                                <table class="table table-bordered card-body" style="width: 100%;border-spacing: 0px;border-collapse: collapse;">
-                                  <thead>
-                                    <tr>
-                                      <th colspan="4" style="background-color:#ffc70b !important;color: #141414;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;border-collapse: collapse !important;">
-                                        {{$sskill['skill_name']}}
-                                      </th>
-                                    </tr>
-                                  </thead>
-                                  <tbody id="tablebody_b{{$sskill['skill_id']}}">
-                                    @foreach($details3 as $detail)
-                                      @if(!in_array($detail['activity_name'], $verifiedActivities))
-                                        @php $looppasstab3 = 0 @endphp
-                                        @foreach($activitys as $activity)
-                                          @if($sskill['skill_id'] == $activity['sub_skill'])
-                                            @if($detail['activity_name'] == $activity['activity_id'])
-                                              @php $looppasstab3 = 1 @endphp
-                                            @endif
-                                          @endif
-                                        @endforeach
-                                        @if($looppasstab3 == 1)
-                                          <tr class="firstrow">
-                                            <td width="20%" style="background: white;border: 1px solid #0e0e0e !important;padding:4px !important;"> @foreach($activitys as $activity) @if($detail['activity_name'] == $activity['activity_id']) @php $f = 1; @endphp <p>{{$activity['activity_name']}}</p> @endif @endforeach </td>
-                                            <td width="15%" style="background: white;border: 1px solid #0e0e0e !important;padding:4px !important;"> @foreach($observations as $observation) @if($detail['observation_name'] == $observation['observation_id']) <p>{{$observation['observation_name']}}</p> @endif @endforeach </td>
-                                            <td width="35%" style="white-space: pre-line;vertical-align: top;font-family: 'Barlow Semi Condensed', sans-serif !important;padding:4px !important;background: white;border: 1px solid #0e0e0e !important;">{!! cleanHtml($detail['evidence']) !!}</td>
-
-                                            <td width="30%" style="white-space: pre-line;vertical-align: top;font-family: 'Barlow Semi Condensed', sans-serif !important;padding:4px !important;background: white;border: 1px solid #0e0e0e !important;">
-                                              {!! cleanHtml($detail['recommendation']) !!}
-                                            </td>
-
-                                          </tr>
-                                        @endif
-                                      @endif
-                                    @endforeach
-                                  </tbody>
-                                </table>
-                              </div>
-                              @if($recommendationCount > 0)
-                                <div class="page-break"></div>
-                              @endif
-                              @if($f = 1) @break @endif
-                            @endif
-                          @endif
-                        @endforeach
-                      @endif
-                    @endforeach
-                    <!--  -->
+        @if($page['page'] != 15)
+        @if($page['enable_flag'] == 0)
+        @if($page['assessment_skill'] != null && $page['enable_flag'] != 1)
+        <p style="font-size: 22px;color:blue;font-weight:bold;font-family: 'Barlow Semi Condensed', sans-serif !important;">{{$page['tab_name']}}</p>
+        @foreach($perskill as $perskills)
+        @if($perskills['performance_area_id'] == $page['assessment_skill'] && $perskills['skill_type'] == 1)
+        <div id="table{{$page['page']}}">
+          <div class="table-responsive" style="font-family: 'Barlow Semi Condensed', sans-serif !important;">
+            <table class="table table-bordered card-body" style="width: 100%;border-spacing: 0px;border-collapse: collapse;">
+              <thead>
+                <tr>
+                  @if($perskills['skill_name'] != null || $perskills['skill_name'] != '')
+                  <th width="20%" style="padding:4px !important;background-color:#ffc70b !important;font-weight:bold !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">{{$perskills['skill_name']}}</th>
+                  @else
+                  <th width="20%" style="padding:4px !important;background-color:#ffc70b !important;font-weight:bold !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">{{$page['tab_name']}}</th>
                   @endif
+                  <th width="15%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
+                    Observation</th>
+                  <th width="35%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
+                    Evidence</th>
+                  <th width="30%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
+                    Recommendation</th>
+                </tr>
+              </thead>
+              @php
+              $detailsCollection = collect($details);
+              $rowCount = $detailsCollection->filter(fn($detail) => $page['assessment_skill'] == $detail['performance_area_id'])->count();
+              $recommendationPrinted = false;
+              @endphp
+              <tbody id="tablebody{{$page['page']}}">
+                @foreach($details as $detail)
+                @if($page['assessment_skill'] == $detail['performance_area_id'])
+                @if(!in_array($detail['activity_name'], $verifiedActivities))
+                <tr>
+                  <td width="20%" style="white-space: pre-line;background: white;border: 1px solid #0e0e0e !important;padding:4px !important;">@foreach($activitys as $activity) @if($page['assessment_skill'] == $activity['performance_area_id'] && $activity['skill_id'] == $perskills['skill_id'] ) @if($activity['skill_type'] == 1) @if( $detail['activity_name'] == $activity['activity_id'] ) <p>{{$activity['activity_name']}}</p> @endif @endif @endif @endforeach</td>
+                  <td width="15%" style="background: white;border: 1px solid #0e0e0e !important;padding:4px !important;">@foreach($observations as $observation) @if( $detail['observation_name'] == $observation['observation_id'] ) <p>{{$observation['observation_name']}}</p> @endif @endforeach </td>
+                  <td width="35%" style="white-space: pre-line;align-items: center;background: white;border: 1px solid #0e0e0e !important;font-family: 'Barlow Semi Condensed', sans-serif !important;padding:4px !important;">{!! $detail['evidence'] !!}</td>
+                  <td width="30%" style="white-space: pre-line;align-items: center;background: white;border: 1px solid #0e0e0e !important;font-family: 'Barlow Semi Condensed', sans-serif !important;padding:4px !important;">
+                    {!! $detail['recommendation'] !!}
+                  </td>
+                </tr>
+                @endif
+                @endif
                 @endforeach
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p style="page-break-after: always"></p>
+
+        @elseif($perskills['performance_area_id'] == $page['assessment_skill'] && $perskills['skill_type'] == 2 && !in_array($perskills['skill_id'] , explode(',',$report['switch'])))
+        <div class="myTableheader{{$page['page']}}" id="table_a{{$page['page']}}">
+          <div class="table-responsive" style="font-family: 'Barlow Semi Condensed', sans-serif !important;">
+            @php
+            $detailsCollection = collect($details2);
+            $filteredDetails = $detailsCollection->filter(fn($detail) => $page['assessment_skill'] == $detail['performance_area_id'] && $detail['cheSkill'] == $perskills['skill_id']);
+            $rowCount = $filteredDetails->count();
+            $recommendationPrinted = false;
+            @endphp
+            <table class="table table-bordered card-body myTable{{$page['page']}}" style="width: 100%;border-spacing: 0px;border-collapse: collapse;">
+              <thead>
+                <tr>
+                  <th colspan="4" style="background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;color: #141414;text-align: left;border: 1px solid #040404 !important;border-collapse: collapse !important;">
+                    {{$perskills['skill_name']}}
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="tablebody_a{{$page['page']}}">
+                @foreach($details2 as $detail)
+                @if($page['assessment_skill'] == $detail['performance_area_id'] && $detail['cheSkill'] == $perskills['skill_id'])
+                @if(!in_array($detail['activity_name'], $verifiedActivities))
+                <tr>
+                  <td width="20%" style="background: white;border: 1px solid #0e0e0e !important;padding:4px !important;"> @foreach($activitys as $activity) @if($activity['skill_type'] == 2) @if($page['assessment_skill'] == $activity['performance_area_id']) @if( $detail['activity_name'] == $activity['activity_id'] ) <p>{{$activity['activity_name']}}</p> @endif @endif @endif @endforeach </td>
+                  <td width="15%" style="background: white;border: 1px solid #0e0e0e !important;padding:4px !important;"> @foreach($observations as $observation) @if( $detail['observation_name'] == $observation['observation_id'] ) <p>{{$observation['observation_name']}}</p> @endif @endforeach </td>
+                  <td width="35%" style="white-space: pre-line;font-family: 'Barlow Semi Condensed', sans-serif !important;padding:4px !important;align-items: center !important;background: white !important;border: 1px solid #0e0e0e !important;"> {!! $detail['evidence'] !!} </td>
+
+                  <td width="30%" style="white-space: pre-line;align-items: center;background: white;border: 1px solid #0e0e0e !important;font-family: 'Barlow Semi Condensed', sans-serif !important;padding:4px !important;">
+                    {!! $detail['recommendation'] !!}
+                  </td>
+
+                </tr>
+                @endif
+                @endif
+                @endforeach
+
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p style="page-break-after: always"></p>
+
+        @elseif($perskills['performance_area_id'] == $page['assessment_skill'] && $perskills['skill_type'] == 3 && !in_array($perskills['skill_id'] , explode(',',$report['switch'])))
+        <!-- NOTE: the standalone header-only table (thead with no tbody) that used
+             to render here has been removed. It was orphaned from the subskill
+             tables below it (its own separate <table>, with nothing forcing it to
+             stay on the same page as the data that followed), which could leave it
+             alone on a near-empty page and then show a second, unrelated header
+             directly after it on the next page. Its column titles are now the
+             second header row inside each subskill table's own <thead> below, so
+             header and data always travel together as a single table. -->
+
+        @php $j= array() ; @endphp
+        @foreach($subskill as $sskill)
+        @if($page['assessment_skill'] == $sskill['performance_area_id'] && $sskill['primary_skill_id'] == $perskills['skill_id'] && !in_array($sskill['skill_id'] , explode(',',$report['switch2'])))
+        @foreach($details3 as $detail)
+        @if($detail['performance_area_id'] == $sskill['performance_area_id'])
+        @php $fid = $detail['activity_name'] @endphp
+        @if(!in_array( $fid , $j ))
+        @php
+        $f = 0;
+        array_push($j, $detail['activity_name']);
+        $recommendationPrinted = false;
+        $recommendationCount = collect($details3)->filter(function($d) use ($sskill, $activitys) {
+        return $d['performance_area_id'] == $sskill['performance_area_id'] &&
+        in_array($d['activity_name'], collect($activitys)->where('sub_skill', $sskill['skill_id'])->pluck('activity_id')->toArray());
+        })->count();
+        @endphp
+        <div class="table-responsive" id="table_b{{$sskill['skill_id']}}" style="font-family: 'Barlow Semi Condensed', sans-serif !important;">
+          <table class="table table-bordered card-body" style="width: 100%;border-spacing: 0px;border-collapse: collapse;">
+            <thead>
+              <tr>
+                <th colspan="4" style="background-color:#ffc70b !important;color: #141414;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;border-collapse: collapse !important;">
+                  {{$sskill['skill_name']}}
+                </th>
+              </tr>
+              <tr>
+                @if($perskills['skill_name'] != null || $perskills['skill_name'] != '')
+                <th width="20%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
+                  {{$perskills['skill_name']}}
+                </th>
+                @else
+                <th width="20%" style="padding:4px !important;background-color:#ffc70b !important;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;">
+                  {{$page['tab_name']}}
+                </th>
+                @endif
+                <th width="15%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;text-align:center;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
+                  Observation</th>
+                <th width="35%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
+                  Evidence</th>
+                <th width="30%" style="padding:4px !important;background-color:#ffc70b !important;font-family: 'Barlow Semi Condensed', sans-serif !important;border: 1px solid #040404 !important;color: #141414;border-collapse: collapse !important;">
+                  Recommendation
+                </th>
+              </tr>
+            </thead>
+            <tbody id="tablebody_b{{$sskill['skill_id']}}">
+              @foreach($details3 as $detail)
+              @if(!in_array($detail['activity_name'], $verifiedActivities))
+              @php $looppasstab3 = 0 @endphp
+              @foreach($activitys as $activity)
+              @if($sskill['skill_id'] == $activity['sub_skill'])
+              @if( $detail['activity_name'] == $activity['activity_id'] )
+              @php $looppasstab3 = 1 @endphp
               @endif
-            @endif
-          @endif
+              @endif
+              @endforeach
+              @if($looppasstab3 == 1)
+              <tr class="firstrow">
+                <td width="20%" style="background: white;border: 1px solid #0e0e0e !important;padding:4px !important;"> @foreach($activitys as $activity) @if( $detail['activity_name'] == $activity['activity_id'] ) @php $f = 1; @endphp <p>{{$activity['activity_name']}}</p> @endif @endforeach </td>
+                <td width="15%" style="background: white;border: 1px solid #0e0e0e !important;padding:4px !important;"> @foreach($observations as $observation) @if( $detail['observation_name'] == $observation['observation_id'] ) <p>{{$observation['observation_name']}}</p> @endif @endforeach </td>
+                <td width="35%" style="white-space: pre-line;font-family: 'Barlow Semi Condensed', sans-serif !important;padding:4px !important;align-items: center;background: white;border: 1px solid #0e0e0e !important;">{!! $detail['evidence'] !!}</td>
+
+                <td width="30%" style="white-space: pre-line;font-family: 'Barlow Semi Condensed', sans-serif !important;padding:4px !important;align-items: center;background: white;border: 1px solid #0e0e0e !important;">
+                  {!! $detail['recommendation'] !!}
+                </td>
+
+              </tr>
+              @endif
+              @endif
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+        <p style="page-break-after: always"></p>
+        @if($f = 1) @break @endif
+        @endif
+        @endif
+        @endforeach
+        @endif
+        @endforeach
+        <!--  -->
+        @endif
+        @endforeach
+        @endif
+        @endif
+        @endif
         @endforeach
         <!-- Sensory -->
         <!-- <p style="page-break-after: always"></p> -->
@@ -1039,8 +742,24 @@ $details3 = mergeDetails($details3 ?? []);
         </div>
         <!-- <img style="display: block;margin-right: auto;margin-left: 25%;width: 50%;height:70%" src="{{asset('images/Self regulation continuum.png')}}" width="550" height="900px"> -->
         <div class="col-12 scrollable fixTableHead title-padding" id="page8" style="margin-top: 5px;">
-          <div class="table-responsive">
-            <table class="table table-bordered card-body"  id="sensoryTable" style="width: 100%; border-spacing: 0; border-collapse: collapse;">
+          @php
+          $sensoryQuadrants = [
+          1 => 'Seeks out and is attracted to a stimulating sensory environment',
+          2 => 'Distressed by a stimulating sensory environment and attempts to leave the environment',
+          3 => 'Sensitivity to stimuli, distractibility, discomfort with sensory stimuli',
+          4 => 'Missing stimuli, responding slowly'
+          ];
+          @endphp
+
+          {{-- Each quadrant gets its own table (own thead + a single row) instead of
+               all 4 rows sharing one table. This guarantees the yellow header always
+               stays attached to its row: if a row doesn't fit in the remaining space
+               on a page, the whole header+row pair moves to the next page together
+               (via the existing "tbody tr:first-child { page-break-before: avoid }"
+               rule), instead of the row landing on the next page with no header. --}}
+          @foreach($sensoryQuadrants as $index => $label)
+          <div class="table-responsive sensory-quadrant-block" style="page-break-inside: avoid; break-inside: avoid;">
+            <table class="table table-bordered card-body sensory-quadrant-table" style="width: 100%; border-spacing: 0; border-collapse: collapse; page-break-inside: avoid !important; break-inside: avoid !important; margin-bottom: 0;">
               <thead>
                 <tr>
                   <th width="30%" style="border: 1px solid #040404 !important; background-color: #ffc70b; color: #141414; text-align: center;">
@@ -1055,31 +774,21 @@ $details3 = mergeDetails($details3 ?? []);
                 </tr>
               </thead>
               <tbody>
-                @php
-                  $sensoryQuadrants = [
-                    1 => 'Seeks out and is attracted to a stimulating sensory environment',
-                    2 => 'Distressed by a stimulating sensory environment and attempts to leave the environment',
-                    3 => 'Sensitivity to stimuli, distractibility, discomfort with sensory stimuli',
-                    4 => 'Missing stimuli, responding slowly'
-                  ];
-                @endphp
-
-                @foreach($sensoryQuadrants as $index => $label)
-                  <tr>
-                    <td style="border: 1px solid #040404 !important; background-color: white;">
-                      {{ $label }}
-                    </td>
-                    <td style="border: 1px solid #0e0e0e !important; background-color: white;">
-                      {!! $page8['sensory_profiling' . $index] !!}
-                    </td>
-                    <td id="quadrantSensory" style="border: 1px solid #0e0e0e !important; background-color: white;">
-                      {!! $data['sensory_recommendation'][$index] !!}
-                    </td>
-                  </tr>
-                @endforeach
+                <tr>
+                  <td style="border: 1px solid #040404 !important; background-color: white;">
+                    {{ $label }}
+                  </td>
+                  <td style="border: 1px solid #0e0e0e !important; background-color: white;">
+                    {!! $page8['sensory_profiling' . $index] !!}
+                  </td>
+                  <td id="quadrantSensory" style="border: 1px solid #0e0e0e !important; background-color: white;">
+                    {!! $data['sensory_recommendation'][$index] !!}
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
+          @endforeach
         </div>
         <!-- <p style="page-break-after: always"></p> -->
         <!-- End Sensory -->
@@ -1102,9 +811,9 @@ $details3 = mergeDetails($details3 ?? []);
       </div>
     </div>
   </div>
-  <form method="post" action="{{ filter_var($data['isTemp'] ?? false, FILTER_VALIDATE_BOOLEAN)
-  ? route('assessment.report.SummaryReportSave', \Crypt::encrypt($data['report_id']))
-  : route('assessment.report.render', \Crypt::encrypt($data['report_id'])) }}" id="submitForm">
+  <form method="post" action="{{ filter_var($data['isTemp'] ?? false, FILTER_VALIDATE_BOOLEAN) 
+    ? route('assessment.report.SummaryReportSave', \Crypt::encrypt($data['report_id'])) 
+    : route('assessment.report.render', \Crypt::encrypt($data['report_id'])) }}" id="submitForm">
 
     <input type="hidden" name="summary_report" id="summary_report">
     <input type="hidden" name="email" id="email" value="{{$data['email']}}">
@@ -1177,62 +886,158 @@ $details3 = mergeDetails($details3 ?? []);
       return height;
     }
 
+    // Rich-text Evidence/Recommendation content (saved from the editor) can carry
+    // its own inline font-family/font-size on nested tags (<p>, <span>, etc). A
+    // style rule on the parent <td> does not override an element's own inline
+    // style, so this walks every descendant of a cell and forces the report's
+    // typography with setProperty(..., 'important') - guaranteed to win over
+    // any inline style the editor content brought with it.
+    function enforceCellTypography(cell) {
+      if (!cell) return;
+      cell.querySelectorAll('*').forEach(el => {
+        el.style.setProperty('font-family', FONT_FAMILY, 'important');
+        el.style.setProperty('font-size', FONT_SIZE, 'important');
+        el.style.setProperty('line-height', LINE_HEIGHT + 'px', 'important');
+        el.style.setProperty('letter-spacing', '0.3px', 'important');
+      });
+    }
+
+    // Removes a text node from a cloned tree, then cleans up any ancestor
+    // element that is left with no visible content as a result (so we don't
+    // leave behind empty <p></p>/<span></span> wrappers).
+    function removeNodeAndEmptyAncestors(textNode, root) {
+      let el = textNode.parentNode;
+      if (textNode.parentNode) textNode.parentNode.removeChild(textNode);
+      while (el && el !== root && el.parentNode) {
+        if (!el.textContent || el.textContent.trim() === '') {
+          const parent = el.parentNode;
+          parent.removeChild(el);
+          el = parent;
+        } else {
+          break;
+        }
+      }
+    }
+
+    // HTML-preserving version of the old plain-text splitter. Instead of
+    // flattening the cell's rich content to textContent (which threw away
+    // every <b>/<i>/<span style="color:..."> etc. coming from the editor),
+    // this walks the actual DOM tree of text nodes and cuts THAT - so both
+    // the visible half and the overflow half keep their original tags and
+    // inline styling.
     function splitContentByHeight(html, width, maxHeight) {
       if (!html || html.trim() === '') {
         return ['', ''];
       }
 
-      const temp = document.createElement("div");
-      temp.innerHTML = html;
-      const originalText = temp.textContent || temp.innerText;
-      const cleanedText = originalText.replace(/\s+/g, ' ').trim();
-      if (!cleanedText) return ['', ''];
+      if (measureHeight(html, width) <= maxHeight) {
+        return [html, ''];
+      }
 
-      const words = cleanedText.split(' ');
-      let visibleText = '';
-      let overflowText = '';
+      const source = document.createElement('div');
+      source.innerHTML = html;
 
-      const tester = document.createElement("div");
-      tester.style.cssText = `
-        visibility: hidden;
-        position: absolute;
-        width: ${width}px;
-        line-height: ${LINE_HEIGHT}px;
-        font-family: ${FONT_FAMILY};
-        font-size: ${FONT_SIZE};
-        font-weight: 400;
-        padding: 4px;
-        box-sizing: border-box;
-        letter-spacing: 0.3px;
-        white-space: pre-line;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-      `;
-      document.body.appendChild(tester);
+      const collectTextNodes = (root) => {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+        const nodes = [];
+        let n;
+        while ((n = walker.nextNode())) {
+          if (n.textContent && n.textContent.length) nodes.push(n);
+        }
+        return nodes;
+      };
 
-      for (let i = 0; i < words.length; i++) {
-        const testText = visibleText ? visibleText + ' ' + words[i] : words[i];
-        tester.textContent = testText;
+      const sourceTextNodes = collectTextNodes(source);
+      if (sourceTextNodes.length === 0) {
+        return [html, ''];
+      }
 
-        if (tester.offsetHeight <= maxHeight) {
-          visibleText = testText;
+      const nodeLengths = sourceTextNodes.map(n => n.textContent.length);
+      const totalChars = nodeLengths.reduce((a, b) => a + b, 0);
+      if (totalChars === 0) return [html, ''];
+
+      const offsetToNodeChar = (offset) => {
+        let remaining = offset;
+        for (let i = 0; i < nodeLengths.length; i++) {
+          if (remaining <= nodeLengths[i]) return [i, remaining];
+          remaining -= nodeLengths[i];
+        }
+        return [nodeLengths.length - 1, nodeLengths[nodeLengths.length - 1]];
+      };
+
+      // Builds [visibleHtml, remainderHtml] for a cut at the given
+      // (text node index, char index within that node), operating on fresh
+      // clones so the original `source` tree is never mutated.
+      const buildSplit = (cutNodeIndex, cutCharIndex) => {
+        const visibleClone = source.cloneNode(true);
+        const visibleNodes = collectTextNodes(visibleClone);
+        for (let i = visibleNodes.length - 1; i >= 0; i--) {
+          if (i > cutNodeIndex) {
+            removeNodeAndEmptyAncestors(visibleNodes[i], visibleClone);
+          } else if (i === cutNodeIndex) {
+            visibleNodes[i].textContent = visibleNodes[i].textContent.slice(0, cutCharIndex);
+            if (!visibleNodes[i].textContent) removeNodeAndEmptyAncestors(visibleNodes[i], visibleClone);
+          }
+        }
+
+        const remainderClone = source.cloneNode(true);
+        const remainderNodes = collectTextNodes(remainderClone);
+        for (let i = 0; i < remainderNodes.length; i++) {
+          if (i < cutNodeIndex) {
+            removeNodeAndEmptyAncestors(remainderNodes[i], remainderClone);
+          } else if (i === cutNodeIndex) {
+            remainderNodes[i].textContent = remainderNodes[i].textContent.slice(cutCharIndex);
+            if (!remainderNodes[i].textContent) removeNodeAndEmptyAncestors(remainderNodes[i], remainderClone);
+          }
+        }
+
+        return [visibleClone.innerHTML, remainderClone.innerHTML];
+      };
+
+      // Binary search the largest character offset whose visible half still
+      // fits within maxHeight (measured with the real HTML, so tags/styling
+      // are accounted for exactly as they'll render).
+      let low = 0, high = totalChars, best = 0;
+      while (low <= high) {
+        const mid = Math.floor((low + high) / 2);
+        const [nIdx, cIdx] = offsetToNodeChar(mid);
+        const [visibleHtml] = buildSplit(nIdx, cIdx);
+        if (measureHeight(visibleHtml, width) <= maxHeight) {
+          best = mid;
+          low = mid + 1;
         } else {
-          overflowText = words.slice(i).join(' ');
-          break;
+          high = mid - 1;
         }
       }
 
-      document.body.removeChild(tester);
-
-      if (!overflowText) {
-        return [cleanedText, ''];
-      }
-      if (!visibleText && words.length > 0) {
-        visibleText = words[0];
-        overflowText = words.slice(1).join(' ');
+      if (best <= 0) {
+        // Nothing at all fits (maxHeight smaller than a single character) -
+        // still force at least a small chunk through so we make progress.
+        best = Math.max(1, Math.floor(totalChars * 0.05));
       }
 
-      return [visibleText, overflowText];
+      let [finalNodeIdx, finalCharIdx] = offsetToNodeChar(best);
+
+      // Avoid cutting mid-word: snap back to the nearest preceding
+      // whitespace in that text node, if one exists within a reasonable
+      // distance, so words aren't broken across the page split.
+      const cutNodeText = sourceTextNodes[finalNodeIdx].textContent;
+      const lastSpace = cutNodeText.lastIndexOf(' ', finalCharIdx);
+      if (lastSpace > 0 && finalCharIdx - lastSpace < 40) {
+        finalCharIdx = lastSpace;
+      }
+
+      const [visibleHtml, remainderHtml] = buildSplit(finalNodeIdx, finalCharIdx);
+
+      if (!remainderHtml || !remainderHtml.trim()) {
+        return [html, ''];
+      }
+      if (!visibleHtml || !visibleHtml.trim()) {
+        // Guarantee forward progress even in a pathological case.
+        return buildSplit(finalNodeIdx, Math.min(finalCharIdx + 1, nodeLengths[finalNodeIdx]));
+      }
+
+      return [visibleHtml, remainderHtml];
     }
     if (!isFontLoaded()) {
       const fontLink = document.createElement('link');
@@ -1243,7 +1048,6 @@ $details3 = mergeDetails($details3 ?? []);
       setTimeout(processTables, 300);
     } else {
       processTables();
-processSensoryTable();
     }
 
     function processTables() {
@@ -1284,6 +1088,12 @@ processSensoryTable();
           const bodyRows = tbody.querySelectorAll("tr");
           bodyRows.forEach(row => {
             const cells = row.querySelectorAll("td");
+            // NOTE: made column-count aware so this also works correctly for the
+            // 3-column Sensory table (Quadrant / Evidence / Recommendations),
+            // not just the 4-column Activity/Observation/Evidence/Recommendation
+            // tables. Behavior for existing 4-column tables is unchanged.
+            const colCount = cells.length;
+            const evidenceIdx = colCount - 2;
             cells.forEach((td, index) => {
               td.style.fontFamily = FONT_FAMILY;
               td.style.fontSize = FONT_SIZE;
@@ -1297,7 +1107,7 @@ processSensoryTable();
               td.style.boxSizing = "border-box";
 
 
-              if (index === 0 || index === 1) {
+              if (colCount >= 3 && index < evidenceIdx) {
                 td.style.textAlign = "center";
                 td.style.verticalAlign = "middle";
               } else {
@@ -1310,6 +1120,8 @@ processSensoryTable();
                 else if (index === 2) td.style.width = "35%";
                 else if (index === 3) td.style.width = "30%";
               }
+
+              enforceCellTypography(td);
             });
           });
         }
@@ -1320,33 +1132,37 @@ processSensoryTable();
         if (!tbody) return;
 
 
-        const thead = table.querySelector("thead");
-        let columnTitles = [];
-        if (thead) {
-          const headerRow = thead.querySelector("tr");
-          if (headerRow) {
-            const headerCells = headerRow.querySelectorAll("th");
-            columnTitles = Array.from(headerCells).map(th => th.textContent.trim());
-          }
-        }
-
-
         const rows = Array.from(tbody.querySelectorAll("tr"));
         let processedRows = [];
 
         rows.forEach((row, rowIndex) => {
-          if (row.closest('thead') || row.children.length < 4) {
+          const colCount = row.children.length;
+
+          // Need at least 3 columns: 1+ label column(s) + Evidence + Recommendation.
+          // This now also covers the 3-column Sensory table (Quadrant / Evidence /
+          // Recommendation), not just the 4-column Activity / Observation / Evidence /
+          // Recommendation tables. Rows with < 3 columns (e.g. a plain 2-column table)
+          // are still left untouched, same as before.
+          if (row.closest('thead') || colCount < 3) {
             processedRows.push(row);
             return;
           }
 
           const cells = Array.from(row.children);
 
+          // The last two columns are always treated as the splittable "Evidence"
+          // and "Recommendation" content. Everything before them is a static label
+          // that repeats on every continuation row (Activity+Observation for the
+          // 4-column tables, just Quadrant for the 3-column Sensory table).
+          const evidenceIdx = colCount - 2;
+          const recommendationIdx = colCount - 1;
+          const labelIdxs = [];
+          for (let i = 0; i < evidenceIdx; i++) labelIdxs.push(i);
+
           const originalContent = {
-            activity: cells[0].innerHTML,
-            observation: cells[1].innerHTML,
-            evidence: cells[2].innerHTML,
-            recommendation: cells[3].innerHTML
+            labels: labelIdxs.map(i => cells[i].innerHTML),
+            evidence: cells[evidenceIdx].innerHTML,
+            recommendation: cells[recommendationIdx].innerHTML
           };
 
           const getCellWidth = (cell) => {
@@ -1354,8 +1170,8 @@ processSensoryTable();
             return parseInt(computedStyle.width) || cell.offsetWidth || FALLBACK_WIDTH;
           };
 
-          const evidenceWidth = getCellWidth(cells[2]);
-          const recommendationWidth = getCellWidth(cells[3]);
+          const evidenceWidth = getCellWidth(cells[evidenceIdx]);
+          const recommendationWidth = getCellWidth(cells[recommendationIdx]);
 
           const effectiveEvidenceWidth = Math.max(evidenceWidth - 12, 50);
           const effectiveRecommendationWidth = Math.max(recommendationWidth - 12, 50);
@@ -1377,20 +1193,39 @@ processSensoryTable();
           const recommendationSplits = needsRecommendationSplit ?
             splitContentByHeight(originalContent.recommendation, effectiveRecommendationWidth, MAX_HEIGHT) : [originalContent.recommendation, ''];
 
-          cells[2].innerHTML = evidenceSplits[0] ? evidenceSplits[0] : '';
-          cells[3].innerHTML = recommendationSplits[0] ? recommendationSplits[0] : '';
+          cells[evidenceIdx].innerHTML = evidenceSplits[0] ? evidenceSplits[0] : '';
+          cells[recommendationIdx].innerHTML = recommendationSplits[0] ? recommendationSplits[0] : '';
 
           processedRows.push(row);
 
           let evidenceRemaining = evidenceSplits[1];
           let recommendationRemaining = recommendationSplits[1];
           let continuationCount = 0;
+          let isFirstContinuationRow = true;
 
+          // NOTE: we intentionally do NOT fabricate a manual header row here.
+          // The <thead> on this table already has
+          // `display: table-header-group !important` (see the stylesheet,
+          // including the @media print block), which makes the renderer
+          // repeat the REAL header automatically on every page the table
+          // spans. Building a second, hand-rolled header row here duplicated
+          // that real header - and rendered broken for colspan-based headers
+          // (skill_type 2 and 3 tables only have a single <th colspan="4">,
+          // so the old `columnTitles` array only ever had one entry - the
+          // other fabricated header cells came out blank). Forcing only the
+          // *first* continuation row onto a fresh page is enough; the native
+          // thead takes care of showing the header there.
           while (evidenceRemaining || recommendationRemaining) {
             const newRow = document.createElement("tr");
-            newRow.className = "continuation-row";
+            newRow.className = isFirstContinuationRow ? "continuation-row new-page-header" : "continuation-row";
+            if (isFirstContinuationRow) {
+              newRow.style.cssText =
+                "page-break-before: always !important; break-before: page !important; " +
+                "page-break-inside: avoid !important; break-inside: avoid !important;";
+            }
+            isFirstContinuationRow = false;
 
-            for (let i = 0; i < 4; i++) {
+            for (let i = 0; i < colCount; i++) {
               const newCell = document.createElement("td");
               newCell.style.border = "1px solid #0e0e0e";
               newCell.style.padding = "4px";
@@ -1404,23 +1239,17 @@ processSensoryTable();
               newCell.style.wordWrap = "break-word";
               newCell.style.overflowWrap = "break-word";
 
-              if (i === 0 || i === 1) {
-                newCell.style.textAlign = "center";
-                newCell.style.verticalAlign = "middle";
-              } else {
-                newCell.style.verticalAlign = "top";
-              }
-
               const originalWidth = getCellWidth(cells[i]) + "px";
               newCell.style.width = originalWidth;
 
-              if (i === 0) {
-                newCell.innerHTML = originalContent.activity || '';
+              if (labelIdxs.includes(i)) {
+                // Label column(s): center-aligned, repeated as-is on every continuation row.
+                newCell.style.textAlign = "center";
+                newCell.style.verticalAlign = "middle";
+                newCell.innerHTML = originalContent.labels[i] || '';
                 newCell.style.backgroundColor = "#ffffff";
-              } else if (i === 1) {
-                newCell.innerHTML = originalContent.observation || '';
-                newCell.style.backgroundColor = "#ffffff";
-              } else if (i === 2) {
+              } else if (i === evidenceIdx) {
+                newCell.style.verticalAlign = "top";
                 if (evidenceRemaining) {
                   const [nextPart, remaining] = splitContentByHeight(
                     evidenceRemaining,
@@ -1432,7 +1261,8 @@ processSensoryTable();
                 } else {
                   newCell.innerHTML = '';
                 }
-              } else if (i === 3) {
+              } else if (i === recommendationIdx) {
+                newCell.style.verticalAlign = "top";
                 if (recommendationRemaining) {
                   const [nextPart, remaining] = splitContentByHeight(
                     recommendationRemaining,
@@ -1446,6 +1276,7 @@ processSensoryTable();
                 }
               }
 
+              enforceCellTypography(newCell);
               newRow.appendChild(newCell);
             }
 
@@ -1477,87 +1308,6 @@ processSensoryTable();
         }
       }, 500);
     }
-    function processSensoryTable() {
-
-    const table = document.getElementById("sensoryTable");
-
-    if (!table) return;
-
-    const tbody = table.querySelector("tbody");
-
-    if (!tbody) return;
-
-    const rows = Array.from(tbody.querySelectorAll("tr"));
-
-    rows.forEach(row => {
-
-        const cells = row.querySelectorAll("td");
-
-        if (cells.length !== 3) return;
-
-        const quadrant = cells[0].innerHTML;
-        let evidence = cells[1].innerHTML;
-        let recommendation = cells[2].innerHTML;
-
-        const evidenceWidth =
-            Math.max(cells[1].offsetWidth - 12, 50);
-
-        const recommendationWidth =
-            Math.max(cells[2].offsetWidth - 12, 50);
-
-        while (
-            measureHeight(evidence, evidenceWidth) > MAX_HEIGHT ||
-            measureHeight(recommendation, recommendationWidth) > MAX_HEIGHT
-        ) {
-
-            const evidenceSplit =
-                splitContentByHeight(
-                    evidence,
-                    evidenceWidth,
-                    MAX_HEIGHT
-                );
-
-            const recommendationSplit =
-                splitContentByHeight(
-                    recommendation,
-                    recommendationWidth,
-                    MAX_HEIGHT
-                );
-
-            cells[1].innerHTML = evidenceSplit[0];
-            cells[2].innerHTML = recommendationSplit[0];
-
-            evidence = evidenceSplit[1];
-            recommendation = recommendationSplit[1];
-
-            if (!evidence && !recommendation) break;
-
-            const newRow = document.createElement("tr");
-
-            newRow.className = "continuation-row";
-
-            newRow.innerHTML = `
-                <td style="border:1px solid #0e0e0e;padding:4px;vertical-align:middle;text-align:center;">
-                    ${quadrant}
-                </td>
-
-                <td style="border:1px solid #0e0e0e;padding:4px;vertical-align:top;">
-                    ${evidence}
-                </td>
-
-                <td style="border:1px solid #0e0e0e;padding:4px;vertical-align:top;">
-                    ${recommendation}
-                </td>
-            `;
-
-            row.after(newRow);
-
-            row = newRow;
-        }
-
-    });
-
-}
   });
 </script>
 </html>
