@@ -60,7 +60,16 @@ class UamDataController extends BaseController
             where a.user_id =$user_id AND b.module_type=2 order by b.display_order asc");
 
             $modules['bg_images'] = DB::select("select * from image_upload");
-            $modules['user_profile'] = DB::select("SELECT a.id , a.profile_image , a.name , b.role_name FROM users AS a INNER JOIN uam_roles AS b ON a.array_roles = b.role_id WHERE id = $user_id;");
+            $modules['user_profile'] = DB::select("
+                SELECT a.id, a.profile_image, a.name, b.role_name,
+                       COALESCE(NULLIF(ed.child_father_guardian_name, ''), NULLIF(ed.child_mother_caretaker_name, ''), '') AS parent_name
+                FROM users AS a
+                INNER JOIN uam_roles AS b ON a.array_roles = b.role_id
+                LEFT JOIN enrollment_details AS ed ON ed.user_id = a.id AND ed.active_flag = 0
+                WHERE a.id = $user_id
+                ORDER BY ed.enrollment_id DESC
+                LIMIT 1
+            ");
             $modules['parentModule'] = DB::select("select DISTINCT b.class_name, a.module_id, b.module_name,a.user_id from uam_user_screens as a inner join uam_modules as b on b.module_id = a.module_id where a.user_id = $user_id");
 
             $screens['parentScreen'] = DB::select("select a.route_url,a.screen_id,a.screen_name,a.screen_url,a.class_name, a.module_id, a.user_id from uam_user_screens as a inner join uam_screens as b on b.screen_id = a.screen_id where a.user_id = $user_id ORDER BY a.display_order ");
