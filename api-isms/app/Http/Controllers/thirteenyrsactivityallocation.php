@@ -1289,6 +1289,25 @@ class thirteenyrsactivityallocation extends BaseController
 
             $this->WriteFileLog($input);
 
+            if ($input['migration_type'] === '13plus') {
+                $dobStr = $input['child_dob'] ?? null;
+                if ($dobStr) {
+                    try {
+                        $cleanDobStr = str_replace('/', '-', trim($dobStr));
+                        $dob = \Carbon\Carbon::parse($cleanDobStr);
+                        if ($dob && $dob->age < 11) {
+                            $serviceResponse = array();
+                            $serviceResponse['Code'] = config('setting.status_code.validation');
+                            $serviceResponse['Message'] = 'Child is below 11 years of age and is not allowed to transition to Sail Adolescent.';
+                            $serviceResponse = json_encode($serviceResponse, JSON_FORCE_OBJECT);
+                            return $this->SendServiceResponse($serviceResponse, config('setting.status_code.validation'), false);
+                        }
+                    } catch (\Exception $e) {
+                        // Continue if date cannot be parsed
+                    }
+                }
+            }
+
             // Determine migration_status based on migration_type
             $migrationStatus = 0;
             if ($input['migration_type'] === 'isms') {

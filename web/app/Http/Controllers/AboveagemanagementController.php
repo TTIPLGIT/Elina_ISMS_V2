@@ -148,6 +148,25 @@ class AboveagemanagementController extends BaseController
             $data['migration_type'] = $request->migration_type ?? '13plus';
 
             $data['full_json']         = json_encode($migrationData);
+
+            if (($request->migration_type ?? '13plus') === '13plus') {
+                $dobStr = $data['child_dob'] ?? null;
+                if ($dobStr) {
+                    try {
+                        $cleanDobStr = str_replace('/', '-', trim($dobStr));
+                        $dob = \Carbon\Carbon::parse($cleanDobStr);
+                        if ($dob && $dob->age < 11) {
+                            return redirect()->back()->with(
+                                'fail',
+                                'Child is below 11 years of age and is not allowed to transition to Sail Adolescent.'
+                            );
+                        }
+                    } catch (\Exception $e) {
+                        // Continue if date cannot be parsed
+                    }
+                }
+            }
+
             $encryptArray = $this->encryptData($data);
 
             $requestData = [];

@@ -1238,7 +1238,58 @@
 
 
 
+            function getAgeInYears(dobStr) {
+                if (!dobStr) return null;
+                dobStr = dobStr.toString().trim();
+                if (!dobStr) return null;
+
+                let birthDate = null;
+                if (/^\d{1,2}[\/\-]\d{1,2}[\/\-]\d{4}$/.test(dobStr)) {
+                    let parts = dobStr.split(/[\/\-]/);
+                    let day = parseInt(parts[0], 10);
+                    let month = parseInt(parts[1], 10) - 1;
+                    let year = parseInt(parts[2], 10);
+                    birthDate = new Date(year, month, day);
+                } else if (/^\d{4}[\/\-]\d{1,2}[\/\-]\d{1,2}/.test(dobStr)) {
+                    let parts = dobStr.split(/[\/\-]/);
+                    let year = parseInt(parts[0], 10);
+                    let month = parseInt(parts[1], 10) - 1;
+                    let day = parseInt(parts[2], 10);
+                    birthDate = new Date(year, month, day);
+                } else {
+                    birthDate = new Date(dobStr);
+                }
+
+                if (!birthDate || isNaN(birthDate.getTime())) {
+                    return null;
+                }
+
+                let today = new Date();
+                let age = today.getFullYear() - birthDate.getFullYear();
+                let monthDiff = today.getMonth() - birthDate.getMonth();
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                return age;
+            }
+
             function submitMigrationForm(type) {
+
+                if (type === '13plus') {
+                    let dob = $('#modal_dob').text().trim() || (selectedJsonData && selectedJsonData.child_details ? selectedJsonData.child_details.dob : '');
+                    let age = getAgeInYears(dob);
+
+                    if (age !== null && age < 11) {
+                        Swal.fire({
+                            title: 'Validation Error',
+                            html: '<div style="font-size:18px;font-weight:500;">The child is under 11 years of age and is not eligible to transition to Sail Adolescent.</div>',
+                            icon: 'warning',
+                            confirmButtonColor: '#1F2B8F',
+                            confirmButtonText: 'OK'
+                        });
+                        return false;
+                    }
+                }
 
                 let notes = $('#notes').val().trim();
 
