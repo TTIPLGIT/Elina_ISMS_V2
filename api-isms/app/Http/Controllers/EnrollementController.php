@@ -206,7 +206,7 @@ class EnrollementController extends BaseController
                         $enrollmentnum = 'EN/' . date("Y") . '/' . date("m") . '/' . $newThreeDigitsEnrollment;
                     }
                     // $this->WriteFileLog($enrollmentnum);exit;
-                    if ($inputArray['child_school'] == 'others') {
+                    if ($inputArray['child_school'] == 0) {
                         $school_id = 0;
                         $paymentCategory = 1;
                     } else {

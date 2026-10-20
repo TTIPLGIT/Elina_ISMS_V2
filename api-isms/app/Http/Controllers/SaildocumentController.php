@@ -13,6 +13,7 @@ use App\Mail\SailAdminUpdate;
 use App\Mail\SailEmailAccept;
 use Illuminate\Support\Carbon;
 
+
 class SaildocumentController extends BaseController
 {
 
@@ -1585,6 +1586,7 @@ class SaildocumentController extends BaseController
                 if ($paymentCategory == 2) {
                     // $this->WriteFileLog('Else if -paymentCategory == 2 ');
                     $feeType = ($feeType == 2) ? $feeType - 1 : $feeType;
+                    $paymentCategory = ($paymentCategory == 2) ? $paymentCategory - 1 : $paymentCategory;
                     $activePayment = DB::table('payment_process_customized')
                         ->where('fees_type_id', $feeType)
                         // ->where('category_id', $paymentCategory)
@@ -1595,6 +1597,7 @@ class SaildocumentController extends BaseController
                 } else {
                     // $this->WriteFileLog('Else');
                     $feeType = ($feeType == 2) ? $feeType - 1 : $feeType;
+                    $paymentCategory = ($paymentCategory == 2) ? $paymentCategory - 1 : $paymentCategory;
                     $activePayment = DB::table('payment_process_customized')
                         ->where('fees_type_id', $feeType)
                         // ->where('category_id', $paymentCategory)
@@ -1604,11 +1607,18 @@ class SaildocumentController extends BaseController
                 }
             } else {
 
-                if ($schoolID == 0) {
+                if ($schoolID == 0 || is_null($schoolID)) {
+                    // $feeType = ($feeType == 2) ? $feeType - 1 : $feeType;
+                    $paymentCategory = ($paymentCategory == 2) ? $paymentCategory - 1 : $paymentCategory;
+
                     // $this->WriteFileLog('else if - School - 0');
                     $activePayment = DB::table('payment_process_masters')
                         ->where('fees_type_id', $feeType)
                         ->where('category_id', $paymentCategory)
+                        ->where(function ($query) {
+                            $query->whereNull('school_enrollment_id')
+                                ->orWhere('school_enrollment_id', 0);
+                        })
                         ->select('final_amount', 'id', 'base_amount', 'gst_rate')
                         ->first();
                 } elseif ($paymentCategory == 2) {
@@ -1620,14 +1630,21 @@ class SaildocumentController extends BaseController
                         ->select('final_amount', 'id', 'base_amount', 'gst_rate')
                         ->first();
                 } else {
+                    $feeType = ($feeType == 2) ? $feeType - 1 : $feeType;
+                    $paymentCategory = ($paymentCategory == 2) ? $paymentCategory - 1 : $paymentCategory;
                     // $this->WriteFileLog('Else else');
                     $activePayment = DB::table('payment_process_masters')
                         ->where('fees_type_id', $feeType)
                         ->where('category_id', $paymentCategory)
+                        ->where(function ($query) {
+                            $query->whereNull('school_enrollment_id')
+                                ->orWhere('school_enrollment_id', 0);
+                        })
                         ->select('final_amount', 'id', 'base_amount', 'gst_rate')
                         ->first();
                 }
             }
+            
             $paymentID = $activePayment->id;
             $payableAmount = $activePayment->final_amount;
             $baseAmount = $activePayment->base_amount;

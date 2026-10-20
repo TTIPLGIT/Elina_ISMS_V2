@@ -297,7 +297,10 @@ class MasterPaymentController extends BaseController
                     if ($validatedData['serviceBriefing'][$i] !== null) {
                         DB::table('payment_process_services')->insert([
                             'payment_process_master_id' => $validatedData['id'],
-                            'service_briefing' => $validatedData['serviceBriefing'][$i],
+                            // 'service_briefing' => $validatedData['serviceBriefing'][$i],
+                            'service_briefing' => DB::table('payment_services_master')
+                                ->where('id', $validatedData['serviceBriefing'][$i])
+                                ->value('service_briefing'),
                             'quantity' => $validatedData['qty'][$i],
                             'rate' => $validatedData['rate'][$i],
                             'amount' => $validatedData['amount'][$i],
